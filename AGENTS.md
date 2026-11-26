@@ -47,10 +47,10 @@ imports. So a file here is, byte for byte, the file in a user's project.
 
 - `docs/authoring.md`: how a component is built (shape, sizes and looks, state, motion vocabulary,
   the checklist; its last section is about this repository).
-- `docs/DESIGN.md` and `docs/design/*.md`: the design rules, each with its reason. They describe
-  what is built: where a rule book and the components disagree, find out which is wrong and fix
-  it. A new rule goes into the rule book that carries it, with its reason, and into
-  `.claude/skills/house-rules/SKILL.md` when it sharpens or overrides a general design skill.
+- `docs/DESIGN.md` and `docs/design/*.md`: the design rules, each with its reason, and the only
+  record of them. They describe what is built: where a rule book and the components disagree,
+  find out which is wrong and fix it. A new rule goes into the rule book that carries it, with
+  its reason.
 - "Decided, though it may look wrong", below: the choices that an outsider would be tempted to
   undo. Ask before going against one.
 
@@ -101,14 +101,20 @@ imports. So a file here is, byte for byte, the file in a user's project.
 
 ## Design work
 
-The design skills in `.claude/skills/` are mandatory for anything that is designed (a component, a
-part, a variant, motion, an example, a screen): `.claude/skills/house-rules/SKILL.md` first (the
-project's own design rules; they override the general skills where the two differ), then
-`emil-design-eng` and the skill that fits (`animate`, `choreograph`, `gestures`, `mobile-native`,
-`animation-performance`); before calling it done, `review-animations/STANDARDS.md` and
-`break-ui`. Anything bigger than one component also goes through `screen-review`, and a review
-by someone who did not build it. `house-rules` and `screen-review` are this project's; the
-others are third-party (MIT, see `NOTICE`), pinned in `skills-lock.json`.
+For anything that is designed (a component, a part, a variant, motion, an example, a block, a
+screen), in this order:
+
+1. The rule books first: `docs/DESIGN.md` and the `docs/design/` book that fits.
+2. Then the general design skills in `.claude/skills/`: `emil-design-eng` and the one that fits
+   the work (`animate`, `choreograph`, `gestures`, `mobile-native`, `animation-performance`).
+3. Before calling it done: `review-animations/STANDARDS.md` and `break-ui`.
+4. Anything bigger than one component (a showcase, a docs page, a block in its context) also goes
+   through `screen-review`, and a review by someone who did not build it: a screen can pass every
+   component check and still be wrong.
+
+Where a general skill disagrees with a rule book, the rule book wins. `screen-review` is this
+project's own skill; the others are third-party (MIT, see `NOTICE`), pinned in
+`skills-lock.json`.
 
 Look at what you made, at 125% display scaling as well as 100%: fractional scaling is where
 hairlines, alignment and flicker go wrong. Take screenshots through `scripts/qa/cdp.mjs`

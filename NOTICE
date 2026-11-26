@@ -5,7 +5,7 @@ MIT licensed, built by Turbo (https://turbodesign.co).
 
 Copyright (c) Turbo. The original license text applies to the derived parts.
 
-The design skills in `.claude/skills/` other than `house-rules` and `screen-review` (animate,
+The design skills in `.claude/skills/` other than `screen-review` (animate,
 animation-performance, animation-vocabulary, apple-design, break-ui, choreograph,
 emil-design-eng, find-animation-opportunities, gestures, improve-animations, learn-taste,
 mobile-native, pick-ui-library, prototype, remove-animations, review-animations) are copied,

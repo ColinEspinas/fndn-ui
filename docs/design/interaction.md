@@ -23,7 +23,12 @@ attributes, never in class names**: the engine keeps its attributes true, and a 
 
 - **Buttons, chips, pills, segments, tabs and icon buttons scale** to `scale-press` (0.97) over
   `duration.press`, from the pointer only. Controls of 20px or less (a checkbox box, a radio, a
-  switch thumb) use `scale-press-sm` (0.9).
+  switch thumb) use `scale-press-sm` (0.9). Space and Enter act at once, with no scale: a key
+  press has no finger to answer.
+- **Joined controls never scale** (a button group, a joined toggle group), neither one button nor
+  the whole group: a button scaled alone pulls away from its neighbour and opens a gap at the
+  join, and a whole group squashing reads as one big button. The box stays still and the pressed
+  button's label and icon dip inside it. Each join is one hairline.
 - **Rows, options and fields darken instead**: `active:bg-hover-2` over `duration.fast`. A select's
   trigger is a field in every look, ghost included: it is as wide as its row, and a scale would
   take a share of that width.
@@ -46,7 +51,7 @@ attributes, never in class names**: the engine keeps its attributes true, and a 
   its ring; a field inside a composite surface (search, prompt bar) shows the caret and nothing
   else.
 - **A field shows one ring, its own.** A part selected inside it (the tag the arrow keys are on in
-  a tags input) is a fill, never a second ring, and the caret hides while it is selected. A part
+  a tags input) is a fill (the accent fill), never a second ring, and the caret hides while it is selected. A part
   edited in place keeps its box and its place: nothing around it moves when the edit starts.
 - **A popup trigger the engine refocused after a pointer closed its popup shows no ring**: the
   browser counts that focus as keyboard focus. This holds while the last key-or-press input was a
@@ -68,12 +73,14 @@ attributes, never in class names**: the engine keeps its attributes true, and a 
 - **A target smaller than 24×24px gets a larger hit area without changing its look**: an `::after`
   that reaches past it (`relative after:absolute after:content-[''] after:-inset-1` takes a 16px
   box to 24px).
-- **A drag released while it is still moving goes on in its direction.** A carousel turns the page
-  on a short flick; only a drag that has stopped before the release settles on the nearest stop.
+- **A drag released while it is still moving goes on in its direction**, however short it was: a
+  carousel turns the page on a flick; only a drag that has stopped before the release settles on
+  the nearest stop. Distance alone is never the test, because a quick flick never gets halfway.
 - **A gesture does the same in every variant of a component**, unless a prop says otherwise: a
   variant changes the look, not what the hand can do. One drag turns one carousel page in every
-  effect (`dragReach` lets it go further), and what the controls can do a drag can do (where the
-  pager goes round, a drag past an end goes round too).
+  effect (`dragReach="page"`, the default; `free` goes as far as it is dragged), and what the
+  controls can do a drag can do (with `loop="rewind"`, a drag past an end goes round, as the pager
+  does).
 - **A drag follows the pointer only where something travels.** Where nothing moves across the
   screen (a carousel's cross-fade), a sideways drag turns one page with the timed change instead
   of scrubbing it: following the pointer would hold two states half drawn over each other for as
@@ -127,7 +134,12 @@ attributes, never in class names**: the engine keeps its attributes true, and a 
 - **A control whose label can wrap (checkbox, radio, switch) stays on the first line**: the row is
   `items-start`, and the label's line is sized so the control and the first line share one centre.
 - **A fixed-size control never stretches.** A width given to a labelled control sizes the whole row;
-  the control keeps its size.
+  the control keeps its size (a switch stretched to a long label no longer reads as a switch).
+- **A tree's guides are never broken by a row.** A row's fill, its focus ring and the hover
+  highlight start where the row's level starts, so none of them crosses a guide; the whole row is
+  still the hit area. Guides are `line-strong` at rest and `ink-3` on the level that holds the
+  selection, so the selection's folder shows at a glance, and they end a little short of their
+  last child.
 - **When an adapter renders a wrapper around its control** (a switch inside its label), `class` and
   `style` land on the outermost element, which is what a caller sizes and places; every other
   attribute stays on the control.
@@ -152,10 +164,10 @@ its own recipe and never copies them.
 | Description | The one part that is cut: it gives way to the label (which keeps up to 70%) and carries a `title` while cut. |
 | Group label, separator | Group label `2xs`, weight 500, `ink-2`, padding 6px 8px 4px. Separator a 1px `line` that bleeds 4px into the popup's padding. |
 | Navigation rows (sidebar, tree) | A different kind: see `docs design` (Shape and spacing). |
-| Highlight in a list | Every list of options, however short, has one glide layer, `bg-hover`. It travels at `duration.move` with `ease-out-strong` for pointer and keyboard moves alike. Its first appearance lands on the row and fades in over `duration.base`; one already there when the list mounts shows at once. Rows, group labels and separators sit above it (`relative z-1`), so it passes behind them. A row never paints its own hover or highlight. |
+| Highlight in a list | Every list of options, however short, has one glide layer, `bg-hover`, and never falls back to a per-row background. A list built by hand (a sidebar, a tree) has one too. It travels at `duration.move` with `ease-out-strong` for pointer and keyboard moves alike, because it is what shows where the highlight went. Its first appearance lands on the row and fades in over `duration.base`; one already there when the list mounts shows at once. Rows, group labels, headings and separators sit above it (`relative z-1`) with no background of their own, so it keeps gliding across them and passes behind. A row never paints its own hover or highlight. |
 | Current or open item | `bg-hover-2`. |
 | A single target outside a list | Hovers with `hover:bg-hover` and `motion-colors-fast`. |
-| Inline single choice (segmented control, tabs, chips) | One indicator travels (transform, and width) over `duration.move` with `ease-move`, switched on only while a selection is made: no slide on mount, instant from the keyboard. Unselected items never paint the indicator's look. Hover is a colour, `ink-2` to `ink`, over `duration.base`; pill tabs too, whose selected pill is `bg-field` with `rounded-chip`. |
+| Inline single choice (segmented control, tabs, chips) | One indicator travels (transform, and width) over `duration.move` with `ease-move`, switched on only while a selection is made: no slide on mount, instant from the keyboard. The travel stays, though the control is used often: for a pointer selection it shows where the selection went. Unselected items never paint the indicator's look. Hover is a colour, `ink-2` to `ink`, over `duration.base`; pill tabs too, whose selected pill is `bg-field` with `rounded-chip`. |
 | Disclosure caret | Points to the reading direction and turns down (90°) over `duration.move` with `ease-out-strong`, instant from the keyboard. |
 | Popup trigger caret | Points down and flips 180° over `duration.move`, instant from the keyboard. |
 | Shared atoms | Shimmer text, spinners, visually hidden text (Tailwind's `sr-only`) and the reveal exist once. A component uses them and never copies them. |

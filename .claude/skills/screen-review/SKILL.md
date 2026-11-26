@@ -7,7 +7,7 @@ description: Review or build a whole screen made from fndn/ui (a showcase app, a
 
 The component skills judge one piece at a time; a screen can pass all of them and still look
 wrong. This skill judges the whole screen the way a person sees it at first glance. Read
-`.claude/skills/house-rules/SKILL.md` and `docs/DESIGN.md` first; use `impeccable` (critique /
+`docs/DESIGN.md` and the `docs/design/` book that fits first; use `impeccable` (critique /
 audit) for the general method, if it is installed, and this skill for what is specific to fndn/ui.
 
 What a screen built from correct components typically gets wrong: code that wraps in an editor,
@@ -33,7 +33,7 @@ that plays on first paint.
    slots) and choose the one meant for this context. A docs look (a card around a table, a pill,
    a copy button, a code block's file tabs) inside product chrome is a finding.
 6. **Wrap or cut the product's way**: no wrapping where the real product truncates or scrolls
-   (code lines, tab titles, table rows); no truncation where the house rules say wrap (names of
+   (code lines, tab titles, table rows); no truncation where `docs/DESIGN.md` says wrap (names of
    choices, numbers).
 7. **The first frame**: nothing moves, scrolls or spins on first paint; every pane shows its
    start (not scrolled into the middle of a message).

@@ -69,7 +69,7 @@ component that is another one with more extends it: a toggle is `tv({ extend: bu
 - A scale keeps its proportions: what sits inside a sized thing (an avatar's initials, a
   control's icon) is checked at every size with the widest content it takes, not designed at one
   size and stepped by eye. An avatar's two initials take about two thirds of its edge at every
-  size.
+  size from 16 to 40px.
 
 ## 3. State
 
@@ -288,9 +288,9 @@ structural selector) goes in `packages/core/css/base.css`.
 The rule books (`docs/DESIGN.md`, `docs motion`, `docs interaction`, `docs accessibility`) hold
 rules and their reasons only, with no history and no repository tooling, because the tool serves
 them as they are to other projects. They describe what is built: where a rule book and the
-components disagree, find out which one is wrong and fix it, rather than leave them apart. The
-design skill of this repository, `.claude/skills/house-rules/SKILL.md`, gathers the rules where
-fndn/ui differs from the general design skills. What checks the rules here:
+components disagree, find out which one is wrong and fix it, rather than leave them apart. They
+are the only place a design rule is written: where a general design skill in `.claude/skills/`
+disagrees with them, the rule book wins. What checks the rules here:
 
 | Rule | Checked by |
 | --- | --- |
@@ -310,3 +310,16 @@ node scripts/qa/run.mjs --fast <name>     # while working: React only
 node scripts/qa/run.mjs <name>            # done: typechecks, same-DOM check, the test, worst cases
 pnpm check                                # the whole repository
 ```
+
+The docs site (`apps/docs`) follows the same rules, and these of its own:
+
+- **No transition between pages, and no flicker**: the new page is complete in its first frame,
+  and the chosen framework holds from the first paint and across pages.
+- **The content column is capped and centred** on every kind of page (`mx-auto` on the column;
+  the overview's column is wider).
+- **View options act on the whole page**, so they sit in the top bar, not on a component.
+  Components and blocks are listed apart; the overview shows each one live.
+- **A preview sits on a solid surface or canvas**: parts without a fill of their own read as
+  broken over a dotted ground.
+- **The props panel drives two-way props on the live component**, so a value set there (a
+  carousel's `page`) travels as it would in an app.

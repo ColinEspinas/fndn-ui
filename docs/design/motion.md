@@ -40,7 +40,7 @@ handled once, in the tokens.
 | `slow` | 250ms | Dialogs and larger surfaces. |
 | `enter` | 300ms | One-shot entrances of content. The ceiling for UI. |
 | `stagger` | 40ms | The gap between items of a group entrance. |
-| `sweep` | 1000ms | The prompt bar's send sweep only: decoration nobody waits on, long so it is seen travelling. |
+| `sweep` | 1000ms | The prompt bar's send sweep only, the one motion above the 300ms ceiling: decoration nobody waits on, and any shorter it is gone before it is seen travelling. |
 
 | Easing | For |
 | --- | --- |
@@ -60,6 +60,8 @@ handled once, in the tokens.
 
 - **Animate `transform` and `opacity`.** Colour, background, `box-shadow` and `filter` are fine
   for state changes.
+- **Motion is the same in every browser, or it is not done.** No effect depends on a feature only
+  some browsers have and falls back to nothing elsewhere.
 - **The one size animation is the reveal**: `grid-rows-[0fr]` to `grid-rows-[1fr]` with
   `motion-size-reveal`.
 - **Any other layout property** (width, height, top, left, margin, padding) needs a real reason
@@ -97,8 +99,8 @@ handled once, in the tokens.
 
 ### Reduced motion
 
-**`prefers-reduced-motion: reduce` means fewer and gentler, not none.** The tokens carry it, so
-add no blanket reduced-motion rules:
+**`prefers-reduced-motion: reduce` means fewer and gentler, not none: travel becomes a fade.** The
+tokens carry it, so add no blanket reduced-motion rules:
 
 | Token | Reduced |
 | --- | --- |
@@ -108,7 +110,8 @@ add no blanket reduced-motion rules:
 | `motion.sheet-shift` | `0%` |
 
 Entrances become plain fades, popups fade without scaling, drawers fade in place, thumbs jump,
-staggered groups appear together.
+staggered groups appear together. What the table does not list is not reduced by itself
+(`duration.press`, the press scales, a scale of your own): check each one.
 
 **The press scale stays** (`scale-press`, 0.97): it is feedback under the finger, a few pixels over
 `duration.press`, not travel across the screen.
@@ -137,11 +140,13 @@ are the loading signal. The pixel grid keeps pulsing (opacity only).
 
 ### Mount and arrival
 
-**A component never animates its own mount.** What changes after its first paint may animate: an
-arrival inside it (a step added to a run, a tab opened, a card reopened, a row streamed in).
+**Nothing plays on first paint, and a component never animates its own mount.** What changes after
+its first paint may animate: an arrival inside it (a step added to a run, a tab opened, a card
+reopened, a row streamed in).
 
 **A mount is an arrival only when the code that adds the component says so**, with `appear`
-(boolean, default `false`, as in Vue's `<Transition appear>`). Set it on the item your code
+(boolean, default `false`, as in Vue's `<Transition appear>`), on the components that show
+arrivals (approval card, tool chips, task rows, thinking state, context cards, streaming text). Set it on the item your code
 appends live, never on what it renders from history or with the page. A component cannot tell a
 live arrival from a restored one: server rendering, hydration, a client-side navigation, a switch
 of chat threads and a virtualized list re-mounting its rows all mount things that are not new.
@@ -153,8 +158,8 @@ which items were there and gives them `animate-none` unless `appear` is set), or
 first paint (`afterPaint` from `lib/paint.ts`, a `ready` variant, a `data-enter` attribute). Items
 added after mount always enter.
 
-**An overlay that mounts open is simply there.** A dialog, drawer, popover, hover card or menu open at
-mount (`defaultOpen`, or `open` already true) marks its parts `data-mounted-open` until it first
+**An overlay that mounts open is simply there.** A dialog, alert dialog, drawer, popover, hover card
+or menu open at mount (`defaultOpen`, or `open` already true) marks its parts `data-mounted-open` until it first
 closes, and the recipe's `@starting-style` entrance skips them (`not-data-mounted-open:`). Its close,
 and every later open, animate as usual.
 
@@ -162,7 +167,9 @@ and every later open, animate as usual.
 content travels (the carousel), every way of moving it (the pager, a page set from outside, a
 drag let go, autoplay) goes through one spring that starts at the speed the content already has:
 nothing stops and starts again, a flick goes on in its direction, and a second press retargets the
-first. The browser's own smooth scroll is not used: it differs between browsers, starts from a
+first. A page set from outside travels like any other, and what names the page (the pager, the
+dots) changes when the page is decided, not when the content arrives, so the controls never lag
+behind the user's intent. The browser's own smooth scroll is not used: it differs between browsers, starts from a
 standstill and is slow. An effect (the carousel's `depth`, `fade`, `parallax`) is drawn from the
 position after every change of it, never from a clock and never from a feature only some
 browsers have, so it is the same everywhere and cannot drift. Its amounts are tokens that carry
@@ -171,13 +178,16 @@ their reduced-motion values, and at rest it leaves no transform at all.
 **An effect is sized by what it moves, and big enough to be seen.** A travel that is part of an
 effect is a share of the thing's own size, not a fixed few pixels: the carousel's parallax lags a
 picture by a fifth of its frame's width, so it reads the same in a small slide and a wide one
-(24px in a 384px slide was 6% and could not be seen). Layers further back lag more.
+(24px in a 384px slide is 6% and cannot be seen). Layers further back lag more. An example of
+an effect shows it plainly.
 
-**A strip that wraps goes on the way it was going.** Where the first item follows the last (the
-carousel's `loop="endless"`), Next never travels back past the others: the strip has no end, a
-jump to a far item goes the shorter way round, and nothing is copied to fake it (each item is
-drawn where the strip needs it). Where running back to the start is the point (a finite set of
-steps), say so (`loop="rewind"`).
+**A loop is a choice, and endless means endless.** The carousel's `loop` is `none`, `rewind` (the
+slides run back to the start) or `endless` (the first item follows the last). Where the strip
+wraps, it goes on the way it was going: Next never travels back past the others, Previous on the
+first item comes in from the other side, a jump to a far item (a dot) goes the shorter way round,
+and nothing is copied to fake it (each item is drawn on the turn of the strip nearest the
+scroller). Where running back to the start is the point (a finite set of steps), say so
+(`loop="rewind"`).
 
 **What moves by itself can be stopped.** Content that advances on a timer (a carousel's
 `autoplay`) shows a pause control for as long as it can move, holds while the pointer is over it,
@@ -187,10 +197,12 @@ over, and does not start under reduced motion.
 **What the pointer removes gives its room back as it fades**: its space closes over
 `duration.reveal` (a row's `grid-rows`, a tag's `grid-cols`, from `1fr` to `0fr`) while it fades,
 so its neighbours slide into place and are there when it is gone, instead of jumping once it is.
-Removed from the keyboard, it goes at once.
+Removed from the keyboard, it goes at once. In a tags input this is the only motion: adding a tag
+(Enter, the delimiter, a paste), selecting one and editing one are instant, because they are
+keyboard work.
 
 **Arrivals make room**: something inserted after the first paint opens its space (a row from
-`grid-rows-[0fr]` to `grid-rows-[1fr]`) while it fades, and never shoves its neighbours in one
+`grid-rows-[0fr]` to `grid-rows-[1fr]` over `duration.reveal`) while it fades, and never shoves its neighbours in one
 frame.
 
 ### Recipes

@@ -108,9 +108,8 @@ playground's starting props, which are realistic too (they are the first thing a
 
 ## Before you finish
 
-- Design skills and standards: `.claude/skills/house-rules/SKILL.md` (which names the general
-  skills to read with it) and `docs/DESIGN.md`; any motion an example adds follows
-  `docs/design/motion.md`.
+- Design rules: `docs/DESIGN.md`, and the general design skills `AGENTS.md` names (Design
+  work); any motion an example adds follows `docs/design/motion.md`.
 - Break it: does the example still read with the longest realistic name, in dark mode, at 390 px
   and right to left?
 - `pnpm --filter examples typecheck`, and look at the page in React, then Vue and Svelte.

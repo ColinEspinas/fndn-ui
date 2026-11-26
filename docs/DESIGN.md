@@ -76,7 +76,8 @@ Depth is a 1px ring plus a shadow, from five tokens and never a home-made shadow
   they read the same over any fill. (`line-strong` is the edge of an outline button.)
 - **Dark is composed, not inverted.** Lighter means nearer: `page` < `canvas` < `inset` <
   `surface` < `hover` < `hover-2`, and the ring becomes a faint white edge. A step between two
-  surfaces must read as clearly in dark as in light. If it does not, the token is fixed, never one
+  surfaces must read as clearly in dark as in light: compare their contrast ratios, not their
+  lightness numbers (the selected attached tab must stand off its strip in both). If it does not, the token is fixed, never one
   component with `dark:` overrides.
 - A modal window sits on `scrim`. A tooltip is the one inverted surface.
 
@@ -149,7 +150,9 @@ values, timers and keys.
 | `lg` 16px | The title of a detail pane. |
 | `xl` 20px | A page's one title (Settings, History). |
 
-Controls set their own text: 12px at `xs`, 13px at `sm`, 14px at `md` and `lg`.
+Controls set their own text: 12px at `xs`, 13px at `sm`, 14px at `md` and `lg`. A size the scale
+names is written as its token: 12.5px is `text-dense`, never `text-[12.5px]`, so a change of
+scale reaches every use.
 
 - **Weights**: 400 for running text; 500 for labels, buttons, card titles, table values and the
   checked option; 600 for the title of a window, a page or a section. 500 is the system's
@@ -163,7 +166,9 @@ Controls set their own text: 12px at `xs`, 13px at `sm`, 14px at `md` and `lg`.
 
 ## Shape and spacing
 
-Radii step `chip` 6 · `control` 8 · `card` 10 · `window` 14, and `pill`:
+Radii step `chip` 6 · `control` 8 · `card` 10 · `window` 14, and `pill`. Controls follow one rule,
+fields and rounded buttons alike, so a small button and a small select in one row have the same
+corners:
 
 | Radius | On |
 | --- | --- |
@@ -221,7 +226,8 @@ One size in one row of controls. `size` changes dimensions only; a look is a `va
   pills. An app whose chrome is square-cornered (an editor, a tracker) sets `"shape": "rounded"`
   there (`init --shape rounded`, or edit it and run `update`): the tool writes it into the
   stylesheet, and every one of them takes a field's corners, those inside dialogs, menus and cards
-  included. No control then repeats `shape`: the prop is for the one control that must differ from
+  included. No control then repeats `shape`, so one setting cannot disagree with itself: the prop
+  is for the one control that must differ from
   its app (a pill filter in a rounded app). Never both shapes in one row. A control of your own
   follows the app with `rounded-shape` (`rounded-shape-sm` up to 28px). One part of a page can
   differ with `data-shape="rounded"` on its root element.
@@ -281,8 +287,10 @@ text that becomes a field only while it is edited. On a desktop the detail of a 
 a split pane beside the list, not in a dialog; narrow, it replaces the list.
 
 **Wrap or cut the product's way.** Code, tab titles and list rows stay on one line and scroll or
-truncate. The names of choices and numbers are never cut. Free text (a title) may be cut, and then
-carries its full text in a `title`.
+truncate. The names of choices and numbers are never cut: they wrap, or the row becomes a pager
+plus a select, because a cut name cannot be told from its neighbour and a cut number is a wrong
+number. Only free text that is not a choice (a title) may be cut, and then carries its full text
+in a `title`.
 
 **Pick a component by its look, not its name**, and read its variants in its docs before building
 around it:

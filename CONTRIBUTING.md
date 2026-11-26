@@ -50,8 +50,8 @@ right-to-left, and attach before and after screenshots.
 ## Working with a coding agent
 
 The repository is set up for it: `AGENTS.md` is read at the start of a task (`CLAUDE.md` points
-to it), and `.claude/skills/` holds the design skills, of which `house-rules` and `screen-review`
-are this project's own. The same rules apply to an agent's change as to a person's.
+to it), and `.claude/skills/` holds the design skills, of which `screen-review` is this
+project's own; the design rules themselves are only in `docs/`. The same rules apply to an agent's change as to a person's.
 
 ## Pull requests
 
