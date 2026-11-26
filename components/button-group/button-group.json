@@ -97,7 +97,7 @@
     ]
   },
   "motion": [
-    "press: nothing moves. A joined button never scales (the join would open) and the group is not scaled either; the pressed button dims (brightness 0.93) at the Button's filter timing (duration.fast)",
+    "press: the boxes stay still. A joined button never scales (the join would open) and the group is not scaled either; the pressed button's label and icon dip inside it (motion.press-scale-sm over duration.press), from the pointer only",
     "hover: the Buttons' own fills over duration.fast (pointer only)",
     "the group adds no motion"
   ]

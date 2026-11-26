@@ -34,7 +34,7 @@
     {
       "part": "content",
       "element": "div",
-      "description": "role=dialog|alertdialog, aria-modal; data-state=open|closed; carries kbd-instant; data-size=sm|lg (md: none)"
+      "description": "role=dialog|alertdialog, aria-modal; data-state=open|closed; carries kbd-instant"
     },
     {
       "part": "header",
@@ -121,7 +121,7 @@
         "lg"
       ],
       "default": "md",
-      "description": "Width of the window: sm 360px, md 440px, lg 880px (a large preview, such as agent-screen's viewer). Set on the content as data-size; md has no attribute."
+      "description": "Width of the window: sm 360px, md 440px, lg 880px (a large preview, such as agent-screen's viewer)."
     },
     "placement": {
       "type": "enum",

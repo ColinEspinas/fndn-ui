@@ -15,10 +15,7 @@ prefix is `--fndn-`, attributes are `data-fndn-*`, keyframes `fndn-*`, a project
 `fndn.json`, the check's opt-out comment is `fndn-check-ok: <reason>`, and the skill `init`
 writes into a project goes to `.claude/skills/fndn/`.
 
-When in doubt about structure, do it the way shadcn/ui does. The library covers shadcn's and
-Zag's components in this design; for now it leaves out a colour picker, angle slider, signature
-pad, QR code, tour, timer, marquee, floating panel, image cropper, cascade select, chart and
-JSON tree.
+When in doubt about structure, do it the way shadcn/ui does.
 
 This file is the guide for anyone working on the repository, a person or a coding agent. It is
 written to be read by an agent at the start of every task.
@@ -28,7 +25,7 @@ written to be read by an agent at the start of every task.
 | Where | What |
 | --- | --- |
 | `components/<name>/` | One folder per component, with everything about it: the spec (`<name>.json`, its contract), the recipe (`<name>.recipe.ts`, every class of every part), the logic its adapters share (`<name>.logic.ts`), the React, Vue and Svelte adapters, its browser test (`<name>.test.mjs`), its test props (`<name>.fixtures.json`) and its examples (`examples/`). |
-| `components/lib/` | What several components share: `tv.ts` (generated), the utilities `modality.ts`, `glide.ts`, `truncate.ts`, `paint.ts`, and the shared recipes `control.ts`, `popup.ts`, `option.ts`. |
+| `components/lib/` | What several components share: `tv.ts` (generated), the utilities `modality.ts`, `glide.ts`, `truncate.ts`, `paint.ts`, `veil.ts`, and the shared recipes `control.ts`, `popup.ts`, `option.ts`. |
 | `spec/` | The sources of the look: `tokens.json`, `icons.json`, and the JSON schemas (`schema/`). Field reference: `spec/README.md`. |
 | `packages/core` | Generated from `spec/`: the stylesheet (`css/`) and the token and icon tables. `css/base.css` is hand-written. |
 | `packages/cli` | The tool users run: `init`, `search`, `docs`, `add`, `remove`, `check`, `status`, `update`, `mcp`. `src/rules.js` holds the rules of `check`; the validator here applies the same ones to the library. |
@@ -36,7 +33,7 @@ written to be read by an agent at the start of every task.
 | `showcases/` | Whole apps built from the components (a code editor, a web app, a browser). |
 | `skill/fndn/SKILL.md` | The skill `init` gives a user's agent. `skill/fndn/evals/` are test tasks for it. |
 | `docs/` | The rule books, which the tool serves to users (`docs design`, `docs motion` …): `DESIGN.md`, `design/motion.md`, `design/interaction.md`, `design/accessibility.md`, `authoring.md`, `porting.md`. For this repository only: `examples-guide.md` (how examples are written). |
-| `apps/docs` | The docs site (Astro). Its dev server also serves the bare page the browser tests drive (`src/harness`, at `/harness.html`). |
+| `apps/docs` | The docs site (Astro). Its dev server also serves the bare page the browser tests drive (`src/harness`, at `/harness.html`). Its own rules: `apps/docs/README.md`. |
 | `scripts/` | `build-*.mjs`, `validate.mjs`, and `qa/` (the test runner, the same-DOM check, the worst-case sweep). |
 
 A project gets the same shape: `add` writes `<ui folder>/<name>/` (the adapter of its framework,
@@ -68,14 +65,15 @@ imports. So a file here is, byte for byte, the file in a user's project.
 | `pnpm fndn <command>` | The tool, from this repository. In another folder: `node <repo>/packages/cli/bin/fndn.js`. |
 | `node scripts/qa/run.mjs [--fast] [--all] [--jobs 4] [names]` | The browser tests of those components in the three frameworks: same DOM, keyboard and pointer, worst-case data. `--fast` is React only. The full suite takes 10 to 35 minutes. |
 | `node scripts/qa/docs.mjs` | The smoke test of the docs site. Every browser test reaches the docs dev server at `DOCS_URL` (default `http://localhost:4321`); the smoke test alone also runs against a built preview. |
-| `pnpm docs` | The docs site on :4321, and with it the test page: `/harness.html?c=<name>&fw=react&ex=0` (`&theme=dark`, `&dir=rtl`, `&data=worst`). |
+| `pnpm docs` | The docs site on :4321, which the browser tests need running, and with it the test page: `/harness.html?c=<name>&fw=react&ex=0` (`&theme=dark`, `&dir=rtl`, `&data=worst`). |
 
 ## Rules
 
-- **The spec is the contract, and generated files are never edited by hand**: `components/lib/tv.ts`,
-  `packages/core/css/tokens.css`, `tailwind.css`, `index.css`, `packages/core/src/tokens.ts`,
-  `icons.ts`, and `packages/{react,vue,svelte}/src/index.ts`. Nothing else is generated: there are
-  no copies of a recipe or a helper anywhere.
+- **The spec is the contract, and generated files are never edited by hand**:
+  `components/lib/tv.ts`; in `packages/core/css/`, `tokens.css`, `tailwind.css` and `index.css`;
+  in `packages/core/src/`, `tokens.ts` and `icons.ts`; `packages/{react,vue,svelte}/src/index.ts`;
+  and the tool's data, `packages/cli/data/`, which git ignores. Nothing else is generated: there
+  are no copies of a recipe or a helper anywhere.
 - **A component ships whole**, in its folder: spec, recipe, React, Vue and Svelte adapters that
   render the same DOM, fixtures, its test and examples.
 - **One component, one folder; what is shared, in `lib/`.** A file that only one component needs
@@ -96,6 +94,10 @@ imports. So a file here is, byte for byte, the file in a user's project.
 - pnpm 11: build-script approvals live in `pnpm-workspace.yaml` (`allowBuilds`).
 - Commit, push or open a pull request only when the person you work for asks, and never on the
   default branch. `pnpm check` passes before anything is proposed.
+- Commit messages follow Conventional Commits: `type(scope): subject`, the subject in the
+  imperative, lower case, with no full stop. Types: `feat`, `fix`, `docs`, `refactor`, `test`,
+  `chore`. The scope is a component or a part of the repository (`carousel`, `cli`, `docs-site`),
+  left out when the change is not about one. One commit per kind of change.
 - Ask when unsure. A question costs less than a wrong guess, above all for anything that changes
   the look of a component or its contract.
 
@@ -113,14 +115,14 @@ screen), in this order:
    component check and still be wrong.
 
 Where a general skill disagrees with a rule book, the rule book wins. `screen-review` is this
-project's own skill; the others are third-party (MIT, see `NOTICE`), pinned in
-`skills-lock.json`.
+project's own skill; the others are third-party (see `NOTICE`).
 
-Look at what you made, at 125% display scaling as well as 100%: fractional scaling is where
-hairlines, alignment and flicker go wrong. Take screenshots through `scripts/qa/cdp.mjs`
-(`launch({ dpr: 1.25 })`), light, dark, 390px wide, right-to-left, and check motion and keyboard
-behaviour by driving the page, not by reading the code. Never start a browser any other way, and
-leave none running.
+Look at what you made. Take screenshots through `scripts/qa/cdp.mjs` (`launch({ dpr })`, 1 for
+100% and 1.25 for 125%): at 100% and 125% display scaling always, since fractional scaling is where hairlines, alignment
+and flicker go wrong, and at 150% and 200% as well when a hairline or a sub-pixel alignment is at
+stake; in light and dark, 390px wide, and right-to-left. Check motion and keyboard behaviour by
+driving the page, not by reading the code. Never start a browser any other way, and leave none
+running.
 
 ## Decided, though it may look wrong
 
@@ -129,23 +131,17 @@ leave none running.
   inside a multi-line textarea. Focus never leaves the textarea.
 - Agent components are controlled (`working`, `rows`, `status` are props). The host wires them to
   real events; nothing plays a scripted timeline.
-- Nothing animates because it mounted. The code that adds an item while the user watches sets
-  `appear`; a component cannot tell a new item from a restored one.
-- Right-to-left comes from Ark's `LocaleProvider` once at the app's root, and from logical
-  properties in the recipes. Components take no `dir` prop.
-- The carousel moves on its own code (`carousel/carousel.logic.ts`): one spring for every page
-  change and drag release, the mouse drag, the effects drawn from the scroll position, the page
-  named wherever the slides come to rest, and the endless strip (no slide is copied: each is
-  drawn on the turn of the strip nearest the scroller). The engine keeps the pages, the keyboard
-  and the ARIA. Its mouse drag and the browser's smooth scroll were tried and are not smooth, CSS
-  scroll-driven effects do not run in every browser, and its own watch on wheel and touch (which
-  names the page from its measure of the slides) is left out of the slide group, which the
-  adapters render themselves from the engine's props.
-- An app's shape is CSS, not a provider. Buttons, toggles and segmented controls read the
-  `radius.shape` tokens; a project sets `"shape": "rounded"` in its `fndn.json` and the tool writes
-  the tokens into `styles/config.css`. Here, where three apps of different shapes share one site,
-  a showcase says its shape in its `index.json` and its page carries `data-shape` (the same
-  switch, for a part of a page). Components that render Buttons take no `shape` prop to pass on.
+- Components take no `dir` prop: right-to-left comes from `dir="rtl"` on `<html>`, Ark's
+  `LocaleProvider` once at the app's root, and logical properties in the recipes
+  (`docs/DESIGN.md`, Type).
+- The carousel moves on its own code (`carousel/carousel.logic.ts`), not on the engine's mouse
+  drag or the browser's smooth scroll: neither is smooth, nor the same in every browser. The
+  engine keeps the pages, the keyboard and the ARIA; the adapters render the slide group
+  themselves from the engine's props, without its watch on wheel and touch. The carousel's spec
+  says what the logic does.
+- An app's shape is CSS, not a provider or a prop passed down (`docs/DESIGN.md`, Controls). In
+  this repository, where three showcases of different shapes share one site, a showcase names
+  its shape in its `index.json` and its page carries `data-shape`.
 - An example the adapters cannot render from JSON props is marked `"frameworks": false` in its
   fixtures; the same-DOM check and the worst-case sweep skip it.
 

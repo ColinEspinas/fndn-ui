@@ -6,9 +6,9 @@ description: Review or build a whole screen made from fndn/ui (a showcase app, a
 # Screen review
 
 The component skills judge one piece at a time; a screen can pass all of them and still look
-wrong. This skill judges the whole screen the way a person sees it at first glance. Read
-`docs/DESIGN.md` and the `docs/design/` book that fits first; use `impeccable` (critique /
-audit) for the general method, if it is installed, and this skill for what is specific to fndn/ui.
+wrong. This skill is the method for judging the whole screen the way a person sees it at first
+glance. The criteria are not here: they are the rules of `docs/DESIGN.md`, and each step below
+names the section to judge by.
 
 What a screen built from correct components typically gets wrong: code that wraps in an editor,
 32px tree rows in an explorer, browser tabs that do not attach to the toolbar, a gridded card table
@@ -20,31 +20,20 @@ that plays on first paint.
 
 1. **Name the real product** the screen imitates (VS Code / Zed, Chrome / Arc, Linear / GitHub
    issues, Stripe dashboard …) and look at it, or a public screenshot of it, at the same width.
-   Judge by that comparison, not by taste in the abstract.
-2. **Measure, do not eyeball**: row heights, text sizes of chrome versus content, the number of
-   filled and pill-shaped elements. Content text is the largest thing in its region; chrome is
-   the quietest.
-3. **The three heaviest marks** on the screen (fill, size, colour, motion): each must be the
-   primary action or the content. Anything else gets quieter.
-4. **Density by product**: editors and browsers use the `xs` / `sm` sizes (24 / 28px rows,
-   12–13px text); trackers and dashboards `sm` (single-line rows); `md` / `lg` are for forms,
-   settings and docs.
-5. **Pick a component by its look, not its name**: read each component's spec (sizes, variants,
-   slots) and choose the one meant for this context. A docs look (a card around a table, a pill,
-   a copy button, a code block's file tabs) inside product chrome is a finding.
-6. **Wrap or cut the product's way**: no wrapping where the real product truncates or scrolls
-   (code lines, tab titles, table rows); no truncation where `docs/DESIGN.md` says wrap (names of
-   choices, numbers).
-7. **The first frame**: nothing moves, scrolls or spins on first paint; every pane shows its
-   start (not scrolled into the middle of a message).
-8. **State the product's way**: an active tab joins its surface; a pressed layout toggle changes
-   its ink, not its background; a selected row is a tint; a single item needs no pager.
-9. **One batched pass** over light and dark at 1280 and 1536, and 390, right to left, at a
-   device pixel ratio of 1.25 as well as 1 (`launch({ dpr })` in `scripts/qa/cdp.mjs`): at 390
-   replace desktop patterns (tab strips, tables, side panes) with the phone's own (sheets, list
-   rows, bottom bars).
-10. **App or component?** Report every finding as one or the other. A component gap is fixed in
-    the component (spec, recipe, three adapters, test), never patched in the app.
+   Judge by that comparison, not by taste in the abstract (`docs/DESIGN.md`, Start from the
+   product, which also gives the density each kind of product takes).
+2. **Measure, do not eyeball**: row heights, text sizes of chrome against content, the number of
+   filled and pill-shaped elements. Then name the three heaviest marks on the screen (fill, size,
+   colour, motion): each must be the main action or the content.
+3. **Go through the screen section by section of `docs/DESIGN.md`**: Surfaces and depth, Ink and
+   colour, Controls, Laying out a screen (which component for which look, what wraps and what is
+   cut), Every state of a view (the first frame, empty, loading, selected), Overlays, Phone. A
+   finding names the rule it breaks.
+4. **One batched pass** under the conditions `AGENTS.md` lists (Design work), and at two desktop
+   widths, 1280 and 1536, since a screen has more ways to break than a component. At 390 the
+   desktop patterns give way to the phone's own (`docs/DESIGN.md`, Phone).
+5. **App or component?** Report every finding as one or the other. A component gap is fixed in
+   the component (spec, recipe, three adapters, test), never patched in the app.
 
 ## Before calling a screen done
 

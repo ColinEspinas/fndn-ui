@@ -16,11 +16,11 @@ npx fndn add select
 
 This writes the stylesheet (`styles/`), a folder per component (`select/` with `select.recipe.ts`,
 the React adapter `select.tsx` and its `index.ts`) and `lib/`: `tv.ts`, the shared recipes
-`popup`, `option` and `control` that the select composes, and the helpers (`modality.ts`,
-`glide.ts`, `truncate.ts`, `paint.ts`: plain TypeScript, no framework imports). Keep everything
-except the `.tsx` files, which you replace with your framework's adapters (and point each
-`index.ts` at them). `npx fndn docs select --framework react`
-prints the contract: parts, props, events, keyboard, motion.
+`popup`, `option` and `control` that the select composes, and the helpers it imports
+(among `modality.ts`, `glide.ts`, `truncate.ts`, `paint.ts`, `veil.ts`: plain TypeScript, no
+framework imports). Keep everything except the `.tsx` files, which you replace with your framework's
+adapters (and point each `index.ts` at them). `npx fndn docs select --framework react` prints the
+contract: parts, props, events, keyboard, motion.
 
 ## Port
 
@@ -37,8 +37,9 @@ prints the contract: parts, props, events, keyboard, motion.
    (`const { base, trigger } = select({ size, variant })`), the caller's class on `base`.
 4. **Do what the React adapter does around the DOM, no more.** `trackModality()` once (it sets
    `html[data-fndn-input]`, which the `kbd-instant` utility reads to drop transitions after a key);
-   `glide(...)` for a list of options; `lib/paint.ts` against entrances on first paint; `lib/truncate.ts`
-   for titles on cut text. Use whichever of them the React adapter uses.
+   `glide(...)` for a list of options; `lib/paint.ts` against entrances on first paint;
+   `lib/truncate.ts` for titles on cut text; `lib/veil.ts` for the edge veils of a table that
+   scrolls sideways. Use whichever of them the React adapter uses.
 5. **Props map to recipe variants** as the Props table says; a bindable prop is two-way in the
    framework's own way. Attributes go where the React adapter puts them (an `aria-label` meant for
    the control lands on the control, not on the root).

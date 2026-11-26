@@ -1,8 +1,9 @@
 # Writing examples
 
-Everything in this library is a base and an example for an AI building UI. An example is read twice: by a person on the docs site, and by a model that copies it into a
-product. So it shows **realistic product UI**: a believable situation in a software product, with
-real-looking labels and data, written the way a developer would write it.
+Everything in this library is a base and an example for an AI building UI. An example is read
+twice: by a person on the docs site, and by a model that copies it into a product. So it shows
+**realistic product UI**: a believable situation in a software product, with real-looking labels
+and data, written the way a developer would write it.
 
 ## The files
 
@@ -18,8 +19,7 @@ components/button/examples/
 - An example is what a user would write: it imports the component from `@fndn/react`, `@fndn/vue` or
   `@fndn/svelte` (the docs and the tool show those as the project's own paths,
   `@/components/ui/button`), icons from the Phosphor package, and nothing from the docs or the tests.
-- The same base name in the three frameworks is the same example and renders the same DOM. A
-  component whose spec lists `"targets": ["react"]` has `.tsx` files only.
+- A component whose spec lists `"targets": ["react"]` has `.tsx` files only.
 - `index.json` gives the order and the titles. `playground` is where the docs' props panel starts;
   a component that needs data to render (items, rows) must have it there.
 - The JSON props the tests render (`<name>.fixtures.json` in the component's folder: `examples`,
@@ -80,24 +80,16 @@ phone), fitted down with CSS zoom when it is larger, never up.
 
 ## Variants, sizes and states
 
-- Follow the variant contract (`docs/authoring.md`, Sizes and looks): `size` is xs 24 · sm 28 ·
-  md 32 · lg 36 and changes dimensions only; a look is a `variant`. Show a size where a product
-  uses it (an sm Select in a toolbar beside sm Buttons), not as a row of every size.
-- A status is a `StatusPill`; a label attached to something is a `Tag`. A composite example uses
-  the real components, never a hand-written copy.
+- Sizes and looks follow `docs/authoring.md` (Sizes and looks). Show a size where a product uses
+  it (an sm Select in a toolbar beside sm Buttons), not as a row of every size.
+- A composite example uses the real components (a status is a `StatusPill`, a label attached to
+  something a `Tag`), never a hand-written copy.
 - A control always has an accessible name: a visible Label (or Field), or `aria-label` when the
   situation has no visible label (a toolbar icon button, a search box with a placeholder).
 - States are shown as situations: "Card declined" (invalid), "No deploys yet" (empty), "Read-only
   for viewers" (disabled), not "Invalid", "Empty", "Disabled".
-
-## Dialog or alert dialog
-
-- **Dialog** holds any content (a form, a preview, settings) and closes on Escape, a click outside
-  or its close button. Its first example: "Invite teammates" (a form in a dialog).
-- **Alert dialog** interrupts to confirm a consequential action (delete, discard, revoke). It has
-  no close button, ignores clicks outside, starts focus on the safe action and is announced at
-  once (`role="alertdialog"`). Its first example: "Delete project" with its consequence in one
-  sentence and an action labelled with the verb ("Delete project", not "OK").
+- An example of an effect (a carousel's parallax, a depth) shows it plainly: at a size and amount
+  where a reader sees what it does.
 
 ## The three frameworks
 
@@ -111,5 +103,8 @@ playground's starting props, which are realistic too (they are the first thing a
 - Design rules: `docs/DESIGN.md`, and the general design skills `AGENTS.md` names (Design
   work); any motion an example adds follows `docs/design/motion.md`.
 - Break it: does the example still read with the longest realistic name, in dark mode, at 390 px
-  and right to left?
-- `pnpm --filter examples typecheck`, and look at the page in React, then Vue and Svelte.
+  and right to left? The display scales to look at: `AGENTS.md` (Design work).
+- Typecheck: `pnpm --filter @fndn/components typecheck`. It checks the React examples only: the Vue
+  and Svelte typechecks leave `examples/` out, and the browser tests render the fixtures, not these
+  files. A Vue or Svelte example is compiled only when the docs site shows it, so open the
+  component's page (`pnpm docs`) in React, then Vue and Svelte, and look at every example.

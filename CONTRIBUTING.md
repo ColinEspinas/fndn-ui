@@ -29,33 +29,26 @@ themes.
 
 ## What a change must keep
 
-- **The spec is the contract.** A component is its spec (`components/<name>/<name>.json`), one
-  recipe, and three adapters that render the same DOM. A change to one framework is a change to
-  all three.
-- **A component ships whole**: spec, recipe, adapters, fixtures, test and examples, in its folder.
-  [`docs/authoring.md`](docs/authoring.md) is the walkthrough and the checklist.
-- **The library passes its own check.** What `fndn check` reports in a user's project,
-  `pnpm validate` reports here.
-- **Generated files are not edited by hand**; `AGENTS.md` lists them.
-- **Comments say what the code does and why**, for a reader in another project: the files here
-  are copied into users' projects as they are.
+A component is its spec, one recipe and three adapters that render the same DOM, and it ships
+whole: a change to one framework is a change to all three. [`AGENTS.md`](AGENTS.md) has the full
+list of rules (Rules), and [`docs/authoring.md`](docs/authoring.md) the walkthrough and the
+checklist for a component.
 
-## Design changes
-
-The design rules are in [`docs/DESIGN.md`](docs/DESIGN.md) and `docs/design/`, each with its
-reason. A change that goes against one changes the rule too, in the same pull request, and says
-why. Look at what you made at 100% and 125% display scaling, in light and dark, at 390px wide and
-right-to-left, and attach before and after screenshots.
+A change to how something looks or moves follows the design rules in
+[`docs/DESIGN.md`](docs/DESIGN.md) and `docs/design/`; one that goes against a rule changes the
+rule too, in the same pull request, and says why. `AGENTS.md` (Design work) says how to look at
+the result and under which conditions; attach before and after screenshots.
 
 ## Working with a coding agent
 
 The repository is set up for it: `AGENTS.md` is read at the start of a task (`CLAUDE.md` points
-to it), and `.claude/skills/` holds the design skills, of which `screen-review` is this
-project's own; the design rules themselves are only in `docs/`. The same rules apply to an agent's change as to a person's.
+to it), and `.claude/skills/` holds the design skills. The same rules apply to an agent's change
+as to a person's.
 
 ## Pull requests
 
-One topic per pull request, with what changed and why. For anything visible, screenshots; for
+One topic per pull request, with what changed and why. Commit messages follow Conventional
+Commits (`fix(carousel): …`, `docs: …`; `AGENTS.md`, Rules). For anything visible, screenshots; for
 behaviour, the test that covers it.
 
 ## License

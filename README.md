@@ -61,32 +61,20 @@ system. The same package is an MCP server with the tools `search`, `docs`, `add`
 ```
 
 `docs` also takes a topic: `design`, `motion`, `interaction`, `accessibility`, `authoring`,
-`rules`, `tokens`, `icons`, `install`.
+`porting`, `rules`, `tokens`, `icons`, `install`.
 
 ## This repository
 
-```
-components/          one folder per component: its spec, recipe, logic, React, Vue and Svelte
-                     adapters, test and examples; lib/ holds what they share
-spec/                tokens, icons, schemas
-packages/cli/        the tool: command line, MCP server, the rules of `check`
-packages/core/       the stylesheet and the token tables, generated from spec/
-showcases/           whole apps built from the components
-skill/fndn/          the skill a user's agent gets
-docs/                the rule books the tool serves
-apps/docs/           the docs site, and the test page the browser tests drive
-scripts/             build, validate, tests
-```
-
 ```bash
 pnpm install
-pnpm check           # build, every typecheck, the tool's tests
+pnpm check           # build, validation, every typecheck, the tool's tests
 pnpm docs            # the docs site on http://localhost:4321
 pnpm fndn search     # the tool, from here
 ```
 
-Everything an agent (or a person) needs to work on the system is in [`AGENTS.md`](AGENTS.md);
-[`CONTRIBUTING.md`](CONTRIBUTING.md) says how to propose a change.
+[`AGENTS.md`](AGENTS.md) is the guide to working here, for a person or a coding agent: the map
+of the repository, every command and the rules. [`CONTRIBUTING.md`](CONTRIBUTING.md) says how to
+set up and propose a change.
 
 ## License
 

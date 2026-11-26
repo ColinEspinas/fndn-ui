@@ -14,26 +14,27 @@ checks every spec against its schema *and* against the real recipe and adapters.
 ## How a component is described
 
 Each component is a **contract** that its recipe and its three adapters (React, Vue, Svelte)
-implement identically:
+implement identically. The full schema is `schema/component.schema.json`.
 
-- **kind** — `component` (a basic building block: button, select, dialog) or `block` (built from
-  several components for a product use: approval card, records table). The docs list them apart.
-- **anatomy** — the named parts. In the DOM the root carries `data-slot="<name>"` and each part
-  `data-slot="<name>-<part>"` (`button`, `button-icon`); in the recipe the root is the `base`
-  slot and each part a slot named after it in camelCase.
-- **props** — type, values, default, description. A prop reaches the look as a recipe variant
-  (`variant: "primary"`); `model` marks a two-way prop. State the behaviour engine (Ark UI) owns
-  stays in its attributes (`data-state`, `aria-checked`); a number the component computes is a
-  `--fndn-*` custom property (`--fndn-segmented-index`).
-- **states** — the interaction states the recipe must cover.
-- **tokens** — the tokens the component uses (`color.ink`, `shadow.card`).
-- **dependencies** — exactly the other components its files import from (the validator compares).
-  What it takes from `components/lib/` is not listed: that is shared code, not a component.
-- **files** — only for a component whose adapter is several files in a framework (card, table,
-  menu, calendar): the file names, per framework.
-- **examples** are not in the spec. The test props are in `<name>.fixtures.json` beside it, and
-  what the docs show are real files in the component's `examples/` folder. A fixture example may
-  be a **scenario**: it carries `steps`, and changes over time (see below).
+| Field | Meaning |
+| --- | --- |
+| `name`, `title`, `summary`, `description` | The kebab-case id; the display name; one plain sentence; the full description. |
+| `kind` | `component` (a basic building block: button, select, dialog) or `block` (built from several components for a product use: approval card, records table). The docs list them apart. |
+| `category`, `order`, `status` | Its place in the catalogue; `draft`, `beta` or `stable`. |
+| `element`, `anatomy` | The root element; every named part (`part`, `element`, `optional`). In the DOM the root carries `data-slot="<name>"` and each part `data-slot="<name>-<part>"` (`button`, `button-icon`); in the recipe the root is the `base` slot and each part a slot named after it in camelCase. |
+| `props` | Type, values, default, description. A prop reaches the look as a recipe variant (`variant: "primary"`); `model` marks a two-way prop. State the behaviour engine (Ark UI) owns stays in its attributes (`data-state`, `aria-checked`); a number the component computes is a `--fndn-*` custom property (`--fndn-progress`, which the progress ring sets). |
+| `slots`, `events` | The content slots; the events. |
+| `states` | The interaction states the recipe must cover. |
+| `tokens` | The tokens the component uses (`color.ink`, `shadow.card`). |
+| `dependencies` | Exactly the other components its files import from (the validator compares). What it takes from `components/lib/` is not listed: that is shared code, not a component. |
+| `engine`, `targets` | The Zag machine behind it; the frameworks it ships in (left out: all three). |
+| `files` | Only for a component whose adapter is several files in a framework (card, table, menu, calendar): the file names, per framework. |
+| `a11y`, `motion` | The role, the keyboard contract and notes; every motion, written out. |
+| `notes` | What a user of the component should know that no other field says (how it composes, how to control it). |
+
+Examples are not in the spec. The test props are in `<name>.fixtures.json` beside it, and what the
+docs show are real files in the component's `examples/` folder (`docs/examples-guide.md`). A
+fixture example may be a **scenario**: it carries `steps`, and changes over time (see below).
 
 ## Scenarios: examples that change over time
 
