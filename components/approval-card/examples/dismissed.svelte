@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ApprovalCard } from "@fndn/svelte";
+  import { ApprovalCard, type ApprovalQuestion, type ApprovalState } from "@fndn/svelte";
 
-  const questions = [
+  const questions: ApprovalQuestion[] = [
     {
       q: "When should I migrate the bookings table (2.4M rows)?",
       type: "radio",
@@ -29,7 +29,7 @@
 
   let index = $state(0);
 
-  let state = $state("closed");
+  let cardState = $state<ApprovalState>("closed");
 </script>
 
-<ApprovalCard questions={questions} bind:index={index} bind:state={state} />
+<ApprovalCard questions={questions} bind:index={index} bind:state={cardState} />

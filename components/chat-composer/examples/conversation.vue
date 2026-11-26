@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ChatComposer } from "@fndn/vue";
+import { ChatComposer, type ChatComposerTab } from "@fndn/vue";
 
-const tabs = ref([
+const tabs = ref<ChatComposerTab[]>([
   {
     value: "deploy-482",
     label: "Deploy #482",

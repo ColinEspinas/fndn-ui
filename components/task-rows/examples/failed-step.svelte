@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { TaskRows } from "@fndn/svelte";
+  import { TaskRows, type TaskRow } from "@fndn/svelte";
 
-  const rows = [
+  const rows: TaskRow[] = [
     {
       key: "patients",
       label: "Imported patient records",

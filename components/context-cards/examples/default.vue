@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ContextCards } from "@fndn/vue";
+import { ContextCards, type ContextChunk } from "@fndn/vue";
 
-const chunks = [
+const chunks: ContextChunk[] = [
   {
     title: "Refund window",
     chars: "412 characters",

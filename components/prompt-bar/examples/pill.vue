@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { PromptBar } from "@fndn/vue";
+import { PromptBar, type PromptBarSource } from "@fndn/vue";
 
 const value = ref("Summarize this week's tickets from Juniper Health");
 
@@ -11,7 +11,7 @@ const models = [
   { value: "atlas-small", label: "Atlas Small", meta: "Fastest" },
 ];
 
-const sources = [
+const sources: PromptBarSource[] = [
   { value: "accounts", label: "Customer accounts", description: "1,284 workspaces, plans and MRR", icon: "users" },
   { value: "tickets", label: "Support tickets", description: "Open and closed, last 90 days", icon: "chat-circle" },
   { value: "metrics", label: "Product metrics", description: "Bookings, activation, churn", icon: "chart-bar" },

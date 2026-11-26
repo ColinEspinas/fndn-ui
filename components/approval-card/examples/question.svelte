@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ApprovalCard } from "@fndn/svelte";
+  import { ApprovalCard, type ApprovalQuestion } from "@fndn/svelte";
 
-  const questions = [
+  const questions: ApprovalQuestion[] = [
     {
       q: "When should I migrate the bookings table (2.4M rows)?",
       type: "radio",

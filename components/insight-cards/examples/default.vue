@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { InsightCards } from "@fndn/vue";
+import { InsightCards, type Insight } from "@fndn/vue";
 
-const insights = [
+const insights: Insight[] = [
   {
     id: "mix",
     title: "Revenue by plan",

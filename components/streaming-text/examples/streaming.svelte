@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, type ComponentProps } from "svelte";
   import { StreamingText } from "@fndn/svelte";
+
+  type Props = ComponentProps<typeof StreamingText>;
 
   const words = (sentence: string) => sentence.split(" ").map((text) => ({ text }));
 
   /* the whole answer; a token with `cite` is the chip of that source */
-  const answer: { text: string; cite?: number }[] = [
+  const answer: Props["content"] = [
     ...words("Kestrel Logistics booked 41% fewer appointments in October than in September."),
     { text: "", cite: 0 },
     ...words("Their admin turned off SMS reminders on October 3, and no-shows rose from 6% to 19% the same week."),
@@ -14,7 +16,7 @@
     { text: "", cite: 2 },
   ];
 
-  const initial = {
+  const initial: Props = {
     content: [],
     sources: [
       {
@@ -49,12 +51,12 @@
   ];
 
   /* each step waits `after` ms, then merges its props over the current ones */
-  const timeline: { after: number; props: Record<string, unknown> }[] = [
+  const timeline: { after: number; props: Partial<Props> }[] = [
     ...arrivals.map(([after, count]) => ({ after, props: { content: answer.slice(0, count) } })),
     { after: 480, props: { done: true } },
   ];
 
-  let props: Record<string, unknown> = $state.raw({ ...initial });
+  let props: Props = $state.raw({ ...initial });
   onMount(() => {
     let i = 0, timer = 0;
     const next = () => {

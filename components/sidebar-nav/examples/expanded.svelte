@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SidebarNav } from "@fndn/svelte";
+  import { SidebarNav, type SidebarNavItem } from "@fndn/svelte";
 
   const workspaces = [
     { value: "harbor", label: "Harbor" },
@@ -7,7 +7,7 @@
     { value: "sandbox", label: "Maya's sandbox" },
   ];
 
-  const items = [
+  const items: SidebarNavItem[] = [
     { value: "new", label: "New chat", href: "#new", icon: "note-pencil" },
     { value: "home", label: "Home", href: "#home", icon: "house" },
     {

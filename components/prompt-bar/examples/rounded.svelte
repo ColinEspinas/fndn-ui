@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PromptBar } from "@fndn/svelte";
+  import { PromptBar, type PromptBarSource } from "@fndn/svelte";
 
   let value = $state("Which accounts renewing in December show churn risk?");
 
@@ -11,7 +11,7 @@
     { value: "atlas-reason", label: "Atlas Reason", meta: "Thinks longer" },
   ];
 
-  const sources = [
+  const sources: PromptBarSource[] = [
     { value: "accounts", label: "Customer accounts", description: "1,284 workspaces, plans and MRR", icon: "users" },
     { value: "tickets", label: "Support tickets", description: "Open and closed, last 90 days", icon: "chat-circle" },
     { value: "metrics", label: "Product metrics", description: "Bookings, activation, churn", icon: "chart-bar" },

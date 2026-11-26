@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PromptBar } from "@fndn/svelte";
+  import { PromptBar, type PromptBarSource } from "@fndn/svelte";
 
   let value = $state("/");
 
@@ -10,7 +10,7 @@
     { value: "atlas-small", label: "Atlas Small", meta: "Fastest" },
   ];
 
-  const sources = [
+  const sources: PromptBarSource[] = [
     { value: "accounts", label: "Customer accounts", description: "1,284 workspaces, plans and MRR", icon: "users" },
   ];
 

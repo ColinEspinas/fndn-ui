@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ChatComposer } from "@fndn/svelte";
+  import { ChatComposer, type ChatComposerTab } from "@fndn/svelte";
 
-  let tabs = $state([
+  let tabs = $state<ChatComposerTab[]>([
     {
       value: "deploy-482",
       label: "Deploy #482",

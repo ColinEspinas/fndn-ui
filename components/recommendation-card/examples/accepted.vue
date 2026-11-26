@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { RecommendationCard } from "@fndn/vue";
+import { RecommendationCard, type RecommendationOption } from "@fndn/vue";
 
-const options = [
+const options: RecommendationOption[] = [
   {
     key: "refund",
     body: [

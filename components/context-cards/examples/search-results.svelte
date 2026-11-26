@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ContextCards } from "@fndn/svelte";
+  import { ContextCards, type ContextChunk } from "@fndn/svelte";
 
-  const chunks = [
+  const chunks: ContextChunk[] = [
     {
       title: "Renewal terms",
       chars: "640 characters",

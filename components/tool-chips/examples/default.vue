@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ToolChips } from "@fndn/vue";
+import { ToolChips, type ToolDiff, type ToolStep } from "@fndn/vue";
 
-const steps = [
+const steps: ToolStep[] = [
   {
     icon: "read",
     label: "Read file",
@@ -33,7 +33,7 @@ const steps = [
   },
 ];
 
-const diffs = [
+const diffs: ToolDiff[] = [
   {
     file: "slots.ts",
     add: 4,

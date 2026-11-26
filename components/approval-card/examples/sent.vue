@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ApprovalCard } from "@fndn/vue";
+import { ApprovalCard, type ApprovalQuestion, type ApprovalState } from "@fndn/vue";
 
-const questions = [
+const questions: ApprovalQuestion[] = [
   {
     q: "When should I migrate the bookings table (2.4M rows)?",
     type: "radio",
@@ -32,7 +32,7 @@ const answers = { "0": [2], "1": [0, 1], "2": [1] };
 
 const index = ref(2);
 
-const state = ref("sent");
+const state = ref<ApprovalState>("sent");
 </script>
 
 <template>

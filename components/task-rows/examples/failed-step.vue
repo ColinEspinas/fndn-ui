@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { TaskRows } from "@fndn/vue";
+import { TaskRows, type TaskRow } from "@fndn/vue";
 
-const rows = [
+const rows: TaskRow[] = [
   {
     key: "patients",
     label: "Imported patient records",

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ToolChips } from "@fndn/svelte";
+  import { ToolChips, type ToolDiff, type ToolStep } from "@fndn/svelte";
 
-  const steps = [
+  const steps: ToolStep[] = [
     {
       icon: "search",
       label: "Search logs",
@@ -33,7 +33,7 @@
     },
   ];
 
-  const diffs = [
+  const diffs: ToolDiff[] = [
     {
       file: "conflicts.ts",
       add: 3,

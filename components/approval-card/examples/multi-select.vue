@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ApprovalCard } from "@fndn/vue";
+import { ApprovalCard, type ApprovalQuestion } from "@fndn/vue";
 
-const questions = [
+const questions: ApprovalQuestion[] = [
   {
     q: "The summary of yesterday's booking outage is drafted. Which customers should get it?",
     type: "check",

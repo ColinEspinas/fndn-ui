@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { ContextCards } from "@fndn/vue";
+import { ContextCards, type ContextChunk } from "@fndn/vue";
 
-const sources = [
+const sources: ContextChunk[] = [
   {
     title: "Timeline, 14:05 to 14:31",
     chars: "880 characters",

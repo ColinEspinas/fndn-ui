@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { CodeBlock } from "@fndn/svelte";
+  import { CodeBlock, type CodeDiffRow } from "@fndn/svelte";
 
-  const diff = [
+  const diff: CodeDiffRow[] = [
     {
       old: 1,
       cur: 1,

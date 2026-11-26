@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { InsightCards } from "@fndn/svelte";
+  import { InsightCards, type Insight } from "@fndn/svelte";
 
-  const insights = [
+  const insights: Insight[] = [
     {
       id: "tidewater",
       title: "Bookings falling",

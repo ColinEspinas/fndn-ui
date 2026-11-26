@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { CodeBlock } from "@fndn/vue";
+import { CodeBlock, type CodeDiffRow } from "@fndn/vue";
 
-const diff = [
+const diff: CodeDiffRow[] = [
   {
     old: 1,
     cur: 1,

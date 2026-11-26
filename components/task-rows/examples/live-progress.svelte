@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { TaskRows } from "@fndn/svelte";
+  import { TaskRows, type TaskRow } from "@fndn/svelte";
 
   const steps = [
     {
@@ -45,7 +45,7 @@
     return () => clearTimeout(timer);
   });
   /* rows before `stage` are done, the one at `stage` is running, later ones have not started */
-  const rows = $derived(
+  const rows = $derived<TaskRow[]>(
     steps
       .slice(0, stage + 1)
       .map((row, i) => (i < stage ? { ...row, status: "done" } : { ...row, status: "running", step: i + 1 })),

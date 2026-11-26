@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ToolChips } from "@fndn/svelte";
+  import { ToolChips, type ToolDiff, type ToolStep } from "@fndn/svelte";
 
-  const steps = [
+  const steps: ToolStep[] = [
     {
       icon: "think",
       label: "Thinking",
@@ -66,7 +66,7 @@
     },
   ];
 
-  const diffs = [
+  const diffs: ToolDiff[] = [
     {
       file: "send.ts",
       add: 38,

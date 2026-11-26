@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { SidebarNav } from "@fndn/vue";
+import { SidebarNav, type SidebarNavItem } from "@fndn/vue";
 
 const workspaces = [
   { value: "harbor", label: "Harbor" },
@@ -8,7 +8,7 @@ const workspaces = [
   { value: "sandbox", label: "Maya's sandbox" },
 ];
 
-const items = [
+const items: SidebarNavItem[] = [
   { value: "new", label: "New chat", href: "#new", icon: "note-pencil" },
   { value: "home", label: "Home", href: "#home", icon: "house" },
   {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import { TaskRows } from "@fndn/vue";
+import { TaskRows, type TaskRow } from "@fndn/vue";
 
-const steps = [
+const steps: Omit<TaskRow, "status">[] = [
   {
     key: "read",
     label: "Read the overnight tickets",
@@ -43,7 +43,7 @@ const tick = () => {
 onMounted(tick);
 onBeforeUnmount(() => clearTimeout(timer));
 /* rows before `stage` are done, the one at `stage` is running, later ones have not started */
-const rows = computed(() =>
+const rows = computed((): TaskRow[] =>
   steps
     .slice(0, stage.value + 1)
     .map((row, i) => (i < stage.value ? { ...row, status: "done" } : { ...row, status: "running", step: i + 1 })),

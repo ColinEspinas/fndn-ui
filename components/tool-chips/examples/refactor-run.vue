@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ToolChips } from "@fndn/vue";
+import { ToolChips, type ToolDiff, type ToolStep } from "@fndn/vue";
 
-const steps = [
+const steps: ToolStep[] = [
   {
     icon: "think",
     label: "Thinking",
@@ -67,7 +67,7 @@ const steps = [
   },
 ];
 
-const diffs = [
+const diffs: ToolDiff[] = [
   {
     file: "send.ts",
     add: 38,

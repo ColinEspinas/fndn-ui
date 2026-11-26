@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ApprovalCard } from "@fndn/vue";
+import { ApprovalCard, type ApprovalQuestion } from "@fndn/vue";
 
-const questions = [
+const questions: ApprovalQuestion[] = [
   {
     q: "When should I migrate the bookings table (2.4M rows)?",
     type: "radio",

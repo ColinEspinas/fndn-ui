@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { RecommendationCard } from "@fndn/svelte";
+  import { RecommendationCard, type RecommendationOption } from "@fndn/svelte";
 
-  const options = [
+  const options: RecommendationOption[] = [
     {
       key: "refund",
       body: [

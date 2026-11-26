@@ -104,7 +104,7 @@ playground's starting props, which are realistic too (they are the first thing a
   work); any motion an example adds follows `docs/design/motion.md`.
 - Break it: does the example still read with the longest realistic name, in dark mode, at 390 px
   and right to left? The display scales to look at: `AGENTS.md` (Design work).
-- Typecheck: `pnpm --filter @fndn/components typecheck`. It checks the React examples only: the Vue
-  and Svelte typechecks leave `examples/` out, and the browser tests render the fixtures, not these
-  files. A Vue or Svelte example is compiled only when the docs site shows it, so open the
-  component's page (`pnpm docs`) in React, then Vue and Svelte, and look at every example.
+- Typecheck: `pnpm --filter @fndn/components typecheck` checks the examples in the three
+  frameworks. Type an example's data with the component's own exported types, as the adapter's
+  props are. The browser tests render the fixtures, not these files, so open the component's page
+  (`pnpm docs`) in React, then Vue and Svelte, and look at every example.

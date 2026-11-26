@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, shallowRef } from "vue";
-import { StreamingText } from "@fndn/vue";
+import { StreamingText, type StreamingSource, type StreamingToken } from "@fndn/vue";
+
+type Props = {
+  content: StreamingToken[];
+  sources: StreamingSource[];
+  followUps: string[];
+  done: boolean;
+  sourcesLabel: string;
+};
 
 const words = (sentence: string) => sentence.split(" ").map((text) => ({ text }));
 
 /* the whole answer; a token with `cite` is the chip of that source */
-const answer: { text: string; cite?: number }[] = [
+const answer: StreamingToken[] = [
   ...words("Kestrel Logistics booked 41% fewer appointments in October than in September."),
   { text: "", cite: 0 },
   ...words("Their admin turned off SMS reminders on October 3, and no-shows rose from 6% to 19% the same week."),
@@ -14,7 +22,7 @@ const answer: { text: string; cite?: number }[] = [
   { text: "", cite: 2 },
 ];
 
-const initial = {
+const initial: Props = {
   content: [],
   sources: [
     {
@@ -49,12 +57,12 @@ const arrivals: [number, number][] = [
 ];
 
 /* each step waits `after` ms, then merges its props over the current ones */
-const timeline: { after: number; props: Record<string, unknown> }[] = [
+const timeline: { after: number; props: Partial<Props> }[] = [
   ...arrivals.map(([after, count]) => ({ after, props: { content: answer.slice(0, count) } })),
   { after: 480, props: { done: true } },
 ];
 
-const props = shallowRef<Record<string, unknown>>({ ...initial });
+const props = shallowRef<Props>({ ...initial });
 let timer = 0;
 onMounted(() => {
   let i = 0;

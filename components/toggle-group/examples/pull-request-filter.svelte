@@ -10,12 +10,12 @@
   ];
 
   let show = $state<string[]>(["open"]);
-  const state = $derived(show[0]);
+  const shown = $derived(show[0]);
 </script>
 
 <div class="flex flex-col items-start gap-2">
   <ToggleGroup bind:value={show} aria-label="Show pull requests" size="sm" items={states} />
   <p class="text-sm text-ink-2" role="status">
-    {state ? `${COUNTS[state]} ${state} pull requests in billing-api` : "All 31 pull requests in billing-api"}
+    {shown ? `${COUNTS[shown]} ${shown} pull requests in billing-api` : "All 31 pull requests in billing-api"}
   </p>
 </div>

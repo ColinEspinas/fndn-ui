@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ToolChips } from "@fndn/vue";
+import { ToolChips, type ToolDiff, type ToolStep } from "@fndn/vue";
 
-const steps = [
+const steps: ToolStep[] = [
   {
     icon: "search",
     label: "Search logs",
@@ -34,7 +34,7 @@ const steps = [
   },
 ];
 
-const diffs = [
+const diffs: ToolDiff[] = [
   {
     file: "conflicts.ts",
     add: 3,

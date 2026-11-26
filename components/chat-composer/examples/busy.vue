@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ChatComposer } from "@fndn/vue";
+import { ChatComposer, type ChatComposerTab } from "@fndn/vue";
 
-const tabs = ref([
+const tabs = ref<ChatComposerTab[]>([
   {
     value: "incident",
     label: "API latency",

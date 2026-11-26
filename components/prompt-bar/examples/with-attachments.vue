@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { PromptBar } from "@fndn/vue";
+import { PromptBar, type PromptBarSource } from "@fndn/vue";
 
 const value = ref("Check these invoices against the October payouts and flag any mismatch");
 
@@ -13,7 +13,7 @@ const models = [
   { value: "atlas-small", label: "Atlas Small", meta: "Fastest" },
 ];
 
-const sources = [
+const sources: PromptBarSource[] = [
   { value: "billing", label: "Billing", description: "Invoices, refunds and payouts", icon: "database" },
   { value: "accounts", label: "Customer accounts", description: "1,284 workspaces, plans and MRR", icon: "users" },
 ];

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { ContextCards } from "@fndn/svelte";
+  import { ContextCards, type ContextChunk } from "@fndn/svelte";
 
-  const sources = [
+  const sources: ContextChunk[] = [
     {
       title: "Timeline, 14:05 to 14:31",
       chars: "880 characters",
