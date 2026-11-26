@@ -1,20 +1,19 @@
-/* The tree (left pane): a filter, Overview, Installation, Foundations, then Components and Blocks
+/* The tree (left pane): Overview, Installation, Foundations, then Components and Blocks
  * (the spec's `kind`), each grouped by category, then Showcase and Guides (the Markdown of docs/). The current page is marked (aria-current). One tab stop for the
- * list (roving tabindex), arrow keys / Home / End to move, Enter to open (native link). On a phone
- * the pane is closed until the top bar's menu button opens it over the page. */
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { EmptyState } from "@fndn/components/empty-state/empty-state.tsx";
-import { Input } from "@fndn/components/input/input.tsx";
+ * list (roving tabindex), arrow keys / Home / End to move, Enter to open (native link). Finding a
+ * page by name is the search palette's job (the top bar, Ctrl K). On a phone the pane is closed
+ * until the top bar's menu button opens it over the page. */
+import { useEffect, useMemo, useRef, type KeyboardEvent } from "react";
 import { glide, glideLayer as glideClasses } from "@fndn/components/lib/glide.ts";
 import { tv } from "@fndn/components/lib/tv.ts";
-import { go, setOptions, usePath, useOptions } from "../lib/store";
+import { setOptions, usePath, useOptions } from "../lib/store";
 import { FOUNDATIONS } from "../lib/types";
 import "../lib/warm"; /* gets the next component page ready before it is shown */
 import "../lib/live-reload"; /* dev: reloads this page when a file it shows is saved */
 
 type Item = { name: string; title: string; status: string; category: string };
 export type TreeSection = { heading: string; groups: { label: string; items: Item[] }[] };
-type Row = { href: string; label: string; keywords: string };
+type Row = { href: string; label: string };
 type Group = { id: string; section?: string; label?: string; rows: Row[] };
 /* the gliding highlight's layer, its classes merged with the tree's own (a control's radius) */
 const highlight = tv({ base: glideClasses });
@@ -23,30 +22,24 @@ export default function Tree({ sections, guides = [], showcase = [], current: fi
   const o = useOptions();
   /* persisted across pages (transition:persist): the current page comes from the location */
   const current = usePath(first);
-  const [q, setQ] = useState("");
   const glideLayer = useRef<HTMLSpanElement>(null);
   const list = useRef<HTMLDivElement>(null);
-  const filter = useRef<HTMLInputElement>(null);
 
   const groups = useMemo<Group[]>(() => [
-    { id: "overview", rows: [{ href: "/", label: "Overview", keywords: "overview home" }, { href: "/installation", label: "Installation", keywords: "installation setup tailwind tv stylesheet" }] },
-    { id: "foundations", label: "Foundations", rows: FOUNDATIONS.map(([id, label]) => ({ href: `/foundations/${id}`, label, keywords: `${label} foundations` })) },
+    { id: "overview", rows: [{ href: "/", label: "Overview" }, { href: "/installation", label: "Installation" }] },
+    { id: "foundations", label: "Foundations", rows: FOUNDATIONS.map(([id, label]) => ({ href: `/foundations/${id}`, label })) },
     ...sections.flatMap((s) => s.groups.map((g, i): Group => ({
       id: `${s.heading}-${g.label}`,
       section: i === 0 ? s.heading : undefined,
       label: g.label,
       /* no status here: it is on the component's page (a "beta" on most rows was noise) */
-      rows: g.items.map((x) => ({ href: `/components/${x.name}`, label: x.title, keywords: `${x.title} ${x.name} ${x.category} ${s.heading}` })),
+      rows: g.items.map((x) => ({ href: `/components/${x.name}`, label: x.title })),
     }))),
-    ...(showcase.length ? [{ id: "showcase", section: "Showcase", rows: showcase.map((a) => ({ href: `/showcase/${a.name}`, label: a.title, keywords: `${a.title} ${a.name} showcase app` })) }] : []),
-    ...(guides.length ? [{ id: "guides", section: "Guides", rows: guides.map((g) => ({ href: `/guides/${g.id}`, label: g.title, keywords: `${g.title} ${g.id} guides` })) }] : []),
+    ...(showcase.length ? [{ id: "showcase", section: "Showcase", rows: showcase.map((a) => ({ href: `/showcase/${a.name}`, label: a.title })) }] : []),
+    ...(guides.length ? [{ id: "guides", section: "Guides", rows: guides.map((g) => ({ href: `/guides/${g.id}`, label: g.title })) }] : []),
   ], [sections, guides, showcase]);
 
-  const needle = q.trim().toLowerCase();
-  const shown = groups
-    .map((g) => ({ ...g, rows: needle ? g.rows.filter((r) => r.keywords.toLowerCase().includes(needle)) : g.rows }))
-    .filter((g) => g.rows.length);
-  const flat = shown.flatMap((g) => g.rows);
+  const flat = groups.flatMap((g) => g.rows);
   const stop = flat.find((r) => r.href === current)?.href ?? flat[0]?.href;
 
   /* The tree is kept across pages, but the router moves its element into the next document, and
@@ -62,14 +55,14 @@ export default function Tree({ sections, guides = [], showcase = [], current: fi
     return () => { document.removeEventListener("astro:before-swap", before); document.removeEventListener("astro:after-swap", after); };
   }, []);
 
-  /* the current row in view inside the pane, below the sticky filter, with its group's label (and
-   * section heading) visible; nothing moves when it is in view already (a persisted tree keeps its
+  /* the current row in view inside the pane, with its group's label (and section heading)
+   * visible; nothing moves when it is in view already (a persisted tree keeps its
    * scroll position from page to page) */
   useEffect(() => {
     const pane = list.current?.closest<HTMLElement>("[data-docs-tree]");
     const row = list.current?.querySelector<HTMLElement>('[aria-current="page"]');
     if (!pane || !row) return;
-    const top = pane.getBoundingClientRect().top + (filter.current?.closest<HTMLElement>("[data-docs-filter]")?.offsetHeight ?? 0);
+    const top = pane.getBoundingClientRect().top;
     const bottom = pane.getBoundingClientRect().bottom;
     const r = row.getBoundingClientRect();
     if (r.top >= top && r.bottom <= bottom) return;
@@ -100,12 +93,12 @@ export default function Tree({ sections, guides = [], showcase = [], current: fi
     if (i < 0) return;
     let next: HTMLElement | undefined;
     if (e.key === "ArrowDown") next = rows[Math.min(i + 1, rows.length - 1)];
-    else if (e.key === "ArrowUp") next = i === 0 ? filter.current ?? undefined : rows[i - 1];
+    else if (e.key === "ArrowUp") next = rows[Math.max(i - 1, 0)];
     else if (e.key === "Home") next = rows[0];
     else if (e.key === "End") next = rows[rows.length - 1];
     if (!next) return;
     e.preventDefault();
-    if (next !== filter.current) { for (const r of rows) r.tabIndex = r === next ? 0 : -1; }
+    for (const r of rows) r.tabIndex = r === next ? 0 : -1;
     next.focus();
   };
 
@@ -116,22 +109,9 @@ export default function Tree({ sections, guides = [], showcase = [], current: fi
       aria-label="Site"
       className={`${o.treeOpen ? "fixed inset-x-0 top-12 bottom-0 z-20 block" : "hidden"} overflow-y-auto overscroll-contain [scrollbar-gutter:stable] bg-page md:sticky md:top-12 md:z-auto md:block md:h-[calc(100dvh-3rem)] md:border-e md:border-line`}
     >
-      <div className="sticky top-0 z-10 bg-page px-3 pt-3 pb-2" data-docs-filter>
-        <Input
-          ref={filter as React.Ref<HTMLInputElement>}
-          size="sm" type="search" placeholder="Filter" aria-label="Filter the tree" autoComplete="off" spellCheck={false}
-          value={q}
-          onChange={(e) => setQ((e.target as HTMLInputElement).value)}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowDown") { e.preventDefault(); list.current?.querySelector<HTMLElement>("a[data-row]")?.focus(); }
-            if (e.key === "Enter" && flat[0]) { e.preventDefault(); go(flat[0].href); }
-            if (e.key === "Escape" && q) { e.preventDefault(); e.stopPropagation(); setQ(""); }
-          }}
-        />
-      </div>
-      <div ref={list} className="relative isolate mx-3 pb-6" onKeyDown={onKeyDown}>
+      <div ref={list} className="relative isolate mx-3 pt-3 pb-6" onKeyDown={onKeyDown}>
         <span ref={glideLayer} className={highlight({ class: "rounded-control bg-hover invisible [@media(hover:hover)_and_(pointer:fine)]:visible" })} aria-hidden />
-        {shown.map((g) => (
+        {groups.map((g) => (
           <div key={g.id} data-docs-group>
             {/* headings and group titles sit above the gliding highlight, like the rows' text: it
               * glides behind them, never over them */}
@@ -153,7 +133,6 @@ export default function Tree({ sections, guides = [], showcase = [], current: fi
             </div>
           </div>
         ))}
-        {!flat.length && <div role="status"><EmptyState title="No matches" icon="magnifying-glass" /></div>}
       </div>
     </nav>
   );

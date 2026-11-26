@@ -2,7 +2,7 @@
 /* The shell: top bar, tree, and the page. Theme and direction are applied before the first paint
  * (inline script), and transitions stay frozen until the islands have taken the stored options.
  * Pages change through Astro's client router: the top bar's controls, the menu button and the tree
- * are persisted islands (their state, the filter and the tree's scroll position stay), and the
+ * are persisted islands (their state and the tree's scroll position stay), and the
  * <html> attributes the options wrote (theme, direction, slowed timings) are carried onto each new
  * page before it is swapped in, so nothing flashes. data-shape is the page's own (a showcase app's
  * shape, which its dialogs and menus in <body> must take too) and is never carried. */
