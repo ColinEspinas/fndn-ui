@@ -24,7 +24,7 @@
     {
       "part": "card",
       "element": "div",
-      "description": "role=region, focusable; scrolls sideways when the table is wider than the card; edge veils (::before / ::after, sticky, shown by a scroll-driven timeline) fade the side the table continues past; armed only while the table overflows (data-overflow, set by filter-table.logic.ts)"
+      "description": "role=region, focusable; scrolls sideways when the table is wider than the card; edge veils (::before / ::after, sticky) fade the side the table continues past, each shown while there is more on its side (data-overflow-start, data-overflow-end, kept in step with the scroll position by lib/veil.ts)"
     },
     {
       "part": "table",
@@ -175,7 +175,7 @@
     "row leave / return: grid-template-rows over duration.reveal easing.out-strong with opacity over duration.base; a leaving row gives its space back while it fades, so the rows below close the gap in one motion; no stagger",
     "keyboard selection: instant (kbd-instant)",
     "row hover: instant both ways (the tables' one hover)",
-    "edge veils: when the table is cut by the card, the side it continues past fades into the surface; scroll-driven (animation-timeline: scroll(nearest inline)), never timed; nothing when the table fits, also after a scrolled card grows to fit (the veils hang on data-overflow)"
+    "edge veils: when the table is cut by the card, the side it continues past fades into the surface; each veil shows at once while there is more on its side (data-overflow-start, data-overflow-end, set from the scroll position by lib/veil.ts, the same in every browser; no animation, never timed); nothing when the table fits, also after a scrolled card grows to fit"
   ],
   "notes": [
     "A status is a StatusPill and a label people assign is a Tag: a column of states (to do, failed, live) is type status, a column of labels (environments, categories) is type tag.",

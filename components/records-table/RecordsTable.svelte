@@ -21,17 +21,26 @@
   import { recordsTable } from "./records-table.recipe";
   import { glide } from "../lib/glide";
   import { trackModality } from "../lib/modality";
+  import { watchVeils } from "../lib/veil";
   import {
     ACTIONS_WIDTH, DEFAULT_LOCALE, MAX_TAGS, ariaSort, columnType, columnWidth, fillLabel, formatNumber, isBlank, isHideable, isSortable, linkHref,
     nextSort, recordsLabels, rowClickOpens, rowKey, rowName, selectAllState, selectedCount, sortRows, statusOption, tableMinWidth, tagTone, textOf, toggleAll, toggleHidden,
     toggleOne, visibleSpan,
-    type RecordsTableAction, type RecordsTableColumn, type RecordsTableLabels, type RecordsTableRow, type RecordsTableSort, type RecordsTableValue,
+    type RecordsTableAction as Action, type RecordsTableColumn as Column, type RecordsTableLabels as Labels, type RecordsTableRow as Row,
+    type RecordsTableSort as Sort, type RecordsTableSortDirection as SortDirection, type RecordsTableStatusOption as StatusOption,
+    type RecordsTableTone as Tone, type RecordsTableValue as Value,
   } from "./records-table.logic";
 
-  export type {
-    RecordsTableAction, RecordsTableColumn, RecordsTableLabels, RecordsTableRow, RecordsTableSort, RecordsTableSortDirection,
-    RecordsTableStatusOption, RecordsTableTone, RecordsTableValue,
-  } from "./records-table.logic";
+  /* declared here, not passed on: Svelte exports a type a component declares, and no other */
+  export type RecordsTableAction = Action;
+  export type RecordsTableColumn = Column;
+  export type RecordsTableLabels = Labels;
+  export type RecordsTableRow = Row;
+  export type RecordsTableSort = Sort;
+  export type RecordsTableSortDirection = SortDirection;
+  export type RecordsTableStatusOption = StatusOption;
+  export type RecordsTableTone = Tone;
+  export type RecordsTableValue = Value;
 
   type Props = {
     columns: ReadonlyArray<RecordsTableColumn>;
@@ -134,6 +143,9 @@
   }
 
   let root = $state<HTMLElement | null>(null);
+  /* the end veil follows the scroll position, measured before the first paint (lib/veil.ts) */
+  let scroll = $state<HTMLElement | null>(null);
+  $effect(() => watchVeils(scroll));
   function columnMenu(column: RecordsTableColumn, index: number): MenuEntry[] {
     return [
       ...(isSortable(column) ? [
@@ -189,7 +201,7 @@
 
 <div bind:this={root} {...data} data-slot="records-table" class={r.base({ class: className })} {style}>
   <!-- svelte-ignore a11y_no_noninteractive_tabindex (a scroll region must be focusable to scroll from the keyboard) -->
-  <div data-slot="records-table-scroll" class={r.scroll()} role="region" aria-label={copy.region} tabindex="0">
+  <div bind:this={scroll} data-slot="records-table-scroll" class={r.scroll()} role="region" aria-label={copy.region} tabindex="0">
     <table data-slot="records-table-table" class={r.table()} style:min-width="{tableMinWidth(columns, hiddenColumns)}px">
       <thead>
         <tr data-slot="records-table-head-row" class={r.headRow()}>

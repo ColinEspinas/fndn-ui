@@ -1,7 +1,10 @@
 <script lang="ts">
+  import type { ComponentProps } from "svelte";
   import { SelectionActions } from "@fndn/svelte";
 
-  const actions = [
+  type Props = ComponentProps<typeof SelectionActions>;
+
+  const actions: Props["actions"] = [
     {
       value: "improve",
       label: "Improve",

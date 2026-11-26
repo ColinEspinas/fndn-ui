@@ -17,7 +17,7 @@ import { tv, type VariantProps } from "../lib/tv";
  * them, so nothing nested can match). The row hover is instant both ways (--_cell-hover, a layer over
  * the fill); only a selection under the pointer eases the fill: a
  * select-all or a sort changes hundreds of cells at once, and a transition on each of them costs
- * more than the whole repaint. The end veil's keyframes are in base.css. */
+ * more than the whole repaint. */
 
 /* the rules shared by header and body cells */
 const GRID_CELL = "p-0 border-e border-b border-e-(color:--_grid-line) border-b-(color:--_grid-line) text-start align-middle";
@@ -42,18 +42,17 @@ export const recordsTable = tv({
      * never leaks into a shrink-to-fit parent, so it scrolls here instead of widening the page.
      * A table cut at the end of the region fades into the surface there (a mask is ruled out: it
      * would cut the card's shadow). The region is a one-column grid as wide as the table, so a
-     * sticky veil can share the table's area and ride the region's end edge; a scroll-driven
-     * timeline (no time involved) hides it once the end is reached, and a table that fits has no
-     * timeline: it stays hidden. The start side needs none: the sticky first column covers what
-     * scrolls under it, with its own soft edge. */
+     * sticky veil can share the table's area and ride the region's end edge. It shows while there
+     * is more past the end, at once (no time involved): data-overflow-end, kept in step with the
+     * scroll position by watchVeils (lib/veil.ts); a table that fits has none. The start side
+     * needs no veil: the sticky first column covers what scrolls under it, with its own soft edge. */
     scroll: [
       "[container-type:inline-size] grid grid-cols-[minmax(min-content,1fr)] max-h-[438px] overflow-auto overscroll-x-contain",
       "[scrollbar-color:var(--fndn-line-strong)_transparent] [scrollbar-width:thin]",
       "focus-visible:outline-2 focus-visible:outline-accent focus-visible:-outline-offset-2",
       "after:content-[''] after:[grid-area:1/1] after:[justify-self:end] after:sticky after:end-0 after:z-4 after:w-6 after:pointer-events-none after:opacity-0",
       "after:bg-[linear-gradient(to_var(--_start,left),var(--fndn-surface),transparent)] rtl:[--_start:right]",
-      "supports-[animation-timeline:scroll()]:after:[animation-name:fndn-records-table-veil-end] supports-[animation-timeline:scroll()]:after:[animation-timing-function:linear]",
-      "supports-[animation-timeline:scroll()]:after:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:after:[animation-timeline:scroll(nearest_inline)]",
+      "data-overflow-end:after:opacity-100",
     ],
     /* row numbers count the rows of the body in their current order */
     table: "[grid-area:1/1] w-full table-fixed border-separate border-spacing-0 text-sm font-medium text-ink [&>tbody]:[counter-reset:fndn-records-row]",

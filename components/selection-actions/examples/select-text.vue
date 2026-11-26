@@ -3,23 +3,23 @@ import { ref } from "vue";
 import { SelectionActions } from "@fndn/vue";
 
 const actions = [
-  { value: "explain", label: "Explain", icon: "question" },
+  { value: "explain", label: "Explain", icon: "question" as const },
   {
     value: "improve",
     label: "Improve",
-    icon: "sparkle",
+    icon: "sparkle" as const,
     busyLabel: "Improving",
   },
   {
     value: "shorten",
     label: "Shorten",
-    icon: "corners-in",
+    icon: "corners-in" as const,
     busyLabel: "Shortening",
   },
   {
     value: "tone",
     label: "Tone",
-    icon: "chat-text",
+    icon: "chat-text" as const,
     busyLabel: "Changing tone",
   },
 ];

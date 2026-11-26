@@ -17,7 +17,7 @@ const columns = [
       { value: "onboarding", label: "Onboarding", tone: "neutral" },
     ],
   },
-];
+] as const;
 
 const rows = [
   { id: "brightline", company: "Brightline Dental", plan: "Business", seats: 48, health: "healthy" },
@@ -32,7 +32,7 @@ const rowActions = [
   { value: "invoices", label: "View invoices" },
   { type: "separator" },
   { value: "cancel", label: "Cancel subscription", tone: "danger" },
-];
+] as const;
 </script>
 
 <template>

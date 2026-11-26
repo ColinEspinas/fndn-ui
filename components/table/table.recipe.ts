@@ -12,7 +12,7 @@ import { tv, type VariantProps } from "../lib/tv";
  * The rules are the cells' own borders (separate borders, no spacing), so a row's hover fill and
  * the card's radius never fight over a collapsed border. The body row's hover is instant both
  * ways, as the records table's: rows are functional data. No motion; the edge veils of a table
- * wider than its card follow the scroll position, not time. Parts are found by data-slot
+ * wider than its card follow the scroll position (lib/veil.ts), not time. Parts are found by data-slot
  * (table, table-table, table-header, …); the root slot is `base`.
  *
  * flush (variant): a list of records inside a pane (an issue list, a file list, Linear's and
@@ -50,20 +50,17 @@ export const table = tv({
       /* a table cut by the card's edge fades into the surface on the side it continues past, as the
        * records and filter tables do (a thin or overlay scrollbar is no cue; a mask is ruled out: it
        * would cut the card's shadow). The card is a one-column grid as wide as the table (at least
-       * the card), so two sticky veils share the table's area and ride the card's edges; a
-       * scroll-driven timeline (no time involved) shows the end one at the start, both in between,
-       * the start one at the end. They are armed only while the table overflows (data-overflow,
-       * measured by watchVeils): a card that fits shows none. Their keyframes are in base.css. */
+       * the card), so two sticky veils share the table's area and ride the card's edges. Each shows
+       * while there is more on its side, at once (no time involved): data-overflow-start and
+       * data-overflow-end, kept in step with the scroll position by watchVeils (lib/veil.ts). A
+       * card that fits has neither and shows none. */
       "grid grid-cols-[minmax(min-content,1fr)]",
       "before:content-[''] before:[grid-area:1/1] before:sticky before:z-1 before:w-6 before:pointer-events-none before:opacity-0",
       "after:content-[''] after:[grid-area:1/1] after:sticky after:z-1 after:w-6 after:pointer-events-none after:opacity-0",
       "before:[justify-self:start] before:start-0 before:bg-[linear-gradient(to_var(--_end,right),var(--fndn-surface),transparent)]",
       "after:[justify-self:end] after:end-0 after:bg-[linear-gradient(to_var(--_start,left),var(--fndn-surface),transparent)]",
       "rtl:[--_end:left] rtl:[--_start:right]",
-      "data-overflow:supports-[animation-timeline:scroll()]:before:[animation-name:fndn-table-veil-start] data-overflow:supports-[animation-timeline:scroll()]:after:[animation-name:fndn-table-veil-end]",
-      "supports-[animation-timeline:scroll()]:before:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:after:[animation-timing-function:linear]",
-      "supports-[animation-timeline:scroll()]:before:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:after:[animation-fill-mode:both]",
-      "supports-[animation-timeline:scroll()]:before:[animation-timeline:scroll(nearest_inline)] supports-[animation-timeline:scroll()]:after:[animation-timeline:scroll(nearest_inline)]",
+      "data-overflow-start:before:opacity-100 data-overflow-end:after:opacity-100",
     ],
     table: "[grid-area:1/1] w-full border-separate border-spacing-0 text-sm font-medium text-ink tabular-nums",
     header: "",

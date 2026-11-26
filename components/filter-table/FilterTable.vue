@@ -43,7 +43,7 @@ const emit = defineEmits<{ change: [filter: FilterTableFilterKey] }>();
 defineOptions({ inheritAttrs: false });
 const attrs = useAttrs();
 const s = filterTable();
-/* the edge veils are armed only while the table overflows the card, measured before the first paint */
+/* the edge veils follow the scroll position, measured before the first paint (lib/veil.ts) */
 const card = ref<HTMLElement | null>(null);
 let stopVeils = () => {};
 onMounted(() => { stopVeils = watchVeils(card.value); });

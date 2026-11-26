@@ -10,8 +10,7 @@ import { popup } from "../lib/popup";
  * (sm; ghost, primary for Keep), restyled by the action/keep/discard/retry slots passed as their
  * class; while a rewrite runs the status shows a Spinner (sm) and a Shimmer (fast).
  * The Buttons are marked data-selection-actions="action|keep|discard|retry". The streaming caret in
- * the mark is streaming-text's caret part (its recipe's caret slot).
- * The veils' two keyframes are in base.css. */
+ * the mark is streaming-text's caret part (its recipe's caret slot). */
 
 /* Keep, Discard and the actions: capped width, a 14px icon */
 const PILL_BUTTON = "max-w-[200px] [&>[data-slot=button-icon]]:text-[14px]";
@@ -42,19 +41,16 @@ export const selectionActions = tv({
       "rounded-pill shadow-overlay",
       /* on a phone the bar is wider than the screen and scrolls; the edge it continues past fades
        * into the surface, so an action cut by the edge never reads as a stray letter. Two sticky
-       * veils ride the scroller's edges; a scroll-driven timeline (no time involved) shows the end
-       * one at the start, both in between, the start one at the end. The veils are armed only while
-       * the bar overflows (data-overflow, set by rovingToolbar): a bar that fits shows nothing. */
+       * veils ride the scroller's edges. Each shows while there is more on its side, at once (no
+       * time involved): data-overflow-start and data-overflow-end, kept in step with the scroll
+       * position by watchVeils (lib/veil.ts, from rovingToolbar). A bar that fits shows nothing. */
       "before:content-[''] before:sticky before:z-1 before:flex-[0_0_20px] before:self-stretch before:-my-1 before:pointer-events-none before:opacity-0",
       "after:content-[''] after:sticky after:z-1 after:flex-[0_0_20px] after:self-stretch after:-my-1 after:pointer-events-none after:opacity-0",
       /* the margins net to nothing with the 2px gap: the actions do not move */
       "before:-start-1 before:ms-[-4px] before:me-[-18px] before:bg-[linear-gradient(to_var(--_end,right),var(--fndn-surface),transparent)]",
       "after:-end-1 after:ms-[-18px] after:me-[-4px] after:bg-[linear-gradient(to_var(--_start,left),var(--fndn-surface),transparent)]",
       "rtl:[--_end:left] rtl:[--_start:right]",
-      "data-overflow:supports-[animation-timeline:scroll()]:before:[animation-name:fndn-selection-actions-veil-start] data-overflow:supports-[animation-timeline:scroll()]:after:[animation-name:fndn-selection-actions-veil-end]",
-      "supports-[animation-timeline:scroll()]:before:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:after:[animation-timing-function:linear]",
-      "supports-[animation-timeline:scroll()]:before:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:after:[animation-fill-mode:both]",
-      "supports-[animation-timeline:scroll()]:before:[animation-timeline:scroll(nearest_inline)] supports-[animation-timeline:scroll()]:after:[animation-timeline:scroll(nearest_inline)]",
+      "data-overflow-start:before:opacity-100 data-overflow-end:after:opacity-100",
       /* a mode swap (idle → busy → result) fades the new controls in; opening is the popup's own one
        * entrance (data-swapped is set only by a swap while open); from the keyboard it is instant */
       "[&>*]:shrink-0 [&[data-swapped]>*]:animate-[fndn-fade-in_var(--fndn-duration-base)_var(--fndn-easing-out-strong)_both]",

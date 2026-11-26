@@ -185,29 +185,8 @@ a) {
 @keyframes fndn-collapsible-exit {
   to { visibility: hidden; }
 }
-/* filter-table */
-@keyframes fndn-filter-table-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
-@keyframes fndn-filter-table-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
 /* prompt-bar */
 @keyframes fndn-prompt-bar-level {
   0%, 100% { transform: scaleY(0.4); }
   50% { transform: scaleY(1); }
 }
-/* records-table */
-@keyframes fndn-records-table-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
-/* segmented-control */
-@keyframes fndn-segmented-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
-@keyframes fndn-segmented-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
-/* the chips' edge fades (a mask): the widths flip at the midpoints (unregistered properties
- * animate discretely), so a fade appears as soon as there is more on its side */
-@keyframes fndn-segmented-fade {
-  0%, 1% { --_fade-start: 0px; --_fade-end: 16px; }
-  2%, 98% { --_fade-start: 16px; --_fade-end: 16px; }
-  99%, 100% { --_fade-start: 16px; --_fade-end: 0px; }
-}
-/* selection-actions */
-@keyframes fndn-selection-actions-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
-@keyframes fndn-selection-actions-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
-/* table */
-@keyframes fndn-table-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
-@keyframes fndn-table-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }

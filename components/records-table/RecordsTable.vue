@@ -16,6 +16,7 @@ import { menu as menuRecipe } from "../menu/menu.recipe";
 import { recordsTable } from "./records-table.recipe";
 import { glide } from "../lib/glide";
 import { trackModality } from "../lib/modality";
+import { watchVeils } from "../lib/veil";
 import {
   ACTIONS_WIDTH, DEFAULT_LOCALE, MAX_TAGS, ariaSort, columnType, columnWidth, fillLabel, formatNumber, isBlank, isHideable, isSortable, linkHref,
   nextSort, recordsLabels, rowClickOpens, rowKey, rowName, selectAllState, selectedCount, sortRows, statusOption, tableMinWidth, tagTone, textOf, toggleAll, toggleHidden,
@@ -159,16 +160,20 @@ const cellValue = (column: RecordsTableColumn, row: RecordsTableRow) => {
   return !isBlank(value) && (type === "number" || type === "status") ? textOf(value) : undefined;
 };
 
+/* the end veil follows the scroll position, measured before the first paint (lib/veil.ts) */
+const scroll = ref<HTMLElement | null>(null);
+let stopVeils = () => {};
 onMounted(() => {
   trackModality();
+  stopVeils = watchVeils(scroll.value);
   if (rowContent.value?.$el && rowHighlight.value) stopGlide = glide(rowContent.value.$el, rowHighlight.value, { rows: "[data-slot=menu-item]", follow: "highlighted" });
 });
-onBeforeUnmount(() => stopGlide?.());
+onBeforeUnmount(() => { stopGlide?.(); stopVeils(); });
 </script>
 
 <template>
   <div ref="root" v-bind="attrs" data-slot="records-table" :class="r.base({ class: attrs.class as string | undefined })">
-    <div data-slot="records-table-scroll" :class="r.scroll()" role="region" :aria-label="copy.region" tabindex="0">
+    <div ref="scroll" data-slot="records-table-scroll" :class="r.scroll()" role="region" :aria-label="copy.region" tabindex="0">
       <table data-slot="records-table-table" :class="r.table()" :style="{ minWidth: `${tableMinWidth(columns, hiddenColumns)}px` }">
         <thead>
           <tr data-slot="records-table-head-row" :class="r.headRow()">

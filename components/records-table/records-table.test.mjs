@@ -188,6 +188,16 @@ for (const fw of targets) {
   const tagFills = () => q(`[...new Set([...document.querySelectorAll("#stage [data-slot=records-table-tags] [data-slot=tag]")].map((t)=>getComputedStyle(t).backgroundColor))].length`);
   check("tags: hues by default (several fills)", await (async () => { await p.goto(`${BASE}/harness.html?c=records-table&fw=${fw}&ex=0`, 300); await ready(); return (await tagFills()) > 1; })(), true);
   check("tagTone neutral: every tag the same neutral fill", await (async () => { await p.goto(`${BASE}/harness.html?c=records-table&fw=${fw}&ex=3`, 300); await ready(); return tagFills(); })(), 1);
+
+  /* the end veil of a table cut by the region, at the start, the middle and the end of the scroll
+   * (the start side has the sticky first column instead), in both directions: it follows the scroll
+   * position, with no animation; a table that fits shows none */
+  const sweep = () => q(`(async()=>{const root=document.querySelector("${R}");const e=root.querySelector("[data-slot=records-table-scroll]");const frame=()=>new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)));const read=()=>[e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),getComputedStyle(e,"::after").opacity];root.style.width="2000px";await frame();const fits=read();root.style.width="420px";await frame();const rtl=getComputedStyle(e).direction==="rtl";const range=e.scrollWidth-e.clientWidth;const at=[];for(const f of [0,0.5,1]){e.scrollLeft=(rtl?-1:1)*Math.round(range*f);await frame();at.push(read())}return {fits,at,animation:getComputedStyle(e,"::after").animationName}})()`);
+  const SWEPT = { fits: [false, false, "0"], at: [[false, true, "1"], [true, true, "1"], [true, false, "0"]], animation: "none" };
+  await p.goto(`${BASE}/harness.html?c=records-table&fw=${fw}&ex=0`, 300); await ready();
+  check("end veil: on while the table continues past the end, off at the end and when it fits; no animation", await sweep(), SWEPT);
+  await p.goto(`${BASE}/harness.html?c=records-table&fw=${fw}&ex=0&dir=rtl`, 300); await ready();
+  check("rtl: the same end veil at the start, the middle and the end", await sweep(), SWEPT);
   check("no console errors", p.errors.slice(0, 2), []);
   } catch (error) { failed++; checks.push(`✗ threw: ${String(error.message ?? error).slice(0, 200)}`); }
   /* a dev-server reload caused by edits elsewhere can interrupt a run: retry before reporting */

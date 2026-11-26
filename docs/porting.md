@@ -38,8 +38,8 @@ contract: parts, props, events, keyboard, motion.
 4. **Do what the React adapter does around the DOM, no more.** `trackModality()` once (it sets
    `html[data-fndn-input]`, which the `kbd-instant` utility reads to drop transitions after a key);
    `glide(...)` for a list of options; `lib/paint.ts` against entrances on first paint;
-   `lib/truncate.ts` for titles on cut text; `lib/veil.ts` for the edge veils of a table that
-   scrolls sideways. Use whichever of them the React adapter uses.
+   `lib/truncate.ts` for titles on cut text; `lib/veil.ts` for the edge veils of a part that
+   scrolls. Use whichever of them the React adapter uses.
 5. **Props map to recipe variants** as the Props table says; a bindable prop is two-way in the
    framework's own way. Attributes go where the React adapter puts them (an `aria-label` meant for
    the control lands on the control, not on the root).

@@ -240,7 +240,7 @@ for (const fw of targets) {
   const R = `document.querySelector("#stage [data-slot=segmented-control]")`;
   const state = () => p.eval(`(()=>{const r=${R};const cs=getComputedStyle(r);const rr=r.getBoundingClientRect();const o=r.querySelector('[data-slot=segmented-control-option][data-state="checked"]').getBoundingClientRect();const veil=(w)=>+getComputedStyle(r,w).opacity;
     return {over:r.hasAttribute("data-overflow"),ox:cs.overflowX,h:Math.round(rr.height),whole:[...r.querySelectorAll("[data-slot=segmented-control-option]")].every((op)=>{const l=op.querySelector("[data-slot=segmented-control-label]");return l.scrollWidth<=Math.ceil(l.getBoundingClientRect().width)+0.5&&op.getBoundingClientRect().width>=l.getBoundingClientRect().width}),
-      inView:o.left>=rr.left+15&&o.right<=rr.right-15||o.left>=rr.left&&o.right<=rr.right&&(r.scrollLeft<=0||Math.abs(r.scrollLeft)>=r.scrollWidth-r.clientWidth-1),scroll:Math.round(Math.abs(r.scrollLeft)),veils:[veil("::before"),veil("::after")],
+      inView:o.left>=rr.left+15&&o.right<=rr.right-15||o.left>=rr.left&&o.right<=rr.right&&(r.scrollLeft<=0||Math.abs(r.scrollLeft)>=r.scrollWidth-r.clientWidth-1),scroll:Math.round(Math.abs(r.scrollLeft)),veils:[r.hasAttribute("data-overflow-start"),r.hasAttribute("data-overflow-end"),veil("::before"),veil("::after")],
       drift:(()=>{const t=r.querySelector("[data-slot=segmented-control-thumb]").getBoundingClientRect();return Math.max(Math.abs(t.x-o.x),Math.abs(t.width-o.width))})()}})()`);
   const fit = await state();
   await p.eval(`${R}.style.width = "130px"`); await sleep(200);
@@ -251,7 +251,7 @@ for (const fw of targets) {
   await p.eval(`${R}.style.width = ""`); await sleep(200);
   const back = await state();
   const got = [[fit.over, fit.ox, fit.h], [squeezed.over, squeezed.ox, squeezed.h, squeezed.whole, squeezed.veils], [end.inView, end.scroll > 0, end.drift <= 0.6, end.veils], [back.over, back.ox, back.whole]];
-  const want = [[false, "visible", 24], [true, "auto", 24, true, [0, 1]], [true, true, true, [1, 0]], [false, "visible", true]];
+  const want = [[false, "visible", 24], [true, "auto", 24, true, [false, true, 0, 1]], [true, true, true, [true, false, 1, 0]], [false, "visible", true]];
   let ok = JSON.stringify(got) === JSON.stringify(want);
   /* mount: a control that mounts too narrow, with its last option selected, starts scrolled to it */
   let mount = "skipped";
@@ -264,6 +264,32 @@ for (const fw of targets) {
   }
   if (!ok) failed++;
   console.log(`${fw}\n  ${ok ? "✓" : "✗"} options that do not fit scroll (labels whole, veils, selection kept in view, thumb on it); fitting is unchanged; mounts scrolled to the selection${ok ? "" : ` — got ${JSON.stringify(got)} mount ${JSON.stringify(mount)}, want ${JSON.stringify(want)}`}`);
+}
+/* the edge veils (segments) and the edge fades (chips) of a row that does not fit, at the start,
+ * the middle and the end of the scroll, left-to-right and right-to-left: each side shows while
+ * there is more on it, drawn from the scroll position (no animation) */
+const sweep = (paint) => p.eval(`(async()=>{const e=document.querySelector("#stage [data-slot=segmented-control]");const rtl=getComputedStyle(e).direction==="rtl";const range=e.scrollWidth-e.clientWidth;const frame=()=>new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)));const at=[];for(const f of [0,0.5,1]){e.scrollLeft=(rtl?-1:1)*Math.round(range*f);await frame();at.push([e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),${paint}])}return {at,animations:[getComputedStyle(e).animationName,getComputedStyle(e,"::before").animationName,getComputedStyle(e,"::after").animationName]}})()`);
+const OPACITY = `getComputedStyle(e,"::before").opacity,getComputedStyle(e,"::after").opacity`;
+const FADE = `getComputedStyle(e).getPropertyValue("--_fade-start")||"0px",getComputedStyle(e).getPropertyValue("--_fade-end")||"0px"`;
+const none = ["none", "none", "none"];
+const cases = [
+  ["segments", 0, "130px", OPACITY, { at: [[false, true, "0", "1"], [true, true, "1", "1"], [true, false, "1", "0"]], animations: none }],
+  ["chips", 5, "160px", FADE, { at: [[false, true, "0px", "16px"], [true, true, "16px", "16px"], [true, false, "16px", "0px"]], animations: none }],
+];
+for (const fw of targets) {
+  const lines = [];
+  for (const [name, ex, width, paint, want] of cases) for (const dir of ["ltr", "rtl"]) {
+    await p.goto(`${BASE}/harness.html?c=segmented-control&fw=${fw}&ex=${ex}${dir === "rtl" ? "&dir=rtl" : ""}`, 300);
+    for (let t = 0; t < 60; t++) { if (await p.eval(`"harnessReady" in document.documentElement.dataset && !!document.querySelector("#stage [data-slot=segmented-control][data-scope] > [data-slot=segmented-control-thumb]:not([hidden])")`).catch(() => false)) break; await sleep(100); }
+    await sleep(200);
+    await p.eval(`document.querySelector("#stage [data-slot=segmented-control]").style.width=${JSON.stringify(width)}`); await sleep(200);
+    let got = await sweep(paint);
+    if (JSON.stringify(got) !== JSON.stringify(want)) { await sleep(300); got = await sweep(paint); }
+    const ok = JSON.stringify(got) === JSON.stringify(want);
+    if (!ok) failed++;
+    lines.push(`${ok ? "✓" : "✗"} ${name}, ${dir}: the edge ${name === "chips" ? "fades" : "veils"} at the start, the middle and the end follow the scroll position, no animation${ok ? "" : ` — got ${JSON.stringify(got)}, want ${JSON.stringify(want)}`}`);
+  }
+  console.log(`${fw}\n  ${lines.join("\n  ")}`);
 }
 console.log(failed ? `${failed} failed` : "all targets pass");
 await p.close();

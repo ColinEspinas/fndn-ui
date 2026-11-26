@@ -38,7 +38,7 @@
     {
       "part": "root",
       "element": "div",
-      "description": "The surface card (radius.card, shadow.card) and the sideways scroller: overflow auto, overscroll-x contain (a wheel at an end goes on to the page), thin scrollbar in line-strong. A table wider than the card fades into the surface at the edge it continues past (two sticky 24px veils, shown by the scroll position, armed only while the table overflows: data-overflow, measured), as the records and filter tables. Its focus ring is drawn inside (keyboard scrolling when the table is wider than the card). flush: no surface, shadow or radius, no veils (nothing to fade into); the scrollbar shows when the columns do not fit."
+      "description": "The surface card (radius.card, shadow.card) and the sideways scroller: overflow auto, overscroll-x contain (a wheel at an end goes on to the page), thin scrollbar in line-strong. A table wider than the card fades into the surface at the edge it continues past (two sticky 24px veils, each shown while there is more on its side: data-overflow-start and data-overflow-end, kept in step with the scroll position by lib/veil.ts), as the records and filter tables. Its focus ring is drawn inside (keyboard scrolling when the table is wider than the card). flush: no surface, shadow or radius, no veils (nothing to fade into); the scrollbar shows when the columns do not fit."
     },
     {
       "part": "table",
@@ -165,7 +165,7 @@
   },
   "motion": [
     "none: rows never animate on sort, load or hover (functional data); the row hover is instant both ways, as in the records table",
-    "edge veils: their opacity follows the scroll position (a scroll-driven timeline, no time involved); none while the table fits",
+    "edge veils: each shows at once while there is more on its side (data-overflow-start, data-overflow-end, set from the scroll position by lib/veil.ts, the same in every browser; no animation, no time involved); none while the table fits",
     "loading: the placeholder bars are still (no shimmer, no pulse): a table is a high-frequency surface; the real rows replace them in one frame"
   ]
 }

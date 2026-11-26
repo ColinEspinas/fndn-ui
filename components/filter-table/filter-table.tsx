@@ -42,7 +42,7 @@ export function FilterTable({
   const [inner, setInner] = useState<FilterTableFilterKey>(defaultFilter);
   const current = filter ?? inner;
   const s = filterTable();
-  /* the edge veils are armed only while the table overflows the card, measured before the first paint */
+  /* the edge veils follow the scroll position, measured before the first paint (lib/veil.ts) */
   const card = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => watchVeils(card.current), []);
   const shown = rows.filter((row) => filterMatches(row, current, filterKey)).length;

@@ -21,8 +21,6 @@ import { tv, type VariantProps } from "../lib/tv";
  *            stagger: the table is refiltered constantly. From the keyboard it is instant
  *            (kbd-instant). Not a disclosure, so it is not the collapsible.
  *   hover    a row's fill, instant both ways (as the other tables)
- * What stays in base.css: the @keyframes of the two edge veils. data-overflow is written by
- * filter-table.logic.ts (measured), not by the adapters, so it stays an attribute.
  * Parts rendered by other components are marked data-filter-table="filters|status|tag|empty". */
 
 /* the grid lines: --_grid-line, set on the root */
@@ -40,20 +38,15 @@ export const filterTable = tv({
       "focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-accent focus-visible:outline-offset-2",
       /* a table cut by the card's edge fades into the surface on the side it continues past (a mask
        * is ruled out: it would cut the card's shadow). Two sticky veils ride the card's edges over the
-       * whole table; a scroll-driven timeline (no time involved) shows the end one at the start, both
-       * in between, the start one at the end. The veils are armed only while the table overflows the
-       * card (data-overflow, set by watchVeils in filter-table.logic.ts): a card that fits shows none, also
-       * one that was scrolled and then grew to fit (Chromium keeps a timeline's last progress once
-       * its scroll range is gone). Their keyframes are in base.css. */
+       * whole table. Each shows while there is more on its side, at once (no time involved):
+       * data-overflow-start and data-overflow-end, kept in step with the scroll position by
+       * watchVeils (lib/veil.ts). A card that fits has neither and shows none. */
       "before:content-[''] before:[grid-area:1/1/-1/2] before:sticky before:z-1 before:w-6 before:pointer-events-none before:opacity-0",
       "after:content-[''] after:[grid-area:1/1/-1/2] after:sticky after:z-1 after:w-6 after:pointer-events-none after:opacity-0",
       "before:[justify-self:start] before:start-0 before:bg-[linear-gradient(to_var(--_end,right),var(--fndn-surface),transparent)]",
       "after:[justify-self:end] after:end-0 after:bg-[linear-gradient(to_var(--_start,left),var(--fndn-surface),transparent)]",
       "rtl:[--_end:left] rtl:[--_start:right]",
-      "data-overflow:supports-[animation-timeline:scroll()]:before:[animation-name:fndn-filter-table-veil-start] data-overflow:supports-[animation-timeline:scroll()]:after:[animation-name:fndn-filter-table-veil-end]",
-      "supports-[animation-timeline:scroll()]:before:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:after:[animation-timing-function:linear]",
-      "supports-[animation-timeline:scroll()]:before:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:after:[animation-fill-mode:both]",
-      "supports-[animation-timeline:scroll()]:before:[animation-timeline:scroll(nearest_inline)] supports-[animation-timeline:scroll()]:after:[animation-timeline:scroll(nearest_inline)]",
+      "data-overflow-start:before:opacity-100 data-overflow-end:after:opacity-100",
     ],
     table: "[grid-area:1/1] min-w-(--fndn-filter-min,420px)",
     head: [

@@ -137,7 +137,7 @@ The shared helpers of `lib/` (plain DOM TypeScript, the same in every framework)
 | `truncate.ts` `truncationTitles(el, selector?)`, `middleTruncation(…)` | A part can be cut: it carries a `title` with the full text while cut. Middle cut for paths and ids. |
 | `glide.ts` `glide(list, layer, { rows, follow })` | The list has a highlight layer (`glideLayer`): moves it to the `data-highlighted` row or the hovered one. |
 | `paint.ts` `afterPaint(fn)` | Something may only start after the first paint (arming an entrance). |
-| `veil.ts` `watchVeils(card)` | A card holds a table that may scroll sideways: keeps `data-overflow` on the card while the table is wider than it, so the edge veils show only then. |
+| `veil.ts` `watchVeils(scroller, { axis, hold })` | A part scrolls and fades the edge it continues past: keeps `data-overflow-start` and `data-overflow-end` on the scroller while content is hidden past that edge, from the scroll position (right-to-left included), so the recipe paints each veil from its attribute. Same in every browser: no scroll-driven animation. Call it before the first paint. |
 
 ## 5. Behaviour
 

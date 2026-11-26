@@ -51,7 +51,7 @@ export function SegmentedControl({
   useEffect(() => trackModality(), []);
   /* labels are never cut: options that do not fit scroll sideways, the selected one kept in view (segmented-control.logic.ts) */
   const root = useRef<HTMLDivElement>(null);
-  /* before the first paint: the thumb and data-overflow are measured with the first frame */
+  /* before the first paint: the thumb, data-overflow and the veils are measured with the first frame */
   useLayoutEffect(() => scrollSelected(root.current), []);
 
   /* Home / End are not part of the native radio keys */

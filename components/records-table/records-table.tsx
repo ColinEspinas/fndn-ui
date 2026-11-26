@@ -2,7 +2,7 @@
 import { Menu as ArkMenu, useMenu } from "@ark-ui/react/menu";
 import { Portal } from "@ark-ui/react/portal";
 import { ArrowDown, ArrowSquareOut, ArrowUp, Columns, DotsThree, EyeSlash } from "@phosphor-icons/react";
-import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useMemo, useRef, useState, type CSSProperties, type FocusEvent, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
+import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type FocusEvent, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { Button, type ButtonProps } from "../button/button";
 import { Checkbox } from "../checkbox/checkbox";
 import { Count } from "../count/count";
@@ -14,6 +14,7 @@ import { Tag } from "../tag/tag";
 import { Tooltip } from "../tooltip/tooltip";
 import { glide } from "../lib/glide";
 import { trackModality } from "../lib/modality";
+import { watchVeils } from "../lib/veil";
 import {
   ACTIONS_WIDTH, DEFAULT_LOCALE, MAX_TAGS, ariaSort, columnType, columnWidth, fillLabel, formatNumber, isBlank, isHideable, isSortable,
   linkHref, nextSort, recordsLabels, rowClickOpens, rowKey, rowName, selectAllState, selectedCount, sortRows, statusOption, tableMinWidth, tagTone, textOf,
@@ -157,6 +158,9 @@ const Table = memo(function Table({
   const [hidden, setHidden] = useControllable<ReadonlyArray<string>>(hiddenProp, defaultHiddenColumns, (next) => onHiddenColumnsChange?.(next.slice()));
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => trackModality(), []);
+  /* the end veil follows the scroll position, measured before the first paint (lib/veil.ts) */
+  const scroll = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => watchVeils(scroll.current), []);
 
   /* rows keep their identity across a sort, so React only moves them */
   const display = useMemo(() => sortRows(rows, columns, sort), [rows, columns, sort]);
@@ -193,7 +197,7 @@ const Table = memo(function Table({
   const all = selectAllState(ids, selected);
   return (
     <div ref={root} data-slot="records-table" className={r.base({ class: className })} style={style}>
-      <div data-slot="records-table-scroll" className={r.scroll()} role="region" aria-label={copy.region} tabIndex={0}>
+      <div ref={scroll} data-slot="records-table-scroll" className={r.scroll()} role="region" aria-label={copy.region} tabIndex={0}>
         <table data-slot="records-table-table" className={r.table()} style={{ minWidth: tableMinWidth(columns, hidden) }}>
           <thead>
             <tr data-slot="records-table-head-row" className={r.headRow()}>

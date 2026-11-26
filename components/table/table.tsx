@@ -39,7 +39,7 @@ const cls = (c: string) => c || undefined;
  * The root is the scrolling card; every other prop (aria-label …) goes to the <table>. */
 export function Table({ columns, rows, caption, variant = "card", loading = false, loadingRows = 5, className, style, children, ...rest }: TableProps) {
   const r = table({ variant });
-  /* the edge veils are armed while the table overflows its card (measured); a cut cell carries its full text as a title */
+  /* the edge veils follow the scroll position, measured before the first paint (lib/veil.ts); a cut cell carries its full text as a title */
   const card = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => watchVeils(card.current), []);
   useLayoutEffect(() => truncationTitles(card.current, "[data-slot=table-cell]"), []);

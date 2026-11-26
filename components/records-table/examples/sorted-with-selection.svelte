@@ -1,7 +1,10 @@
 <script lang="ts">
+  import type { ComponentProps } from "svelte";
   import { RecordsTable } from "@fndn/svelte";
 
-  const columns = [
+  type Props = ComponentProps<typeof RecordsTable>;
+
+  const columns: Props["columns"] = [
     { key: "company", label: "Company" },
     { key: "segment", label: "Segment", type: "tags", tagTone: "neutral" },
     { key: "owner", label: "Account owner", width: 150 },
@@ -125,7 +128,7 @@
     },
   ];
 
-  const rowActions = [
+  const rowActions: Props["rowActions"] = [
     { value: "open", label: "Open account" },
     { value: "email", label: "Email account owner" },
     { value: "invoices", label: "View invoices" },
@@ -133,7 +136,7 @@
     { value: "cancel", label: "Cancel subscription", tone: "danger" },
   ];
 
-  let sort = $state({ key: "health", direction: "ascending" });
+  let sort = $state<Props["sort"]>({ key: "health", direction: "ascending" });
 
   let selected = $state(["kestrel", "saint-aldric", "marlow"]);
 </script>

@@ -17,7 +17,7 @@ const columns = [
       { value: "onboarding", label: "Onboarding", tone: "neutral" },
     ],
   },
-];
+] as const;
 
 const labels = { empty: "No accounts at risk this week" };
 </script>

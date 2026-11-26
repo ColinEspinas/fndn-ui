@@ -16,14 +16,14 @@ import { tv, type VariantProps } from "../lib/tv";
  * the options do not fit, the engine glue sets data-overflow and the row scrolls sideways.
  *
  * Everything is here, motion included. Parts are found by data-slot (segmented-control,
- * segmented-control-thumb, -option, -label, -dot, -input); the root slot is `base`. What stays in
- * base.css: the @keyframes of the overflow veils and of the chips' edge fade. data-overflow is
- * written by the engine glue (segmented-control.logic.ts), not by the adapters, so it stays an attribute. */
+ * segmented-control-thumb, -option, -label, -dot, -input); the root slot is `base`. data-overflow
+ * is written by the engine glue (segmented-control.logic.ts), data-overflow-start and
+ * data-overflow-end by watchVeils (lib/veil.ts), not by the adapters, so they stay attributes. */
 
 /* The edge veils of an overflowing row (segments only: chips have no track). The edge the row
  * continues past fades into the track, so an option cut by the edge never reads as a stray letter:
- * two sticky veils ride the scroller's edges and a scroll-driven timeline (no time involved) shows
- * the end one at the start, both in between, the start one at the end (as in
+ * two sticky veils ride the scroller's edges, each shown while there is more on its side, at once
+ * (no time involved): data-overflow-start and data-overflow-end follow the scroll position (as in
  * selection-actions). Each nets to nothing in the row (16px minus the 2px padding it reaches into minus
  * 14px): the options do not move. Without data-overflow none of this applies. */
 const VEILS = [
@@ -32,8 +32,7 @@ const VEILS = [
   "data-overflow:after:content-[''] data-overflow:after:sticky data-overflow:after:z-3 data-overflow:after:flex-[0_0_16px] data-overflow:after:-my-0.5 data-overflow:after:pointer-events-none data-overflow:after:opacity-0",
   "data-overflow:before:start-0 data-overflow:before:ms-[-2px] data-overflow:before:me-[-14px] data-overflow:before:rounded-s-(--_radius) data-overflow:before:bg-[linear-gradient(to_var(--_end,right),var(--_veil),transparent)]",
   "data-overflow:after:end-0 data-overflow:after:ms-[-14px] data-overflow:after:me-[-2px] data-overflow:after:rounded-e-(--_radius) data-overflow:after:bg-[linear-gradient(to_var(--_start,left),var(--_veil),transparent)]",
-  "supports-[animation-timeline:scroll()]:data-overflow:before:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:data-overflow:before:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:data-overflow:before:[animation-timeline:scroll(nearest_inline)] supports-[animation-timeline:scroll()]:data-overflow:before:[animation-name:fndn-segmented-veil-start]",
-  "supports-[animation-timeline:scroll()]:data-overflow:after:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:data-overflow:after:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:data-overflow:after:[animation-timeline:scroll(nearest_inline)] supports-[animation-timeline:scroll()]:data-overflow:after:[animation-name:fndn-segmented-veil-end]",
+  "data-overflow:data-overflow-start:before:opacity-100 data-overflow:data-overflow-end:after:opacity-100",
 ];
 
 /* until the thumb is measured (first paint, server render) the selected segment paints itself
@@ -119,15 +118,15 @@ export const segmentedControl = tv({
       /* the one thumb still slides between the chips; the 4px padding keeps the focus ring and the
        * thumb's shadow (3px below it) inside the scroller. The label holds a dot, the text and a count.
        * Overflowing, the edge the row continues past fades out: a mask, not a veil, because the row
-       * has no colour of its own to fade into. A scroll-driven timeline (no time involved) sets the
-       * fade's two widths: the end one at the start, both in between, the start one at the end. The
-       * fade is 16px, the room revealSelected keeps clear; without timelines there is no fade. */
+       * has no colour of its own to fade into. Each side's fade is 16px while there is more on that
+       * side (data-overflow-start, data-overflow-end: the scroll position, at once, no time
+       * involved), the room revealSelected keeps clear; 0px otherwise. */
       chips: {
         base: [
           "flex gap-1 p-1 bg-transparent overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
           "[&:dir(rtl)]:[--_end:left]",
           "data-overflow:[mask-image:linear-gradient(to_var(--_end,right),transparent,#000_var(--_fade-start,0px),#000_calc(100%_-_var(--_fade-end,0px)),transparent)]",
-          "supports-[animation-timeline:scroll()]:data-overflow:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:data-overflow:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:data-overflow:[animation-timeline:scroll(self_inline)] supports-[animation-timeline:scroll()]:data-overflow:[animation-name:fndn-segmented-fade]",
+          "data-overflow-start:[--_fade-start:16px] data-overflow-end:[--_fade-end:16px]",
         ],
         thumb: "before:shadow-btn",
         option: ["shrink-0 h-[26px] px-2.5 gap-1.5 text-xs", `${UNMEASURED}:shadow-btn`],

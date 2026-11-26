@@ -6,7 +6,7 @@ const actions = [
   {
     value: "improve",
     label: "Improve",
-    icon: "sparkle",
+    icon: "sparkle" as const,
     busyLabel: "Improving",
   },
 ];

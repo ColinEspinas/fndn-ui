@@ -56,7 +56,7 @@ const tableAttrs = computed(() => {
   return rest;
 });
 const r = computed(() => table({ variant: props.variant }));
-/* the edge veils are armed while the table overflows its card (measured); a cut cell carries its full text as a title */
+/* the edge veils follow the scroll position, measured before the first paint (lib/veil.ts); a cut cell carries its full text as a title */
 const card = ref<HTMLDivElement | null>(null);
 let stopVeils = () => {};
 let stopTitles = () => {};

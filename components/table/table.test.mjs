@@ -22,13 +22,18 @@ const h = (sel) => q(`Math.round(document.querySelector(${JSON.stringify(sel)}).
 const HEAD = `${R} [data-slot=table-head]`;
 const ROW = (i) => `${R} [data-slot=table-body] > [data-slot=table-row]:nth-child(${i + 1})`;
 const CELL = (i, j) => `${ROW(i)} > [data-slot=table-cell]:nth-child(${j + 1})`;
+/* the edge veils at the start, the middle and the end of the scroll, in the page's direction:
+ * [data-overflow-start, data-overflow-end, ::before opacity, ::after opacity] at each, then the
+ * animation names of the scroller and its two veils (none: the scroll position drives them) */
+const veilSweep = (sel) => q(`(async()=>{const e=document.querySelector(${JSON.stringify(sel)});const rtl=getComputedStyle(e).direction==="rtl";const range=e.scrollWidth-e.clientWidth;const frame=()=>new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)));const at=[];for(const f of [0,0.5,1]){e.scrollLeft=(rtl?-1:1)*Math.round(range*f);await frame();at.push([e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),getComputedStyle(e,"::before").opacity,getComputedStyle(e,"::after").opacity])}e.scrollLeft=0;await frame();return {at,animations:[getComputedStyle(e).animationName,getComputedStyle(e,"::before").animationName,getComputedStyle(e,"::after").animationName]}})()`);
+const VEILS_SWEPT = { at: [[false, true, "0", "1"], [true, true, "1", "1"], [true, false, "1", "0"]], animations: ["none", "none", "none"] };
 
 async function run(fw, check) {
   await open(fw, 0);
   check("data form: a <table> in the card, thead with 4 th scope=col, tbody with 4 rows", await q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});const t=e.querySelector(":scope > [data-slot=table-table]");return [e.tagName,t.tagName,[...t.querySelectorAll("thead th")].map((x)=>x.scope).join(","),t.querySelectorAll("tbody > tr").length,t.querySelectorAll("tbody td").length]})()`), ["DIV", "TABLE", "col,col,col,col", 4, 16]);
   const surface = await token("--fndn-surface");
   check("card: radius.card, surface, a shadow, scrolls sideways (overscroll-x contain)", await cs(R, ["borderRadius", "backgroundColor", "overflowX", "overscrollBehaviorX"]).then((v) => [...v.slice(0, 2), v[2], v[3]]), ["10px", surface, "auto", "contain"]);
-  check("a table that fits its card arms no veil", await q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});return [e.hasAttribute("data-overflow"),getComputedStyle(e,"::after").opacity]})()`), [false, "0"]);
+  check("a table that fits its card shows no veil", await q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});return [e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),getComputedStyle(e,"::before").opacity,getComputedStyle(e,"::after").opacity]})()`), [false, false, "0", "0"]);
   check("card has the card shadow", await q(`getComputedStyle(document.querySelector(${JSON.stringify(R)})).boxShadow!=="none"`), true);
 
   /* the model's metrics: rows 35px, header 12.5px/500 ink-2, values 13px/500 ink */
@@ -64,14 +69,11 @@ async function run(fw, check) {
   check("an unbreakable value widens its column and the card scrolls; the page does not", await q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});return [e.scrollWidth>e.clientWidth,document.documentElement.scrollWidth<=innerWidth,Math.round(e.getBoundingClientRect().width)]})()`), [true, true, 360]);
   await open(fw, 1, "&data=worst");
   /* edge veils (as the records and filter tables): at the start only the end one shows, scrolled
-   * both, at the end only the start one; a table that fits arms none */
-  const veils = () => q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});return [e.hasAttribute("data-overflow"),getComputedStyle(e,"::before").opacity,getComputedStyle(e,"::after").opacity]})()`);
-  const atStart = await veils();
-  await q(`document.querySelector(${JSON.stringify(R)}).scrollLeft=40`); await sleep(150);
-  const between = await veils();
-  await q(`document.querySelector(${JSON.stringify(R)}).scrollLeft=99999`); await sleep(150);
-  check("a table wider than its card fades at the edge it continues past (end veil, both, start veil)", [atStart, between, await veils()], [[true, "0", "1"], [true, "1", "1"], [true, "1", "0"]]);
-  await q(`document.querySelector(${JSON.stringify(R)}).scrollLeft=0`); await sleep(100);
+   * both, at the end only the start one; drawn from the scroll position, no animation */
+  check("a table wider than its card fades at the edge it continues past (end veil, both, start veil), no animation", await veilSweep(R), VEILS_SWEPT);
+  await open(fw, 1, "&data=worst&dir=rtl");
+  check("rtl: the same veils at the start, the middle and the end", await veilSweep(R), VEILS_SWEPT);
+  await open(fw, 1, "&data=worst");
   check("many columns at 320px: the card scrolls sideways, every header label whole", await q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});return [e.scrollWidth>e.clientWidth,[...e.querySelectorAll("th")].every((t)=>t.scrollWidth<=t.clientWidth+1)]})()`), [true, true]);
   await p.click(5, 5); await p.key("Tab");
   check("a scrolling card is reachable by Tab and draws its ring inside", await q(`(()=>{const e=document.querySelector(${JSON.stringify(R)});const s=getComputedStyle(e);return [document.activeElement===e,s.outlineStyle,parseFloat(s.outlineOffset)<0]})()`), [true, "solid", true]);

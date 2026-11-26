@@ -50,7 +50,7 @@
 
   let { columns, rows, caption, variant = "card", loading = false, loadingRows = 5, class: className, style, children, cell, ...rest }: Props = $props();
   const r = $derived(table({ variant }));
-  /* the edge veils are armed while the table overflows its card (measured); a cut cell carries its full text as a title */
+  /* the edge veils follow the scroll position, measured before the first paint (lib/veil.ts); a cut cell carries its full text as a title */
   let card: HTMLDivElement | undefined = $state();
   $effect(() => watchVeils(card ?? null));
   $effect(() => truncationTitles(card ?? null, "[data-slot=table-cell]"));

@@ -44,7 +44,7 @@ const ABOUT: Record<string, string> = {
   "modality.ts": "Remembers whether the last input was a key or a pointer, so changes made from the keyboard are instant.",
   "truncate.ts": "Text cut by an ellipsis gets a title with its full text while it is cut.",
   "paint.ts": "Nothing plays on first paint: an entrance runs only once the part has been painted.",
-  "veil.ts": "The edge veils of a table that scrolls sideways: shown only while the table is wider than its card.",
+  "veil.ts": "The edge veils of a scroller: each shows while content is scrolled out of view past that edge.",
 };
 /* a file not described above: the first sentence of its leading comment */
 const lead = (code: string) => firstSentence((code.match(/^\s*\/\*\*?([\s\S]*?)\*\//)?.[1] ?? "").replace(/\n\s*\*\s?/g, " ").replace(/\s+/g, " ").trim());

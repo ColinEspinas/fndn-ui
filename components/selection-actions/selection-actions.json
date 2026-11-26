@@ -178,7 +178,7 @@
   "motion": [
     "toolbar: the shared popup recipe (`popup`): opacity + scale from motion.popup-scale out of --transform-origin, duration.popup, easing.out-strong when the text was selected with a pointer; instant from the keyboard; closes at duration.fast",
     "mode swap (idle → busy → result): the new controls fade in over duration.base under the pointer; instant from the keyboard; the bar's width eases to the new controls over duration.base (easing.out-strong) and stays centred under the selection (instant from the keyboard). Opening plays only the popup's entrance (the controls arrive with it)",
-    "veils: the edge veils of a bar wider than the screen are armed only while it overflows (data-overflow); a bar that fits shows none",
+    "veils: the edge veils of a bar wider than the screen show at once while there is more on their side (data-overflow-start, data-overflow-end, set from the scroll position by lib/veil.ts, the same in every browser; no animation); not judged while the bar eases between widths; a bar that fits shows none",
     "mark: background over duration.base as it opens and closes; streamed words do not animate; the caret is streaming-text's",
     "buttons: the button component's press scale and colour; the spinner loops (it is the loading signal)"
   ]

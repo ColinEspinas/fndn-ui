@@ -9,10 +9,13 @@
  *   restoreSelection put the native selection back over a range (after Escape, Keep, Discard)
  *   rovingToolbar    one tab stop; arrows / Home / End move between the buttons; focus survives the
  *                    buttons being replaced (idle → busy → result); Tab returns to the passage.
- *                    It also keeps two attributes on the content for the recipe: data-overflow while
- *                    the controls are wider than the bar (arms the edge veils), data-swapped once the
- *                    mode has changed while open (the new controls fade; opening alone does not)
+ *                    It also keeps attributes on the content for the recipe: data-overflow-start and
+ *                    data-overflow-end while controls are hidden past that edge (the edge veils,
+ *                    lib/veil.ts), data-swapped once the mode has changed while open (the new
+ *                    controls fade; opening alone does not)
  * Plain TypeScript, DOM only, no framework imports. */
+
+import { watchVeils } from "../lib/veil";
 
 export type TextRange = { start: number; end: number };
 export type SelectionActionsMode = "idle" | "busy" | "result";
@@ -225,13 +228,12 @@ export function rovingToolbar(content: HTMLElement, passage: () => HTMLElement |
   const release = (e?: TransitionEvent) => {
     if (e && (e.target !== content || e.propertyName !== "width")) return;
     content.style.width = "";
-    measure();
   };
   const resize = () => {
     const from = painted;
     content.style.width = "";
     const to = content.offsetWidth;
-    if (!from || !to || Math.abs(to - from) < 1 || document.documentElement.dataset.fndnInput === "keyboard") { measure(); return; }
+    if (!from || !to || Math.abs(to - from) < 1 || document.documentElement.dataset.fndnInput === "keyboard") return;
     /* The engine follows a size change a frame late, so a bar resizing every frame would drift off
      * centre. The positioner holds the widest width of this opening instead (reset on close); the
      * bar is centred inside it (mx-auto), so it stays under the selection while it eases. */
@@ -260,18 +262,11 @@ export function rovingToolbar(content: HTMLElement, passage: () => HTMLElement |
   });
   swaps.observe(content, { childList: true, attributes: true, attributeFilter: ["data-state"] });
   content.addEventListener("transitionend", release);
-  /* data-overflow: the veils are armed only while the controls do not fit (a bar that fits shows
-   * none); not judged while the bar is held at a width on its way to its natural one */
-  function measure() {
-    if (content.style.width) return;
-    const over = content.scrollWidth > content.clientWidth + 1;
-    if (over !== content.hasAttribute("data-overflow")) content.toggleAttribute("data-overflow", over);
-  }
-  const sizes = new ResizeObserver(() => { painted = content.offsetWidth; measure(); });
+  const sizes = new ResizeObserver(() => { painted = content.offsetWidth; });
   sizes.observe(content);
-  const grow = new MutationObserver(measure);
-  grow.observe(content, { childList: true, subtree: true, characterData: true });
-  measure();
+  /* the edge veils follow the scroll position; not judged while the bar is held at a width on its
+   * way to its natural one (it is judged again when the width's transition ends) */
+  const stopVeils = watchVeils(content, { hold: () => !!content.style.width });
   content.addEventListener("keydown", keydown);
   content.addEventListener("focusin", focusin);
   content.addEventListener("focusout", focusout);
@@ -281,7 +276,7 @@ export function rovingToolbar(content: HTMLElement, passage: () => HTMLElement |
     swaps.disconnect();
     content.removeEventListener("transitionend", release);
     sizes.disconnect();
-    grow.disconnect();
+    stopVeils();
     content.removeEventListener("keydown", keydown);
     content.removeEventListener("focusin", focusin);
     content.removeEventListener("focusout", focusout);

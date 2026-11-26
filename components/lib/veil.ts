@@ -1,24 +1,62 @@
-/* The edge veils of a table that scrolls sideways: a card arms them only while its table is wider
- * than it. Plain TypeScript, DOM only.
+/* The edge veils of a scroller: the side it continues past fades, to show there is more. This
+ * keeps two attributes on the scroller, which the recipe paints from:
+ *   data-overflow-start  content is hidden past the start edge (scrolled away from the start)
+ *   data-overflow-end    content is hidden past the end edge
+ * Neither is set while the content fits. The veils are drawn from the scroll position by this
+ * code, not by a scroll-driven animation, so they look the same in every browser.
  *
- * The veils follow a scroll-driven timeline (the table and filter-table recipes). A card whose
- * table stops overflowing (the card grew, a filter left narrower rows) has no scroll range, and
- * Chromium then keeps the timeline's last progress: a card scrolled to the end that widens to fit
- * kept its start veil over the first column. data-overflow goes on the card while the table
- * overflows it, and the recipe hangs the veils' animation on it: a card that fits shows none.
- * Measured at once (call it before the first paint) and again on every resize. */
+ * Correct at once (call it before the first paint: no veil flashes in or out on mount), on scroll
+ * (a passive listener, one write per frame), when the scroller or its content resizes, and when
+ * the content changes. Right-to-left is handled (scrollLeft runs from 0 to negative there). A
+ * couple of pixels count as nothing, so a fractional offset never shows a veil.
+ * Plain TypeScript, DOM only. */
 
-/** Keep data-overflow on the card in step with its table's width. Returns a cleanup. */
-export function watchVeils(card: HTMLElement | null): () => void {
-  if (!card) return () => {};
+export type VeilOptions = {
+  /** The axis the scroller scrolls on: "x" (inline, the default) or "y". */
+  axis?: "x" | "y";
+  /** While this returns true the attributes are left as they are: a scroller held at a size on
+   * its way to another (a width that eases) is judged again when the ease ends. */
+  hold?: () => boolean;
+};
+
+/* offsets this close to an end count as at that end */
+const TOLERANCE = 2;
+
+/** Keep data-overflow-start and data-overflow-end on the scroller in step with its scroll
+ * position. Returns a cleanup. */
+export function watchVeils(scroller: HTMLElement | null, { axis = "x", hold }: VeilOptions = {}): () => void {
+  if (!scroller) return () => {};
+  const el = scroller;
+  const set = (name: string, on: boolean) => {
+    if (on !== el.hasAttribute(name)) el.toggleAttribute(name, on);
+  };
   const measure = () => {
-    const over = card.scrollWidth > card.clientWidth + 0.5;
-    if (over !== card.hasAttribute("data-overflow")) card.toggleAttribute("data-overflow", over);
+    if (hold?.()) return;
+    const range = axis === "x" ? el.scrollWidth - el.clientWidth : el.scrollHeight - el.clientHeight;
+    /* the distance scrolled from the start, whatever the direction's sign */
+    const from = Math.abs(axis === "x" ? el.scrollLeft : el.scrollTop);
+    set("data-overflow-start", range > TOLERANCE && from > TOLERANCE);
+    set("data-overflow-end", range > TOLERANCE && range - from > TOLERANCE);
+  };
+  let frame = 0;
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(() => { frame = 0; measure(); });
   };
   measure();
-  if (typeof ResizeObserver === "undefined") return () => {};
-  const resize = new ResizeObserver(measure);
-  resize.observe(card);
-  for (const child of Array.from(card.children)) resize.observe(child);
-  return () => resize.disconnect();
+  el.addEventListener("scroll", schedule, { passive: true });
+  el.addEventListener("transitionend", schedule);
+  /* resize observers run after layout and before paint: measure there and then */
+  const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+  const observeChildren = () => { for (const child of Array.from(el.children)) resize?.observe(child); };
+  resize?.observe(el);
+  observeChildren();
+  const content = new MutationObserver(() => { observeChildren(); schedule(); });
+  content.observe(el, { childList: true, subtree: true, characterData: true });
+  return () => {
+    cancelAnimationFrame(frame);
+    el.removeEventListener("scroll", schedule);
+    el.removeEventListener("transitionend", schedule);
+    resize?.disconnect();
+    content.disconnect();
+  };
 }

@@ -6,7 +6,11 @@
  * changes, so a control whose options fit is untouched by any of this. The selected option is scrolled
  * into view (clear of the veil) when the control mounts and whenever the selection changes:
  * instantly from the keyboard, at mount and under reduced motion, smoothly after a pointer pick.
- * The thumb lives in the scrolled content, so it stays on its option at any scroll position. */
+ * The thumb lives in the scrolled content, so it stays on its option at any scroll position.
+ * Which edges show a veil (or, for chips, a fade) follows the scroll position: watchVeils
+ * (lib/veil.ts) keeps data-overflow-start and data-overflow-end on the root. */
+
+import { watchVeils } from "../lib/veil";
 
 const OPTION = ":scope > [data-slot=segmented-control-option]";
 /* the veil's width (segmented-control.recipe.ts): a revealed option clears it */
@@ -91,9 +95,10 @@ export function placeThumb(root: HTMLElement): void {
   thumb.hidden = false;
 }
 
-/** Keep data-overflow in step with the options' width and the selected option in view. Returns a
- * cleanup. Call it before the first paint: it measures at once (data-overflow and the thumb), not
- * a frame later in the first ResizeObserver callback. */
+/** Keep data-overflow in step with the options' width, the selected option in view and the veils
+ * in step with the scroll position. Returns a cleanup. Call it before the first paint: it measures
+ * at once (data-overflow, the thumb and the veils), not a frame later in the first ResizeObserver
+ * callback. */
 export function scrollSelected(root: HTMLElement | null): () => void {
   if (!root) return () => {};
   placeThumb(root);
@@ -123,5 +128,6 @@ export function scrollSelected(root: HTMLElement | null): () => void {
     revealSelected(root, !first && smoothAllowed());
   });
   mutations.observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ["data-state"] });
-  return () => { resize.disconnect(); mutations.disconnect(); };
+  const stopVeils = watchVeils(root);
+  return () => { resize.disconnect(); mutations.disconnect(); stopVeils(); };
 }

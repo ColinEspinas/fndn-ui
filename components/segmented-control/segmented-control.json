@@ -14,7 +14,7 @@
     {
       "part": "root",
       "element": "div",
-      "description": "role=radiogroup. The track: its height is the segments' height plus 2px padding (chips: no track, a 4px-padded row that scrolls sideways). Labels are never cut: when the options do not fit, the engine glue (segmented-control.logic.ts) sets data-overflow and the row scrolls sideways with no scrollbar, a veil in the track colour on the edge(s) with more, the focus ring on the option's edge, and the selected option scrolled into view at mount and when it changes. Options that fit: nothing changes."
+      "description": "role=radiogroup. The track: its height is the segments' height plus 2px padding (chips: no track, a 4px-padded row that scrolls sideways). Labels are never cut: when the options do not fit, the engine glue (segmented-control.logic.ts) sets data-overflow and the row scrolls sideways with no scrollbar, a veil in the track colour on the edge(s) with more (chips: a 16px mask fade; data-overflow-start and data-overflow-end, kept in step with the scroll position by lib/veil.ts), the focus ring on the option's edge, and the selected option scrolled into view at mount and when it changes. Options that fit: nothing changes."
     },
     {
       "part": "thumb",
@@ -179,7 +179,7 @@
     "segment text: colour over duration.base",
     "press: no background anywhere in the control. The pressed segment's label goes to ink and the segment scales to motion.press-scale over duration.press; pressing the selected segment also scales the thumb (its ::before, with the individual scale property, so the engine's translate is untouched)",
     "chips: the same thumb, hover, press and keyboard rules as segments; an unselected chip never paints the thumb's look",
-    "overflow: the edge veils show and hide on a scroll-driven timeline (no time involved); the selected option is scrolled into view instantly at mount, from the keyboard and under reduced motion, smoothly after a pointer pick; the thumb rides the scrolled content and never re-measures for a scroll; an option wider than the room between the veils shows its start, in both directions",
-    "mount: the thumb and data-overflow are measured before the first paint (a layout effect), so a fresh control (a docs page swap) never paints a frame without its thumb"
+    "overflow: the edge veils (chips: the edge fades) show and hide at once from the scroll position (lib/veil.ts, the same in every browser; no animation, no time involved); the selected option is scrolled into view instantly at mount, from the keyboard and under reduced motion, smoothly after a pointer pick; the thumb rides the scrolled content and never re-measures for a scroll; an option wider than the room between the veils shows its start, in both directions",
+    "mount: the thumb, data-overflow and the veils are measured before the first paint (a layout effect), so a fresh control (a docs page swap) never paints a frame without its thumb"
   ]
 }

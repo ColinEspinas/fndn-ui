@@ -21,7 +21,7 @@ const columns = [
   },
   { key: "mrr", label: "MRR (USD)", type: "number" },
   { key: "website", label: "Website", type: "link", width: 240 },
-];
+] as const;
 
 const rows = [
   {
@@ -132,9 +132,9 @@ const rowActions = [
   { value: "invoices", label: "View invoices" },
   { type: "separator" },
   { value: "cancel", label: "Cancel subscription", tone: "danger" },
-];
+] as const;
 
-const sort = ref({ key: "health", direction: "ascending" });
+const sort = ref({ key: "health", direction: "ascending" as const });
 
 const selected = ref(["kestrel", "saint-aldric", "marlow"]);
 </script>

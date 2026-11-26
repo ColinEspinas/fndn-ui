@@ -89,7 +89,15 @@ for (const fw of targets) {
   await load(4);
   check("result: Keep, Discard, Try again", await q(`[...document.querySelectorAll(${JSON.stringify(C + " button")})].map((b)=>b.getAttribute("aria-label")??b.textContent.trim())`), ["Keep", "Discard", "Try again"]);
   check("result: the mark holds the result", await mark(), [RESULT, "result", true]);
-  check("a bar that fits shows no veil over its controls", await q(`(()=>{const c=document.querySelector(${JSON.stringify(C)});return [c.scrollWidth>c.clientWidth+1,c.hasAttribute("data-overflow"),getComputedStyle(c,"::before").opacity,getComputedStyle(c,"::after").opacity]})()`), [false, false, "0", "0"]);
+  check("a bar that fits shows no veil over its controls", await q(`(()=>{const c=document.querySelector(${JSON.stringify(C)});return [c.scrollWidth>c.clientWidth+1,c.hasAttribute("data-overflow-start"),c.hasAttribute("data-overflow-end"),getComputedStyle(c,"::before").opacity,getComputedStyle(c,"::after").opacity]})()`), [false, false, false, "0", "0"]);
+  /* a bar narrower than its controls (a phone): the edge veils at the start, the middle and the end
+   * of the scroll follow the scroll position, in both directions, with no animation */
+  const sweep = () => q(`(async()=>{const e=document.querySelector(${JSON.stringify(C)});e.style.maxWidth="140px";const frame=()=>new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)));await frame();const rtl=getComputedStyle(e).direction==="rtl";const range=e.scrollWidth-e.clientWidth;const at=[];for(const f of [0,0.5,1]){e.scrollLeft=(rtl?-1:1)*Math.round(range*f);await frame();at.push([e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),getComputedStyle(e,"::before").opacity,getComputedStyle(e,"::after").opacity])}e.style.maxWidth="";await frame();return {at,animations:[getComputedStyle(e,"::before").animationName,getComputedStyle(e,"::after").animationName]}})()`);
+  const SWEPT = { at: [[false, true, "0", "1"], [true, true, "1", "1"], [true, false, "1", "0"]], animations: ["none", "none"] };
+  check("a bar that does not fit: end veil at the start, both in the middle, start veil at the end; no animation", await sweep(), SWEPT);
+  await load(4, "&dir=rtl");
+  check("rtl: the same veils at the start, the middle and the end", await sweep(), SWEPT);
+  await load(4);
   await p.clickSel(`${C} [data-selection-actions=retry]`); await sleep(30);
   check("a mode swap under the pointer fades the new controls in", await q(`document.querySelector(${JSON.stringify(C)}).getAnimations({subtree:true}).some((a)=>a.animationName==="fndn-fade-in")`), true);
   check("…and the bar eases to its new width (a width transition), centred under the selection", await q(`(()=>{const c=document.querySelector(${JSON.stringify(C)});return [c.getAnimations().some((a)=>a.transitionProperty==="width"), __geo().offCentre<=1]})()`), [true, true]);

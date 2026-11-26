@@ -1,7 +1,10 @@
 <script lang="ts">
+  import type { ComponentProps } from "svelte";
   import { RecordsTable } from "@fndn/svelte";
 
-  const columns = [
+  type Props = ComponentProps<typeof RecordsTable>;
+
+  const columns: Props["columns"] = [
     { key: "company", label: "Company", width: 190 },
     { key: "plan", label: "Plan", width: 100 },
     { key: "seats", label: "Seats", type: "number", width: 90 },
@@ -27,7 +30,7 @@
     { id: "orbit", company: "Orbit Studio", plan: "Starter", seats: 6, health: "onboarding" },
   ];
 
-  const rowActions = [
+  const rowActions: Props["rowActions"] = [
     { value: "open", label: "Open account" },
     { value: "invoices", label: "View invoices" },
     { type: "separator" },

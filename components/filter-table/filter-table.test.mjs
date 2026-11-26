@@ -108,18 +108,22 @@ for (const fw of targets) {
   await sleep(400);
   check("release selects it", [await checked(), await shown()], ["done", 1]);
 
-  /* edge veils: on only while there is something to scroll to on that side; a card scrolled to the
-   * end that grows to fit shows none (Chromium keeps a scroll timeline's last progress) */
-  const veils = () => q(`(()=>{const e=document.querySelector("#stage [data-slot=filter-table-card]");return [e.scrollWidth>e.clientWidth, +getComputedStyle(e,"::before").opacity, +getComputedStyle(e,"::after").opacity]})()`);
+  /* edge veils: on only while there is something to scroll to on that side, drawn from the scroll
+   * position (no animation), in both directions; a card scrolled to the end that grows to fit shows
+   * none. The card is squeezed to 300px so that it scrolls. */
+  const CARD = "#stage [data-slot=filter-table-card]";
+  const veils = () => q(`(()=>{const e=document.querySelector(${JSON.stringify(CARD)});return [e.scrollWidth>e.clientWidth,e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),+getComputedStyle(e,"::before").opacity,+getComputedStyle(e,"::after").opacity]})()`);
   const frames = () => q(`new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)))`);
-  const v0 = await veils();
-  if (v0[0]) {
-    check("an overflowing card at rest: end veil on, start veil off", v0, [true, 0, 1]);
-    await q(`(()=>{const e=document.querySelector("#stage [data-slot=filter-table-card]");e.scrollLeft=(getComputedStyle(e).direction==="rtl"?-1:1)*e.scrollWidth})()`); await frames();
-    check("scrolled to the end: start veil on, end veil off", await veils(), [true, 1, 0]);
-    await q(`(()=>{let n=document.querySelector("#stage [data-slot=filter-table-card]");while(n&&n.id!=="stage"){n.style.maxWidth="none";n.style.width="1100px";n=n.parentElement}})()`); await frames(); await sleep(100);
-    check("then grown to fit: no veil on either side", await veils(), [false, 0, 0]);
-  }
+  const squeeze = async () => { await q(`document.querySelector("#stage [data-slot=filter-table]").style.width="300px"`); await frames(); };
+  const sweep = () => q(`(async()=>{const e=document.querySelector(${JSON.stringify(CARD)});const rtl=getComputedStyle(e).direction==="rtl";const range=e.scrollWidth-e.clientWidth;const frame=()=>new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)));const at=[];for(const f of [0,0.5,1]){e.scrollLeft=(rtl?-1:1)*Math.round(range*f);await frame();at.push([e.hasAttribute("data-overflow-start"),e.hasAttribute("data-overflow-end"),getComputedStyle(e,"::before").opacity,getComputedStyle(e,"::after").opacity])}return {at,animations:[getComputedStyle(e).animationName,getComputedStyle(e,"::before").animationName,getComputedStyle(e,"::after").animationName]}})()`);
+  const SWEPT = { at: [[false, true, "0", "1"], [true, true, "1", "1"], [true, false, "1", "0"]], animations: ["none", "none", "none"] };
+  await squeeze();
+  check("an overflowing card: end veil at the start, both in the middle, start veil at the end; no animation", await sweep(), SWEPT);
+  await q(`(()=>{let n=document.querySelector(${JSON.stringify(CARD)});while(n&&n.id!=="stage"){n.style.maxWidth="none";n.style.width="1100px";n=n.parentElement}})()`); await frames(); await sleep(100);
+  check("then grown to fit: no veil on either side", await veils(), [false, false, false, 0, 0]);
+  await p.goto(`${BASE}/harness.html?c=filter-table&fw=${fw}&ex=0&dir=rtl`, 1500);
+  await squeeze();
+  check("rtl: the same veils at the start, the middle and the end", await sweep(), SWEPT);
   /* generic: its own columns, chips and filtered field (deploys by environment) */
   await p.goto(`${BASE}/harness.html?c=filter-table&fw=${fw}&ex=1`, 1500);
   check("generic: the columns from props, the chips with their tones and counts", await q(`(()=>{const th=[...document.querySelectorAll("#stage [data-slot=filter-table-th]")].map((t)=>t.textContent);const chips=[...document.querySelectorAll("#stage [data-slot=segmented-control-option]")].map((c)=>c.textContent.replace(/\s+/g," ").trim());return [th,chips]})()`), [["Commit", "Environment", "Author", "Duration"], ["All 4", "Production 2", "Staging 1", "Preview 1"]]);

@@ -21,10 +21,13 @@
   import { trackModality } from "../lib/modality";
   import {
     anchorRect, clearNativeSelection, modeOf, restoreSelection, rovingToolbar, spliceResult, splitText, watchSelection,
-    type SelectionAction, type TextRange,
+    type SelectionAction as Action, type SelectionActionIcon as ActionIcon, type TextRange as SelectedRange,
   } from "./selection-actions.logic";
 
-  export type { SelectionAction, SelectionActionIcon, TextRange } from "./selection-actions.logic";
+  /* declared here, not passed on: Svelte exports a type a component declares, and no other */
+  export type SelectionAction = Action;
+  export type SelectionActionIcon = ActionIcon;
+  export type TextRange = SelectedRange;
 
   type Props = {
     /** Two-way bindable: the passage; Keep writes the result into it. */

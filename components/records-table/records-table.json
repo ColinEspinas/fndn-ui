@@ -335,6 +335,6 @@
     "sort icon: opacity at duration.fast, turns over at duration.move with easing.out-strong; instant from the keyboard (kbd-instant)",
     "selection bar: the reveal recipe (grid-template-rows 0fr → 1fr over duration.reveal, opacity over duration.base)",
     "menus and checkboxes bring their own motion",
-    "edge veil: when columns are cut at the end of the scroll region, that edge fades into the surface; scroll-driven (animation-timeline: scroll(nearest inline)), never timed; nothing when the table fits (the start side has the sticky first column and its shadow)"
+    "edge veil: when columns are cut at the end of the scroll region, that edge fades into the surface; shown at once while there is more past the end (data-overflow-end, set from the scroll position by lib/veil.ts, the same in every browser; no animation, never timed); nothing when the table fits (the start side has the sticky first column and its shadow)"
   ]
 }

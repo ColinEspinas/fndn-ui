@@ -41,7 +41,7 @@
 
   let { columns, rows = [], filters, filterKey = "status", filter = $bindable("all"), onchange, labels, class: className, style, ...data }: Props = $props();
   const s = filterTable();
-  /* the edge veils are armed only while the table overflows the card, measured before the first paint */
+  /* the edge veils follow the scroll position, measured before the first paint (lib/veil.ts) */
   let card = $state<HTMLElement | null>(null);
   $effect(() => watchVeils(card));
 
