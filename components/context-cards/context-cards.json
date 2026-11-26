@@ -1,0 +1,160 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "context-cards",
+  "title": "Context Cards",
+  "summary": "The passages an agent retrieved to answer a question, each with its source.",
+  "description": "The passages an agent retrieved to answer a question, each with the document it came from. A header with a count badge over cards that each carry a title bar, the chunk body and a source chip. With appear the cards rise once, staggered, at mount; a card added later rises alone.",
+  "kind": "block",
+  "category": "agent",
+  "order": 7,
+  "status": "stable",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "description": "The title, then the chunk count as our Count (boxed, tabular)"
+    },
+    {
+      "part": "title",
+      "element": "span"
+    },
+    {
+      "part": "card",
+      "element": "div",
+      "repeat": true,
+      "description": "--fndn-row-index (set only on cards present at mount) staggers the entrance"
+    },
+    {
+      "part": "bar",
+      "element": "div"
+    },
+    {
+      "part": "card-title",
+      "element": "span",
+      "description": "lines icon + title; the title truncates at the end and carries it as title"
+    },
+    {
+      "part": "chars",
+      "element": "span"
+    },
+    {
+      "part": "body",
+      "element": "p"
+    },
+    {
+      "part": "footer",
+      "element": "div"
+    },
+    {
+      "part": "source",
+      "element": "a",
+      "description": "source chip: badge + name + arrow; pops in after its card; presses"
+    },
+    {
+      "part": "badge",
+      "element": "span",
+      "description": "14px file-type square, tinted by data-tone; aria-hidden (the file name says it). Local: a three-letter type does not fit our avatar (two letters)"
+    },
+    {
+      "part": "source-name",
+      "element": "span",
+      "description": "file name; truncates at the end and carries it as title"
+    }
+  ],
+  "props": {
+    "title": {
+      "type": "string",
+      "default": "All chunks"
+    },
+    "count": {
+      "type": "string",
+      "description": "Shown as given (tabular numbers)."
+    },
+    "chunks": {
+      "type": "array",
+      "items": {
+        "title": "string",
+        "chars": "string",
+        "body": "string",
+        "source": "string",
+        "href": "string?",
+        "badge": "string",
+        "tone": "neutral|red|green|orange|accent"
+      },
+      "description": "Cards present at the first render rise staggered with appear; later ones enter without delay."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "red",
+        "green",
+        "orange",
+        "accent"
+      ],
+      "default": "neutral",
+      "part": "badge",
+      "description": "Per-chunk badge tint."
+    },
+    "appear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the header and the cards present at mount enter (the header fades in, the cards rise staggered). Off by default: set it on the set your code adds live, never on one rendered from history or with the page (a mount is not an arrival). Cards added after mount enter either way."
+    }
+  },
+  "states": [
+    "source-hover",
+    "source-press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.accent",
+    "color.green",
+    "color.hover",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.inset",
+    "color.line",
+    "color.on-accent",
+    "color.orange",
+    "color.red",
+    "color.surface",
+    "duration.base",
+    "duration.enter",
+    "duration.fast",
+    "duration.press",
+    "duration.stagger",
+    "easing.out-strong",
+    "motion.press-scale",
+    "motion.stagger-max",
+    "radius.card",
+    "radius.pill",
+    "shadow.btn",
+    "shadow.card",
+    "text.sm",
+    "text.xs",
+    "color.hover-2"
+  ],
+  "dependencies": [
+    "count"
+  ],
+  "motion": [
+    "header: fndn-fade-in over duration.enter, together with the first card; only with appear (a plain mount shows everything at once)",
+    "cards: with appear, fndn-fade-up over duration.enter, staggered by duration.stagger, capped at motion.stagger-max; only cards present at mount get --fndn-row-index; a card added after mount always enters, with no delay",
+    "source chip: no entrance of its own; it arrives with its card",
+    "source chip: hover background over duration.fast (gated); press darkens to color.hover-2 and scales to motion.press-scale"
+  ],
+  "a11y": {
+    "notes": [
+      "Source chips are links (Tab, Enter); with no href they point at '#'.",
+      "Truncated titles and file names carry the full text as title.",
+      "The badge is aria-hidden: the file name already says the type."
+    ]
+  }
+}

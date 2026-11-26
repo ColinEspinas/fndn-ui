@@ -1,0 +1,134 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "splitter",
+  "title": "Splitter",
+  "summary": "Panels side by side with a handle between them that resizes them.",
+  "description": "Panels side by side (or stacked) with a handle between each pair that resizes them: dragged by the pointer 1:1, stepped by the arrow keys. The handle at rest is the separator's 1px rule in the line colour, so a splitter reads like any divided surface; it darkens under a mouse and turns accent while dragged. An optional grip sits on the rule. Behaviour by Ark UI's splitter (Zag). Sizes are percentages; controlled or uncontrolled.",
+  "kind": "component",
+  "category": "display",
+  "order": 18,
+  "status": "beta",
+  "engine": "splitter",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's splitter root: a flex row (a column when vertical) as large as its container (the engine sets width and height to 100% and clips). Give it, or its parent, a height. No frame of its own: the caller frames it (a card, a window)."
+    },
+    {
+      "part": "panel",
+      "element": "div",
+      "repeat": true,
+      "description": "One region, sized by the engine (flex-grow from a zero basis, from its percentage), so it never pads itself. Scrolls its own content when it overflows (the engine's inline overflow: hidden is overridden) and hands the wheel on to the page at its ends."
+    },
+    {
+      "part": "text",
+      "element": "p",
+      "optional": true,
+      "repeat": true,
+      "description": "A panel's content when it is plain text: padded 12px, text.sm ink-2, wrapping anywhere; author text keeps its own direction."
+    },
+    {
+      "part": "handle",
+      "element": "div",
+      "repeat": true,
+      "description": "Ark's resize trigger between two panels: role=separator, focusable, the 1px rule in color.line (1px wide in a row, 1px high in a column). Its hit area reaches 4px each side under a mouse (9px) and 20px each side on a coarse pointer (41px), without changing its look. Hovered by a mouse: ink-3; dragged: accent. The cursor is the engine's col-resize / row-resize; touch-action none, so a drag never scrolls the page."
+    },
+    {
+      "part": "grip",
+      "element": "div",
+      "optional": true,
+      "description": "The optional grip (grip prop), Ark's resize trigger indicator: a 12×24 tab centred on the rule by flex centring (never a fractional translate) (24×12 in a column), surface with shadow.btn and radius.chip, holding the dots-six-vertical glyph at 10px in ink-3 (turned a quarter in a column). Decoration; the handle is what is dragged and focused."
+    }
+  ],
+  "props": {
+    "panels": {
+      "type": "array",
+      "items": {
+        "id": "string",
+        "content": "node? (a string is padded text)",
+        "minSize": "number? (percent)",
+        "maxSize": "number? (percent)",
+        "collapsible": "boolean?",
+        "collapsedSize": "number? (percent)"
+      },
+      "description": "The panels in order, with their limits. Every pair gets a handle."
+    },
+    "size": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "model": true,
+      "description": "One percentage per panel, adding up to 100. Controlled: size with onSizeChange. Uncontrolled: defaultSize. Without either, the panels share the room equally."
+    },
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal",
+      "description": "horizontal: panels side by side, the handles are vertical rules. vertical: panels stacked, the handles are horizontal rules."
+    },
+    "grip": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show the grip on every handle."
+    },
+    "keyboardStep": {
+      "type": "number",
+      "default": 1,
+      "description": "Percent an arrow key moves a handle; Shift + arrow moves 10."
+    },
+    "handleLabel": {
+      "type": "string",
+      "default": "Resize",
+      "description": "Accessible name of every handle."
+    }
+  },
+  "events": {
+    "sizeChange": "(size: number[]) while dragging and on every key",
+    "sizeChangeEnd": "(size: number[]) when a drag or a key press ends"
+  },
+  "slots": {},
+  "states": [
+    "hover",
+    "dragging",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.line",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.surface",
+    "shadow.btn",
+    "radius.chip",
+    "text.sm",
+    "duration.fast"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "separator",
+    "keyboard": [
+      "Tab moves to each handle in turn",
+      "Arrow Left / Right (horizontal) or Up / Down (vertical) move the focused handle by keyboardStep percent; with Shift, 10. Right-to-left, Left and Right are mirrored (the engine's keys)",
+      "Home / End: the panel before the handle shrinks to its minimum / grows to its maximum",
+      "Enter collapses or expands a collapsible panel (the engine's key)",
+      "F6 moves to the next handle (the engine's key)"
+    ],
+    "notes": [
+      "Each handle is role=separator with aria-valuenow (the size of the panel before it), aria-valuemin, aria-valuemax, aria-orientation (perpendicular to the layout) and aria-controls naming both panels.",
+      "Name the handles with handleLabel (\"Resize\" by default); give the panels their own headings when they have names.",
+      "Resizing is never animated: the panels follow the pointer 1:1 and a key moves them at once."
+    ]
+  },
+  "motion": [
+    "panels: no transition; they follow the pointer 1:1 while dragged and change at once from the keyboard",
+    "handle hover (a real pointer only): line → ink-3 over duration.fast; while dragged: accent at once; back to line over duration.fast",
+    "grip: never moves on its own",
+    "first paint: the panels are laid out at their given sizes from the first frame; a collapsible panel given its collapsed size is shut from the first frame (its minSize only applies once it is open; React renders a frame before the engine resolves the sizes, so its adapter holds the collapsed minimum meanwhile)"
+  ]
+}

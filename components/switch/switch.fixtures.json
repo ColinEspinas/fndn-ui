@@ -1,0 +1,66 @@
+{
+  "examples": [
+    {
+      "name": "On",
+      "text": "Auto-approve edits",
+      "props": {
+        "checked": true
+      }
+    },
+    {
+      "name": "Off",
+      "text": "Sounds",
+      "props": {
+        "checked": false
+      }
+    },
+    {
+      "name": "Small",
+      "text": "Compact mode",
+      "props": {
+        "checked": true,
+        "size": "sm"
+      }
+    },
+    {
+      "name": "Disabled",
+      "text": "Disabled",
+      "props": {
+        "checked": false,
+        "disabled": true
+      }
+    },
+    {
+      "name": "No visible label",
+      "props": {
+        "checked": false,
+        "label": "Notifications"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "width": 220,
+      "text": "Automatically approve every edit the agent proposes to supplier records without asking first",
+      "props": {
+        "checked": true
+      }
+    },
+    {
+      "name": "One letter",
+      "text": "A",
+      "props": {
+        "checked": false,
+        "size": "sm"
+      }
+    },
+    {
+      "name": "Right to left",
+      "text": "الموافقة التلقائية على التعديلات",
+      "props": {
+        "checked": true
+      }
+    }
+  ]
+}

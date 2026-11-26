@@ -1,0 +1,119 @@
+{
+  "examples": [
+    {
+      "name": "Row",
+      "width": 280,
+      "props": {
+        "title": "No matches",
+        "size": "row"
+      }
+    },
+    {
+      "name": "Row centred",
+      "width": 320,
+      "props": {
+        "title": "No tasks match this filter",
+        "icon": "funnel",
+        "size": "row",
+        "align": "center"
+      }
+    },
+    {
+      "name": "Block",
+      "width": 320,
+      "props": {
+        "title": "No results found",
+        "hint": "Adjust your search to try again",
+        "icon": "magnifying-glass",
+        "size": "block"
+      }
+    },
+    {
+      "name": "In a list",
+      "frameworks": false,
+      "props": {
+        "title": "No more commands",
+        "hint": "Keep typing to search",
+        "size": "row"
+      }
+    },
+    {
+      "name": "In a table",
+      "frameworks": false,
+      "props": {
+        "title": "No records",
+        "hint": "Records you add will show up here",
+        "icon": "table",
+        "size": "block"
+      }
+    },
+    {
+      "name": "In a popup",
+      "frameworks": false,
+      "props": {
+        "title": "No results for “oat mlik”",
+        "hint": "Check the spelling or search for something else",
+        "icon": "magnifying-glass",
+        "size": "block"
+      }
+    },
+    {
+      "name": "Inbox, nothing selected",
+      "props": {
+        "size": "block",
+        "icon": "bell",
+        "title": "No notification selected",
+        "hint": "Pick one to read its issue here."
+      }
+    },
+    {
+      "name": "Unknown icon name",
+      "props": {
+        "size": "block",
+        "icon": "not-an-icon",
+        "title": "No notification selected"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long row",
+      "width": 240,
+      "props": {
+        "title": "No suppliers match “Organic oat milk, unsweetened, barista edition, 1L”",
+        "hint": "averyveryveryverylongunbreakablequeryterm@example-supplier-domain.com",
+        "icon": "magnifying-glass",
+        "size": "row"
+      }
+    },
+    {
+      "name": "Long block",
+      "width": 240,
+      "props": {
+        "title": "Nothing in the archive for the third quarter of the previous financial year",
+        "hint": "Records older than eighteen months are moved to cold storage and can be restored by an administrator",
+        "icon": "folder-open",
+        "size": "block"
+      }
+    },
+    {
+      "name": "One letter",
+      "width": 240,
+      "props": {
+        "title": "Ø",
+        "size": "row",
+        "align": "center"
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 240,
+      "props": {
+        "title": "لا توجد نتائج",
+        "hint": "جرّب كلمة أخرى",
+        "icon": "magnifying-glass",
+        "size": "block"
+      }
+    }
+  ]
+}

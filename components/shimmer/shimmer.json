@@ -1,0 +1,59 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "shimmer",
+  "title": "Shimmer",
+  "summary": "A label with a moving sheen that says work is under way.",
+  "description": "A label with a moving sheen that says work is under way: an agent thinking, a page loading. Shimmering label: signals the agent is processing. A moving ink highlight clipped to the text; tone accent sweeps in the accent hue.",
+  "kind": "component",
+  "category": "feedback",
+  "order": 2,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span"
+    }
+  ],
+  "props": {
+    "speed": {
+      "type": "enum",
+      "values": [
+        "normal",
+        "fast"
+      ],
+      "default": "normal"
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "ink",
+        "accent"
+      ],
+      "default": "ink",
+      "description": "ink or accent: accent text with an accent-ink highlight (fine-tune-card's \"Adjust\" hint)."
+    }
+  },
+  "slots": {
+    "default": "Text"
+  },
+  "states": [],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-ink"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "The text is real text. Put the shimmer in a role=\"status\" region when it announces work in progress."
+    ]
+  },
+  "motion": [
+    "background-position sweep, 1.8s linear, forever (1.4s when fast)",
+    "prefers-reduced-motion: the sweep stops and the label shows as static ink-2 text (accent text for tone accent)",
+    "forced-colors: static system text colour (background images are dropped there)"
+  ]
+}

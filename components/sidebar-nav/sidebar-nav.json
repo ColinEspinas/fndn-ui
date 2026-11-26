@@ -1,0 +1,273 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "sidebar-nav",
+  "title": "Sidebar Nav",
+  "summary": "An app's side navigation, which collapses to a rail of icons.",
+  "description": "The app's left rail: a workspace switcher, primary links, labelled sections of links (projects, teams) and a collapsible list of recent chats. It collapses to a 52px rail of icons without moving a single glyph: the 224px tree stays put and the shell clips it, while the labels fade and drift away. A highlight glides between rows under the pointer and with keyboard focus; the collapse is instant from the keyboard. The workspace switcher is our menu with a custom trigger (Zag menu machine through Ark UI); the chats section is our collapsible, the toggle our button, the badge our count, and every icon-only control in the rail gets our tooltip; links are native elements.",
+  "kind": "block",
+  "category": "navigation",
+  "order": 3,
+  "status": "beta",
+  "element": "nav",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "nav",
+      "description": "aria-label; data-collapsed while collapsed; carries kbd-instant. Its width is the only thing that changes size (224px ↔ 52px); it clips the panel"
+    },
+    {
+      "part": "panel",
+      "element": "div",
+      "description": "The fixed 224px tree; never re-laid out by a collapse"
+    },
+    {
+      "part": "header",
+      "element": "div"
+    },
+    {
+      "part": "switcher",
+      "element": "div",
+      "description": "The menu root (the Menu's root); its popup is portaled"
+    },
+    {
+      "part": "workspace",
+      "element": "button",
+      "description": "The menu trigger (the Menu's trigger): logo, workspace name and caret Marked data-menu=\"trigger\" (the menu's trigger part, written here)."
+    },
+    {
+      "part": "logo",
+      "element": "span"
+    },
+    {
+      "part": "workspace-name",
+      "element": "span",
+      "description": "Truncates; title carries the full name"
+    },
+    {
+      "part": "caret",
+      "element": "span"
+    },
+    {
+      "part": "toggle",
+      "element": "button",
+      "description": "Collapse / expand: a Button (ghost, md, square, rounded, muted) with our tooltip naming its action. Pinned to the root's inline-end edge, so it rides the edge and lands on the logo's spot Marked data-sidebar-nav=\"toggle\"."
+    },
+    {
+      "part": "group",
+      "element": "div",
+      "repeat": true,
+      "description": "Offset parent of a gliding highlight and its list"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "repeat": true,
+      "description": "Gliding highlight (`glideLayer` of `lib/glide.ts`): follows pointer and focus and glides for both"
+    },
+    {
+      "part": "list",
+      "element": "ul",
+      "repeat": true
+    },
+    {
+      "part": "item",
+      "element": "a",
+      "repeat": true,
+      "description": "A link; aria-current=page on the current one. An optional badge is a plain Count (also data-sidebar-nav=\"copy\"). Collapsed: aria-label carries the name and our tooltip shows it Every link's text starts on one edge: with an icon, the icon sits in the icon column; a chat or section link without one is indented to the label column."
+    },
+    {
+      "part": "item-icon",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "Also data-sidebar-nav=\"copy\""
+    },
+    {
+      "part": "copy",
+      "element": "span",
+      "repeat": true,
+      "description": "Anything that fades out on collapse; aria-hidden while collapsed Every element that fades carries data-sidebar-nav=\"copy\" (labels, the switcher name and caret, a badge Count)."
+    },
+    {
+      "part": "sections",
+      "element": "div",
+      "description": "Holds the sections and the chats: with sections, one scroller (overscroll contained) where each section takes its own height, 12px apart; without, no box of its own (display: contents)."
+    },
+    {
+      "part": "section",
+      "element": "div",
+      "description": "A Collapsible (variant section, caret at the start): the chats, or one of the sections (its own label, open until folded). The chats' body holds a group of links, or an EmptyState row when there are none. Without sections the chats section scrolls itself; with sections every section is as tall as its rows and the sections part scrolls. Hidden while collapsed"
+    }
+  ],
+  "props": {
+    "workspace": {
+      "type": "string",
+      "model": true,
+      "description": "Value of the current workspace."
+    },
+    "workspaces": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string"
+      },
+      "description": "Workspaces offered by the switcher (a radio group in the menu)."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "icon": "string? (an icon name) or an icon",
+        "tone": "'danger'?",
+        "type": "'separator'?"
+      },
+      "description": "Menu actions under the workspaces. Defaults to New workspace, Workspace settings, a separator and Sign out."
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "href": "string",
+        "icon": "icon name or icon",
+        "badge": "string?"
+      },
+      "description": "Primary links, each with an icon."
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "items": "{ value, label, href, icon? }[]"
+      },
+      "description": "Labelled groups of links under the primary ones (projects, teams, saved views): each a collapsible section with its own label, open until the reader folds it. A link with an icon shows it; without, its text lines up with the labels."
+    },
+    "chats": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "href": "string",
+        "icon": "icon name or icon?"
+      },
+      "description": "Recent chats. A chat with an icon shows it; one without is indented to the label column. Without sections the Chats section is always shown (empty shows the empty text); with sections only when chats is given."
+    },
+    "current": {
+      "type": "string",
+      "model": true,
+      "attr": "aria-current",
+      "part": "item",
+      "description": "Value of the current link (an item or a chat): aria-current=page."
+    },
+    "collapsed": {
+      "type": "boolean",
+      "model": true,
+      "default": false,
+      "description": "Rail of icons only."
+    },
+    "chatsOpen": {
+      "type": "boolean",
+      "model": true,
+      "default": true,
+      "description": "Whether the chats list is shown (the collapsible's open state)."
+    },
+    "logo": {
+      "type": "string",
+      "default": "squares-four",
+      "description": "Icon in front of the workspace name (an icon name, or an icon)."
+    },
+    "label": {
+      "type": "string",
+      "default": "Workspace navigation",
+      "description": "Accessible name of the nav."
+    },
+    "chatsLabel": {
+      "type": "string",
+      "default": "Chats"
+    },
+    "emptyLabel": {
+      "type": "string",
+      "default": "No chats yet"
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "Dimensions only (the control scale). md: 32px rows, 14px text, 18px glyphs, the control radius. sm: 28px rows, 13px text, 16px glyphs (and the toggle's), the chip radius on the rows, their fill and ring, the highlight and the switcher (as every control up to 28px), for a dense app whose content is 13px. Both keep the 20px glyph box, so the glyphs' 26px centre, the 52px rail and the 34px label column do not move; collapsed rows stay 36px wide."
+    }
+  },
+  "events": {
+    "workspaceChange": "(value: string) a workspace was picked; the menu closes",
+    "workspaceAction": "(value: string) a menu action was chosen",
+    "currentChange": "(value: string) a link was followed",
+    "collapsedChange": "(collapsed: boolean)",
+    "chatsOpenChange": "(open: boolean)",
+    "navigate": "(value: string, href: string, event) a link was followed, before it becomes current; event.preventDefault() lets the app route without loading href"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "current",
+    "collapsed",
+    "expanded"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.hover",
+    "color.hover-2",
+    "color.accent",
+    "radius.control",
+    "radius.chip",
+    "text.xs",
+    "text.md",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "duration.move",
+    "easing.out-strong",
+    "motion.press-scale",
+    "motion.enter-shift"
+  ],
+  "dependencies": [
+    "menu",
+    "collapsible",
+    "button",
+    "count",
+    "empty-state",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "navigation",
+    "keyboard": [
+      "Tab order: workspace switcher, collapse toggle, links, then each section's disclosure and its links, then Chats and the chat links. Collapsed: toggle, then the icon links",
+      "Enter on a link follows it and makes it current (aria-current=page)",
+      "Enter / Space / ArrowDown on the switcher open the menu; arrows move, Enter picks a workspace (the menu closes and focus returns to the switcher), Escape closes",
+      "Enter / Space on the toggle collapse or expand the rail; focus stays on the toggle, which keeps its place under the pointer of the rail",
+      "Enter / Space on Chats show or hide the list; focus stays on the trigger"
+    ],
+    "notes": [
+      "Collapsed, the labels are aria-hidden and every icon link is named by aria-label; our tooltip shows that name on hover and keyboard focus (on the inline-end side). The toggle's tooltip names its action.",
+      "The collapse and the caret are instant from the keyboard; the highlight glides for keyboard moves too."
+    ]
+  },
+  "motion": [
+    "collapse: the root's width over duration.move with easing.out-strong (the one layout transition: the page beside it has to reflow; the 224px tree inside never re-lays out). Instant from the keyboard; jumps under reduced motion",
+    "copy: opacity over duration.base and an enter-shift drift over duration.move",
+    "row backgrounds (current, press): a childless pseudo-element shrinks to 36px with the rail",
+    "toggle glyph flips with scaleX over duration.move",
+    "highlight: glides between rows under the pointer and with keyboard focus (duration.move easing.out-strong); hover-gated",
+    "chats: the collapsible's reveal recipe and caret",
+    "picking a link changes state instantly: no motion on navigation"
+  ]
+}

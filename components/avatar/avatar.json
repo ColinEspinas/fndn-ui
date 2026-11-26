@@ -1,0 +1,95 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "avatar",
+  "title": "Avatar",
+  "summary": "A picture or initials that stand for a person, a team or a source.",
+  "description": "A picture or initials for a person, a team or a source. Inside a line of text (a chip, a mention): 12, 14 or 16px. In a list row or a table cell: 20px. Beside controls: 24, 28 or 32px (the control scale's xs, sm, md, so the avatar lines up with the buttons next to it). 40px for a profile header. Round or square. The initials sit under the image, so a slow image shows initials first and a broken image falls back to them.",
+  "kind": "component",
+  "category": "display",
+  "order": 13,
+  "status": "beta",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span",
+      "description": "role=\"img\" with aria-label when it has a name; aria-hidden otherwise."
+    },
+    {
+      "part": "initials",
+      "element": "span",
+      "description": "One or two letters (one at 12 and 14px) on the avatar colour; aria-hidden."
+    },
+    {
+      "part": "image",
+      "element": "img",
+      "optional": true,
+      "description": "Covers the initials; alt=\"\" (the root carries the name). Removed when it fails to load."
+    }
+  ],
+  "props": {
+    "name": {
+      "type": "string",
+      "description": "Accessible name; the initials come from it when initials is not given."
+    },
+    "initials": {
+      "type": "string",
+      "description": "Letters to show instead of the ones taken from name."
+    },
+    "src": {
+      "type": "string",
+      "attr": "src",
+      "part": "image",
+      "description": "Image URL. Without it, or when it fails, the initials show."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "12",
+        "14",
+        "16",
+        "20",
+        "24",
+        "28",
+        "32",
+        "40"
+      ],
+      "default": "16",
+      "description": "Edge in px. 12 · 14 · 16 inside a line of text; 20 in a list row or a table cell; 24 · 28 · 32 on the control scale (beside buttons of that height, a row of two lines); 40 for a profile or issue header. Two initials take about two thirds of the edge whatever the size (7, 8.5, 10, 12, 13, 15px at 16–40), so wide letters stay clear of the rim; 12 and 14 show one letter."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "round",
+        "square"
+      ],
+      "default": "round",
+      "description": "square: corners a quarter of the edge (3px at 12, 4px at 14 and 16, 5px at 20, 6 · 7 · 8 · 10px at 24 · 28 · 32 · 40)."
+    },
+    "color": {
+      "type": "string",
+      "attr": "--fndn-avatar-color",
+      "description": "Fill behind the initials (any colour or token); default ink-3."
+    }
+  },
+  "slots": {},
+  "events": {},
+  "states": [
+    "broken image"
+  ],
+  "tokens": [
+    "color.ink-3",
+    "color.on-accent",
+    "color.line"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "With a name, the root is role=\"img\" and named; without one it is decorative (aria-hidden). Next to the same name in text, leave name out.",
+      "The image has alt=\"\" because the root already carries the name."
+    ]
+  },
+  "motion": [
+    "none: the image covers the initials when it arrives, without a fade"
+  ]
+}

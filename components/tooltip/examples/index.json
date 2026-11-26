@@ -1,0 +1,14 @@
+{
+  "playground": {
+    "props": {
+      "content": "Copy deploy ID",
+      "shortcut": "⌘C",
+      "triggerLabel": "dpl_7f3a9c"
+    }
+  },
+  "examples": [
+    { "file": "comment-toolbar", "title": "Formatting toolbar of a comment" },
+    { "file": "sidebar-toggle", "title": "Icon button with a shortcut" },
+    { "file": "navigation-rail", "title": "Labels for a collapsed rail" }
+  ]
+}

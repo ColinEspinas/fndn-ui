@@ -1,0 +1,215 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "diff-table",
+  "title": "Diff Table",
+  "summary": "Changes an agent proposes to a table, accepted or rejected row by row.",
+  "description": "Edits an agent proposes to tabular data, reviewed row by row before they are applied. Each changed row is the control: click it, or focus its include box and press Enter / Space, to include or exclude that addition or removal before applying. A native table; the checkbox role sits on the include box inside each changed row.",
+  "kind": "block",
+  "category": "data",
+  "order": 1,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "max-width 380; data-enter once painted (an added row reveals only after that)"
+    },
+    {
+      "part": "card",
+      "element": "div"
+    },
+    {
+      "part": "bar",
+      "element": "div",
+      "description": "title + hint"
+    },
+    {
+      "part": "title",
+      "element": "span"
+    },
+    {
+      "part": "hint",
+      "element": "span",
+      "optional": true,
+      "description": "Gone once applied, and when no row changes"
+    },
+    {
+      "part": "table",
+      "element": "table",
+      "description": "Native table, fixed layout"
+    },
+    {
+      "part": "col",
+      "element": "col",
+      "repeat": true,
+      "description": "One per column (name, category, value); its width is the recipe col variant"
+    },
+    {
+      "part": "th",
+      "element": "th",
+      "repeat": true,
+      "description": "scope=col"
+    },
+    {
+      "part": "row",
+      "element": "tr",
+      "repeat": true,
+      "description": "data-key; its change (removed|added|unchanged), included and toggleable state are recipe variants"
+    },
+    {
+      "part": "cell",
+      "element": "td",
+      "repeat": true,
+      "description": "Its column (name|category|value) is a recipe variant. The category is a status-pill (tone neutral, size sm) whose dot takes the row tone through dotTone (data-dot-tone=accent|orange|green; none for neutral)"
+    },
+    {
+      "part": "reveal",
+      "element": "div",
+      "optional": true,
+      "description": "Added rows only: the reveal wrapper of each cell (grid 0fr → 1fr on mount)"
+    },
+    {
+      "part": "pad",
+      "element": "div",
+      "optional": true,
+      "description": "Added rows only: the cell padding, inside the clipping child of reveal"
+    },
+    {
+      "part": "value",
+      "element": "span",
+      "description": "Value text + include box (a checkbox: size md, tone red for a removal / green for an addition, aria-label on its input, roving tabindex on the inputs; disabled once applied)"
+    },
+    {
+      "part": "value-text",
+      "element": "span",
+      "description": "Truncates at the end; full value in title"
+    },
+    {
+      "part": "empty",
+      "element": "td",
+      "optional": true,
+      "description": "No rows: one cell across the columns (in a plain tr) holding the real EmptyState (size block, icon table, labels.empty). With no changed row, Apply is not offered"
+    },
+    {
+      "part": "footer",
+      "element": "div"
+    },
+    {
+      "part": "summary",
+      "element": "span"
+    },
+    {
+      "part": "applied",
+      "element": "span",
+      "optional": true,
+      "description": "The real StatusPill (tone green, with a mark), marked data-diff-table=\"applied\", after apply; pops in and takes focus (tabindex=-1)"
+    }
+  ],
+  "props": {
+    "title": {
+      "type": "string",
+      "default": "Proposed changes"
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "0": "string"
+      },
+      "default": [
+        "Name",
+        "Category",
+        "Value"
+      ]
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "key": "string",
+        "name": "string",
+        "category": "string",
+        "tone": "accent|neutral|orange|green",
+        "value": "string",
+        "change": "removed|added|unchanged"
+      }
+    },
+    "included": {
+      "type": "object",
+      "model": true,
+      "description": "Record<key, boolean>; defaults to every changed row included"
+    },
+    "accepted": {
+      "type": "boolean",
+      "default": false,
+      "model": true
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ hint, remove, add, apply, removal, removals, addition, additions, edit, edits, applied, change, changes, empty }"
+    }
+  },
+  "events": {
+    "toggle": "(key, included)",
+    "apply": "(included: Record<string, boolean>)"
+  },
+  "states": [
+    "removed",
+    "added",
+    "included",
+    "excluded",
+    "accepted",
+    "row-hover",
+    "row-press",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.accent",
+    "color.green",
+    "color.green-tint",
+    "color.red",
+    "color.red-tint",
+    "color.orange",
+    "shadow.card",
+    "radius.card",
+    "text.2xs",
+    "text.xs",
+    "text.sm",
+    "easing.out-strong",
+    "duration.base",
+    "duration.reveal"
+  ],
+  "dependencies": [
+    "button",
+    "checkbox",
+    "empty-state",
+    "status-pill"
+  ],
+  "a11y": {
+    "role": "table; checkbox per changed row",
+    "keyboard": [
+      "Tab reaches the include boxes once (roving tabindex), then the Apply button",
+      "Enter / Space toggle the focused row's edit",
+      "ArrowDown / ArrowUp move to the next / previous changed row; Home / End to the first / last",
+      "Enter / Space on Apply applies; focus moves to the applied pill"
+    ],
+    "notes": [
+      "The table keeps native semantics (table, th scope=col, tr, td). Each changed row holds a checkbox (the native input inside the checkbox component), named \"Remove <name>\" or \"Add <name>\", so a screen reader reads the row as a table row and the box as a checkbox.",
+      "The focus ring is the checkbox's own, on the include box, while it has keyboard focus.",
+      "After Apply the boxes stay readable but are disabled and leave the tab order."
+    ]
+  },
+  "motion": [
+    "row tint, text colour and the category pill: colour / opacity over duration.base from the pointer; instant from the keyboard (kbd-instant), like the include box",
+    "row hover (toggleable rows, fine pointers): a 4% ink layer, instant both ways; the press darkens the fill beneath to 7% over duration.base",
+    "include box: the checkbox's own recipe (fill leads, the check is drawn, shorter exit)",
+    "added row: reveal recipe (grid-template-rows over duration.reveal, opacity over duration.base, through @starting-style) only for a row added after the table's first paint (data-enter on the root, lib/paint.ts); the rows it mounts with are simply there; no timers",
+    "applied pill: the status-pill's pop-in (mark) over duration.popup, once",
+    "Apply button: the button's own press"
+  ]
+}

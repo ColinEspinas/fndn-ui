@@ -1,0 +1,129 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "input-group",
+  "title": "Input Group",
+  "summary": "A text field with addons at its start or end: text, an icon or a button.",
+  "description": "An Input with addons joined to it: a prefix or suffix text (https://, .com, USD), an icon, a keyboard hint or a Button at its start or end. The group is the field (the Input's colour, hairline, radius, heights, hover, rings and motion) and the Input inside it draws nothing of its own. A press on an addon's text puts the caret in the field. Inside a Field it is wired to the label, helper and error.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 12,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The field: the shared control (`lib/control.ts`), field kind: its sizes and looks, the hover fill, the accent ring while focus is inside, the red ring when it is invalid, half opacity when disabled. class and style land here; every other attribute on the Input."
+    },
+    {
+      "part": "start",
+      "element": "span",
+      "optional": true,
+      "description": "Addon before the Input: text ink-2, nowrap, icons ink-3 and 14px; as far from the edge as the Input's text (the size's padding), 4px around a Button (2px up to 28px)."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "The Input component (data-input-group=\"input\"), transparent, without its own ring; 8px from an addon."
+    },
+    {
+      "part": "end",
+      "element": "span",
+      "optional": true,
+      "description": "Addon after the Input, as the start addon."
+    }
+  ],
+  "props": {
+    "start": {
+      "type": "node",
+      "description": "Addon before the Input: text, an icon, a Kbd, or a Button (ghost, xs, square, muted, with a tooltip)."
+    },
+    "end": {
+      "type": "node",
+      "description": "Addon after the Input, as start."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "The Input's value. Controlled: value with onChange. Uncontrolled: defaultValue."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The shared control's sizes (`lib/control.ts`): xs 24px, sm 28px, md 32px, lg 36px, with their text and padding."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "mono": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false,
+      "description": "aria-invalid on the Input; the group shows the red ring."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "placeholder": {
+      "type": "string"
+    }
+  },
+  "states": [
+    "hover",
+    "focus",
+    "invalid",
+    "disabled"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base"
+  ],
+  "dependencies": [
+    "input"
+  ],
+  "a11y": {
+    "keyboard": [
+      "The Input's: standard text editing; Tab moves to a Button in an addon, then on"
+    ],
+    "notes": [
+      "Addon text is not part of the Input's name: name the Input with a Field label or an aria-label, and say the unit there when it matters.",
+      "A Button in an addon is a real Button with its own name (a tooltip names an icon-only one).",
+      "Text is 16px on touch devices (the Input's)."
+    ]
+  },
+  "motion": [
+    "the Input's: the ring over duration.base and the fill over duration.fast, on the group",
+    "nothing else moves"
+  ]
+}

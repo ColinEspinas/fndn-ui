@@ -1,0 +1,217 @@
+{
+  "examples": [
+    {
+      "name": "Vertical",
+      "props": {
+        "items": [
+          {
+            "value": "three",
+            "label": "Three (core line)"
+          },
+          {
+            "value": "five",
+            "label": "Five (full case)"
+          },
+          {
+            "value": "one",
+            "label": "Just one hero"
+          }
+        ],
+        "value": "three",
+        "label": "How many plans should we launch?"
+      }
+    },
+    {
+      "name": "Horizontal",
+      "props": {
+        "items": [
+          {
+            "value": "trucks",
+            "label": "Food trucks"
+          },
+          {
+            "value": "grocery",
+            "label": "Self-serve signups"
+          },
+          {
+            "value": "shops",
+            "label": "Partner resellers"
+          }
+        ],
+        "value": "grocery",
+        "orientation": "horizontal",
+        "aria-label": "First market"
+      }
+    },
+    {
+      "name": "Disabled option",
+      "props": {
+        "items": [
+          {
+            "value": "day",
+            "label": "Daily"
+          },
+          {
+            "value": "week",
+            "label": "Weekly"
+          },
+          {
+            "value": "month",
+            "label": "Monthly",
+            "disabled": true
+          },
+          {
+            "value": "never",
+            "label": "Never"
+          }
+        ],
+        "value": "week",
+        "label": "Digest"
+      }
+    },
+    {
+      "name": "None selected",
+      "props": {
+        "items": [
+          {
+            "value": "low",
+            "label": "Low"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "high",
+            "label": "High"
+          }
+        ],
+        "value": null,
+        "orientation": "horizontal",
+        "label": "Priority"
+      }
+    },
+    {
+      "name": "Rows",
+      "width": 280,
+      "props": {
+        "items": [
+          {
+            "value": "three",
+            "label": "Three (core line)"
+          },
+          {
+            "value": "five",
+            "label": "Five (full case)"
+          },
+          {
+            "value": "one",
+            "label": "Just one hero"
+          }
+        ],
+        "value": "three",
+        "layout": "row",
+        "customPlaceholder": "Something else…",
+        "label": "How many plans should we launch?"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long labels",
+      "width": 240,
+      "props": {
+        "items": [
+          {
+            "value": "a",
+            "label": "Automatically approve every edit the agent proposes to supplier records"
+          },
+          {
+            "value": "b",
+            "label": "maximilian.wisniewska-kowalczyk@example-supplier-network.com"
+          },
+          {
+            "value": "c",
+            "label": "A"
+          }
+        ],
+        "value": "a",
+        "label": "When the agent proposes an edit to a record that another person is reviewing right now"
+      }
+    },
+    {
+      "name": "Many in a row",
+      "width": 280,
+      "props": {
+        "items": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Every weekday"
+        ],
+        "value": "Wed",
+        "orientation": "horizontal",
+        "aria-label": "Day"
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "items": [
+          {
+            "value": "day",
+            "label": "يومي"
+          },
+          {
+            "value": "week",
+            "label": "أسبوعي"
+          },
+          {
+            "value": "month",
+            "label": "شهري"
+          }
+        ],
+        "value": "week",
+        "label": "الملخص"
+      }
+    },
+    {
+      "name": "Rows with long labels",
+      "width": 240,
+      "props": {
+        "items": [
+          {
+            "value": "a",
+            "label": "Automatically approve every edit the agent proposes to supplier records"
+          },
+          {
+            "value": "b",
+            "label": "maximilian.wisniewska-kowalczyk@example-supplier-network.com"
+          },
+          {
+            "value": "c",
+            "label": "A"
+          }
+        ],
+        "value": "b",
+        "layout": "row",
+        "customPlaceholder": "Something else entirely, described in my own words…",
+        "aria-label": "Worst case"
+      }
+    },
+    {
+      "name": "One option",
+      "props": {
+        "items": [
+          "Only option"
+        ],
+        "value": "Only option",
+        "aria-label": "Single"
+      }
+    }
+  ]
+}

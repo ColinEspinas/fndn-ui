@@ -1,0 +1,56 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "chip",
+  "title": "Chip",
+  "summary": "A monospace chip for a code value in text or a table.",
+  "description": "A monospace chip for a code value in prose or a table: a field name, a command, a version. Monospace token chip for code values like `updated_at`. Inline: it sits on the text baseline, and a long value wraps with the sentence instead of overflowing.",
+  "kind": "component",
+  "category": "display",
+  "order": 2,
+  "status": "stable",
+  "element": "code",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "code"
+    }
+  ],
+  "props": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "accent",
+        "green",
+        "orange",
+        "red"
+      ],
+      "default": "neutral"
+    }
+  },
+  "slots": {
+    "default": "Value"
+  },
+  "states": [],
+  "tokens": [
+    "color.inset",
+    "color.ink-2",
+    "color.accent-tint",
+    "color.accent-ink",
+    "color.green",
+    "color.green-tint",
+    "color.orange",
+    "color.orange-tint",
+    "color.red",
+    "color.red-tint",
+    "radius.chip",
+    "font.mono",
+    "text.xs"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "Rendered as <code>, so it is announced as code. Tone is decoration; never the only carrier of meaning."
+    ]
+  }
+}

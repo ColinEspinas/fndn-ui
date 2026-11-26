@@ -1,0 +1,100 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "progress-ring",
+  "title": "Progress Ring",
+  "summary": "A small ring that shows a task's progress, with a count or a mark in its centre.",
+  "description": "A small ring that shows a task's progress, with a count or a mark in its centre. Small progress ring with content in the center: the task badge. A custom property drives the arc; the root is a progressbar.",
+  "kind": "component",
+  "category": "display",
+  "order": 7,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span",
+      "description": "role=progressbar with aria-valuenow; carries --fndn-progress"
+    },
+    {
+      "part": "svg",
+      "element": "svg",
+      "description": "rotated -90deg so the arc starts at 12 o'clock"
+    },
+    {
+      "part": "track",
+      "element": "circle"
+    },
+    {
+      "part": "bar",
+      "element": "circle",
+      "description": "pathLength=100; dashoffset = 100 * (1 - progress)"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true
+    }
+  ],
+  "props": {
+    "progress": {
+      "type": "number",
+      "default": 0,
+      "attr": "--fndn-progress",
+      "description": "0..1. Out-of-range and non-finite values are clamped."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "orange",
+        "green",
+        "red",
+        "accent"
+      ],
+      "default": "orange"
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "sm 24px · md 28px"
+    },
+    "label": {
+      "type": "string",
+      "default": "Progress",
+      "attr": "aria-label",
+      "description": "Accessible name of the progress bar."
+    }
+  },
+  "slots": {
+    "default": "Center content (a step number)"
+  },
+  "states": [],
+  "tokens": [
+    "color.line",
+    "color.orange",
+    "color.green",
+    "color.red",
+    "color.accent",
+    "color.ink",
+    "text.2xs",
+    "text.xs",
+    "duration.move",
+    "easing.out-strong"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "progressbar",
+    "notes": [
+      "aria-valuenow is the progress as a whole percentage; give the ring a label that says what is progressing.",
+      "The center content is visual shorthand (a step number); the label and value carry the meaning."
+    ]
+  },
+  "motion": [
+    "arc: stroke-dashoffset over duration.move, easing.out-strong when progress changes; jumps under prefers-reduced-motion",
+    "tone: the stroke colour changes over duration.base ease, with the travel (a completion turns green as the arc lands)",
+    "nothing animates on mount"
+  ]
+}

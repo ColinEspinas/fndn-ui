@@ -1,0 +1,25 @@
+{
+  "name": "showcases",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Whole apps built from the components (a code editor, a web app, a browser): what the system looks like in use, shown on the docs site.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@phosphor-icons/vue": "^2.2.1",
+    "@fndn/react": "workspace:*",
+    "@fndn/svelte": "workspace:*",
+    "@fndn/vue": "workspace:*",
+    "phosphor-svelte": "^3.1.1",
+    "react": "^19.3.1",
+    "svelte": "^5.57.3",
+    "vue": "^3.5.45"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "playground": {
+    "props": {
+      "ratio": 1.7777777777777777,
+      "style": {
+        "width": 320,
+        "background": "var(--fndn-hover-2)"
+      }
+    },
+    "text": "Preview · feat/usage-alerts"
+  },
+  "examples": [
+    { "file": "preview-thumbnail", "title": "Preview deployment thumbnail" },
+    { "file": "video-poster", "title": "Video poster" },
+    { "file": "upload-slots", "title": "Image slots by format" }
+  ]
+}

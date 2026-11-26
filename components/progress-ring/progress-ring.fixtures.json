@@ -1,0 +1,75 @@
+{
+  "examples": [
+    {
+      "name": "Step",
+      "props": {
+        "progress": 0.66,
+        "tone": "orange",
+        "size": "md",
+        "label": "Step 2 of 3"
+      },
+      "text": "2"
+    },
+    {
+      "name": "Complete",
+      "props": {
+        "progress": 1,
+        "tone": "green",
+        "size": "md",
+        "label": "Step 3 of 3"
+      },
+      "text": "3"
+    },
+    {
+      "name": "Small",
+      "props": {
+        "progress": 0.3,
+        "tone": "accent",
+        "size": "sm",
+        "label": "Progress"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Over range",
+      "props": {
+        "progress": 1.4,
+        "tone": "green",
+        "size": "md",
+        "label": "Progress"
+      },
+      "text": "9"
+    },
+    {
+      "name": "Below range",
+      "props": {
+        "progress": -0.2,
+        "tone": "red",
+        "size": "md",
+        "label": "Progress"
+      },
+      "text": "0"
+    },
+    {
+      "name": "Two digits",
+      "props": {
+        "progress": 0.5,
+        "tone": "orange",
+        "size": "md",
+        "label": "Step 12 of 24"
+      },
+      "text": "12"
+    },
+    {
+      "name": "Two digits, small",
+      "props": {
+        "progress": 0.5,
+        "tone": "accent",
+        "size": "sm",
+        "label": "Step 12 of 24"
+      },
+      "text": "12"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "playground": {
+    "props": {
+      "variant": "row",
+      "label": "Build",
+      "meta": "48s",
+      "detail": "Installed 1,284 packages, compiled 312 modules and uploaded 14.2 MB of assets for dpl_7f3a9c."
+    },
+    "width": 320
+  },
+  "examples": [
+    { "file": "build-step", "title": "Deploy step with details" },
+    { "file": "build-warnings", "title": "Warnings under a message" },
+    { "file": "sidebar-section", "title": "Sidebar section" },
+    { "file": "locked-for-viewers", "title": "Locked for viewers" }
+  ]
+}

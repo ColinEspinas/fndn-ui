@@ -1,0 +1,165 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "summary": "Turns one option on or off, independently of the others.",
+  "description": "Turn one option on or off, independently of the others. A 16px box on a hairline ring that fills with ink when checked; the box fills first and the check is then drawn from the inline start (the dash of the indeterminate state from its centre); unchecking is a shorter plain fade. The whole row, label included, is the hit area. Behaviour, focus and ARIA come from the Zag checkbox machine, through Ark UI in React, Vue and Svelte. A visually hidden native checkbox carries focus, Space and the form value.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 5,
+  "engine": "checkbox",
+  "status": "beta",
+  "element": "label",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "label",
+      "description": "The row and its hit area; data-state=checked|unchecked|indeterminate, data-disabled, data-invalid, data-focus-visible. In row layout it composes the shared option row (`lib/option.ts`). Wrapper rule: class and style land on this outermost element (what a caller sizes and places); every other attribute stays on the control."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "The 16px box (18px at size md; aria-hidden); same state attributes as the root; carries kbd-instant. Usable outside the label: written by hand in an option row (with this recipe's control and mark classes) it hovers and presses with that row."
+    },
+    {
+      "part": "mark",
+      "element": "span",
+      "repeat": true,
+      "description": "Decorative check (data-mark=check) and dash (data-mark=indeterminate); shown through the control's data-state; carries kbd-instant"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "Visible label; wraps when long"
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "Native checkbox, visually hidden: focus, Space and the form value"
+    }
+  ],
+  "props": {
+    "checked": {
+      "type": "string",
+      "model": true,
+      "description": "true, false or \"indeterminate\"."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label; otherwise pass aria-label."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "sm",
+      "description": "sm: the 16px box. md: an 18px box, for table rows."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "ink",
+        "red",
+        "green"
+      ],
+      "default": "ink",
+      "description": "Colour of the checked fill: ink, or red / green for a change to remove / add. The mark is white on red and green in both themes."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "inline",
+        "row"
+      ],
+      "default": "inline",
+      "description": "inline: the box with its label, sized to the text. row: fills a 30px option row (`lib/option.ts`: padding, radius, press hover-2) in a list that owns one glide highlight (`glideLayer` of `lib/glide.ts`; glide(list, layer, { rows: \"[data-slot=checkbox]\", follow: \"hover\" })); the box is drawn the same."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": " Reaches the input in every target."
+    },
+    "tabIndex": {
+      "type": "number",
+      "description": "tabindex of the input (the focusable part), for a host that runs a roving tab stop over several boxes (diff-table)."
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name."
+    },
+    "value": {
+      "type": "string",
+      "default": "on",
+      "description": "Form value when checked."
+    }
+  },
+  "events": {
+    "checkedChange": "(checked: boolean | \"indeterminate\")"
+  },
+  "states": [
+    "checked",
+    "indeterminate",
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled",
+    "invalid",
+    "kbd-instant",
+    "reduced-motion",
+    "size-md",
+    "tone-red",
+    "tone-green",
+    "row"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-3",
+    "color.on-ink",
+    "color.line-strong",
+    "color.accent",
+    "color.red",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "duration.stagger",
+    "easing.out-strong",
+    "motion.press-scale-sm",
+    "color.green",
+    "color.on-accent",
+    "text.md"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "checkbox",
+    "keyboard": [
+      "Tab reaches each checkbox; every box is its own tab stop",
+      "Space toggles"
+    ],
+    "notes": [
+      "Give it a visible label or an aria-label.",
+      "Indeterminate is reported as mixed (the native input's indeterminate state).",
+      "Several related checkboxes sit in a group with a label (role=group + aria-label, or a fieldset).",
+      "To set it from outside, control `checked` (true, false or \"indeterminate\"): React checked / onCheckedChange, Vue v-model:checked, Svelte bind:checked.",
+      "Outside setters: the `checked` and `disabled` props."
+    ]
+  },
+  "motion": [
+    "box on: fill and ring colour over duration.fast, ease; it leads",
+    "check on: drawn by a clip-path wipe from the inline start, inset(0 100% 0 0) to inset(0), over duration.base with easing.out-strong, delayed by duration.stagger so the fill leads; no scale, no opacity ramp; the glyph is not mirrored right to left, so neither is the wipe",
+    "dash on: the same wipe from its centre, inset(0 50%) to inset(0)",
+    "off (and the old mark when check and dash swap): opacity to 0 over duration.fast with easing.out-strong, no wipe, no delay; the box empties over duration.fast; the clip resets after the fade",
+    "press (pointer only): the box scales to motion.press-scale-sm over duration.press with easing.out-strong and springs back the same way",
+    "keyboard (Space): instant; the control and both marks carry kbd-instant and the mark's delay drops",
+    "mount: nothing animates on the first paint, in every target",
+    "reduced motion: no wipe; the marks fade over duration.fast both ways; the press stays",
+    "size, tone and row layout change no motion: the same fill, wipe, exit and press; in a row the press also darkens the row (hover-2)"
+  ]
+}

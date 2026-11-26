@@ -1,0 +1,563 @@
+{
+  "$schema": "./schema/icons.schema.json",
+  "$description": "The icon vocabulary of the system. Every icon is a Phosphor icon (MIT, https://phosphoricons.com) at the given weight; `bold` reads closest to the 2px-at-24 strokes of the design. Components reference icons by the key only; the build emits CSS mask images (ui-icon[data-icon]) and a TS table.",
+  "source": "@phosphor-icons/core",
+  "defaultWeight": "bold",
+  "icons": {
+    "check": {
+      "phosphor": "check"
+    },
+    "check-circle": {
+      "phosphor": "check-circle",
+      "weight": "fill"
+    },
+    "x": {
+      "phosphor": "x"
+    },
+    "x-circle": {
+      "phosphor": "x-circle",
+      "weight": "fill"
+    },
+    "caret-down": {
+      "phosphor": "caret-down"
+    },
+    "caret-up": {
+      "phosphor": "caret-up"
+    },
+    "caret-right": {
+      "phosphor": "caret-right"
+    },
+    "caret-left": {
+      "phosphor": "caret-left"
+    },
+    "arrow-up": {
+      "phosphor": "arrow-up"
+    },
+    "arrow-right": {
+      "phosphor": "arrow-right"
+    },
+    "arrow-up-right": {
+      "phosphor": "arrow-up-right"
+    },
+    "arrow-elbow-down-left": {
+      "phosphor": "arrow-elbow-down-left"
+    },
+    "arrow-clockwise": {
+      "phosphor": "arrow-clockwise"
+    },
+    "arrow-counter-clockwise": {
+      "phosphor": "arrow-counter-clockwise"
+    },
+    "copy": {
+      "phosphor": "copy"
+    },
+    "thumbs-up": {
+      "phosphor": "thumbs-up"
+    },
+    "thumbs-down": {
+      "phosphor": "thumbs-down"
+    },
+    "magnifying-glass": {
+      "phosphor": "magnifying-glass"
+    },
+    "sparkle": {
+      "phosphor": "sparkle",
+      "weight": "fill"
+    },
+    "pencil-simple": {
+      "phosphor": "pencil-simple"
+    },
+    "terminal": {
+      "phosphor": "terminal"
+    },
+    "file": {
+      "phosphor": "file"
+    },
+    "file-text": {
+      "phosphor": "file-text"
+    },
+    "image": {
+      "phosphor": "image"
+    },
+    "code": {
+      "phosphor": "code"
+    },
+    "text-align-left": {
+      "phosphor": "text-align-left"
+    },
+    "list": {
+      "phosphor": "list"
+    },
+    "dots-three": {
+      "phosphor": "dots-three"
+    },
+    "dots-six-vertical": {
+      "phosphor": "dots-six-vertical"
+    },
+    "sun": {
+      "phosphor": "sun",
+      "weight": "fill"
+    },
+    "moon": {
+      "phosphor": "moon",
+      "weight": "fill"
+    },
+    "globe": {
+      "phosphor": "globe"
+    },
+    "paperclip": {
+      "phosphor": "paperclip"
+    },
+    "microphone": {
+      "phosphor": "microphone"
+    },
+    "plus": {
+      "phosphor": "plus"
+    },
+    "minus": {
+      "phosphor": "minus"
+    },
+    "warning-circle": {
+      "phosphor": "warning-circle"
+    },
+    "info": {
+      "phosphor": "info"
+    },
+    "question": {
+      "phosphor": "question"
+    },
+    "clock": {
+      "phosphor": "clock"
+    },
+    "calendar": {
+      "phosphor": "calendar"
+    },
+    "user": {
+      "phosphor": "user"
+    },
+    "users": {
+      "phosphor": "users"
+    },
+    "user-plus": {
+      "phosphor": "user-plus"
+    },
+    "gear": {
+      "phosphor": "gear"
+    },
+    "funnel": {
+      "phosphor": "funnel"
+    },
+    "chat-circle": {
+      "phosphor": "chat-circle"
+    },
+    "paper-plane-right": {
+      "phosphor": "paper-plane-right"
+    },
+    "house": {
+      "phosphor": "house"
+    },
+    "lightning": {
+      "phosphor": "lightning"
+    },
+    "link": {
+      "phosphor": "link"
+    },
+    "trash": {
+      "phosphor": "trash"
+    },
+    "play": {
+      "phosphor": "play",
+      "weight": "fill"
+    },
+    "eye": {
+      "phosphor": "eye"
+    },
+    "lock": {
+      "phosphor": "lock"
+    },
+    "sidebar-simple": {
+      "phosphor": "sidebar-simple"
+    },
+    "database": {
+      "phosphor": "database"
+    },
+    "chart-bar": {
+      "phosphor": "chart-bar"
+    },
+    "stack": {
+      "phosphor": "stack"
+    },
+    "brain": {
+      "phosphor": "brain"
+    },
+    "spinner-gap": {
+      "phosphor": "spinner-gap"
+    },
+    "note-pencil": {
+      "phosphor": "note-pencil"
+    },
+    "sidebar": {
+      "phosphor": "sidebar"
+    },
+    "arrows-down-up": {
+      "phosphor": "arrows-down-up"
+    },
+    "sort-ascending": {
+      "phosphor": "sort-ascending"
+    },
+    "sort-descending": {
+      "phosphor": "sort-descending"
+    },
+    "eye-slash": {
+      "phosphor": "eye-slash"
+    },
+    "plus-circle": {
+      "phosphor": "plus-circle"
+    },
+    "tag": {
+      "phosphor": "tag"
+    },
+    "hash": {
+      "phosphor": "hash"
+    },
+    "text-t": {
+      "phosphor": "text-t"
+    },
+    "text-aa": {
+      "phosphor": "text-aa"
+    },
+    "calendar-blank": {
+      "phosphor": "calendar-blank"
+    },
+    "envelope-simple": {
+      "phosphor": "envelope-simple"
+    },
+    "at": {
+      "phosphor": "at"
+    },
+    "command": {
+      "phosphor": "command"
+    },
+    "stop": {
+      "phosphor": "stop",
+      "weight": "fill"
+    },
+    "waveform": {
+      "phosphor": "waveform"
+    },
+    "record": {
+      "phosphor": "record",
+      "weight": "fill"
+    },
+    "monitor": {
+      "phosphor": "monitor"
+    },
+    "cursor": {
+      "phosphor": "cursor"
+    },
+    "cursor-click": {
+      "phosphor": "cursor-click"
+    },
+    "hand-pointing": {
+      "phosphor": "hand-pointing"
+    },
+    "ice-cream": {
+      "phosphor": "ice-cream"
+    },
+    "storefront": {
+      "phosphor": "storefront"
+    },
+    "git-branch": {
+      "phosphor": "git-branch"
+    },
+    "flow-arrow": {
+      "phosphor": "flow-arrow"
+    },
+    "tree-structure": {
+      "phosphor": "tree-structure"
+    },
+    "funnel-simple": {
+      "phosphor": "funnel-simple"
+    },
+    "sliders-horizontal": {
+      "phosphor": "sliders-horizontal"
+    },
+    "faders": {
+      "phosphor": "faders"
+    },
+    "magic-wand": {
+      "phosphor": "magic-wand"
+    },
+    "chat-text": {
+      "phosphor": "chat-text"
+    },
+    "chats": {
+      "phosphor": "chats"
+    },
+    "arrow-left": {
+      "phosphor": "arrow-left"
+    },
+    "arrow-down": {
+      "phosphor": "arrow-down"
+    },
+    "caret-up-down": {
+      "phosphor": "caret-up-down"
+    },
+    "check-square": {
+      "phosphor": "check-square"
+    },
+    "square": {
+      "phosphor": "square"
+    },
+    "circle": {
+      "phosphor": "circle",
+      "weight": "fill"
+    },
+    "dots-three-vertical": {
+      "phosphor": "dots-three-vertical"
+    },
+    "columns": {
+      "phosphor": "columns"
+    },
+    "rows": {
+      "phosphor": "rows"
+    },
+    "squares-four": {
+      "phosphor": "squares-four"
+    },
+    "list-bullets": {
+      "phosphor": "list-bullets"
+    },
+    "list-checks": {
+      "phosphor": "list-checks"
+    },
+    "table": {
+      "phosphor": "table"
+    },
+    "arrows-out-simple": {
+      "phosphor": "arrows-out-simple"
+    },
+    "arrow-square-out": {
+      "phosphor": "arrow-square-out"
+    },
+    "download-simple": {
+      "phosphor": "download-simple"
+    },
+    "upload-simple": {
+      "phosphor": "upload-simple"
+    },
+    "share-network": {
+      "phosphor": "share-network"
+    },
+    "bookmark-simple": {
+      "phosphor": "bookmark-simple"
+    },
+    "star": {
+      "phosphor": "star",
+      "weight": "fill"
+    },
+    "heart": {
+      "phosphor": "heart",
+      "weight": "fill"
+    },
+    "bell": {
+      "phosphor": "bell"
+    },
+    "folder": {
+      "phosphor": "folder"
+    },
+    "folder-open": {
+      "phosphor": "folder-open"
+    },
+    "file-pdf": {
+      "phosphor": "file-pdf"
+    },
+    "file-csv": {
+      "phosphor": "file-csv"
+    },
+    "robot": {
+      "phosphor": "robot"
+    },
+    "cpu": {
+      "phosphor": "cpu"
+    },
+    "key-return": {
+      "phosphor": "key-return"
+    },
+    "backspace": {
+      "phosphor": "backspace"
+    },
+    "pause": {
+      "phosphor": "pause",
+      "weight": "fill"
+    },
+    "stop-circle": {
+      "phosphor": "stop-circle"
+    },
+    "speaker-high": {
+      "phosphor": "speaker-high"
+    },
+    "push-pin": {
+      "phosphor": "push-pin"
+    },
+    "sign-out": {
+      "phosphor": "sign-out"
+    },
+    "credit-card": {
+      "phosphor": "credit-card"
+    },
+    "rocket-launch": {
+      "phosphor": "rocket-launch"
+    },
+    "crown": {
+      "phosphor": "crown"
+    },
+    "caret-double-left": {
+      "phosphor": "caret-double-left"
+    },
+    "caret-double-right": {
+      "phosphor": "caret-double-right"
+    },
+    "x-square": {
+      "phosphor": "x-square"
+    },
+    "minus-circle": {
+      "phosphor": "minus-circle"
+    },
+    "warning": {
+      "phosphor": "warning"
+    },
+    "lightbulb": {
+      "phosphor": "lightbulb"
+    },
+    "pencil-line": {
+      "phosphor": "pencil-line"
+    },
+    "selection": {
+      "phosphor": "selection"
+    },
+    "text-align-center": {
+      "phosphor": "text-align-center"
+    },
+    "text-align-right": {
+      "phosphor": "text-align-right"
+    },
+    "text-b": {
+      "phosphor": "text-b"
+    },
+    "text-italic": {
+      "phosphor": "text-italic"
+    },
+    "text-underline": {
+      "phosphor": "text-underline"
+    },
+    "link-simple": {
+      "phosphor": "link-simple"
+    },
+    "article": {
+      "phosphor": "article"
+    },
+    "notepad": {
+      "phosphor": "notepad"
+    },
+    "cube": {
+      "phosphor": "cube"
+    },
+    "package": {
+      "phosphor": "package"
+    },
+    "shopping-cart": {
+      "phosphor": "shopping-cart"
+    },
+    "currency-dollar": {
+      "phosphor": "currency-dollar"
+    },
+    "percent": {
+      "phosphor": "percent"
+    },
+    "trend-up": {
+      "phosphor": "trend-up"
+    },
+    "trend-down": {
+      "phosphor": "trend-down"
+    },
+    "chart-line": {
+      "phosphor": "chart-line"
+    },
+    "chart-line-up": {
+      "phosphor": "chart-line-up"
+    },
+    "clock-counter-clockwise": {
+      "phosphor": "clock-counter-clockwise"
+    },
+    "hourglass": {
+      "phosphor": "hourglass"
+    },
+    "arrows-clockwise": {
+      "phosphor": "arrows-clockwise"
+    },
+    "arrow-u-up-left": {
+      "phosphor": "arrow-u-up-left"
+    },
+    "corners-out": {
+      "phosphor": "corners-out"
+    },
+    "corners-in": {
+      "phosphor": "corners-in"
+    },
+    "frame-corners": {
+      "phosphor": "frame-corners"
+    },
+    "layout": {
+      "phosphor": "layout"
+    },
+    "square-half": {
+      "phosphor": "square-half"
+    },
+    "device-mobile": {
+      "phosphor": "device-mobile"
+    },
+    "browsers": {
+      "phosphor": "browsers"
+    },
+    "app-window": {
+      "phosphor": "app-window"
+    },
+    "globe-simple": {
+      "phosphor": "globe-simple"
+    },
+    "map-pin": {
+      "phosphor": "map-pin"
+    },
+    "phone": {
+      "phosphor": "phone"
+    },
+    "video-camera": {
+      "phosphor": "video-camera"
+    },
+    "camera": {
+      "phosphor": "camera"
+    },
+    "microphone-slash": {
+      "phosphor": "microphone-slash"
+    },
+    "paint-brush": {
+      "phosphor": "paint-brush"
+    },
+    "palette": {
+      "phosphor": "palette"
+    },
+    "drop": {
+      "phosphor": "drop"
+    },
+    "eyedropper": {
+      "phosphor": "eyedropper"
+    },
+    "swatches": {
+      "phosphor": "swatches"
+    },
+    "shapes": {
+      "phosphor": "shapes"
+    }
+  }
+}

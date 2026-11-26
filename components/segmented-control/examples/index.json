@@ -1,0 +1,22 @@
+{
+  "playground": {
+    "props": {
+      "size": "sm",
+      "options": [
+        { "value": "24h", "label": "24h" },
+        { "value": "7d", "label": "7d" },
+        { "value": "30d", "label": "30d" },
+        { "value": "90d", "label": "90d" }
+      ],
+      "value": "7d",
+      "aria-label": "Range"
+    }
+  },
+  "examples": [
+    { "file": "chart-range", "title": "Range of a usage figure" },
+    { "file": "theme", "title": "Theme, icon-only" },
+    { "file": "view-switch", "title": "List or board, beside a small button" },
+    { "file": "status-chips", "title": "Filter chips with counts" },
+    { "file": "backup-frequency", "title": "Backups, one option not on your plan" }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "examples": [
+    {
+      "name": "Compact",
+      "props": {
+        "size": "xs",
+        "options": [
+          {
+            "value": "steps",
+            "label": "Steps"
+          },
+          {
+            "value": "reasoning",
+            "label": "Reasoning"
+          },
+          {
+            "value": "search",
+            "label": "Search"
+          },
+          {
+            "value": "coding",
+            "label": "Coding"
+          }
+        ],
+        "value": "steps",
+        "aria-label": "Trace view"
+      }
+    },
+    {
+      "name": "Medium",
+      "width": 240,
+      "props": {
+        "options": [
+          {
+            "value": "capsules",
+            "label": "Capsules"
+          },
+          {
+            "value": "list",
+            "label": "List"
+          }
+        ],
+        "value": "capsules",
+        "size": "md",
+        "fill": true,
+        "aria-label": "Layout"
+      }
+    },
+    {
+      "name": "Disabled option",
+      "props": {
+        "options": [
+          {
+            "value": "day",
+            "label": "Day"
+          },
+          {
+            "value": "week",
+            "label": "Week"
+          },
+          {
+            "value": "month",
+            "label": "Month",
+            "disabled": true
+          },
+          {
+            "value": "year",
+            "label": "Year"
+          }
+        ],
+        "value": "week",
+        "size": "md",
+        "aria-label": "Range"
+      }
+    },
+    {
+      "name": "Icons",
+      "frameworks": false
+    },
+    {
+      "name": "Rounded",
+      "props": {
+        "options": [
+          {
+            "value": "preview",
+            "label": "Preview"
+          },
+          {
+            "value": "code",
+            "label": "Code"
+          },
+          {
+            "value": "tokens",
+            "label": "Tokens"
+          }
+        ],
+        "value": "preview",
+        "size": "md",
+        "shape": "rounded",
+        "aria-label": "Panel"
+      }
+    },
+    {
+      "name": "Chips",
+      "props": {
+        "variant": "chips",
+        "options": [
+          {
+            "value": "all",
+            "label": "All",
+            "count": 5
+          },
+          {
+            "value": "todo",
+            "label": "To do",
+            "dot": "orange",
+            "count": 2
+          },
+          {
+            "value": "progress",
+            "label": "In progress",
+            "dot": "blue",
+            "count": 2
+          },
+          {
+            "value": "done",
+            "label": "Completed",
+            "dot": "green",
+            "count": 1
+          }
+        ],
+        "value": "all",
+        "aria-label": "Filter by status"
+      }
+    },
+    {
+      "name": "Small",
+      "props": {
+        "size": "sm",
+        "options": [
+          {
+            "value": "steps",
+            "label": "Steps"
+          },
+          {
+            "value": "reasoning",
+            "label": "Reasoning"
+          },
+          {
+            "value": "search",
+            "label": "Search"
+          },
+          {
+            "value": "coding",
+            "label": "Coding"
+          }
+        ],
+        "value": "steps",
+        "aria-label": "Trace view"
+      }
+    },
+    {
+      "name": "Large",
+      "props": {
+        "size": "lg",
+        "options": [
+          {
+            "value": "steps",
+            "label": "Steps"
+          },
+          {
+            "value": "reasoning",
+            "label": "Reasoning"
+          },
+          {
+            "value": "search",
+            "label": "Search"
+          },
+          {
+            "value": "coding",
+            "label": "Coding"
+          }
+        ],
+        "value": "steps",
+        "aria-label": "Trace view"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long labels",
+      "width": 280,
+      "props": {
+        "options": [
+          {
+            "value": "a",
+            "label": "Reasoning and intermediate conclusions"
+          },
+          {
+            "value": "b",
+            "label": "S"
+          },
+          {
+            "value": "c",
+            "label": "Wiśniewska-Kowalczyk"
+          }
+        ],
+        "value": "a",
+        "size": "md",
+        "fill": true,
+        "aria-label": "Worst case"
+      }
+    },
+    {
+      "name": "Many options",
+      "props": {
+        "size": "xs",
+        "options": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Every weekday",
+          "Custom"
+        ],
+        "value": "Wed",
+        "aria-label": "Days"
+      }
+    },
+    {
+      "name": "One option",
+      "props": {
+        "size": "xs",
+        "options": [
+          "Only"
+        ],
+        "value": "Only",
+        "aria-label": "Single"
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "options": [
+          {
+            "value": "day",
+            "label": "يوم"
+          },
+          {
+            "value": "week",
+            "label": "أسبوع"
+          },
+          {
+            "value": "month",
+            "label": "شهر"
+          }
+        ],
+        "value": "week",
+        "size": "md",
+        "aria-label": "المدى"
+      }
+    },
+    {
+      "name": "Chips that overflow",
+      "width": 240,
+      "props": {
+        "variant": "chips",
+        "options": [
+          {
+            "value": "all",
+            "label": "All",
+            "count": 12840
+          },
+          {
+            "value": "todo",
+            "label": "Waiting for supplier review",
+            "dot": "orange",
+            "count": 2
+          },
+          {
+            "value": "progress",
+            "label": "In progress",
+            "dot": "blue",
+            "count": 0
+          },
+          {
+            "value": "done",
+            "label": "Completed",
+            "dot": "green",
+            "count": 999
+          }
+        ],
+        "value": "done",
+        "aria-label": "Filter by status"
+      }
+    },
+    {
+      "name": "Many options, large",
+      "props": {
+        "size": "lg",
+        "options": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Every weekday",
+          "Custom"
+        ],
+        "value": "Wed",
+        "aria-label": "Days"
+      }
+    }
+  ]
+}

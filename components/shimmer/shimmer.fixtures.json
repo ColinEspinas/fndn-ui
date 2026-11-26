@@ -1,0 +1,50 @@
+{
+  "examples": [
+    {
+      "name": "Normal",
+      "props": {
+        "speed": "normal"
+      },
+      "text": "Reading supplier lists…"
+    },
+    {
+      "name": "Fast",
+      "props": {
+        "speed": "fast"
+      },
+      "text": "Thinking"
+    },
+    {
+      "name": "Accent",
+      "props": {
+        "speed": "fast",
+        "tone": "accent"
+      },
+      "text": "Adjust"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Wraps",
+      "width": 200,
+      "props": {
+        "speed": "normal"
+      },
+      "text": "Reading 1,284 supplier records and comparing tasting notes across three summers…"
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "speed": "fast"
+      },
+      "text": "…"
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "speed": "normal"
+      },
+      "text": "جارٍ قراءة قوائم الموردين…"
+    }
+  ]
+}

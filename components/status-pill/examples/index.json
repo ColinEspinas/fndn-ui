@@ -1,0 +1,15 @@
+{
+  "playground": {
+    "props": {
+      "tone": "green"
+    },
+    "text": "Ready"
+  },
+  "examples": [
+    { "file": "recent-deploys", "title": "Recent deploys" },
+    { "file": "invoices-table", "title": "Status column of an invoices table" },
+    { "file": "review-approved", "title": "Pull request approved" },
+    { "file": "environments", "title": "Environments" },
+    { "file": "beta-setting", "title": "Beta label on a setting" }
+  ]
+}

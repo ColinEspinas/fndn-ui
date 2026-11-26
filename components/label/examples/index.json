@@ -1,0 +1,11 @@
+{
+  "playground": {
+    "props": {},
+    "text": "Email address"
+  },
+  "examples": [
+    { "file": "email-address", "title": "Email address" },
+    { "file": "beside-a-switch", "title": "Setting beside a switch" },
+    { "file": "optional-field", "title": "Optional field" }
+  ]
+}

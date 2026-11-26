@@ -1,0 +1,8 @@
+{
+  "playground": { "props": { "orientation": "vertical", "style": { "width": 280, "height": 160 } }, "text": "Usage alerts: get an email when a project reaches 80% and 100% of its monthly build minutes. Set the thresholds in Settings → Billing. Webhook deliveries now retry five times with exponential backoff before they are marked as failed. Failed deliveries can be replayed from the log for 30 days. Preview deployments get a comment on their pull request with the URL and the build time. Fixed: invoices for workspaces that changed plans in the middle of a month rounded the prorated amount down by one cent." },
+  "examples": [
+    { "file": "recent-activity", "title": "Recent activity in a panel" },
+    { "file": "release-notes", "title": "Release notes in a card" },
+    { "file": "preview-deploys", "title": "Preview deployments, sideways" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "examples": [
+    { "name": "Drop zone", "width": 360, "props": { "label": "Attachment", "hint": "or click to choose · PDF up to 5 MB", "accept": ["application/pdf"], "maxFileSize": 5000000 } },
+    { "name": "With files", "width": 360, "props": { "label": "Images", "hint": "PNG or JPG, up to 4 files", "maxFiles": 4, "accept": ["image/png", "image/jpeg"], "files": [{ "name": "header.png", "size": 248000, "type": "image/png" }, { "name": "avatar.jpg", "size": 51200, "type": "image/jpeg" }] } },
+    { "name": "No label", "width": 320, "props": { "title": "Drop a CSV", "hint": "or click to choose one", "accept": [".csv"] } },
+    { "name": "Disabled", "width": 360, "props": { "label": "Attachment", "disabled": true } }
+  ],
+  "worstCase": [
+    { "name": "Long file names", "width": 300, "props": { "label": "Attachments for the quarterly review of the synchronisation service and its consumers", "maxFiles": 5, "files": [{ "name": "quarterly-review-of-the-background-synchronisation-service-final-v12.pdf", "size": 12480000, "type": "application/pdf" }, { "name": "a.txt", "size": 1, "type": "text/plain" }, { "name": "تقرير الربع الأول.pdf", "size": 2048, "type": "application/pdf" }] } },
+    { "name": "Narrow", "width": 160, "props": { "maxFiles": 2, "files": [{ "name": "screenshot-2026-11-15.png", "size": 912000, "type": "image/png" }] } },
+    { "name": "Many files", "width": 320, "props": { "maxFiles": 20, "files": [{ "name": "1.png", "size": 1000 }, { "name": "2.png", "size": 2000 }, { "name": "3.png", "size": 3000 }, { "name": "4.png", "size": 4000 }, { "name": "5.png", "size": 5000 }, { "name": "6.png", "size": 6000 }, { "name": "7.png", "size": 7000 }, { "name": "8.png", "size": 8000 }, { "name": "9.png", "size": 9000 }, { "name": "10.png", "size": 10000 }, { "name": "11.png", "size": 11000 }, { "name": "12.png", "size": 12000 }] } },
+    { "name": "Right-to-left text", "width": 320, "props": { "label": "المرفقات", "title": "أفلت الملفات هنا", "hint": "أو انقر للاختيار", "maxFiles": 2, "files": [{ "name": "ملف.pdf", "size": 4096 }] } },
+    { "name": "Long hint", "width": 260, "props": { "title": "Drop the signed contract and every appendix here", "hint": "PDF, DOCX or a scanned image, up to 25 MB each, at most ten files; they are checked before upload" } }
+  ]
+}

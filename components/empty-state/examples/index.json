@@ -1,0 +1,19 @@
+{
+  "playground": {
+    "props": {
+      "title": "No deploys yet",
+      "hint": "Push to main to create the first one.",
+      "icon": "folder-open",
+      "size": "block"
+    },
+    "width": 320
+  },
+  "examples": [
+    { "file": "no-deploys", "title": "No deploys yet" },
+    { "file": "no-issues", "title": "An empty project, with the next step" },
+    { "file": "search-no-results", "title": "Search finds nothing" },
+    { "file": "filter-no-matches", "title": "A filter matches nothing" },
+    { "file": "member-picker", "title": "Nothing left in a picker" },
+    { "file": "no-invoices", "title": "No invoices yet, in a table" }
+  ]
+}

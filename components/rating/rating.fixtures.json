@@ -1,0 +1,16 @@
+{
+  "examples": [
+    { "name": "With a label", "props": { "label": "How was the answer?", "value": 3 } },
+    { "name": "Half stars", "props": { "aria-label": "Rating", "allowHalf": true, "value": 3.5 } },
+    { "name": "Small, read-only", "props": { "aria-label": "Average rating", "size": "sm", "readOnly": true, "value": 4 } },
+    { "name": "Empty", "props": { "aria-label": "Rating" } },
+    { "name": "Disabled", "props": { "label": "How was the answer?", "value": 2, "disabled": true } },
+    { "name": "Ten", "props": { "aria-label": "Score", "count": 10, "value": 7 } }
+  ],
+  "worstCase": [
+    { "name": "Long label, narrow", "width": 140, "props": { "label": "How helpful was this answer for the task you were working on?", "value": 4 } },
+    { "name": "One star", "props": { "aria-label": "Favourite", "count": 1, "value": 1 } },
+    { "name": "Many stars in 200px", "width": 200, "props": { "aria-label": "Score", "count": 10, "value": 10 } },
+    { "name": "Right-to-left label, half", "props": { "label": "كيف كانت الإجابة؟", "allowHalf": true, "value": 2.5 } }
+  ]
+}

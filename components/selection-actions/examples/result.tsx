@@ -1,0 +1,26 @@
+import type { ComponentProps } from "react";
+import { SelectionActions } from "@fndn/react";
+
+type Props = ComponentProps<typeof SelectionActions>;
+
+const actions: Props["actions"] = [
+  {
+    value: "improve",
+    label: "Improve",
+    icon: "sparkle",
+    busyLabel: "Improving",
+  },
+];
+
+export default function Result() {
+  return (
+    <SelectionActions
+      defaultText="Thanks for flagging this, and sorry for the confusion on Monday. Reminders scheduled before 6 a.m. were going out an hour late after the daylight saving change, and we shipped a fix this morning."
+      defaultSelection={{ start: 65, end: 195 }}
+      defaultOpen
+      defaultResult="Reminders set before 6 a.m. went out an hour late after the daylight saving change. We shipped a fix this morning."
+      actions={actions}
+      style={{ width: 420 }}
+    />
+  );
+}

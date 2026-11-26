@@ -1,0 +1,20 @@
+{
+  "playground": {
+    "props": {
+      "items": [
+        { "value": "private", "label": "Private: only members of web-app" },
+        { "value": "internal", "label": "Internal: everyone at Northwind" },
+        { "value": "public", "label": "Public: anyone with the link" }
+      ],
+      "value": "internal",
+      "label": "Who can see web-app"
+    }
+  },
+  "examples": [
+    { "file": "project-visibility", "title": "Project visibility" },
+    { "file": "billing-cycle", "title": "Billing cycle, in a row" },
+    { "file": "cancel-reason", "title": "Why are you cancelling (rows, with free text)" },
+    { "file": "log-retention", "title": "Log retention, one option not on your plan" },
+    { "file": "region", "title": "Pick a region (no default)" }
+  ]
+}

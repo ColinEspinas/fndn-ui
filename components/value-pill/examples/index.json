@@ -1,0 +1,14 @@
+{
+  "playground": {
+    "props": {
+      "tone": "neutral"
+    },
+    "text": "Dec 1, 2026"
+  },
+  "examples": [
+    { "file": "usage-summary", "title": "Usage summary" },
+    { "file": "uptime", "title": "Uptime report" },
+    { "file": "payment-failed", "title": "Payment declined" },
+    { "file": "seats-left", "title": "Seats left on the plan" }
+  ]
+}

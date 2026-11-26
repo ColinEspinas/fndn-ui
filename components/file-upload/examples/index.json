@@ -1,0 +1,9 @@
+{
+  "playground": { "props": { "title": "Import members from a CSV", "hint": "Drop it here or click to choose · up to 2 MB", "maxFiles": 1, "disabled": false }, "width": 320 },
+  "examples": [
+    { "file": "members-csv", "title": "Import members from a CSV" },
+    { "file": "bug-screenshots", "title": "Screenshots for a bug report" },
+    { "file": "ticket-attachments", "title": "Ticket with files attached" },
+    { "file": "free-plan", "title": "Locked on the Free plan" }
+  ]
+}

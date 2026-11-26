@@ -1,0 +1,9 @@
+{
+  "playground": { "props": { "placeholder": "Leave a comment", "aria-label": "Comment", "size": "md", "variant": "outline", "mono": false, "invalid": false, "autoResize": true, "disabled": false }, "width": 280 },
+  "examples": [
+    { "file": "review-comment", "title": "Comment on a pull request" },
+    { "file": "release-notes", "title": "Release notes, capped height" },
+    { "file": "webhook-payload", "title": "Webhook payload, resizable" },
+    { "file": "cancel-reason", "title": "Reason for cancelling" }
+  ]
+}

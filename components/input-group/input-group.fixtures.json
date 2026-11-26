@@ -1,0 +1,17 @@
+{
+  "examples": [
+    { "name": "Prefix", "props": { "start": "https://", "placeholder": "example.com", "aria-label": "Website" }, "width": 280 },
+    { "name": "Suffix", "props": { "end": ".com", "placeholder": "northwind", "aria-label": "Domain" }, "width": 280 },
+    { "name": "Both", "props": { "start": "$", "end": "USD", "value": "12.50", "aria-label": "Price" }, "width": 200 },
+    { "name": "Small", "props": { "size": "sm", "start": "@", "placeholder": "handle", "aria-label": "Handle" }, "width": 200 },
+    { "name": "Invalid", "props": { "start": "https://", "value": "not a url", "invalid": true, "aria-label": "Website" }, "width": 280 },
+    { "name": "Disabled", "props": { "start": "https://", "value": "northwind.example", "disabled": true, "aria-label": "Website" }, "width": 280 }
+  ],
+  "worstCase": [
+    { "name": "Long addons", "props": { "start": "https://northwind-industries-holdings.", "end": ".example.com/suppliers", "placeholder": "path", "aria-label": "Address" }, "width": 280 },
+    { "name": "Long value", "props": { "start": "@", "value": "bartholomew.fitzgerald@northwind-industries-holdings.example.com", "aria-label": "Email" }, "width": 280 },
+    { "name": "One character", "props": { "end": "%", "value": "5", "aria-label": "Discount" }, "width": 120 },
+    { "name": "Right-to-left", "props": { "start": "ر.س", "value": "١٢٫٥٠", "aria-label": "Price" }, "width": 200 },
+    { "name": "Narrow", "props": { "start": "https://", "end": ".com", "placeholder": "site", "aria-label": "Website" }, "width": 120 }
+  ]
+}

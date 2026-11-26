@@ -1,0 +1,194 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "chat-composer",
+  "title": "Chat Composer",
+  "summary": "A chat panel with conversation tabs, a thread of messages and a composer.",
+  "description": "A compact chat panel with conversation tabs, a thread and a composer. A pill tab strip switches between conversations (our tabs; panels swap instantly), the thread is made of Message components (the user's prompts as bubbles, the agent's steps as labelled messages), and a composer at the bottom sends. Enter sends, Shift+Enter starts a new line, nothing sends during an IME composition. Suggestion pills fill the composer; while the agent works they give way to a shimmering status and send turns into stop. The card keeps its height: the thread scrolls.",
+  "kind": "block",
+  "category": "agent",
+  "order": 1,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Fixed height; the thread takes the room the composer leaves."
+    },
+    {
+      "part": "tabs",
+      "element": "div",
+      "description": "The real Tabs (pill): the strip is the header, each panel holds one conversation and scrolls. Marked data-chat-composer=\"tabs\" on its root"
+    },
+    {
+      "part": "thread",
+      "element": "div",
+      "repeat": true,
+      "description": "role=log; one per tab panel"
+    },
+    {
+      "part": "message",
+      "element": "article",
+      "repeat": true,
+      "description": "The real Message, marked data-chat-composer=\"message\": the user's prompt as its bubble at the end (role user); an agent step as role assistant with the step's label as its name, the source as its Chip and the duration (\"for 4s\") as its time. A message that arrives after mount carries data-enter (set and cleared by the shared helper) while it rises in."
+    },
+    {
+      "part": "composer",
+      "element": "div"
+    },
+    {
+      "part": "suggestions",
+      "element": "div",
+      "optional": true,
+      "description": "One row of suggestion Buttons; scrolls sideways. Hidden while busy."
+    },
+    {
+      "part": "suggestion",
+      "element": "button",
+      "repeat": true,
+      "description": "The real Button (outline, sm), marked data-chat-composer=\"suggestion\""
+    },
+    {
+      "part": "status",
+      "element": "div",
+      "optional": true,
+      "description": "role=status; a Shimmer label in the suggestions row place while busy"
+    },
+    {
+      "part": "field",
+      "element": "div",
+      "description": "The input box; pressing its padding focuses the textarea"
+    },
+    {
+      "part": "input",
+      "element": "textarea",
+      "description": "Grows with its content up to 96px, then scrolls"
+    },
+    {
+      "part": "footer",
+      "element": "div"
+    },
+    {
+      "part": "send",
+      "element": "button",
+      "description": "The real Button (primary sm square) with our Tooltip naming it, marked data-chat-composer=\"send\". aria-label Send, or Stop generating while busy; disabled while the draft is empty"
+    }
+  ],
+  "props": {
+    "tabs": {
+      "type": "array",
+      "model": true,
+      "items": {
+        "value": "string",
+        "label": "string",
+        "messages": "Array<{ role: 'user', text } | { role: 'agent', text, label?, source?, time? }>?"
+      },
+      "description": "Conversations in order. Sending appends the user's message to the selected tab's messages (tabsChange); the host appends the agent's reply. Each message renders as a Message."
+    },
+    "tab": {
+      "type": "string",
+      "model": true,
+      "description": "Selected conversation. Defaults to the first."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "default": "",
+      "description": "The draft."
+    },
+    "suggestions": {
+      "type": "array",
+      "items": {
+        "text": "string"
+      },
+      "description": "Prompts offered as pills (plain strings); choosing one puts it in the composer."
+    },
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "description": "The agent is working: the status replaces the suggestions, send becomes stop, Enter does not send."
+    },
+    "status": {
+      "type": "string",
+      "default": "Thinking",
+      "description": "Label of the busy status (an ellipsis is added)."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Write a message…"
+    },
+    "aria-label": {
+      "type": "string",
+      "default": "Conversations",
+      "description": "Name of the tab list."
+    },
+    "labels": {
+      "type": "object",
+      "description": "The fixed strings, partial: { message (the textarea's name), send, stop (the send button's name and tooltip, idle and busy), time ('for {time}', a step's duration) }."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string)",
+    "tabChange": "(tab: string)",
+    "tabsChange": "(tabs: ChatComposerTab[])",
+    "submit": "({ value, tab }) Enter or the send button; value is trimmed; the composer then clears",
+    "stop": "() the stop button while busy"
+  },
+  "states": [
+    "focus-within",
+    "busy",
+    "disabled",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.field",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.line-strong",
+    "shadow.card",
+    "radius.window",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.base",
+    "duration.enter",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "tabs",
+    "button",
+    "shimmer",
+    "tooltip",
+    "message",
+    "prompt-bar"
+  ],
+  "a11y": {
+    "role": "tablist + tabpanel (role=log thread) + textarea",
+    "keyboard": [
+      "Tab order: the selected tab, the panel, each suggestion, the textarea, send",
+      "Tab strip: ArrowLeft / ArrowRight move and select (wrapping), Home / End jump; panels swap instantly",
+      "Textarea: Enter sends; Shift+Enter inserts a newline; nothing sends during an IME composition or while busy",
+      "Suggestion: Enter / Space put it in the composer and move focus to the end of the textarea",
+      "Send / stop: Enter / Space"
+    ],
+    "notes": [
+      "The thread is role=log, so a new message is announced once; the busy status is role=status.",
+      "Send is icon-only: aria-label Send, Stop generating while busy.",
+      "16px text on coarse pointers so iOS does not zoom the page; enterkeyhint=send."
+    ]
+  },
+  "motion": [
+    "panels: swap instantly; the strip's indicator is the tabs component's (slides under the pointer, jumps under the keyboard)",
+    "message: a message that arrives after mount rises in once (fndn-fade-up, duration.enter, easing.out-strong); messages present at mount and tab swaps never animate",
+    "thread: an arriving message scrolls the thread to it smoothly (scrollTo, behavior smooth; instant under prefers-reduced-motion); at mount and when a panel is shown again it opens at the end at once",
+    "field: border colour over duration.base on focus",
+    "status / suggestions: swap instantly; the shimmer is the shimmer component's loop (static under reduced motion)",
+    "buttons: the button component's press scale and colour"
+  ]
+}

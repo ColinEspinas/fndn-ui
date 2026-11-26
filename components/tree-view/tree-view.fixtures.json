@@ -1,0 +1,242 @@
+{
+  "examples": [
+    {
+      "name": "Files",
+      "width": 280,
+      "props": {
+        "label": "Project",
+        "expandedValue": ["src"],
+        "items": [
+          {
+            "value": "src", "label": "src",
+            "children": [
+              { "value": "src/app.tsx", "label": "app.tsx" },
+              {
+                "value": "src/components", "label": "components",
+                "children": [
+                  { "value": "src/components/button.tsx", "label": "button.tsx" },
+                  { "value": "src/components/card.tsx", "label": "card.tsx" }
+                ]
+              },
+              { "value": "src/main.tsx", "label": "main.tsx" }
+            ]
+          },
+          { "value": "public", "label": "public", "children": [{ "value": "public/favicon.svg", "label": "favicon.svg" }] },
+          { "value": "package.json", "label": "package.json" },
+          { "value": "readme.md", "label": "README.md" }
+        ]
+      }
+    },
+    {
+      "name": "Selected, nested open",
+      "width": 280,
+      "props": {
+        "aria-label": "Settings",
+        "expandedValue": ["workspace", "workspace/members"],
+        "selectedValue": ["workspace/members/roles"],
+        "items": [
+          {
+            "value": "workspace", "label": "Workspace",
+            "children": [
+              { "value": "workspace/general", "label": "General" },
+              {
+                "value": "workspace/members", "label": "Members",
+                "children": [
+                  { "value": "workspace/members/people", "label": "People" },
+                  { "value": "workspace/members/roles", "label": "Roles" }
+                ]
+              }
+            ]
+          },
+          { "value": "account", "label": "Account", "children": [{ "value": "account/profile", "label": "Profile" }] }
+        ]
+      }
+    },
+    {
+      "name": "A disabled node, multiple",
+      "width": 280,
+      "props": {
+        "aria-label": "Reports",
+        "selectionMode": "multiple",
+        "items": [
+          { "value": "q1", "label": "First quarter" },
+          { "value": "q2", "label": "Second quarter", "disabled": true },
+          { "value": "q3", "label": "Third quarter" }
+        ]
+      }
+    },
+    {
+      "name": "Dense side pane (xs)",
+      "width": 220,
+      "props": {
+        "aria-label": "Explorer",
+        "size": "xs",
+        "expandedValue": ["src", "src/webhooks"],
+        "items": [
+          {
+            "value": "src", "label": "src",
+            "children": [
+              { "value": "src/webhooks", "label": "webhooks", "children": [{ "value": "src/webhooks/deliver.ts", "label": "deliver.ts" }, { "value": "src/webhooks/retry-policy.ts", "label": "retry-policy.ts" }] },
+              { "value": "src/index.ts", "label": "index.ts" }
+            ]
+          },
+          { "value": "package.json", "label": "package.json" }
+        ]
+      }
+    },
+    {
+      "name": "Small (sm)",
+      "width": 220,
+      "props": {
+        "aria-label": "Explorer",
+        "size": "sm",
+        "expandedValue": ["src", "src/webhooks"],
+        "items": [
+          {
+            "value": "src", "label": "src",
+            "children": [
+              { "value": "src/webhooks", "label": "webhooks", "children": [{ "value": "src/webhooks/deliver.ts", "label": "deliver.ts" }, { "value": "src/webhooks/retry-policy.ts", "label": "retry-policy.ts" }] },
+              { "value": "src/index.ts", "label": "index.ts" }
+            ]
+          },
+          { "value": "package.json", "label": "package.json" }
+        ]
+      }
+    },
+    {
+      "name": "Large (lg)",
+      "width": 220,
+      "props": {
+        "aria-label": "Explorer",
+        "size": "lg",
+        "expandedValue": ["src", "src/webhooks"],
+        "items": [
+          {
+            "value": "src", "label": "src",
+            "children": [
+              { "value": "src/webhooks", "label": "webhooks", "children": [{ "value": "src/webhooks/deliver.ts", "label": "deliver.ts" }, { "value": "src/webhooks/retry-policy.ts", "label": "retry-policy.ts" }] },
+              { "value": "src/index.ts", "label": "index.ts" }
+            ]
+          },
+          { "value": "package.json", "label": "package.json" }
+        ]
+      }
+    },
+    {
+      "name": "Four levels, a deep row selected",
+      "width": 300,
+      "props": {
+        "label": "web",
+        "expandedValue": ["app", "app/routes", "app/routes/settings", "app/routes/settings/billing"],
+        "selectedValue": ["app/routes/settings/billing/invoices.tsx"],
+        "items": [
+          {
+            "value": "app", "label": "app",
+            "children": [
+              { "value": "app/components", "label": "components", "children": [{ "value": "app/components/header.tsx", "label": "header.tsx" }] },
+              {
+                "value": "app/routes", "label": "routes",
+                "children": [
+                  { "value": "app/routes/index.tsx", "label": "index.tsx" },
+                  {
+                    "value": "app/routes/settings", "label": "settings",
+                    "children": [
+                      { "value": "app/routes/settings/profile.tsx", "label": "profile.tsx" },
+                      {
+                        "value": "app/routes/settings/billing", "label": "billing",
+                        "children": [
+                          { "value": "app/routes/settings/billing/plans.tsx", "label": "plans.tsx" },
+                          { "value": "app/routes/settings/billing/invoices.tsx", "label": "invoices.tsx" },
+                          { "value": "app/routes/settings/billing/usage.tsx", "label": "usage.tsx" }
+                        ]
+                      },
+                      { "value": "app/routes/settings/team.tsx", "label": "team.tsx" }
+                    ]
+                  },
+                  { "value": "app/routes/login.tsx", "label": "login.tsx" }
+                ]
+              },
+              { "value": "app/root.tsx", "label": "root.tsx" }
+            ]
+          },
+          { "value": "package.json", "label": "package.json" }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names wrap",
+      "width": 240,
+      "props": {
+        "aria-label": "Files",
+        "expandedValue": ["a", "a/b"],
+        "items": [
+          {
+            "value": "a", "label": "Quarterly supplier reconciliation reports for the northern region",
+            "children": [
+              {
+                "value": "a/b", "label": "averyveryveryveryverylongunbrokenfoldername_without_spaces",
+                "children": [{ "value": "a/b/c", "label": "reconciliation-2026-q3-final-final-v2.xlsx" }]
+              },
+              { "value": "a/d", "label": "B" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deep",
+      "width": 320,
+      "props": {
+        "aria-label": "Deep",
+        "expandedValue": ["1", "2", "3", "4", "5"],
+        "items": [{ "value": "1", "label": "One", "children": [{ "value": "2", "label": "Two", "children": [{ "value": "3", "label": "Three", "children": [{ "value": "4", "label": "Four", "children": [{ "value": "5", "label": "Five", "children": [{ "value": "6", "label": "Six" }] }] }] }] }] }]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 280,
+      "props": {
+        "label": "الملفات",
+        "expandedValue": ["a"],
+        "items": [
+          { "value": "a", "label": "التقارير", "children": [{ "value": "a/1", "label": "تقرير الربع الثالث" }, { "value": "a/2", "label": "report.pdf" }] },
+          { "value": "b", "label": "الفواتير" }
+        ]
+      }
+    },
+    {
+      "name": "No items",
+      "width": 240,
+      "props": { "aria-label": "Empty", "items": [] }
+    },
+    {
+      "name": "Empty folder, narrow",
+      "width": 120,
+      "props": {
+        "aria-label": "Narrow",
+        "expandedValue": ["a"],
+        "items": [{ "value": "a", "label": "Empty folder", "children": [] }, { "value": "b", "label": "Notes" }]
+      }
+    },
+    {
+      "name": "Dense, long names in a narrow pane",
+      "width": 180,
+      "props": {
+        "aria-label": "Explorer",
+        "size": "xs",
+        "expandedValue": ["a"],
+        "items": [
+          {
+            "value": "a", "label": "data-pipeline",
+            "children": [
+              { "value": "a/1", "label": "reconcile-supplier-invoices-for-the-northern-region.sql" },
+              { "value": "a/2", "label": "x" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

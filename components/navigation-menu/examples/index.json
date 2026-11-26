@@ -1,0 +1,15 @@
+{
+  "playground": { "props": { "label": "Northwind", "openDelay": 200, "closeDelay": 300, "items": [
+    { "value": "projects", "label": "Projects", "links": [
+      { "label": "web-app", "href": "#web-app", "description": "Customer dashboard, live on Production" },
+      { "label": "billing-api", "href": "#billing-api", "description": "Payments, invoices and webhooks" },
+      { "label": "mobile", "href": "#mobile", "description": "iOS and Android app" }
+    ] },
+    { "value": "team", "label": "Team", "links": [{ "label": "Members", "href": "#members" }, { "label": "Audit log", "href": "#audit-log" }] },
+    { "value": "billing", "label": "Billing", "href": "#billing" }
+  ] } },
+  "examples": [
+    { "file": "workspace-header", "title": "Top bar of the workspace" },
+    { "file": "client-router", "title": "Mark the current page, with a client router" }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "playground": {
+    "props": {
+      "workspace": "harbor",
+      "workspaces": [
+        {
+          "value": "harbor",
+          "label": "Harbor"
+        },
+        {
+          "value": "harbor-eu",
+          "label": "Harbor EU"
+        },
+        {
+          "value": "sandbox",
+          "label": "Maya's sandbox"
+        }
+      ],
+      "logo": "calendar",
+      "items": [
+        {
+          "value": "new",
+          "label": "New chat",
+          "href": "#new",
+          "icon": "note-pencil"
+        },
+        {
+          "value": "home",
+          "label": "Home",
+          "href": "#home",
+          "icon": "house"
+        },
+        {
+          "value": "invite",
+          "label": "Invite teammates",
+          "href": "#invite",
+          "icon": "user-plus",
+          "badge": "3/10"
+        }
+      ],
+      "chats": [
+        {
+          "value": "deploy",
+          "label": "Failed deploy on harbor/api",
+          "href": "#deploy"
+        },
+        {
+          "value": "refund",
+          "label": "Refund for Brightline Dental",
+          "href": "#refund"
+        }
+      ],
+      "current": "home",
+      "collapsed": false,
+      "chatsOpen": true
+    }
+  },
+  "examples": [
+    {
+      "file": "expanded",
+      "title": "Assistant sidebar"
+    },
+    {
+      "file": "issue-tracker",
+      "title": "Issue tracker with project sections"
+    },
+    {
+      "file": "collapsed",
+      "title": "Collapsed to an icon rail"
+    },
+    {
+      "file": "no-chats",
+      "title": "First day in a new workspace"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "examples": [
+    {
+      "name": "Live",
+      "props": {
+        "cursor": {
+          "x": 42,
+          "y": 53
+        }
+      },
+      "steps": [
+        {
+          "after": 900,
+          "props": {
+            "cursor": {
+              "x": 72,
+              "y": 30
+            }
+          }
+        },
+        {
+          "after": 1100,
+          "props": {
+            "cursor": {
+              "x": 26,
+              "y": 68
+            }
+          }
+        },
+        {
+          "after": 1100,
+          "props": {
+            "cursor": {
+              "x": 58,
+              "y": 44
+            }
+          }
+        },
+        {
+          "after": 800,
+          "props": {
+            "recording": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recording",
+      "props": {
+        "label": "Atlas's screen",
+        "cursor": {
+          "x": 68,
+          "y": 30
+        },
+        "recording": true
+      }
+    },
+    {
+      "name": "Loading",
+      "props": {
+        "state": "loading"
+      }
+    },
+    {
+      "name": "Image",
+      "props": {
+        "state": "idle",
+        "alt": "A gradient test card on the agent's screen",
+        "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23c7d2fe'/%3E%3Cstop offset='1' stop-color='%23fbcfe8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='160' height='100' fill='url(%23g)'/%3E%3C/svg%3E"
+      }
+    },
+    {
+      "name": "Expandable",
+      "props": {
+        "expandable": true,
+        "recording": true,
+        "cursor": {
+          "x": 58,
+          "y": 44
+        }
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label, cursor off the screen",
+      "props": {
+        "label": "Wiśniewska-Kowalczyk's research agent on the quarterly supplier review",
+        "cursor": {
+          "x": 140,
+          "y": -20
+        },
+        "recording": true
+      }
+    },
+    {
+      "name": "Cursor in the corner",
+      "width": 200,
+      "props": {
+        "label": "A",
+        "cursor": {
+          "x": 100,
+          "y": 100
+        }
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "label": "شاشة الوكيل",
+        "recording": true,
+        "labels": {
+          "live": "مباشر",
+          "recording": "تسجيل",
+          "rec": "تسجيل"
+        }
+      }
+    }
+  ]
+}

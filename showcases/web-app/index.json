@@ -1,0 +1,5 @@
+{
+  "title": "Issue tracker",
+  "description": "An issue tracker: projects in a sidebar, search on Ctrl/⌘ K, a filtered list with bulk actions, an issue panel with its fields and comments, and settings with a danger zone.",
+  "shape": "rounded"
+}

@@ -1,0 +1,416 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "width": 420,
+      "props": {
+        "triggers": [
+          {
+            "value": "order-created",
+            "label": "New order created",
+            "caption": "Runs when a new order is created"
+          },
+          {
+            "value": "order-paid",
+            "label": "Order paid",
+            "caption": "Runs when payment for an order clears"
+          },
+          {
+            "value": "stock-low",
+            "label": "Stock running low",
+            "caption": "Runs when an item drops below its reorder point"
+          }
+        ],
+        "trigger": "order-created",
+        "source": "order",
+        "properties": [
+          {
+            "value": "plan",
+            "label": "plan"
+          },
+          {
+            "value": "region",
+            "label": "region"
+          },
+          {
+            "value": "size",
+            "label": "size"
+          },
+          {
+            "value": "seats",
+            "label": "seats"
+          }
+        ],
+        "choices": {
+          "plan": [
+            {
+              "value": "enterprise",
+              "label": "Enterprise",
+              "meta": "Annual"
+            },
+            {
+              "value": "business",
+              "label": "Business",
+              "meta": "Annual"
+            },
+            {
+              "value": "team",
+              "label": "Team",
+              "meta": "Monthly"
+            },
+            {
+              "value": "starter",
+              "label": "Starter",
+              "meta": "Legacy"
+            }
+          ],
+          "region": [
+            {
+              "value": "apac",
+              "label": "Asia Pacific (Sydney, Singapore, Tokyo)"
+            },
+            {
+              "value": "eu",
+              "label": "Europe (Frankfurt)"
+            },
+            {
+              "value": "us-east",
+              "label": "US East"
+            },
+            {
+              "value": "sa",
+              "label": "South America"
+            }
+          ],
+          "size": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "seats": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            }
+          ]
+        },
+        "conditions": [
+          {
+            "id": "c1",
+            "property": "plan",
+            "value": "enterprise"
+          },
+          {
+            "id": "c2",
+            "property": "region",
+            "value": "apac"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names",
+      "width": 360,
+      "props": {
+        "triggers": [
+          {
+            "value": "long",
+            "label": "A new wholesale order was created by Aleksandra Wiśniewska-Kowalczyk Logistics Holdings",
+            "caption": "Runs whenever bartholomew.fitzgerald@northwind-industries-holdings.example.com places a wholesale order for any location"
+          }
+        ],
+        "trigger": "long",
+        "source": "wholesale-order-line-item",
+        "properties": [
+          {
+            "value": "plan",
+            "label": "plan of the account including legacy contracts"
+          }
+        ],
+        "choices": {
+          "plan": [
+            {
+              "value": "enterprise-plus",
+              "label": "Enterprise annual contract with premium support, SSO and data residency",
+              "meta": "Monthly"
+            }
+          ]
+        },
+        "conditions": [
+          {
+            "id": "c1",
+            "property": "plan",
+            "value": "enterprise-plus"
+          },
+          {
+            "id": "c2",
+            "property": "plan",
+            "value": "enterprise-plus"
+          }
+        ]
+      }
+    },
+    {
+      "name": "One condition",
+      "width": 420,
+      "props": {
+        "triggers": [
+          {
+            "value": "t",
+            "label": "T"
+          }
+        ],
+        "trigger": "t",
+        "source": "o",
+        "properties": [
+          {
+            "value": "p",
+            "label": "p"
+          }
+        ],
+        "choices": {
+          "p": [
+            {
+              "value": "1",
+              "label": "1"
+            }
+          ]
+        },
+        "conditions": [
+          {
+            "id": "c1",
+            "property": "p",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Zero conditions",
+      "width": 420,
+      "props": {
+        "triggers": [
+          {
+            "value": "order-created",
+            "label": "New order created",
+            "caption": "Runs when a new order is created"
+          }
+        ],
+        "trigger": "order-created",
+        "properties": [
+          {
+            "value": "plan",
+            "label": "plan"
+          }
+        ],
+        "choices": {
+          "plan": [
+            {
+              "value": "enterprise",
+              "label": "Enterprise"
+            }
+          ]
+        },
+        "conditions": []
+      }
+    },
+    {
+      "name": "Huge values, twelve conditions",
+      "width": 420,
+      "props": {
+        "triggers": [
+          {
+            "value": "big",
+            "label": "Order total above $12,480,000.00",
+            "caption": "Runs when 12,480 orders clear in one day"
+          }
+        ],
+        "trigger": "big",
+        "properties": [
+          {
+            "value": "total",
+            "label": "total"
+          },
+          {
+            "value": "seats",
+            "label": "seats"
+          }
+        ],
+        "choices": {
+          "total": [
+            {
+              "value": "huge",
+              "label": "$12,480,000,000.00"
+            },
+            {
+              "value": "small",
+              "label": "$1"
+            }
+          ],
+          "seats": [
+            {
+              "value": "many",
+              "label": "12,480"
+            }
+          ]
+        },
+        "conditions": [
+          {
+            "id": "c1",
+            "property": "total",
+            "value": "huge"
+          },
+          {
+            "id": "c2",
+            "property": "seats",
+            "value": "many"
+          },
+          {
+            "id": "c3",
+            "property": "total",
+            "value": "small"
+          },
+          {
+            "id": "c4",
+            "property": "total",
+            "value": "huge"
+          },
+          {
+            "id": "c5",
+            "property": "seats",
+            "value": "many"
+          },
+          {
+            "id": "c6",
+            "property": "total",
+            "value": "huge"
+          },
+          {
+            "id": "c7",
+            "property": "total",
+            "value": "small"
+          },
+          {
+            "id": "c8",
+            "property": "seats",
+            "value": "many"
+          },
+          {
+            "id": "c9",
+            "property": "total",
+            "value": "huge"
+          },
+          {
+            "id": "c10",
+            "property": "total",
+            "value": "huge"
+          },
+          {
+            "id": "c11",
+            "property": "seats",
+            "value": "many"
+          },
+          {
+            "id": "c12",
+            "property": "total",
+            "value": "small"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 420,
+      "props": {
+        "triggers": [
+          {
+            "value": "new",
+            "label": "تم إنشاء طلب جديد",
+            "caption": "يعمل عند إنشاء طلب جديد"
+          },
+          {
+            "value": "paid",
+            "label": "تم دفع الطلب"
+          }
+        ],
+        "trigger": "new",
+        "source": "الطلب",
+        "properties": [
+          {
+            "value": "plan",
+            "label": "الخطة"
+          },
+          {
+            "value": "size",
+            "label": "الحجم"
+          }
+        ],
+        "choices": {
+          "plan": [
+            {
+              "value": "team",
+              "label": "الفريق",
+              "meta": "شهري"
+            },
+            {
+              "value": "enterprise",
+              "label": "المؤسسات"
+            }
+          ],
+          "size": [
+            {
+              "value": "large",
+              "label": "كبير"
+            }
+          ]
+        },
+        "conditions": [
+          {
+            "id": "c1",
+            "property": "plan",
+            "value": "team"
+          },
+          {
+            "id": "c2",
+            "property": "size",
+            "value": "large"
+          }
+        ],
+        "labels": {
+          "trigger": "المُشغِّل",
+          "condition": "إذا / وإلا",
+          "conditions": "الشروط",
+          "if": "إذا",
+          "and": "و",
+          "is": "هو",
+          "addCondition": "إضافة شرط",
+          "rowOptions": "خيارات الشرط {n}",
+          "rowProperty": "خاصية الشرط {n}",
+          "rowValue": "قيمة الشرط {n}",
+          "moveUp": "تحريك لأعلى",
+          "moveDown": "تحريك لأسفل",
+          "remove": "إزالة"
+        }
+      }
+    }
+  ]
+}

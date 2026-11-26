@@ -1,0 +1,171 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "table",
+  "title": "Table",
+  "summary": "Rows and columns of data, such as invoices, members or deploys.",
+  "description": "Rows and columns of data: invoices, members, deploys. Two looks. card (default): the records table's look, one quiet surface card, 35px rows, precise rules between rows and columns, text.dense (12.5px) header labels in ink-2 over 13px/500 values in ink; values wrap, nothing is cut. flush: a list of records inside a pane (an issue list, a file list): no card, a hairline between rows only, every row one line (35px), the column marked truncate takes the room left and cuts its free text with a title. While the data loads, placeholder rows and aria-busy. Static parts you compose (header, body, row, head cell, cell, caption), or columns and rows as data. It scrolls sideways when the columns do not fit. The model is records-table, whose blocks (records-table, filter-table, diff-table) could later be built from these parts.",
+  "kind": "component",
+  "category": "data",
+  "order": 5,
+  "status": "beta",
+  "files": {
+    "react": [
+      "table.tsx"
+    ],
+    "vue": [
+      "Table.vue",
+      "TableHeader.vue",
+      "TableBody.vue",
+      "TableRow.vue",
+      "TableHead.vue",
+      "TableCell.vue",
+      "TableCaption.vue",
+      "TableSkeleton.vue"
+    ],
+    "svelte": [
+      "Table.svelte",
+      "TableHeader.svelte",
+      "TableBody.svelte",
+      "TableRow.svelte",
+      "TableHead.svelte",
+      "TableCell.svelte",
+      "TableCaption.svelte",
+      "TableSkeleton.svelte"
+    ]
+  },
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The surface card (radius.card, shadow.card) and the sideways scroller: overflow auto, overscroll-x contain (a wheel at an end goes on to the page), thin scrollbar in line-strong. A table wider than the card fades into the surface at the edge it continues past (two sticky 24px veils, shown by the scroll position, armed only while the table overflows: data-overflow, measured), as the records and filter tables. Its focus ring is drawn inside (keyboard scrolling when the table is wider than the card). flush: no surface, shadow or radius, no veils (nothing to fade into); the scrollbar shows when the columns do not fit."
+    },
+    {
+      "part": "table",
+      "element": "table",
+      "description": "The <table>: full width, separate borders with no spacing (so the rules are the cells' own), 13px/500 ink, tabular figures. aria-busy=\"true\" while loading."
+    },
+    {
+      "part": "header",
+      "element": "thead",
+      "description": "The header row group."
+    },
+    {
+      "part": "body",
+      "element": "tbody",
+      "description": "The body row group."
+    },
+    {
+      "part": "row",
+      "element": "tr",
+      "description": "One row. In the body its hover fills color.hover at once both ways (gated to a fine pointer), as the records table's rows; the header row does not hover."
+    },
+    {
+      "part": "head",
+      "element": "th",
+      "description": "A column's header cell: 35px minimum, padding 0 12px, text.dense (12.5px)/500 ink-2, starting at the inline start; a 1px rule (line) under it and at its inline end, none after the last column. Wraps, never cut. flush: no rule at its inline end. truncate: the column takes the room left (width 100%)."
+    },
+    {
+      "part": "cell",
+      "element": "td",
+      "description": "A value: 35px minimum, padding 6px 12px (header and values share their inline start), 20px lines; the same rules, none under the last row. Wraps whole words (a word longer than the column widens it, and the card scrolls). Author text keeps its own direction while the column keeps the table's alignment. numeric: aligned to the end, tabular figures. flush: one line (nowrap), no rule at its inline end. truncate: takes the room left and cuts its text at the end, with the full text in a title while it is cut (lib/truncate.ts); only for free text (a title), never for a name of a choice or a number."
+    },
+    {
+      "part": "skeleton",
+      "element": "span",
+      "optional": true,
+      "description": "A placeholder bar in a loading row (TableSkeleton; the data form draws them): 8px high, pill, hover-2, a varying share of its column (64, 42, 78, 52%), at the end in a number column; aria-hidden. Still: no shimmer across a table."
+    },
+    {
+      "part": "caption",
+      "element": "caption",
+      "optional": true,
+      "description": "The table's name, under the rows inside the card: 12px ink-2, padding 8px 12px, a rule above it. It names the table for assistive technology."
+    }
+  ],
+  "props": {
+    "columns": {
+      "type": "array",
+      "description": "Data form: the columns in order, { key, label, numeric?, truncate? }. With columns and rows the Table renders its own header and body; without them it renders its children (the parts)."
+    },
+    "rows": {
+      "type": "array",
+      "description": "Data form: one object per row, values by column key, shown as text. Rich content (a status pill, an avatar, a link): React, a node as the value; Vue, the cell slot; Svelte, the cell snippet. A row may carry more fields for that slot (a tone, an email)."
+    },
+    "caption": {
+      "type": "string",
+      "description": "Data form: the caption under the rows. With parts, use <TableCaption>."
+    },
+    "numeric": {
+      "type": "boolean",
+      "default": false,
+      "part": "head",
+      "description": "On TableHead and TableCell: a number column, aligned to the end with tabular figures."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "card",
+        "flush"
+      ],
+      "default": "card",
+      "description": "card: the surface card with rules between rows and columns; values wrap. flush: no card, a hairline between rows only, single-line rows (an issue list in a pane, a file list), the truncate column gives way."
+    },
+    "loading": {
+      "type": "boolean",
+      "default": false,
+      "description": "The data is on its way: aria-busy on the table; in the data form, loadingRows placeholder rows in place of the rows (the header stays)."
+    },
+    "loadingRows": {
+      "type": "number",
+      "default": 5,
+      "description": "How many placeholder rows while loading: as many as the page will most likely show, so the rows do not jump when they arrive."
+    },
+    "truncate": {
+      "type": "boolean",
+      "default": false,
+      "part": "cell",
+      "description": "On TableHead and TableCell (or a column): the column that gives way, cut at the end with a title. One per table, free text only (a title, a message)."
+    }
+  },
+  "slots": {
+    "default": "The parts: TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption (when columns and rows are not given).",
+    "cell": "Data form: the content of one value cell, inside the cell part (Vue: the cell slot; Svelte: the cell snippet; React: a node as the row's value), called with { row, column, value, rowIndex, columnIndex }. Without it the value is shown as text; render value for the columns left as they are. Not called for loading rows."
+  },
+  "states": [
+    "hover",
+    "focus-visible",
+    "loading"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.line",
+    "color.line-strong",
+    "color.accent",
+    "color.ink",
+    "color.ink-2",
+    "color.hover",
+    "shadow.card",
+    "radius.card",
+    "text.xs",
+    "text.sm",
+    "color.hover-2",
+    "radius.pill"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "table",
+    "notes": [
+      "A native <table>: the header cells are <th scope=\"col\">, so a screen reader announces each value with its column.",
+      "The caption names the table; without one, give the root's table an aria-label (pass it on the Table).",
+      "Not interactive: no roving focus. The card itself is reachable by Tab only when it scrolls (the browser makes a scroller focusable), so the keyboard can scroll it.",
+      "While loading the table carries aria-busy=\"true\" and the placeholder bars are aria-hidden; the rows that replace them are announced as the table's content.",
+      "A cut cell carries its full text in title (only while it is cut)."
+    ]
+  },
+  "motion": [
+    "none: rows never animate on sort, load or hover (functional data); the row hover is instant both ways, as in the records table",
+    "edge veils: their opacity follows the scroll position (a scroll-driven timeline, no time involved); none while the table fits",
+    "loading: the placeholder bars are still (no shimmer, no pulse): a table is a high-frequency surface; the real rows replace them in one frame"
+  ]
+}

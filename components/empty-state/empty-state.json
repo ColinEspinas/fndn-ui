@@ -1,0 +1,116 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "empty-state",
+  "title": "Empty State",
+  "summary": "What a list, a table or a popup shows when there is nothing in it.",
+  "description": "What a list, a table or a popup shows when there is nothing in it: an optional icon, a title, an optional hint and an optional action (the real Button the host passes: \"New issue\", \"Clear filters\"). A row sits in a list like one of its rows; a block is a centred stack for a popup or a table body. It fades in when it appears.",
+  "kind": "component",
+  "category": "feedback",
+  "order": 4,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-size, data-align. The host toggles it with `hidden`. Extra attributes (hidden, id, role, aria-*) land on it in every target, so a host toggles it with hidden."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "aria-hidden. Row: 14px ink-3 glyph. Block: a 32px tile in the hover grey with a soft hairline (line-soft) and a 15px glyph: quiet in both themes (in dark mode an inset tile read as a hole with a bright ring)."
+    },
+    {
+      "part": "title",
+      "element": "p",
+      "description": "The message"
+    },
+    {
+      "part": "hint",
+      "element": "p",
+      "optional": true,
+      "description": "The next step"
+    },
+    {
+      "part": "action",
+      "element": "div",
+      "optional": true,
+      "description": "What to do next, passed by the host (React: action, a node; Vue: slot action; Svelte: snippet action), usually one Button (sm). Block: centred under the text, 14px below it. Row: at the end of the line."
+    }
+  ],
+  "props": {
+    "title": {
+      "type": "node",
+      "description": "The message."
+    },
+    "hint": {
+      "type": "string",
+      "description": "Optional next step."
+    },
+    "icon": {
+      "type": "string",
+      "description": "A name from the icon vocabulary (spec/icons.json), one of magnifying-glass, funnel, chats, folder-open, table, file, bell, check-circle, users, rocket-launch, list-checks, git-branch (the adapters type the prop to these names); or your own icon (React element, Vue slot `icon`, Svelte snippet). Any other string draws nothing: a name is never rendered as text."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "row",
+        "block"
+      ],
+      "default": "row",
+      "description": "row: one line as tall as the list's rows (--option-height, 30px by default), 12px ink-2. block: a centred stack, 13px/500 ink title, 12px ink-2 hint, padding 32/16."
+    },
+    "align": {
+      "type": "enum",
+      "values": [
+        "start",
+        "center"
+      ],
+      "default": "start",
+      "description": "Rows only: start the line with the list's text, or centre it (a message in a card or under a filter). A block is always centred."
+    },
+    "action": {
+      "type": "node",
+      "description": "What to do next: a Button (or two). React: a node; Vue: the action slot; Svelte: a snippet."
+    }
+  },
+  "slots": {
+    "icon": "Vue: your own icon in place of the named ones (React: icon as a node; Svelte: icon as a snippet).",
+    "action": "Vue: what to do next (a Button), under a block's text or at the end of a row (React: action as a node; Svelte: action as a snippet)."
+  },
+  "states": [
+    "appearing"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "duration.base",
+    "color.hover",
+    "color.line-soft"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "none (plain text)",
+    "keyboard": [
+      "Not focusable; nothing to operate"
+    ],
+    "notes": [
+      "The icon is decorative (aria-hidden); the title says what is empty.",
+      "When the empty state replaces results the user is typing for, announce it from the host's own status region (search and prompt-bar already have one); the empty state does not carry role=status, so it is never announced twice.",
+      "Inside a listbox, keep it outside the options (it is not an option).",
+      "The action is an ordinary Button in the tab order; its label says what it does (\"New issue\", not \"Get started\")."
+    ]
+  },
+  "motion": [
+    "enter: opacity 0 -> 1 over duration.base ease when it appears, also out of `hidden` (@starting-style)",
+    "exit: none; it goes when results arrive"
+  ],
+  "notes": [
+    "Replaces the hand-made empty states in search, prompt-bar, filter-table, records-table, insight-cards and sidebar-nav: the host keeps its spacing through its own class (a table cell's height, a card's inset background)."
+  ]
+}

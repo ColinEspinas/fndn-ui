@@ -1,0 +1,25 @@
+{
+  "examples": [
+    { "name": "Tones", "props": { "toasts": [
+      { "title": "Prices change on Monday", "duration": 0 },
+      { "title": "Order sent to Northwind Cloud", "description": "They confirm by email within the hour.", "tone": "green", "duration": 0 },
+      { "title": "Could not reach the supplier", "description": "Their server did not answer.", "tone": "red", "action": { "label": "Retry", "value": "retry" }, "duration": 0 }
+    ] } },
+    { "name": "With an action", "props": { "toasts": [{ "title": "Staging project deleted", "action": { "label": "Undo", "value": "undo" }, "duration": 0 }] } },
+    { "name": "Loading", "props": { "toasts": [{ "title": "Saving the weekend plan…", "loading": true, "closable": false }] } },
+    { "name": "Top centre, overlapping", "props": { "placement": "top", "overlap": true, "toasts": [
+      { "title": "Seat licenses are running low", "tone": "orange", "duration": 0 },
+      { "title": "The agent finished the plan", "tone": "accent", "duration": 0 },
+      { "title": "Order sent", "tone": "green", "duration": 0 }
+    ] } },
+    { "name": "Times out", "props": { "toasts": [{ "title": "Copied to the clipboard", "duration": 1500 }] } }
+  ],
+  "worstCase": [
+    { "name": "Long everything", "props": { "toasts": [{ "title": "Remove Aleksandra Wiśniewska-Kowalczyk Confectionery Holdings and every purchase order that references it?", "description": "bartholomew.fitzgerald@northwind-industries-holdings.example.com will be notified. 12,480 rows change.", "tone": "red", "action": { "label": "Undo everything", "value": "undo" }, "duration": 0 }] } },
+    { "name": "Unbreakable", "props": { "toasts": [{ "title": "averyveryveryverylongunbrokentitlewithoutanyspacesatallthatmustwrap", "tone": "accent", "duration": 0 }] } },
+    { "name": "Many", "props": { "max": 3, "toasts": [
+      { "title": "A", "duration": 0 }, { "title": "B", "tone": "green", "duration": 0 }, { "title": "C", "tone": "orange", "duration": 0 }, { "title": "D", "tone": "red", "duration": 0 }, { "title": "E", "duration": 0 }
+    ] } },
+    { "name": "Right-to-left", "props": { "toasts": [{ "title": "تم إرسال الطلب", "description": "سيؤكدون عبر البريد خلال ساعة.", "tone": "green", "action": { "label": "عرض", "value": "view" }, "duration": 0 }] } }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "playground": {
+    "props": {
+      "triggerLabel": "Edit deploy settings",
+      "side": "end",
+      "closable": true,
+      "title": "Deploy settings",
+      "description": "web-app · Production",
+      "actions": [
+        { "label": "Cancel", "value": "cancel", "variant": "ghost" },
+        { "label": "Save changes", "value": "save", "variant": "primary" }
+      ]
+    },
+    "text": "Production deploys main on every push. Preview deploys every other branch."
+  },
+  "examples": [
+    { "file": "deploy-settings", "title": "Edit deploy settings" },
+    { "file": "filter-sheet", "title": "Filters as a bottom sheet on a phone" },
+    { "file": "member-panel", "title": "Member details from a list" }
+  ]
+}

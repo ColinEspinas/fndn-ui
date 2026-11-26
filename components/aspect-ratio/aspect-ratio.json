@@ -1,0 +1,41 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "aspect-ratio",
+  "title": "Aspect Ratio",
+  "summary": "A box that keeps its width-to-height ratio for images, video and embeds.",
+  "description": "A box that keeps a width-to-height ratio as its width changes: images, video, maps and embeds. Its width comes from its container; its height follows the ratio and never grows with its content. A direct child (an image, a video, an iframe or any element) fills it; media cover it. No look of its own: the caller rounds or frames it.",
+  "kind": "component",
+  "category": "display",
+  "order": 17,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "aspect-ratio from --fndn-aspect-ratio; full width of its container, clips what overflows. Its direct children fill it (img, video and iframe with object-fit: cover)."
+    }
+  ],
+  "props": {
+    "ratio": {
+      "type": "number",
+      "default": 1.7777777777777777,
+      "attr": "--fndn-aspect-ratio",
+      "description": "Width divided by height (16 / 9 by default; 1 is a square, 0.75 a portrait 3:4). A value that is not a positive number falls back to 16 / 9."
+    }
+  },
+  "slots": {
+    "default": "The content that fills the box."
+  },
+  "states": [],
+  "tokens": [],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "No role: the box is layout only. Give its image an alt text or its iframe a title."
+    ]
+  },
+  "motion": [
+    "none"
+  ]
+}

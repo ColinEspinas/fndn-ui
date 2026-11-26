@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ui/tokens",
+  "title": "fndn/ui design tokens",
+  "description": "DTCG-flavoured token file. Each group carries a $type; each token a $value. A $value may be a single value or an object keyed by mode (light/dark). Color strings are oklch(). Shadows are arrays of layers; a layer color may alias another token as {color.name}.",
+  "type": "object",
+  "required": [
+    "name",
+    "prefix",
+    "modes",
+    "color",
+    "shadow",
+    "radius",
+    "font",
+    "text",
+    "easing",
+    "duration",
+    "motion"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*$"
+    },
+    "modes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "$transitions": {
+      "type": "object",
+      "description": "Named transition timings: name \u2192 [duration token, easing token or CSS keyword]. They become the motion-<what>-<name> utilities of the Tailwind preset.",
+      "properties": {
+        "$description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      }
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "required": [
+      "$type"
+    ],
+    "properties": {
+      "$type": {
+        "enum": [
+          "color",
+          "shadow",
+          "dimension",
+          "fontFamily",
+          "cubicBezier",
+          "duration",
+          "number"
+        ]
+      },
+      "$description": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": {
+      "type": "object",
+      "required": [
+        "$value"
+      ],
+      "properties": {
+        "$value": {},
+        "$description": {
+          "type": "string"
+        },
+        "$reducedMotion": {
+          "description": "Value under prefers-reduced-motion: reduce. Emitted into a media query in tokens.css and into the reducedMotion table for ports."
+        },
+        "$rounded": {
+          "description": "Value in a rounded app: under [data-shape=\"rounded\"] in tokens.css."
+        }
+      }
+    }
+  }
+}

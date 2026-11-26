@@ -1,0 +1,517 @@
+{
+  "examples": [
+    {
+      "name": "Field",
+      "width": 220,
+      "props": {
+        "label": "Supplier",
+        "placeholder": "Search suppliers",
+        "items": [
+          {
+            "value": "alpine",
+            "label": "Alpine Hosting"
+          },
+          {
+            "value": "cobalt",
+            "label": "Cobalt Collective"
+          },
+          {
+            "value": "core",
+            "label": "Core Works"
+          },
+          {
+            "value": "freight",
+            "label": "Orchard Freight Co."
+          },
+          {
+            "value": "summit",
+            "label": "Summit Mail",
+            "disabled": true
+          },
+          {
+            "value": "vantage",
+            "label": "Vantage House"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Small, with a value",
+      "width": 160,
+      "props": {
+        "size": "sm",
+        "variant": "subtle",
+        "aria-label": "Font",
+        "value": "inter",
+        "items": [
+          {
+            "value": "inter",
+            "label": "Inter"
+          },
+          {
+            "value": "geist",
+            "label": "Geist"
+          },
+          {
+            "value": "plex",
+            "label": "IBM Plex Sans"
+          },
+          {
+            "value": "mono",
+            "label": "JetBrains Mono"
+          }
+        ]
+      }
+    },
+    {
+      "name": "With notes",
+      "width": 240,
+      "props": {
+        "label": "Model",
+        "placeholder": "Pick a model",
+        "items": [
+          {
+            "value": "fast",
+            "label": "Swift",
+            "meta": "Fast"
+          },
+          {
+            "value": "balanced",
+            "label": "Steady",
+            "meta": "Balanced"
+          },
+          {
+            "value": "deep",
+            "label": "Deliberate",
+            "meta": "Best"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Invalid",
+      "width": 220,
+      "props": {
+        "label": "Region",
+        "invalid": true,
+        "items": [
+          "North",
+          "South",
+          "East",
+          "West"
+        ]
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 220,
+      "props": {
+        "label": "Region",
+        "disabled": true,
+        "value": "North",
+        "items": [
+          "North",
+          "South",
+          "East",
+          "West"
+        ]
+      }
+    },
+    {
+      "name": "Start text",
+      "width": 240,
+      "props": {
+        "label": "Channel",
+        "placeholder": "Search channels",
+        "start": "#",
+        "items": [
+          {
+            "value": "deploys",
+            "label": "deploys"
+          },
+          {
+            "value": "incidents",
+            "label": "incidents"
+          },
+          {
+            "value": "billing-api",
+            "label": "billing-api"
+          },
+          {
+            "value": "web-app",
+            "label": "web-app"
+          }
+        ]
+      }
+    },
+    {
+      "name": "No caret",
+      "width": 200,
+      "props": {
+        "aria-label": "Assignee",
+        "size": "sm",
+        "variant": "ghost",
+        "caret": false,
+        "placeholder": "Unassigned",
+        "items": [
+          {
+            "value": "maya",
+            "label": "Maya Chen"
+          },
+          {
+            "value": "daniel",
+            "label": "Daniel Okafor"
+          },
+          {
+            "value": "priya",
+            "label": "Priya Raman"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Keywords",
+      "width": 240,
+      "props": {
+        "label": "Country",
+        "placeholder": "Country, code or city",
+        "items": [
+          {
+            "value": "DE",
+            "label": "Germany",
+            "meta": "DE",
+            "keywords": [
+              "DE",
+              "DEU",
+              "Deutschland",
+              "Berlin",
+              "Munich"
+            ]
+          },
+          {
+            "value": "JP",
+            "label": "Japan",
+            "meta": "JP",
+            "keywords": [
+              "JP",
+              "JPN",
+              "Nippon",
+              "Tokyo",
+              "Osaka"
+            ]
+          },
+          {
+            "value": "GB",
+            "label": "United Kingdom",
+            "meta": "GB",
+            "keywords": [
+              "GB",
+              "GBR",
+              "UK",
+              "Britain",
+              "London"
+            ]
+          },
+          {
+            "value": "US",
+            "label": "United States",
+            "meta": "US",
+            "keywords": [
+              "US",
+              "USA",
+              "America",
+              "New York"
+            ]
+          },
+          {
+            "value": "BR",
+            "label": "Brazil",
+            "meta": "BR",
+            "keywords": [
+              "BR",
+              "BRA",
+              "Brasil",
+              "São Paulo",
+              "Sao Paulo"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Free text",
+      "width": 240,
+      "props": {
+        "label": "Label",
+        "placeholder": "Find or create a label",
+        "allowCustomValue": true,
+        "emptyText": "Press Enter to create this label",
+        "items": [
+          {
+            "value": "bug",
+            "label": "bug"
+          },
+          {
+            "value": "feature",
+            "label": "feature"
+          },
+          {
+            "value": "docs",
+            "label": "docs"
+          },
+          {
+            "value": "wontfix",
+            "label": "wontfix",
+            "disabled": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "End text, no caret",
+      "width": 260,
+      "props": {
+        "aria-label": "Address",
+        "placeholder": "Search or enter address",
+        "caret": false,
+        "end": "3 tabs",
+        "items": [
+          {
+            "value": "deploys",
+            "label": "deploys"
+          },
+          {
+            "value": "incidents",
+            "label": "incidents"
+          },
+          {
+            "value": "billing-api",
+            "label": "billing-api"
+          },
+          {
+            "value": "web-app",
+            "label": "web-app"
+          }
+        ]
+      }
+    },
+    {
+      "name": "End text and caret",
+      "width": 260,
+      "props": {
+        "label": "Channel",
+        "placeholder": "Search channels",
+        "end": "12",
+        "items": [
+          {
+            "value": "deploys",
+            "label": "deploys"
+          },
+          {
+            "value": "incidents",
+            "label": "incidents"
+          },
+          {
+            "value": "billing-api",
+            "label": "billing-api"
+          },
+          {
+            "value": "web-app",
+            "label": "web-app"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Match marked",
+      "width": 280,
+      "props": {
+        "aria-label": "Go to file",
+        "placeholder": "Go to file",
+        "highlightMatch": true,
+        "items": [
+          {
+            "value": "src/middleware/rate-limit.ts",
+            "label": "rate-limit.ts",
+            "meta": "src/middleware"
+          },
+          {
+            "value": "src/webhooks/retry-policy.ts",
+            "label": "retry-policy.ts",
+            "meta": "src/webhooks"
+          },
+          {
+            "value": "docs/rate-limits.md",
+            "label": "rate-limits.md",
+            "meta": "docs",
+            "keywords": [
+              "throttle"
+            ]
+          },
+          {
+            "value": "config/limits.yaml",
+            "label": "limits.yaml",
+            "meta": "config"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long options",
+      "width": 160,
+      "props": {
+        "aria-label": "Layout",
+        "items": [
+          {
+            "value": "a",
+            "label": "Grid"
+          },
+          {
+            "value": "b",
+            "label": "Seasonal revenue performance across every regional store for the whole of last year"
+          },
+          {
+            "value": "c",
+            "label": "supplier-contracts-renewal-schedule-and-pricing-history-export"
+          },
+          {
+            "value": "d",
+            "label": "Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Many options",
+      "width": 220,
+      "props": {
+        "label": "Currency",
+        "items": [
+          "US dollar",
+          "Euro",
+          "British pound",
+          "Japanese yen",
+          "Swiss franc",
+          "Canadian dollar",
+          "Mexican peso",
+          "Swedish krona",
+          "Australian dollar",
+          "Danish krone",
+          "Norwegian krone",
+          "Polish zloty",
+          "Czech koruna",
+          "Indian rupee",
+          "Korean won",
+          "Brazilian real",
+          "Turkish lira",
+          "Thai baht",
+          "Israeli shekel",
+          "South African rand"
+        ]
+      }
+    },
+    {
+      "name": "Long chosen label",
+      "width": 160,
+      "props": {
+        "aria-label": "Report",
+        "value": "b",
+        "items": [
+          {
+            "value": "a",
+            "label": "Weekly"
+          },
+          {
+            "value": "b",
+            "label": "Seasonal revenue performance across every regional store"
+          }
+        ]
+      }
+    },
+    {
+      "name": "No options",
+      "width": 220,
+      "props": {
+        "label": "Supplier",
+        "items": []
+      }
+    },
+    {
+      "name": "Right-to-left options",
+      "width": 220,
+      "props": {
+        "label": "المورد",
+        "placeholder": "ابحث",
+        "items": [
+          "ألبين للاستضافة",
+          "مجموعة كوبالت",
+          "Core Works",
+          "بيت فانتاج"
+        ]
+      }
+    },
+    {
+      "name": "Long start",
+      "width": 200,
+      "props": {
+        "aria-label": "Owner",
+        "start": "Out of office until Dec 3",
+        "value": "maya",
+        "items": [
+          {
+            "value": "maya",
+            "label": "Maya Chen"
+          },
+          {
+            "value": "aleksandra",
+            "label": "Aleksandra Wiśniewska-Kowalczyk"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Long free text",
+      "width": 160,
+      "props": {
+        "aria-label": "Tag",
+        "allowCustomValue": true,
+        "items": [
+          "bug",
+          "docs"
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left, start, no caret",
+      "width": 220,
+      "props": {
+        "label": "القناة",
+        "placeholder": "ابحث",
+        "start": "#",
+        "caret": false,
+        "items": [
+          {
+            "value": "a",
+            "label": "النشر",
+            "keywords": [
+              "deploys"
+            ]
+          },
+          {
+            "value": "b",
+            "label": "الفوترة",
+            "keywords": [
+              "billing"
+            ]
+          },
+          {
+            "value": "c",
+            "label": "web-app"
+          }
+        ]
+      }
+    }
+  ]
+}

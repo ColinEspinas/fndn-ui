@@ -1,0 +1,228 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "recommendation-card",
+  "title": "Recommendation Card",
+  "summary": "A suggestion from an agent with its confidence, the action to take and the alternatives.",
+  "description": "A suggestion from the agent with its confidence, the action to take and the alternatives it weighed. The card holds its shape: every option's body shares one cell, so switching crossfades in place. Alternatives reveals a drawer of the other options, picking one promotes it, and the primary action confirms and turns into Accepted.",
+  "kind": "block",
+  "category": "agent",
+  "order": 6,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The root of a collapsible (Zag): data-state=open|closed from the engine"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status, sr-only; says the accepted label once accepted"
+    },
+    {
+      "part": "body",
+      "element": "div"
+    },
+    {
+      "part": "title",
+      "element": "span"
+    },
+    {
+      "part": "texts",
+      "element": "div",
+      "description": "one grid cell holding every option's body, so the card is as tall as the longest"
+    },
+    {
+      "part": "text",
+      "element": "p",
+      "repeat": true,
+      "description": "one option's body; data-active on the shown one, aria-hidden on the rest; may contain EntityChip / ValuePill"
+    },
+    {
+      "part": "strong",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "drawer",
+      "element": "div",
+      "description": "The collapsible’s region (collapsible-content > collapsible-body, the reveal recipe), marked data-recommendation-card=\"drawer\": hidden while closed, instant from the keyboard. Absent with one option",
+      "optional": true
+    },
+    {
+      "part": "drawer-list",
+      "element": "div"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "the alternatives' one glide layer (`glideLayer` of `lib/glide.ts`), first child of the drawer list, aria-hidden; follows hover and focus",
+      "optional": true
+    },
+    {
+      "part": "drawer-label",
+      "element": "p"
+    },
+    {
+      "part": "alt",
+      "element": "button",
+      "repeat": true,
+      "description": "one per option; the active option's row is hidden"
+    },
+    {
+      "part": "alt-short",
+      "element": "span",
+      "description": "truncates at the end"
+    },
+    {
+      "part": "alt-label",
+      "element": "span"
+    },
+    {
+      "part": "meter",
+      "element": "span",
+      "description": "3 bars on one baseline; data-tone; aria-hidden (the label says it)"
+    },
+    {
+      "part": "meter-bar",
+      "element": "span",
+      "repeat": true,
+      "description": "data-on when lit"
+    },
+    {
+      "part": "footer",
+      "element": "div"
+    },
+    {
+      "part": "confidence",
+      "element": "span"
+    },
+    {
+      "part": "confidence-label",
+      "element": "span"
+    },
+    {
+      "part": "actions",
+      "element": "span",
+      "description": "An outline sm Button, Alternatives (the collapsible's trigger: aria-expanded, aria-controls; absent with one option) + the option's primary action"
+    }
+  ],
+  "props": {
+    "title": {
+      "type": "string"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "key": "string",
+        "body": "string | segment[] (string, { entity, color? }, { value, tone? }, { strong })",
+        "short": "string",
+        "signal": "0 | 1 | 2 | 3",
+        "tone": "green | orange | red | accent | neutral",
+        "label": "string",
+        "cta": "string",
+        "ctaVariant": "accent | primary"
+      },
+      "description": "The options; with one option there is no Alternatives button and no drawer."
+    },
+    "selected": {
+      "type": "number",
+      "default": 0,
+      "model": true
+    },
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "part": "root",
+      "description": "The drawer is open (ignored with one option)."
+    },
+    "accepted": {
+      "type": "boolean",
+      "default": false,
+      "model": true
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "green",
+        "orange",
+        "red",
+        "accent"
+      ],
+      "default": "neutral",
+      "part": "meter",
+      "description": "Per option."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ alternatives, otherOptions, accepted }"
+    }
+  },
+  "events": {
+    "accept": "(option)",
+    "select": "(index)",
+    "openChange": "(open)"
+  },
+  "states": [
+    "drawer-open",
+    "alt-hover",
+    "alt-press",
+    "focus-visible",
+    "selected",
+    "accepted"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.line-strong",
+    "color.hover",
+    "color.hover-2",
+    "color.green",
+    "color.orange",
+    "color.red",
+    "color.accent",
+    "shadow.card",
+    "radius.card",
+    "radius.control",
+    "radius.pill",
+    "text.2xs",
+    "text.sm",
+    "text.md",
+    "duration.fast",
+    "duration.base",
+    "duration.move",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "button",
+    "collapsible",
+    "entity-chip",
+    "value-pill"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Alternatives: Enter / Space toggle the drawer at once; focus stays on the button (aria-expanded, aria-controls)",
+      "The drawer sits above the footer, so its rows come before Alternatives in the tab order (Shift+Tab from Alternatives reaches them)",
+      "Each alternative is a button: Enter / Space promote it; focus stays at the same place in the list",
+      "The primary action: Enter / Space accept"
+    ],
+    "notes": [
+      "The closed drawer is hidden, so its rows are not in the tab order. With one option there is no Alternatives button and no drawer.",
+      "Inactive bodies are aria-hidden; the meter is aria-hidden next to its text label.",
+      "Accepting announces the accepted label through role=status."
+    ]
+  },
+  "motion": [
+    "body: crossfade between options, opacity + blur(2px) over duration.base (transition, so rapid picks retarget; the stacked cell keeps the height)",
+    "drawer: the collapsible's reveal recipe (grid-template-rows over duration.reveal easing.out-strong, opacity over duration.base); the footer moves with it; instant from the keyboard",
+    "meter bars: background-color over duration.base",
+    "alt rows: one highlight glides between them on hover and focus (transform + height over duration.move, easing.out-strong; fades in over duration.base); :active hover-2 over duration.fast",
+    "primary action: the button's own colour transition into success"
+  ]
+}

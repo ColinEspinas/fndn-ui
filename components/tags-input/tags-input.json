@@ -1,0 +1,206 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "tags-input",
+  "title": "Tags Input",
+  "summary": "A field that collects several values as tags, such as emails or keywords.",
+  "description": "A field that collects several values as tags: emails, labels, keywords. A field that collects values as tags: the Input's box holding a row of tags (the removable Tag) and a text input; the row wraps onto new lines. Enter or the delimiter adds the text as a tag, Backspace in an empty field selects the last tag and removes it on the second press, a double click edits a tag in place without moving anything. One focus ring, the field's: a selected tag takes the accent fill. Behaviour, focus and ARIA come from the Zag tags-input machine, through Ark UI.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 9,
+  "status": "beta",
+  "engine": "tags-input",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "The shared control (`lib/control.ts`), field kind: its sizes and looks; the accent ring for every kind of focus, red when invalid. Wraps its tags and the input onto new rows. One row is the size's height: the 22px tags sit 1, 3, 5 or 7px in (xs, sm, md, lg). data-focus, data-invalid, data-disabled from the engine."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "One tag: a one-cell grid holding its preview and, while the tag is edited, its edit field on top of it, so editing moves nothing."
+    },
+    {
+      "part": "item-preview",
+      "element": "span",
+      "description": "The real Tag (size sm, removable, its tone from tones or tone, its variant from tagVariant), marked data-tags-input=\"item-preview\": 22px, chip radius, its label cut at the end with a title, its remove Button (aria-label \"Remove <tag>\", not a tab stop) wired to the engine's delete trigger. data-highlighted (Backspace, the arrow keys, a click): selected, not focused: the accent fill, its label, dot and × in on-accent, at once; the field's ring stays the only ring and the input's caret hides meanwhile. While the tag is edited it stays in the row (the engine's hidden is undone) and holds its place: the same box with the accent-tint fill, its label and × not drawn (an outline tag keeps its dot), under the edit field."
+    },
+    {
+      "part": "item-input",
+      "element": "input",
+      "description": "Edits a tag in place, lying over it: transparent and ringless (the field's ring already shows the focus), its text on the label's pixels (same size, weight, tracking and inset). As wide as the tag was when the edit started, wider as the text grows (the engine sets its width to its text), never wider than the field. The engine selects the text: the selection takes the accent fill. 16px on coarse pointers. Hidden unless the tag is edited."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "Takes the rest of the row, at least 64px (else a row of its own); its text starts where the Input's does (the size's padding: 6, 8, 10 or 12px in). dir=auto. 16px on coarse pointers."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "array",
+      "model": true,
+      "description": "The tags."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Add a tag",
+      "description": "Shown only while there is no tag (beside tags it would be cut)."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label; otherwise pass aria-label."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The shared control's sizes (`lib/control.ts`): one row is 24, 28, 32 or 36px; tags are 22px at every size."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "accent",
+        "blue",
+        "green",
+        "orange",
+        "red",
+        "purple",
+        "cyan",
+        "yellow",
+        "pink",
+        "auto"
+      ],
+      "default": "neutral",
+      "description": "The tags' tone (Tag's tones): one for every tag, or auto, which gives the same word the same tag hue every time (the records table's hash)."
+    },
+    "tones": {
+      "type": "object",
+      "description": "A tone per tag text ({ bug: \"red\", billing: \"purple\" }), for labels with their own colours; wins over tone. Looked up as typed, then trimmed and lower-cased."
+    },
+    "tagVariant": {
+      "type": "enum",
+      "values": [
+        "tint",
+        "outline"
+      ],
+      "default": "tint",
+      "description": "The tags' look (Tag's variant). tint: the hue fills the tag. outline: a neutral tag with the hue only in its dot, for a field of labels beside lists that show them the same way (an issue's labels)."
+    },
+    "max": {
+      "type": "number",
+      "description": "Most tags; past it nothing is added."
+    },
+    "editable": {
+      "type": "boolean",
+      "default": true,
+      "description": "A double click, or Enter on a highlighted tag, edits it."
+    },
+    "delimiter": {
+      "type": "string",
+      "default": ",",
+      "description": "Typing it adds the text as a tag."
+    },
+    "addOnPaste": {
+      "type": "boolean",
+      "default": true,
+      "description": "Pasted text is split on the delimiter into tags."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name: a hidden input carries the tags."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[]) after a tag is added, edited or removed"
+  },
+  "states": [
+    "hover",
+    "focus",
+    "highlighted",
+    "editing",
+    "disabled",
+    "invalid"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover",
+    "color.ink",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.on-accent",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "radius.control",
+    "radius.chip",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.reveal",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "tag"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Enter, or the delimiter, adds the text as a tag; a tag past max is not added. A text that is already a tag is not added twice: the tag it names is selected (the accent fill), so it is seen to be there, and the field is emptied; typing on clears the selection. Left in the field when the focus leaves, a duplicate is dropped quietly",
+      "Backspace in an empty field highlights the last tag; Backspace again removes it",
+      "ArrowLeft / ArrowRight (mirrored right-to-left) walk the tags from an empty field; Delete or Backspace removes the highlighted tag",
+      "Enter on a highlighted tag edits it; Enter commits the edit, Escape cancels it; either way focus returns to the input and the tag stays selected. A click away commits it and leaves the field; so does Tab (or Shift+Tab), and the focus goes where it was put. Emptied, the tag is removed",
+      "An edit committed with the text of another tag is not taken: the edited tag keeps its former text; committed with Enter, the tag that already has that text is selected instead (the sign a text typed twice gives). An edit that leaves the tag's own text is not a duplicate",
+      "Escape clears the highlight; Tab, or a click away, adds the text left in the field and moves on"
+    ],
+    "notes": [
+      "Give it a visible label or an aria-label.",
+      "Focus stays in the text input while tags are walked; the field's ring is the only ring, the highlighted tag is shown selected (the accent fill) and the input's caret hides meanwhile. A click on a tag selects it the same way. Each tag's remove button has its own name (\"Remove <tag>\") and is not a tab stop.",
+      "The engine announces additions and removals through its live region.",
+      "Tags keep their own direction and are cut at the end with a title when the field is narrower than one."
+    ]
+  },
+  "motion": [
+    "control: fill over duration.fast, ring over duration.base (the Input's)",
+    "tags: appear at once (typing is keyboard work); Backspace / Delete remove at once; a tag removed with its × (the pointer) fades over duration.fast while its cell gives its width back over duration.reveal (easing.out-strong), so the tags after it slide into the room and are in place when it leaves (under reduced motion the cell closes at once); a press on the × does not select the tag; the selected fill is instant (keyboard and pointer alike)",
+    "editing: nothing moves when it starts, ends or is cancelled; the edited tag only grows, at once, when its text gets longer",
+    "remove button: the Button's press (motion.press-scale over duration.press)"
+  ]
+}

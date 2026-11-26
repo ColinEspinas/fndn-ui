@@ -1,0 +1,60 @@
+---
+/* One static page per spec (blocks included): title, status, description, install line, then the
+ * workbench island (stage, inspector, Usage and the component's own files). */
+import Layout from "../../layouts/Layout.astro";
+import InstallLine from "../../components/InstallLine";
+import Workbench from "../../components/Workbench";
+import { Chip } from "@fndn/components/chip/chip.tsx";
+import { StatusPill } from "@fndn/components/status-pill/status-pill.tsx";
+import PrevNext from "../../components/PrevNext";
+import { allOwnFiles, specOf, specs } from "../../lib/catalog";
+import type { Spec } from "../../lib/types";
+
+export function getStaticPaths() {
+  return specs().map((spec) => ({ params: { name: spec.name } }));
+}
+const spec = specOf(Astro.params.name!) as Spec;
+/* names and paths only: the component page fetches a file's source when its tab is opened */
+const own = allOwnFiles(spec);
+const files = Object.fromEntries(Object.entries(own).map(([fw, o]) => [fw, o.files.map((f) => ({ path: f.path, label: f.label, src: `/source/${fw}/${f.label}` }))])) as Record<string, { path: string; label: string; src: string }[]>;
+/* the components its files import (in any framework it has), which `add` brings along */
+const builtFrom = [...new Set(Object.values(own).flatMap((o) => o.builtFrom))].sort();
+const deps = builtFrom.map((d) => ({ name: d, title: specOf(d)?.title ?? d }));
+const all = specs();
+const at = all.findIndex((s) => s.name === spec.name);
+const near = (d: number) => { const s = all[(at + d + all.length) % all.length]!; return { name: s.name, title: s.title }; };
+const tone = spec.status === "stable" ? "green" : spec.status === "beta" ? "blue" : "neutral";
+---
+<Layout title={spec.title} current={`/components/${spec.name}`} description={spec.summary}>
+  <div class="xl:pe-80">
+  <div class="px-4 pt-10 pb-20 md:px-8">
+  <div class="mx-auto max-w-[55rem]" data-docs-column>
+    <header>
+      <p class="text-sm text-ink-2">{spec.kind === "block" ? "Blocks" : "Components"}</p>
+      <div class="mt-1 flex flex-wrap items-center gap-3">
+        <h1 class="text-2xl font-semibold tracking-tight text-ink">{spec.title}</h1>
+        {spec.status !== "stable" && <StatusPill tone={tone} size="sm">{spec.status === "beta" ? "Beta" : spec.status}</StatusPill>}
+        <span class="ms-auto"><PrevNext client:load prev={near(-1)} next={near(1)} /></span>
+      </div>
+      <p class="mt-2 max-w-[46rem] text-md leading-relaxed text-ink-2 [unicode-bidi:plaintext]" data-docs-summary>{spec.summary}</p>
+      <div class="mt-5 max-w-[46rem]">
+        <InstallLine client:load transition:persist="docs-install" name={spec.name} />
+      </div>
+    </header>
+    {/* at least a viewport tall: the Details below stay under the fold while the island grows
+        from its placeholder, so they never shift on screen */}
+    <div class="mt-8 min-h-dvh">
+      {/* gated (lib/gate.tsx): the stage, the Usage and the files follow the stored framework from the first
+          paint; a stage-sized box holds the room until then */}
+      <Workbench client:load transition:persist="docs-workbench" name={spec.name} files={files} deps={deps} />
+    </div>
+    {/* the full description, for whoever wants the detail after trying it (the lede is the summary) */}
+    <section aria-labelledby="docs-details" class="mt-12 flex max-w-[46rem] flex-col gap-3" data-docs-details>
+      <h2 id="docs-details" class="text-md font-semibold text-ink">Details</h2>
+      <p class="text-sm leading-relaxed text-ink-2 [unicode-bidi:plaintext]">{spec.description}</p>
+      {spec.engine && <p class="flex flex-wrap items-center gap-1.5 text-sm text-ink-2" data-docs-engine>Behaviour from Ark UI, the <Chip>{spec.engine}</Chip> machine of Zag.</p>}
+    </section>
+  </div>
+  </div>
+  </div>
+</Layout>

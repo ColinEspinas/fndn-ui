@@ -1,0 +1,158 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "toggle-group",
+  "title": "Toggle Group",
+  "summary": "A row of toggle buttons where one or several stay pressed.",
+  "description": "A row of Toggles where one stays pressed (text alignment, a view) or, multiple, several (bold, italic, underline). Each item is the Toggle: the same looks, sizes, shapes, square and muted, the same pressed fill; icon-only items are named and tipped by their labels (a Tooltip). One tab stop, arrow keys move between the items, Space / Enter press. Unlike the segmented control there is no track and no sliding thumb, and nothing has to be pressed. Behaviour by Ark UI's toggle-group (Zag). Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "actions",
+  "order": 3,
+  "status": "beta",
+  "engine": "toggle-group",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's toggle-group root: role=radiogroup when one at most, role=group with multiple. Outline items are joined into one control, as a button group joins Buttons: square inner corners, one hairline at each join; a press dims the pressed item and moves nothing. Ghost (borderless) items sit 2px apart. It wraps rather than overflowing. Vertical: a column of full-width items, their content at the start."
+    },
+    {
+      "part": "item",
+      "element": "button",
+      "repeat": true,
+      "description": "One Toggle (the toggle recipe's classes): role=radio with aria-checked when one at most, aria-pressed with multiple (styled from those: a Tooltip around an icon-only item writes its own data-state on it). Pressed: hover-2, hovered or not; muted turns ink. Only one item is in the tab order."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "The Toggle's icon part; aria-hidden."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "The Toggle's label part: cut at the end with a title when the item has less room. Not shown on a square item that has an icon: its label is then its aria-label and its tooltip. A square item without an icon shows its (short) label and is named by its tooltip when it has one."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string?",
+        "tooltip": "string?",
+        "disabled": "boolean?"
+      },
+      "description": "The toggles, in order. Strings are accepted as value = label. Each may carry an icon (a node in React)."
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "model": true,
+      "description": "The pressed values."
+    },
+    "multiple": {
+      "type": "boolean",
+      "default": false,
+      "description": "Several may be pressed at once. Otherwise one at most."
+    },
+    "deselectable": {
+      "type": "boolean",
+      "default": true,
+      "description": "One at most: a click on the pressed item releases it. false keeps one pressed once chosen."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The Toggle's looks."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The Toggle's sizes. The one control height scale: xs 24px, sm 28px, md 32px, lg 36px (an sm Toggle lines up with an sm Button or Select). Dimensions only, as the Button."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "pill",
+        "rounded"
+      ],
+      "description": "The shape of the toggles, as on Toggle. Left out, the app's shape: a pill, or rounded in a rounded app (\"shape\": \"rounded\" in the project's fndn.json)."
+    },
+    "square": {
+      "type": "boolean",
+      "default": false,
+      "description": "Icon-only items, as wide as they are tall; each label names its item and is its tooltip."
+    },
+    "muted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Quiet at rest, ink when hovered, held down or pressed: ink-3 for icon-only items (square), ink-2 for items with a label."
+    },
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal",
+      "description": "vertical: a column; Arrow Up / Down move."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[]) after a click, Space or Enter"
+  },
+  "states": [
+    "pressed",
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.hover-2"
+  ],
+  "dependencies": [
+    "toggle",
+    "tooltip",
+    "button-group"
+  ],
+  "a11y": {
+    "role": "radiogroup of radios while one at most can be pressed; group of toggle buttons (aria-pressed) with multiple",
+    "keyboard": [
+      "Tab moves into the group (to the last focused item) and out of it",
+      "Arrow Right / Arrow Left (vertical: Arrow Down / Arrow Up) move to the next / previous item, wrapping; mirrored right-to-left",
+      "Home / End: the first / last item",
+      "Space / Enter press or release the focused item"
+    ],
+    "notes": [
+      "One at most: role=radiogroup with role=radio items and aria-checked. Multiple: role=group with toggle buttons and aria-pressed.",
+      "Name the group with aria-label. Icon-only items are named by their labels (aria-label), which their Tooltips show.",
+      "To set it from outside, control `value`: React value / onValueChange."
+    ]
+  },
+  "motion": [
+    "the Toggle's: press scales to motion.press-scale; hover fill and colour over duration.fast (pointer only)",
+    "pressed fill: over duration.fast from a pointer; instant from the keyboard (kbd-instant)",
+    "focus moves between the items instantly"
+  ]
+}

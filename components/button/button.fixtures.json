@@ -1,0 +1,223 @@
+{
+  "examples": [
+    {
+      "name": "Primary",
+      "props": {
+        "variant": "primary",
+        "size": "md"
+      },
+      "text": "Approve"
+    },
+    {
+      "name": "Outline",
+      "props": {
+        "variant": "outline",
+        "size": "md"
+      },
+      "text": "Alternatives"
+    },
+    {
+      "name": "Accent",
+      "props": {
+        "variant": "accent",
+        "size": "md"
+      },
+      "text": "Continue"
+    },
+    {
+      "name": "Success",
+      "props": {
+        "variant": "success",
+        "size": "sm"
+      },
+      "text": "Apply 3 changes"
+    },
+    {
+      "name": "Danger",
+      "props": {
+        "variant": "danger",
+        "size": "sm"
+      },
+      "text": "Delete invoice"
+    },
+    {
+      "name": "Secondary",
+      "props": {
+        "variant": "secondary",
+        "size": "sm"
+      },
+      "text": "Skip"
+    },
+    {
+      "name": "Ghost",
+      "props": {
+        "variant": "ghost",
+        "size": "sm"
+      },
+      "text": "Edit"
+    },
+    {
+      "name": "Disabled",
+      "props": {
+        "variant": "outline",
+        "size": "md",
+        "disabled": true
+      },
+      "text": "Waiting for stock"
+    },
+    {
+      "name": "Icon only",
+      "frameworks": false
+    },
+    {
+      "name": "With icon",
+      "frameworks": false
+    },
+    {
+      "name": "Extra small",
+      "props": {
+        "variant": "outline",
+        "size": "xs"
+      },
+      "text": "Retry"
+    },
+    {
+      "name": "Rounded",
+      "props": {
+        "variant": "outline",
+        "size": "sm",
+        "shape": "rounded"
+      },
+      "text": "Export"
+    },
+    {
+      "name": "Ghost muted",
+      "props": {
+        "variant": "ghost",
+        "size": "xs",
+        "shape": "rounded",
+        "muted": true
+      },
+      "text": "Show all"
+    },
+    {
+      "name": "Icon sizes",
+      "frameworks": false
+    },
+    {
+      "name": "Two states",
+      "frameworks": false
+    },
+    {
+      "name": "With trailing icon",
+      "frameworks": false
+    },
+    {
+      "name": "Large",
+      "props": {
+        "variant": "primary",
+        "size": "lg"
+      },
+      "text": "Place order"
+    },
+    {
+      "name": "Busy",
+      "props": {
+        "variant": "primary",
+        "size": "md",
+        "busy": true
+      },
+      "text": "Save changes"
+    },
+    {
+      "name": "Busy, then done",
+      "props": {
+        "variant": "outline",
+        "size": "sm",
+        "busy": false
+      },
+      "text": "Retry deploy",
+      "steps": [
+        {
+          "after": 600,
+          "props": {
+            "busy": true
+          }
+        },
+        {
+          "after": 1600,
+          "props": {
+            "busy": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Danger outline",
+      "props": {
+        "variant": "danger-outline",
+        "size": "sm"
+      },
+      "text": "Delete project"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "props": {
+        "variant": "primary",
+        "size": "md"
+      },
+      "text": "Approve and renew 1,284 license seats for Kumo Capital"
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "variant": "outline",
+        "size": "sm"
+      },
+      "text": "K"
+    },
+    {
+      "name": "Long word",
+      "props": {
+        "variant": "accent",
+        "size": "md"
+      },
+      "text": "Lieferantenbestätigungsanforderung senden"
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "variant": "outline",
+        "size": "md"
+      },
+      "text": "الموافقة على الطلب"
+    },
+    {
+      "name": "Tiny and long",
+      "props": {
+        "variant": "ghost",
+        "size": "sm"
+      },
+      "text": "Regenerate with the previous supplier shortlist"
+    },
+    {
+      "name": "Extra small and long",
+      "props": {
+        "variant": "ghost",
+        "size": "xs",
+        "muted": true
+      },
+      "text": "Regenerate with the previous supplier shortlist"
+    },
+    {
+      "name": "Large and long",
+      "props": {
+        "variant": "outline",
+        "size": "lg"
+      },
+      "text": "Approve and renew 1,284 license seats for Kumo Capital"
+    }
+  ]
+}

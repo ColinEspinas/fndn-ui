@@ -1,0 +1,73 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "count",
+  "title": "Count",
+  "summary": "A small number badge next to a label, a tab or a heading.",
+  "description": "Number badge: a count next to a label, tab, chip or heading. Tabular numbers, one line, never shrinks: a huge number widens the badge instead of wrapping. plain is coloured text; boxed sits in a small inset box. Inside a selected chip, tab or segment it takes the selected look by itself.",
+  "kind": "component",
+  "category": "display",
+  "order": 11,
+  "status": "beta",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span",
+      "description": "Holds the number as text (\"12\", \"+3\", \"12,480\"). Format it before passing it in."
+    }
+  ],
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "plain",
+        "boxed"
+      ],
+      "default": "plain",
+      "description": "plain: ink-2 text in the surrounding size. boxed: 20px box, radius.chip, inset fill with a hairline, 11px/500 ink-2."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "md: plain in the surrounding size, boxed 20px. sm: plain 12px (text.xs), boxed an 18px box."
+    },
+    "selected": {
+      "type": "boolean",
+      "default": false,
+      "description": "The selected look of a boxed count (field fill, ink); a plain count stays ink-2, the quieter one beside its selected label. Applied automatically inside an element with data-state=\"checked\", aria-selected=\"true\", aria-checked=\"true\" or aria-pressed=\"true\"."
+    }
+  },
+  "slots": {
+    "default": "The number, formatted"
+  },
+  "states": [
+    "selected"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.inset",
+    "color.field",
+    "shadow.hairline",
+    "radius.chip",
+    "text.2xs",
+    "duration.base",
+    "text.xs"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "The number is real text and is read with its label. When the label alone does not say what is counted, give the count a visually hidden suffix (\"12 unread\") or put the meaning in the label.",
+      "Never truncate a number; the badge grows instead.",
+      "A signed value (\"+2\", \"-1\") keeps its sign order on a right-to-left page: the badge is a left-to-right island (direction: ltr, unicode-bidi: isolate)."
+    ]
+  },
+  "motion": [
+    "selected: fill and colour cross-fade over duration.base, ease (it follows the chip or tab that is selected)",
+    "no other motion"
+  ]
+}

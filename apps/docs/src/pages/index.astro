@@ -1,0 +1,98 @@
+---
+/* Overview: a heading, one line and two actions, then the Showcase (whole apps, each a live
+ * thumbnail), then Components and Blocks, each one flat grid of cards with a live example (inert,
+ * hydrated when it comes near the viewport). Components keep the tree's order (by category); a
+ * category is not a heading here: its groups of one or two would leave half-empty rows. */
+import Layout from "../layouts/Layout.astro";
+import Preview from "../components/Preview";
+import ShowcaseFrame from "../components/ShowcaseFrame";
+import { hasOpenSurface } from "../components/OpenSurface";
+import { Card } from "@fndn/components/card/card.tsx";
+import { Count } from "@fndn/components/count/count.tsx";
+import { button } from "@fndn/components/button/button.recipe.ts";
+import { sections } from "../lib/catalog";
+import { exampleIndex } from "../lib/examples";
+import { showcases } from "../lib/showcase";
+
+const all = sections().map((s) => {
+  const specs = s.groups.flatMap((g) => g.specs);
+  /* blocks in the tree's order (by title) */
+  return { ...s, specs: s.kind === "block" ? [...specs].sort((a, b) => a.title.localeCompare(b.title)) : specs };
+});
+const index = exampleIndex();
+const apps = showcases();
+const card = "relative flex h-full flex-col overflow-hidden motion-shadow-fast hover:shadow-card has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent";
+const cta = "no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+---
+<Layout title="fndn/ui" current="/" description="Components for React, Vue and Svelte, built from one spec.">
+  <div class="px-4 pt-12 pb-20 md:px-8 md:pt-16">
+  <div class="mx-auto max-w-[70rem]">
+    <header class="max-w-[42rem]">
+      <h1 class="text-3xl font-semibold tracking-tight text-balance text-ink md:text-4xl">Components for React, Vue and Svelte, built from one spec</h1>
+      <p class="mt-4 text-lg leading-relaxed text-pretty text-ink-2 [unicode-bidi:plaintext]">
+        Each component is a JSON spec, a Tailwind recipe and thin adapters that render the same markup in all three. Try it here, then add its files to your project and make them yours.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/installation" data-slot="button" class={button({ variant: "primary", size: "lg" }).base({ class: cta })}><span data-slot="button-label" class={button({ variant: "primary", size: "lg" }).label()}>Get started</span></a>
+        <a href="#kind-component" data-slot="button" class={button({ variant: "outline", size: "lg" }).base({ class: cta })}><span data-slot="button-label" class={button({ variant: "outline", size: "lg" }).label()}>Browse components</span></a>
+      </div>
+    </header>
+
+    {apps.length > 0 && (
+      <section class="mt-16" aria-labelledby="kind-showcase">
+        <h2 id="kind-showcase" class="text-lg font-semibold tracking-tight text-ink">Showcase</h2>
+        <p class="mt-1 text-sm text-ink-2">Whole app screens built only from these components: open one to use it.</p>
+        {/* three across from 1024px, one per row below: never a card alone on a row of two */}
+        <ul class="mt-6 grid gap-4 lg:grid-cols-3">
+          {apps.map((a) => (
+            <li class="min-w-0">
+              <Card elevation="hairline" className={card}>
+                <div class="relative aspect-[16/10] overflow-hidden border-b border-line bg-surface" inert aria-hidden="true">
+                  <ShowcaseFrame client:visible={{ rootMargin: "400px" }} name={a.name} shape={a.shape} thumb />
+                </div>
+                <div class="flex flex-col gap-1 px-4 pt-3 pb-4">
+                  <a href={`/showcase/${a.name}`} class="text-md font-semibold text-ink no-underline outline-none after:absolute after:inset-0 after:content-['']">{a.title}</a>
+                  <span class="text-sm text-ink-2 [unicode-bidi:plaintext]">{a.description}</span>
+                </div>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {all.map((s) => (
+      <section class="mt-16 scroll-mt-16" id={`kind-${s.kind}`} aria-labelledby={`kind-${s.kind}-h`}>
+        <h2 id={`kind-${s.kind}-h`} class="flex items-center gap-2 text-lg font-semibold tracking-tight text-ink">{s.heading} <Count>{String(s.specs.length)}</Count></h2>
+        <p class="mt-1 text-sm text-ink-2">{s.lede}</p>
+        <ul class={`mt-6 grid gap-4 ${s.kind === "block" ? "grid-cols-[repeat(auto-fill,minmax(min(100%,21rem),1fr))]" : "grid-cols-[repeat(auto-fill,minmax(min(100%,18rem),1fr))]"}`}>
+          {s.specs.map((spec) => {
+            const ex = index[spec.name];
+            const first = ex?.examples[0]?.file;
+            const surface = hasOpenSurface(spec.name) && ex?.playground?.props ? { props: ex.playground.props, text: ex.playground.text } : undefined;
+            return (
+              <li class="min-w-0">
+                {/* the title link covers the card (::after), so the card holds no link inside a link:
+                    some live examples contain links of their own */}
+                <Card elevation="hairline" className={card}>
+                  <div class={`${s.kind === "block" ? "h-60" : "h-44"} border-b border-line bg-surface`} inert aria-hidden="true">
+                    {first || surface ? (
+                      <Preview client:visible={{ rootMargin: "400px" }} name={spec.name} file={first ?? ""} block={spec.kind === "block"} surface={surface} />
+                    ) : (
+                      <div class="grid h-full place-items-center px-6 text-center text-sm text-ink-2">No example yet.</div>
+                    )}
+                  </div>
+                  <div class="flex flex-col gap-1 px-4 pt-3 pb-4">
+                    <a href={`/components/${spec.name}`} class="text-md font-semibold text-ink no-underline outline-none after:absolute after:inset-0 after:content-['']">{spec.title}</a>
+                    <span class="text-sm text-ink-2 [unicode-bidi:plaintext]">{spec.summary}</span>
+                  </div>
+                </Card>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+  </div>
+</Layout>

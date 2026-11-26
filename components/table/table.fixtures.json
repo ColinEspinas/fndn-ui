@@ -1,0 +1,514 @@
+{
+  "examples": [
+    {
+      "name": "Columns and rows",
+      "width": 520,
+      "props": {
+        "columns": [
+          {
+            "key": "company",
+            "label": "Company"
+          },
+          {
+            "key": "city",
+            "label": "City"
+          },
+          {
+            "key": "orders",
+            "label": "Orders",
+            "numeric": true
+          },
+          {
+            "key": "last",
+            "label": "Last order"
+          }
+        ],
+        "rows": [
+          {
+            "company": "Aurora Health",
+            "city": "Reykjavík",
+            "orders": "1,284",
+            "last": "9 days ago"
+          },
+          {
+            "company": "Kumo Capital",
+            "city": "Tokyo",
+            "orders": "312",
+            "last": "3 weeks ago"
+          },
+          {
+            "company": "Sol y Nieve",
+            "city": "Buenos Aires",
+            "orders": "86",
+            "last": "2 months ago"
+          },
+          {
+            "company": "Maple Orbit",
+            "city": "Montréal",
+            "orders": "2,045",
+            "last": "15 days ago"
+          }
+        ]
+      }
+    },
+    {
+      "name": "With a caption",
+      "width": 400,
+      "props": {
+        "caption": "Invoices paid in October",
+        "columns": [
+          {
+            "key": "invoice",
+            "label": "Invoice"
+          },
+          {
+            "key": "status",
+            "label": "Status"
+          },
+          {
+            "key": "amount",
+            "label": "Amount",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "invoice": "INV-001",
+            "status": "Paid",
+            "amount": "$250.00"
+          },
+          {
+            "invoice": "INV-002",
+            "status": "Paid",
+            "amount": "$150.00"
+          },
+          {
+            "invoice": "INV-003",
+            "status": "Paid",
+            "amount": "$350.00"
+          }
+        ]
+      }
+    },
+    {
+      "name": "One column",
+      "width": 240,
+      "props": {
+        "columns": [
+          {
+            "key": "name",
+            "label": "Plan"
+          }
+        ],
+        "rows": [
+          {
+            "name": "Essential"
+          },
+          {
+            "name": "Professional"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Flush issue list",
+      "width": 560,
+      "props": {
+        "variant": "flush",
+        "aria-label": "Open issues in billing-api",
+        "columns": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "title",
+            "label": "Title",
+            "truncate": true
+          },
+          {
+            "key": "status",
+            "label": "Status"
+          },
+          {
+            "key": "assignee",
+            "label": "Assignee"
+          },
+          {
+            "key": "updated",
+            "label": "Updated",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "id": "NW-482",
+            "title": "Add retry to webhook delivery when the endpoint times out",
+            "status": "In review",
+            "assignee": "Priya Raman",
+            "updated": "2 min ago"
+          },
+          {
+            "id": "NW-479",
+            "title": "Usage alerts fire twice for the same threshold",
+            "status": "In progress",
+            "assignee": "Daniel Okafor",
+            "updated": "1 h ago"
+          },
+          {
+            "id": "NW-471",
+            "title": "Invoice PDF cuts the tax line",
+            "status": "Todo",
+            "assignee": "Aiko Tanaka",
+            "updated": "Nov 14"
+          },
+          {
+            "id": "NW-468",
+            "title": "Rename staging environment",
+            "status": "Done",
+            "assignee": "Jonas Weber",
+            "updated": "Nov 12"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Loading",
+      "width": 520,
+      "props": {
+        "variant": "flush",
+        "aria-label": "Open issues in billing-api",
+        "loading": true,
+        "loadingRows": 4,
+        "columns": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "title",
+            "label": "Title",
+            "truncate": true
+          },
+          {
+            "key": "status",
+            "label": "Status"
+          },
+          {
+            "key": "assignee",
+            "label": "Assignee"
+          },
+          {
+            "key": "updated",
+            "label": "Updated",
+            "numeric": true
+          }
+        ],
+        "rows": []
+      }
+    },
+    {
+      "name": "Loading, then rows",
+      "width": 520,
+      "props": {
+        "aria-label": "Recent deploys",
+        "loading": true,
+        "loadingRows": 3,
+        "columns": [
+          {
+            "key": "branch",
+            "label": "Branch"
+          },
+          {
+            "key": "status",
+            "label": "Status"
+          },
+          {
+            "key": "duration",
+            "label": "Duration",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "branch": "main",
+            "status": "Ready",
+            "duration": "50s"
+          },
+          {
+            "branch": "feat/usage-alerts",
+            "status": "Building",
+            "duration": "1m 12s"
+          },
+          {
+            "branch": "fix/tax-rounding",
+            "status": "Failed",
+            "duration": "48s"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "after": 1200,
+          "props": {
+            "loading": false
+          }
+        }
+      ]
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long values wrap",
+      "width": 360,
+      "props": {
+        "columns": [
+          {
+            "key": "company",
+            "label": "Company name as registered with the chamber of commerce"
+          },
+          {
+            "key": "email",
+            "label": "Email"
+          },
+          {
+            "key": "orders",
+            "label": "Orders",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "company": "The Extraordinarily Long-Named Artisanal Ledger and Payroll Cooperative of Northern Florence",
+            "email": "averyveryveryverylongunbrokenemailaddress@example-software-domain.com",
+            "orders": "12,480"
+          },
+          {
+            "company": "B",
+            "email": "",
+            "orders": "1"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Many columns scroll",
+      "width": 320,
+      "props": {
+        "columns": [
+          {
+            "key": "a",
+            "label": "Company"
+          },
+          {
+            "key": "b",
+            "label": "City"
+          },
+          {
+            "key": "c",
+            "label": "Country"
+          },
+          {
+            "key": "d",
+            "label": "Orders",
+            "numeric": true
+          },
+          {
+            "key": "e",
+            "label": "Revenue",
+            "numeric": true
+          },
+          {
+            "key": "f",
+            "label": "Last order"
+          }
+        ],
+        "rows": [
+          {
+            "a": "Aurora Health",
+            "b": "Reykjavík",
+            "c": "Iceland",
+            "d": "1,284",
+            "e": "€48,210",
+            "f": "9 days ago"
+          },
+          {
+            "a": "Kumo Capital",
+            "b": "Tokyo",
+            "c": "Japan",
+            "d": "312",
+            "e": "¥1,204,000",
+            "f": "3 weeks ago"
+          }
+        ]
+      }
+    },
+    {
+      "name": "No rows",
+      "width": 320,
+      "props": {
+        "columns": [
+          {
+            "key": "a",
+            "label": "Company"
+          },
+          {
+            "key": "b",
+            "label": "Orders",
+            "numeric": true
+          }
+        ],
+        "rows": []
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 360,
+      "props": {
+        "caption": "الطلبات في أكتوبر",
+        "columns": [
+          {
+            "key": "a",
+            "label": "الشركة"
+          },
+          {
+            "key": "b",
+            "label": "المدينة"
+          },
+          {
+            "key": "c",
+            "label": "الطلبات",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "a": "حلول الفجر",
+            "b": "مراكش",
+            "c": "١٢٤"
+          },
+          {
+            "a": "Kumo Capital",
+            "b": "Tokyo",
+            "c": "312"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Many rows",
+      "width": 320,
+      "props": {
+        "columns": [
+          {
+            "key": "n",
+            "label": "#",
+            "numeric": true
+          },
+          {
+            "key": "v",
+            "label": "Plan"
+          }
+        ],
+        "rows": [
+          {
+            "n": "1",
+            "v": "Essential"
+          },
+          {
+            "n": "2",
+            "v": "Professional"
+          },
+          {
+            "n": "3",
+            "v": "Business"
+          },
+          {
+            "n": "4",
+            "v": "Basic"
+          },
+          {
+            "n": "5",
+            "v": "Teams"
+          },
+          {
+            "n": "6",
+            "v": "Growth bundle"
+          },
+          {
+            "n": "7",
+            "v": "Developer"
+          },
+          {
+            "n": "8",
+            "v": "Hobby"
+          },
+          {
+            "n": "9",
+            "v": "Nonprofit"
+          },
+          {
+            "n": "10",
+            "v": "Startup"
+          },
+          {
+            "n": "11",
+            "v": "Premium"
+          },
+          {
+            "n": "12",
+            "v": "Free"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Flush at 320px",
+      "width": 320,
+      "props": {
+        "variant": "flush",
+        "aria-label": "Open issues",
+        "columns": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "title",
+            "label": "Title",
+            "truncate": true
+          },
+          {
+            "key": "status",
+            "label": "Status"
+          },
+          {
+            "key": "assignee",
+            "label": "Assignee"
+          },
+          {
+            "key": "updated",
+            "label": "Updated",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "id": "NW-482",
+            "title": "Add retry to webhook delivery when the endpoint times out",
+            "status": "In review",
+            "assignee": "Priya Raman",
+            "updated": "2 min ago"
+          },
+          {
+            "id": "NW-1",
+            "title": "x",
+            "status": "Todo",
+            "assignee": "Maximilian Alexander von Hohenzollern-Sigmaringen",
+            "updated": "Nov 2"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+---
+/* Installation: the `fndn` tool from start to finish (Tailwind 4, init, add, find and read, check,
+ * keep up to date, the MCP server and the skill for agents), per framework where a step differs,
+ * following the framework switch in the top bar. Says what the generator's /installation.md says. */
+import Layout from "../layouts/Layout.astro";
+import Installation, { type Folder, type Helper } from "../components/Installation";
+import { addedFiles, library, stripGenerated, type SourceFile } from "../lib/catalog";
+import { readText } from "../lib/content";
+import { componentFiles, ownerOf } from "../lib/files";
+import { FRAMEWORKS, UI_DIR, firstSentence, type Fw } from "../lib/types";
+import { docs } from "./_agent-docs";
+
+/* the stylesheet `fndn init` writes into <ui folder>/styles/ */
+const STYLES = ["index.css", "tokens.css", "tailwind.css", "base.css"];
+const css = Object.fromEntries(FRAMEWORKS.map((fw) => [fw, STYLES.map((f) => ({ path: `${UI_DIR[fw]}/styles/${f}`, label: f, code: stripGenerated(readText(`packages/core/css/${f}`)) }))])) as Record<Fw, SourceFile[]>;
+
+/* the example of the Add step: what `fndn add button select` writes, folder by folder (the asked
+ * components, the ones they are built from, lib/), and the line it ends with */
+const ADD = ["button", "select"];
+function folders(fw: Fw): Folder[] {
+  const { files } = addedFiles(ADD, fw);
+  const lib = library(fw);
+  const byDir = new Map<string, string[]>();
+  for (const f of files) { const [d, ...rest] = f.split("/"); byDir.set(d!, [...(byDir.get(d!) ?? []), rest.join("/")]); }
+  /* in a folder: index.ts, the adapters, the recipe, the rest */
+  const rank = (dir: string, f: string) => (f === "index.ts" ? 0 : (lib.components[dir] ?? []).includes(`${dir}/${f}`) ? 1 : f.endsWith(".recipe.ts") ? 2 : 3);
+  const sorted = (dir: string) => byDir.get(dir)!.sort((a, b) => rank(dir, a) - rank(dir, b) || a.localeCompare(b));
+  const extra = [...byDir.keys()].filter((d) => ownerOf(`${d}/x`) && !ADD.includes(d)).sort();
+  return [
+    ...ADD.map((dir) => ({ dir, files: sorted(dir) })),
+    ...extra.map((dir) => ({ dir, files: sorted(dir), by: ADD.filter((n) => componentFiles(lib, n).builtFrom.includes(dir)) })),
+    ...(byDir.has("lib") ? [{ dir: "lib", files: sorted("lib") }] : []),
+  ];
+}
+const added = Object.fromEntries(FRAMEWORKS.map((fw) => [fw, { folders: folders(fw), install: addedFiles(ADD, fw).install }])) as Record<Fw, { folders: Folder[]; install: string }>;
+
+/* what lib/ holds: every file of components/lib/, as a project gets it */
+const ABOUT: Record<string, string> = {
+  "tv.ts": "The tv every recipe imports: tailwind-variants told which group each token class belongs to, so a variant's text-xs replaces the base's text-md instead of both staying in the class list.",
+  "control.ts": "The shared control recipe: the surface of every field-like control (input, textarea, the select's trigger, the combobox's control), one size scale and one set of looks.",
+  "popup.ts": "The shared popup recipe: the raised surface of select and menu lists, popovers and hover cards, its entrance and exit, instant from the keyboard.",
+  "option.ts": "The shared option row recipe: a row of a list you pick from (select, menu, search, suggestions), with its icon, text, description, meta, check, group label and separator.",
+  "glide.ts": "The gliding highlight: one layer that travels between the rows of a list, a menu or a select, and the classes of that layer.",
+  "modality.ts": "Remembers whether the last input was a key or a pointer, so changes made from the keyboard are instant.",
+  "truncate.ts": "Text cut by an ellipsis gets a title with its full text while it is cut.",
+  "paint.ts": "Nothing plays on first paint: an entrance runs only once the part has been painted.",
+  "veil.ts": "The edge veils of a table that scrolls sideways: shown only while the table is wider than its card.",
+};
+/* a file not described above: the first sentence of its leading comment */
+const lead = (code: string) => firstSentence((code.match(/^\s*\/\*\*?([\s\S]*?)\*\//)?.[1] ?? "").replace(/\n\s*\*\s?/g, " ").replace(/\s+/g, " ").trim());
+const libFiles = Object.keys(library("react").files).filter((f) => f.startsWith("lib/")).map((f) => f.slice(4));
+const order = Object.keys(ABOUT);
+const rankLib = (f: string) => (order.includes(f) ? order.indexOf(f) : order.length);
+const helpers: Helper[] = libFiles.sort((a, b) => rankLib(a) - rankLib(b) || a.localeCompare(b)).map((file) => ({ file: `lib/${file}`, about: ABOUT[file] ?? lead(library("react").files[`lib/${file}`]!.content) }));
+
+/* the MCP configuration, exactly as the generator's Installation page gives it */
+const mcp = docs().render("/installation.md", () => null)?.match(/```json\n([\s\S]*?)\n```/)?.[1] ?? "";
+---
+<Layout title="Installation" current="/installation" description="Set a project up once with the fndn tool, add components as files you own, check the result; the same tool as an MCP server for agents.">
+  <div class="px-4 pt-10 pb-20 md:px-8">
+  <div class="mx-auto max-w-[55rem]">
+    <header class="max-w-[46rem]">
+      <p class="text-sm text-ink-2">Getting started</p>
+      <h1 class="mt-1 text-2xl font-semibold tracking-tight text-ink">Installation</h1>
+      <p class="mt-3 text-md leading-relaxed text-ink-2">
+        The system comes with its own tool, <code class="rounded-chip bg-inset px-1 py-0.5 font-mono text-xs text-ink">fndn</code>. It sets a
+        project up, adds components as files the project owns, prints a component's documentation for the project's framework
+        and checks the code against the rules the components follow. The components are inside it: one command line, also an
+        MCP server for agents. It needs a React, Vue 3 or Svelte 5 project with Tailwind 4.
+      </p>
+    </header>
+    <div class="mt-8 max-w-[52rem]">
+      <Installation client:load css={css} added={added} addNames={ADD} helpers={helpers} mcp={mcp} />
+    </div>
+  </div>
+  </div>
+</Layout>

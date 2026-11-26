@@ -1,0 +1,456 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "items": [
+          {
+            "value": "forecast",
+            "label": "Forecast Q4 demand"
+          },
+          {
+            "value": "suppliers",
+            "label": "Find contract renewals"
+          },
+          {
+            "value": "compare",
+            "label": "Compare plan tiers"
+          },
+          {
+            "value": "launch",
+            "label": "Draft pricing launch plan"
+          },
+          {
+            "value": "connectors",
+            "label": "Check connector status"
+          },
+          {
+            "value": "sugar",
+            "label": "Audit compute costs"
+          },
+          {
+            "value": "retire",
+            "label": "Retire unused seats"
+          }
+        ],
+        "placeholder": "Search actions…",
+        "label": "Search actions"
+      }
+    },
+    {
+      "name": "Grouped commands",
+      "props": {
+        "label": "Search commands",
+        "placeholder": "Type a command or search…",
+        "limit": 8,
+        "items": [
+          {
+            "value": "/projects/web-app",
+            "label": "web-app",
+            "group": "Projects",
+            "meta": "Production",
+            "keywords": [
+              "frontend",
+              "next"
+            ]
+          },
+          {
+            "value": "/projects/billing-api",
+            "label": "billing-api",
+            "group": "Projects",
+            "meta": "Staging",
+            "keywords": [
+              "payments",
+              "stripe"
+            ]
+          },
+          {
+            "value": "deploy",
+            "label": "Deploy to Production",
+            "group": "Actions",
+            "shortcut": [
+              "⌘",
+              "D"
+            ],
+            "keywords": [
+              "ship",
+              "release"
+            ]
+          },
+          {
+            "value": "invite",
+            "label": "Invite teammates",
+            "group": "Actions",
+            "shortcut": [
+              "⌘",
+              "I"
+            ]
+          },
+          {
+            "value": "/projects/docs-site",
+            "label": "docs-site",
+            "group": "Projects",
+            "meta": "Preview"
+          },
+          {
+            "value": "theme",
+            "label": "Switch to dark theme",
+            "group": "Preferences",
+            "keywords": [
+              "appearance",
+              "night"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long labels and many rows",
+      "props": {
+        "query": "a",
+        "label": "Search",
+        "placeholder": "Search every customer, plan, invoice and renewal schedule in the workspace…",
+        "items": [
+          {
+            "value": "long",
+            "label": "Reconcile the Q4 wholesale invoice batch for Aleksandra Wiśniewska-Kowalczyk’s Northwind Industries Holdings account",
+            "meta": "Finance"
+          },
+          {
+            "value": "email",
+            "label": "bartholomew.fitzgerald@northwind-industries-holdings.example.com",
+            "meta": "⌘⇧K"
+          },
+          {
+            "value": "one",
+            "label": "A"
+          },
+          {
+            "value": "rtl",
+            "label": "مراجعة تكاليف الحوسبة لهذا الأسبوع",
+            "meta": "RTL"
+          },
+          {
+            "value": "cjk",
+            "label": "第4四半期の需要予測を更新する"
+          },
+          {
+            "value": "emoji",
+            "label": "🚀 Launch 🎉 & rollout — release batch 12,480"
+          },
+          {
+            "value": "row-1",
+            "label": "Archive supplier record 01 — Aurora Analytics"
+          },
+          {
+            "value": "row-2",
+            "label": "Archive supplier record 02 — Aurora Analytics"
+          },
+          {
+            "value": "row-3",
+            "label": "Archive supplier record 03 — Aurora Analytics"
+          },
+          {
+            "value": "row-4",
+            "label": "Archive supplier record 04 — Aurora Analytics"
+          },
+          {
+            "value": "row-5",
+            "label": "Archive supplier record 05 — Aurora Analytics"
+          },
+          {
+            "value": "row-6",
+            "label": "Archive supplier record 06 — Aurora Analytics"
+          },
+          {
+            "value": "row-7",
+            "label": "Archive supplier record 07 — Aurora Analytics"
+          },
+          {
+            "value": "row-8",
+            "label": "Archive supplier record 08 — Aurora Analytics"
+          },
+          {
+            "value": "row-9",
+            "label": "Archive supplier record 09 — Aurora Analytics"
+          },
+          {
+            "value": "row-10",
+            "label": "Archive supplier record 10 — Aurora Analytics"
+          },
+          {
+            "value": "row-11",
+            "label": "Archive supplier record 11 — Aurora Analytics"
+          },
+          {
+            "value": "row-12",
+            "label": "Archive supplier record 12 — Aurora Analytics"
+          },
+          {
+            "value": "row-13",
+            "label": "Archive supplier record 13 — Aurora Analytics"
+          },
+          {
+            "value": "row-14",
+            "label": "Archive supplier record 14 — Aurora Analytics"
+          },
+          {
+            "value": "row-15",
+            "label": "Archive supplier record 15 — Aurora Analytics"
+          },
+          {
+            "value": "row-16",
+            "label": "Archive supplier record 16 — Aurora Analytics"
+          },
+          {
+            "value": "row-17",
+            "label": "Archive supplier record 17 — Aurora Analytics"
+          },
+          {
+            "value": "row-18",
+            "label": "Archive supplier record 18 — Aurora Analytics"
+          },
+          {
+            "value": "row-19",
+            "label": "Archive supplier record 19 — Aurora Analytics"
+          },
+          {
+            "value": "row-20",
+            "label": "Archive supplier record 20 — Aurora Analytics"
+          },
+          {
+            "value": "row-21",
+            "label": "Archive supplier record 21 — Aurora Analytics"
+          },
+          {
+            "value": "row-22",
+            "label": "Archive supplier record 22 — Aurora Analytics"
+          },
+          {
+            "value": "row-23",
+            "label": "Archive supplier record 23 — Aurora Analytics"
+          },
+          {
+            "value": "row-24",
+            "label": "Archive supplier record 24 — Aurora Analytics"
+          },
+          {
+            "value": "row-25",
+            "label": "Archive supplier record 25 — Aurora Analytics"
+          },
+          {
+            "value": "row-26",
+            "label": "Archive supplier record 26 — Aurora Analytics"
+          },
+          {
+            "value": "row-27",
+            "label": "Archive supplier record 27 — Aurora Analytics"
+          },
+          {
+            "value": "row-28",
+            "label": "Archive supplier record 28 — Aurora Analytics"
+          },
+          {
+            "value": "row-29",
+            "label": "Archive supplier record 29 — Aurora Analytics"
+          },
+          {
+            "value": "row-30",
+            "label": "Archive supplier record 30 — Aurora Analytics"
+          },
+          {
+            "value": "row-31",
+            "label": "Archive supplier record 31 — Aurora Analytics"
+          },
+          {
+            "value": "row-32",
+            "label": "Archive supplier record 32 — Aurora Analytics"
+          },
+          {
+            "value": "row-33",
+            "label": "Archive supplier record 33 — Aurora Analytics"
+          },
+          {
+            "value": "row-34",
+            "label": "Archive supplier record 34 — Aurora Analytics"
+          },
+          {
+            "value": "row-35",
+            "label": "Archive supplier record 35 — Aurora Analytics"
+          },
+          {
+            "value": "row-36",
+            "label": "Archive supplier record 36 — Aurora Analytics"
+          },
+          {
+            "value": "row-37",
+            "label": "Archive supplier record 37 — Aurora Analytics"
+          },
+          {
+            "value": "row-38",
+            "label": "Archive supplier record 38 — Aurora Analytics"
+          },
+          {
+            "value": "row-39",
+            "label": "Archive supplier record 39 — Aurora Analytics"
+          },
+          {
+            "value": "row-40",
+            "label": "Archive supplier record 40 — Aurora Analytics"
+          },
+          {
+            "value": "row-41",
+            "label": "Archive supplier record 41 — Aurora Analytics"
+          },
+          {
+            "value": "row-42",
+            "label": "Archive supplier record 42 — Aurora Analytics"
+          },
+          {
+            "value": "row-43",
+            "label": "Archive supplier record 43 — Aurora Analytics"
+          },
+          {
+            "value": "row-44",
+            "label": "Archive supplier record 44 — Aurora Analytics"
+          },
+          {
+            "value": "row-45",
+            "label": "Archive supplier record 45 — Aurora Analytics"
+          },
+          {
+            "value": "row-46",
+            "label": "Archive supplier record 46 — Aurora Analytics"
+          },
+          {
+            "value": "row-47",
+            "label": "Archive supplier record 47 — Aurora Analytics"
+          },
+          {
+            "value": "row-48",
+            "label": "Archive supplier record 48 — Aurora Analytics"
+          },
+          {
+            "value": "row-49",
+            "label": "Archive supplier record 49 — Aurora Analytics"
+          },
+          {
+            "value": "row-50",
+            "label": "Archive supplier record 50 — Aurora Analytics"
+          },
+          {
+            "value": "row-51",
+            "label": "Archive supplier record 51 — Aurora Analytics"
+          },
+          {
+            "value": "row-52",
+            "label": "Archive supplier record 52 — Aurora Analytics"
+          },
+          {
+            "value": "row-53",
+            "label": "Archive supplier record 53 — Aurora Analytics"
+          },
+          {
+            "value": "row-54",
+            "label": "Archive supplier record 54 — Aurora Analytics"
+          }
+        ]
+      }
+    },
+    {
+      "name": "No results",
+      "props": {
+        "query": "brown butter bourbon brittle crunch",
+        "items": [
+          {
+            "value": "forecast",
+            "label": "Forecast Q4 demand"
+          },
+          {
+            "value": "suppliers",
+            "label": "Find contract renewals"
+          },
+          {
+            "value": "compare",
+            "label": "Compare plan tiers"
+          },
+          {
+            "value": "launch",
+            "label": "Draft pricing launch plan"
+          },
+          {
+            "value": "connectors",
+            "label": "Check connector status"
+          },
+          {
+            "value": "sugar",
+            "label": "Audit compute costs"
+          },
+          {
+            "value": "retire",
+            "label": "Retire unused seats"
+          }
+        ],
+        "emptyTitle": "No results found for “brown butter bourbon brittle crunch”",
+        "emptyHint": "Adjust your search to try again, or check the spelling of the plan, customer or invoice number"
+      }
+    },
+    {
+      "name": "One row",
+      "props": {
+        "items": [
+          {
+            "value": "only",
+            "label": "Jo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Zero rows",
+      "props": {
+        "items": []
+      }
+    },
+    {
+      "name": "Long group labels and shortcuts",
+      "props": {
+        "label": "Search commands",
+        "items": [
+          {
+            "value": "a",
+            "label": "Rotate the production API key and notify every webhook subscriber",
+            "group": "Security and access for the Northwind workspace and its 1,284 members",
+            "shortcut": [
+              "Ctrl",
+              "Shift",
+              "Alt",
+              "K"
+            ],
+            "meta": "billing-api"
+          },
+          {
+            "value": "b",
+            "label": "A",
+            "group": "B",
+            "shortcut": [
+              "⌘",
+              "1"
+            ]
+          },
+          {
+            "value": "c",
+            "label": "تبديل المظهر",
+            "group": "التفضيلات",
+            "shortcut": [
+              "⌘",
+              "T"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

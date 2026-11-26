@@ -1,0 +1,85 @@
+{
+  "playground": {
+    "props": {
+      "label": "Reviewer",
+      "placeholder": "Search people",
+      "emptyText": "No one in Northwind matches",
+      "size": "md",
+      "variant": "outline",
+      "disabled": false,
+      "invalid": false,
+      "items": [
+        {
+          "value": "maya",
+          "label": "Maya Chen",
+          "meta": "Owner"
+        },
+        {
+          "value": "daniel",
+          "label": "Daniel Okafor",
+          "meta": "Admin"
+        },
+        {
+          "value": "priya",
+          "label": "Priya Raman",
+          "meta": "Member"
+        },
+        {
+          "value": "lucas",
+          "label": "Lucas Moreau",
+          "meta": "Member"
+        },
+        {
+          "value": "sofia",
+          "label": "Sofia Alvarez",
+          "meta": "Viewer",
+          "disabled": true
+        },
+        {
+          "value": "jonas",
+          "label": "Jonas Weber",
+          "meta": "Member"
+        }
+      ]
+    },
+    "width": 240
+  },
+  "examples": [
+    {
+      "file": "reviewer",
+      "title": "Assign a reviewer"
+    },
+    {
+      "file": "branch-to-deploy",
+      "title": "Branch in a deploy bar"
+    },
+    {
+      "file": "address-bar",
+      "title": "A browser's address bar, with a bookmark star"
+    },
+    {
+      "file": "timezone",
+      "title": "Timezone, with UTC offsets"
+    },
+    {
+      "file": "billing-country",
+      "title": "Billing country decides the tax"
+    },
+    {
+      "file": "assignee-in-side-panel",
+      "title": "Assignee in an issue's side panel"
+    },
+    {
+      "file": "country-by-code",
+      "title": "Country, found by its code or a city"
+    },
+    {
+      "file": "new-label",
+      "title": "Label, or create a new one"
+    },
+    {
+      "file": "go-to-file",
+      "title": "Go to file, the typed part marked"
+    }
+  ]
+}

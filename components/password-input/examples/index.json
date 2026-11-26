@@ -1,0 +1,9 @@
+{
+  "playground": { "props": { "placeholder": "Password", "aria-label": "Password", "size": "md", "variant": "outline", "invalid": false, "disabled": false, "autoComplete": "current-password" }, "width": 280 },
+  "examples": [
+    { "file": "password", "title": "Password" },
+    { "file": "sign-in", "title": "Sign in" },
+    { "file": "new-password", "title": "Choose a new password" },
+    { "file": "confirm-action", "title": "Confirm a sensitive change" }
+  ]
+}

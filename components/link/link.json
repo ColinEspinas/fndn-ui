@@ -1,0 +1,93 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "link",
+  "title": "Link",
+  "summary": "A link in running text or on its own.",
+  "description": "A link in running text (\"read the deploy log\"), or one on its own (\"View all deploys\"). Inline links are always underlined, in a softer shade that takes the full colour on hover; standalone links are medium weight and underline on hover. Accent or neutral tone. external opens a new tab and says so: an arrow after the text and a visually hidden \"(opens in a new tab)\". Text links never scale; a press shifts the colour. Use it instead of a bare <a>; for a router's link component, give it the recipe's classes (link()).",
+  "kind": "component",
+  "category": "navigation",
+  "order": 9,
+  "status": "beta",
+  "element": "a",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "a",
+      "description": "The anchor, with every attribute passed on (href, download, rel…). Wraps anywhere, so a pasted URL never overflows its column; its text keeps its own direction. 3px focus-ring radius on each line of a wrapped link."
+    },
+    {
+      "part": "external",
+      "element": "span",
+      "optional": true,
+      "description": "With external: the arrow-up-right icon (aria-hidden, 0.85em, mirrored right-to-left) held to the last word, not underlined, followed by a visually hidden label (\"(opens in a new tab)\")."
+    }
+  ],
+  "props": {
+    "href": {
+      "type": "string",
+      "description": "Where it goes."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "inline",
+        "standalone"
+      ],
+      "default": "inline",
+      "description": "inline: inside a sentence, always underlined (1px, 3px under the text, 40% of the link's colour; full colour on hover). standalone: a link on its own line or at the end of a card (\"View all deploys\"): medium weight, no line at rest, the line on hover; its hit area is 40px tall on coarse pointers."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "accent",
+        "neutral"
+      ],
+      "default": "accent",
+      "description": "accent: accent-ink, the link in product text. neutral: ink with an ink-3 underline (the line is all that marks it), for quiet text (a field hint, a footnote, terms)."
+    },
+    "external": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opens in a new tab: target=_blank, rel=\"noopener noreferrer\", the arrow marker and the hidden label. A rel or target you pass wins."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ external: '(opens in a new tab)' }, the hidden text read after an external link."
+    }
+  },
+  "slots": {
+    "default": "The link text (and an icon with data-slot=\"icon\", which takes 1em)."
+  },
+  "events": {},
+  "states": [
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.accent",
+    "color.accent-ink",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "duration.fast"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "link (native <a href>)",
+    "keyboard": [
+      "Tab reaches it; Enter follows it"
+    ],
+    "notes": [
+      "Inline links are underlined at rest: colour alone does not tell a link from text.",
+      "An external link says so to screen readers (\"(opens in a new tab)\", visually hidden) and to sight (the arrow).",
+      "Name the destination in the text (\"read the deploy log\"), not \"click here\".",
+      "No visited colour: product links are navigation, the same link looks the same every time."
+    ]
+  },
+  "motion": [
+    "hover: colour and underline colour over duration.fast (a real pointer only)",
+    "press: the colour shifts at once (accent → accent; neutral → ink-2) and eases back over duration.fast on release; no scale (text links never scale)",
+    "focus: the global ring, never faded"
+  ]
+}

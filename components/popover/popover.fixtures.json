@@ -1,0 +1,50 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "triggerLabel": "Share",
+        "title": "Share this rollout plan",
+        "description": "Anyone at Platform Ops with the link can view it."
+      },
+      "text": "Suppliers only see the rows that mention them."
+    },
+    {
+      "name": "Plain",
+      "props": {
+        "triggerLabel": "Why this plan?",
+        "closable": false,
+        "placement": "top"
+      },
+      "text": "Annual plans lead weekend signups, so they bill first."
+    },
+    {
+      "name": "Mounted open",
+      "props": {
+        "open": true,
+        "triggerLabel": "Share",
+        "title": "Share this rollout plan"
+      },
+      "text": "Anyone at Platform Ops with the link can view it."
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long content",
+      "props": {
+        "triggerLabel": "Details",
+        "title": "Renew the contract with Aleksandra Wiśniewska-Kowalczyk Logistics Holdings",
+        "description": "bartholomew.fitzgerald@northwind-industries-holdings.example.com approved 12,480 units."
+      },
+      "text": "Pneumonoultramicroscopicsilicovolcanoconiosis-grade workloads are not covered by the standard SOC 2 attestation, so this order needs a manual review before Friday."
+    },
+    {
+      "name": "Nearly empty",
+      "props": {
+        "triggerLabel": "?",
+        "closable": false
+      },
+      "text": "Ok"
+    }
+  ]
+}

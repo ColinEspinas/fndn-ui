@@ -1,0 +1,109 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "card",
+  "title": "Card",
+  "summary": "A surface that groups the content of one thing, with an optional header and footer.",
+  "description": "A surface that groups one thing's content: a deploy, a plan, a pull request. White surface on the hairline ring. Elevation chooses the shadow stack; header, body and footer are optional parts. A long title wraps and never pushes header actions out; footer actions wrap.",
+  "kind": "component",
+  "category": "display",
+  "order": 1,
+  "status": "stable",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "optional": true
+    },
+    {
+      "part": "title",
+      "element": "h3",
+      "optional": true
+    },
+    {
+      "part": "description",
+      "element": "p",
+      "optional": true
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "optional": true
+    },
+    {
+      "part": "footer",
+      "element": "div",
+      "optional": true
+    }
+  ],
+  "props": {
+    "elevation": {
+      "type": "enum",
+      "values": [
+        "hairline",
+        "card",
+        "raised",
+        "overlay"
+      ],
+      "default": "card"
+    },
+    "inset": {
+      "type": "boolean",
+      "default": false,
+      "description": "Inset (recessed) background instead of surface."
+    }
+  },
+  "slots": {
+    "default": "Content",
+    "header": "Header row",
+    "footer": "Footer row"
+  },
+  "states": [],
+  "tokens": [
+    "color.surface",
+    "color.inset",
+    "color.ink",
+    "color.ink-2",
+    "color.line",
+    "shadow.hairline",
+    "shadow.card",
+    "shadow.raised",
+    "shadow.overlay",
+    "radius.card",
+    "radius.window",
+    "text.xs",
+    "text.sm"
+  ],
+  "dependencies": [],
+  "files": {
+    "react": [
+      "card.tsx"
+    ],
+    "vue": [
+      "Card.vue",
+      "CardHeader.vue",
+      "CardTitle.vue",
+      "CardDescription.vue",
+      "CardBody.vue",
+      "CardFooter.vue"
+    ],
+    "svelte": [
+      "Card.svelte",
+      "CardHeader.svelte",
+      "CardTitle.svelte",
+      "CardDescription.svelte",
+      "CardBody.svelte",
+      "CardFooter.svelte"
+    ]
+  },
+  "a11y": {
+    "notes": [
+      "A card is a plain container. Give it a heading (the title part is an h3 by default; pick the level that fits the page).",
+      "It is not interactive; put buttons or links inside it rather than making the whole card clickable."
+    ]
+  }
+}

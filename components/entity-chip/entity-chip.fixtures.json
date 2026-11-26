@@ -1,0 +1,69 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "name": "Northwind Cloud"
+      }
+    },
+    {
+      "name": "Custom color",
+      "props": {
+        "name": "Maple Orbit",
+        "color": "#3b82f6"
+      }
+    },
+    {
+      "name": "Custom monogram",
+      "props": {
+        "name": "Aurora Analytics",
+        "color": "#25a878",
+        "monogram": "AS"
+      }
+    },
+    {
+      "name": "In a sentence",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long name",
+      "width": 220,
+      "props": {
+        "name": "Aleksandra Wiśniewska-Kowalczyk Logistics Holdings"
+      }
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "name": "J"
+      }
+    },
+    {
+      "name": "Lowercase",
+      "props": {
+        "name": "jo"
+      }
+    },
+    {
+      "name": "Emoji first",
+      "props": {
+        "name": "🚀 Launch"
+      }
+    },
+    {
+      "name": "Accented",
+      "props": {
+        "name": "élan glacé"
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "name": "مثلجات الواحة",
+        "color": "#3b82f6"
+      }
+    }
+  ]
+}

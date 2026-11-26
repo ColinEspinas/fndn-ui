@@ -1,0 +1,185 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "selection-actions",
+  "title": "Selection Actions",
+  "summary": "A toolbar of AI actions that appears under the text a person selects.",
+  "description": "A floating toolbar of AI actions that appears under the text a person selects. Select part of the passage and a pill of actions hangs under the selection, centred on it; run one and the toolbar shows a shimmering status while the result streams into the passage in place of the selection, then offers Keep, Discard and Try again. Positioned by the Zag popover machine (through Ark UI in React, Vue and Svelte); it is a toolbar: one tab stop, arrows move between actions, Escape dismisses and gives the selection back. It scales out of the selection when the text was selected with a pointer and appears instantly from the keyboard.",
+  "kind": "block",
+  "category": "agent",
+  "order": 2,
+  "engine": "popover",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-slot=\"selection-actions\"; the passage wrapper"
+    },
+    {
+      "part": "text",
+      "element": "div",
+      "description": "The passage, and the popover's anchor. Focusable (tabindex=-1) so Escape, Keep and Discard can hand the selection back."
+    },
+    {
+      "part": "mark",
+      "element": "mark",
+      "optional": true,
+      "description": "The selection, highlighted while the toolbar is open (the recipe open variant). It holds the original text, then the streamed result. Streaming-text caret part (data-slot=\"streaming-text-caret\", that recipe caret classes) follows the result while busy."
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "The engine positioner (Zag places it under the selection; rendered in a portal; stacked by base.css)."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "Inside the positioner. role=toolbar; the shared popup surface (`lib/popup.ts`: motion, keyboard-instant; stacking from base.css); data-state=open|closed (Zag). What stays its own: a 36px pill (radius.pill, not the card radius), shadow.overlay, a sideways scroll."
+    },
+    {
+      "part": "action",
+      "element": "button",
+      "repeat": true,
+      "description": "The real Button (ghost, sm, with an icon), marked data-selection-actions=\"action\"; data-value"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status while busy: the Spinner (sm, decorative) and the busy label (a Shimmer until the result starts streaming)"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "The busy label once the result streams"
+    },
+    {
+      "part": "keep",
+      "element": "button",
+      "description": "The real Button (primary, sm), marked data-selection-actions=\"keep\""
+    },
+    {
+      "part": "discard",
+      "element": "button",
+      "description": "The real Button (ghost, sm), marked data-selection-actions=\"discard\""
+    },
+    {
+      "part": "separator",
+      "element": "span"
+    },
+    {
+      "part": "retry",
+      "element": "button",
+      "description": "The real Button (ghost, sm, square), marked data-selection-actions=\"retry\"; aria-label Try again"
+    }
+  ],
+  "props": {
+    "text": {
+      "type": "string",
+      "model": true,
+      "description": "The passage. Keep writes the result into it."
+    },
+    "selection": {
+      "type": "object",
+      "model": true,
+      "description": "{ start, end } character offsets into text, or null. Set by selecting in the passage."
+    },
+    "open": {
+      "type": "boolean",
+      "model": true,
+      "default": false,
+      "description": "The toolbar is showing. Opens when text is selected; closes on Escape, Tab, a press outside, Keep or Discard."
+    },
+    "result": {
+      "type": "string",
+      "model": true,
+      "default": "",
+      "description": "The action's output, shown in place of the selection. Feed it as it streams; Keep, Discard and closing clear it."
+    },
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "description": "The action is running (status in the toolbar, caret after the streamed result)."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "icon": "'question' | 'sparkle' | 'corners-in' | 'chat-text' | 'text-aa' | 'magic-wand' | 'pencil-simple' | 'list-bullets'?",
+        "busyLabel": "string?"
+      },
+      "description": "The actions offered while idle. busyLabel is the status while it runs (default Editing)."
+    },
+    "busyLabel": {
+      "type": "string",
+      "description": "Overrides the status label while busy (an ellipsis is added)."
+    },
+    "aria-label": {
+      "type": "string",
+      "default": "Edit selection",
+      "description": "Name of the toolbar."
+    }
+  },
+  "events": {
+    "textChange": "(text: string) Keep",
+    "selectionChange": "(selection: { start, end } | null)",
+    "openChange": "(open: boolean)",
+    "resultChange": "(result: string) cleared by Keep, Discard, Try again and closing",
+    "action": "({ value, text }) an action or Try again; text is the selected original",
+    "keep": "({ text, result }) the passage now holds the result",
+    "discard": "() Discard, or closing while busy or holding a result"
+  },
+  "states": [
+    "open",
+    "busy",
+    "result",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.line",
+    "color.accent-tint",
+    "shadow.overlay",
+    "radius.pill",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.base",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "button",
+    "shimmer",
+    "spinner",
+    "streaming-text"
+  ],
+  "a11y": {
+    "role": "toolbar (in a non-modal popover) anchored to a text selection",
+    "keyboard": [
+      "Selecting text opens the toolbar: on pointer release, or on releasing Shift after a keyboard selection; focus moves to the first action",
+      "The toolbar is one tab stop: ArrowRight / ArrowLeft move between buttons (wrapping, mirrored right-to-left), Home / End jump",
+      "Enter / Space run the focused action; when the buttons change (running, result) focus moves to the first new one, or to the toolbar while busy",
+      "Escape closes the toolbar, focuses the passage and selects the same text again",
+      "Keep / Discard close the toolbar and select the kept or original text",
+      "Tab closes the toolbar and returns to the passage with the selection given back (the toolbar sits at the end of the page, so Tab would otherwise only come back to it); the next Tab moves on"
+    ],
+    "notes": [
+      "The status is role=status, so the busy label is announced; the streamed text itself is not announced word by word.",
+      "Try again is icon-only: aria-label Try again.",
+      "The passage takes focus programmatically (tabindex=-1); the restored selection is its focus indicator."
+    ]
+  },
+  "motion": [
+    "toolbar: the shared popup recipe (`popup`): opacity + scale from motion.popup-scale out of --transform-origin, duration.popup, easing.out-strong when the text was selected with a pointer; instant from the keyboard; closes at duration.fast",
+    "mode swap (idle → busy → result): the new controls fade in over duration.base under the pointer; instant from the keyboard; the bar's width eases to the new controls over duration.base (easing.out-strong) and stays centred under the selection (instant from the keyboard). Opening plays only the popup's entrance (the controls arrive with it)",
+    "veils: the edge veils of a bar wider than the screen are armed only while it overflows (data-overflow); a bar that fits shows none",
+    "mark: background over duration.base as it opens and closes; streamed words do not animate; the caret is streaming-text's",
+    "buttons: the button component's press scale and colour; the spinner loops (it is the loading signal)"
+  ]
+}

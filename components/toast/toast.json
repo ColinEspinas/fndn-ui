@@ -1,0 +1,157 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "toast",
+  "title": "Toast",
+  "summary": "A brief message that appears in a corner and leaves by itself.",
+  "description": "A brief message that arrives in a corner and leaves by itself: \"Link copied\", \"Deploying…\", \"Deploy failed\" with Retry. <Toast /> is the region (mount it once, near the root of the app); toast({ title, … }) raises one from anywhere. Each toast is a raised card (the selection toolbar's floating surface: surface, shadow.overlay) with the tone's icon (the alert's, in the status-pill tones), a title, a description, an optional action Button and a close Button. Hovering or focusing the region pauses every timer. Behaviour, timing, stacking and announcements come from the Zag toast machine through Ark UI.",
+  "kind": "component",
+  "category": "feedback",
+  "order": 6,
+  "status": "beta",
+  "engine": "toast",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The region (Ark's toaster group): role=region, aria-live=polite, labelled \"Notifications\" with its hotkey; fixed in its corner, 16px from the edges (and above the safe-area insets), min(356px, 100vw − 32px) wide. Toasts stack in it 8px apart, newest nearest the edge."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "description": "One toast: role=status, aria-atomic; data-state=open|closed, data-type. Absolutely placed by the engine through --y, --scale, --opacity and --z-index; a card: radius.card, padding 12px, gap 10px, surface, shadow.overlay. Focusable (tabIndex 0): Escape dismisses it. Carries kbd-instant."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "The alert's tone icon (16px, bold, the tone's colour) on the title's first line; a Spinner (sm) while loading. None when neutral. aria-hidden."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "Takes the free space: title and description, wrapping (never cut)."
+    },
+    {
+      "part": "title",
+      "element": "div",
+      "description": "text.sm, weight 500, ink, line-height 20px."
+    },
+    {
+      "part": "description",
+      "element": "div",
+      "optional": true,
+      "description": "text.sm, ink-2."
+    },
+    {
+      "part": "action",
+      "element": "button",
+      "optional": true,
+      "description": "A Button (outline, sm) after the text, marked data-toast=\"action\". Calls its handler, then dismisses the toast."
+    },
+    {
+      "part": "close",
+      "element": "button",
+      "optional": true,
+      "description": "A Button (ghost, xs, square, rounded, muted, X) with a Tooltip, aria-label \"Dismiss notification\"; marked data-toast=\"close\". On a coarse pointer its hit area reaches 40px."
+    }
+  ],
+  "props": {
+    "placement": {
+      "type": "enum",
+      "values": [
+        "top-start",
+        "top",
+        "top-end",
+        "bottom-start",
+        "bottom",
+        "bottom-end"
+      ],
+      "default": "bottom-end",
+      "description": "The corner (or edge centre) the toasts arrive in. start and end follow the writing direction."
+    },
+    "max": {
+      "type": "number",
+      "default": 3,
+      "description": "Toasts shown at once; the rest wait in a queue."
+    },
+    "duration": {
+      "type": "number",
+      "default": 5000,
+      "description": "Default time on screen, in ms (each toast may set its own). Paused while the region is hovered or focused, or the page is hidden."
+    },
+    "overlap": {
+      "type": "boolean",
+      "default": false,
+      "description": "false: every toast shows in full, stacked. true: older toasts tuck behind the newest one and fan out while the region is hovered or focused."
+    },
+    "toasts": {
+      "type": "array",
+      "items": {
+        "id": "string?",
+        "title": "string",
+        "description": "string?",
+        "tone": "'neutral' | 'accent' | 'green' | 'orange' | 'red'?",
+        "loading": "boolean? (a Spinner, and it stays until updated or dismissed)",
+        "action": "{ label: string, value?: string, onClick?: () => void }? (one Button: onClick runs when it is pressed, an Undo; the action event also reports it, with value or the label)",
+        "closable": "boolean? (default true)",
+        "duration": "number? (ms; 0 = stays until dismissed)"
+      },
+      "description": "Toasts raised when the region mounts (the same options toast() takes). Later ones come from toast()."
+    }
+  },
+  "slots": {},
+  "events": {
+    "action": "(value: string, id: string) an action Button was pressed (its own action.onClick runs as well)",
+    "dismiss": "(id: string) a toast left: timed out, closed, Escape, or toast.dismiss()"
+  },
+  "states": [
+    "open",
+    "paused",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.accent",
+    "color.green",
+    "color.orange",
+    "color.red",
+    "shadow.overlay",
+    "radius.card",
+    "text.sm",
+    "duration.base",
+    "duration.slow",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip",
+    "spinner"
+  ],
+  "a11y": {
+    "role": "region (status per toast)",
+    "keyboard": [
+      "Alt+T moves focus to the region (the engine's hotkey); Tab then walks the toasts and their Buttons",
+      "Escape on a focused toast dismisses it",
+      "Enter / Space on the action or the close Button press it"
+    ],
+    "notes": [
+      "The region is aria-live=polite: a new toast is read once, title then description, without moving focus.",
+      "Timers pause while the pointer is over the region or focus is inside it, so a toast never leaves while it is being read or reached.",
+      "A toast never holds the only way to do something: its action repeats something reachable elsewhere (Undo, Retry, View).",
+      "Leaving from the keyboard (Escape, the close Button pressed with a key) is instant."
+    ]
+  },
+  "motion": [
+    "arrive: slides in from its edge (--y from ±100% to its place) and fades in, over duration.slow with easing.out-strong; nothing plays for toasts present on first paint",
+    "the others make room: they glide to their new offset on the same timing; after a dismissal they start as the exit ends (removeDelay = duration.base), with no empty slot in between",
+    "leave: shorter, over duration.base with easing.out-strong: it slides back towards its edge and fades",
+    "keyboard: leaving after Escape or a key press is instant (kbd-instant)",
+    "reduced motion: no travel: a toast fades in place (opacity only, duration.slow in, duration.base out); position and stacking still apply",
+    "overlap: the toasts behind the newest show only their edge, their content hidden (opacity 0) so no text shows past the front toast; it fades back in when the stack expands (hover, focus), with the same timing"
+  ]
+}

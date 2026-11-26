@@ -1,0 +1,181 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "tree-view",
+  "title": "Tree View",
+  "summary": "A hierarchy of rows that open and close, such as files and folders.",
+  "description": "A hierarchy of rows that open and close: files and folders, nested settings, an outline. Rows are the sidebar nav's (32px at size md, 14px/500 ink-2, control radius, the one gliding hover highlight, the current row filled hover-2 in ink); a branch carries the collapsible's caret that turns down and opens with the collapsible's reveal; each level is indented by the caret's box and gap (26px at md) with a hairline guide under its parent's caret, drawn in ink-3 for the level that holds the selection. A row's fill, focus ring and hover highlight start where its level starts, so no guide is ever under them, while the whole row stays clickable. size puts the rows on the control scale (xs 24 for the dense side pane of a code editor's explorer, sm 28, md 32, lg 36) and changes dimensions only (the radius steps with the height: chip up to 28px, control from 32). Behaviour and ARIA from the Zag tree-view machine through Ark UI.",
+  "kind": "component",
+  "category": "navigation",
+  "order": 6,
+  "status": "beta",
+  "engine": "tree-view",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's tree-view root: a column, no surface of its own."
+    },
+    {
+      "part": "label",
+      "element": "h3",
+      "optional": true,
+      "description": "The tree's name above it (Ark's label; the tree is labelled by it): 28px, 12px/500 ink-2 (information, quieter than the rows by size), as the collapsible's section header; it starts where the top level's carets are drawn. Without a label, pass aria-label."
+    },
+    {
+      "part": "tree",
+      "element": "div",
+      "description": "role=tree; the offset parent of the highlight (relative, isolated), rows 1px apart."
+    },
+    {
+      "part": "highlight",
+      "element": "div",
+      "description": "The gliding hover highlight (aria-hidden), as the sidebar nav's: it follows the pointer and keyboard focus between rows, shown only under a fine pointer; rows sit above it. It takes the shape of the row's fill: it starts where the row's level starts and narrows or widens as it glides between levels."
+    },
+    {
+      "part": "branch",
+      "element": "div",
+      "description": "A node with children (role=treeitem, aria-expanded, aria-level; data-state=open|closed): its control, then its content."
+    },
+    {
+      "part": "branch-control",
+      "element": "div",
+      "description": "A branch's row (focusable, roving tabindex): the row's look; the caret first. A click opens or closes it and selects it."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "description": "A leaf's row (role=treeitem, aria-selected, aria-level, roving tabindex). At md: 32px minimum, padding 6px 8px with the inline start indented 26px per level (a leaf adds one level, so its label lines up with a sibling branch's), gap 6, 14px/500 ink-2 on 20px lines. xs: 24px, padding 4px 6px, 12px text on 16px lines, a 16px caret / icon box, gap 4 (20px a level). sm: 28px, padding 4px 8px, 13px text. lg: 36px, padding 8px 8px. 40px minimum on a coarse pointer at every size. The fill and the focus ring are a ::before from where the row's level starts (26px a level at md; 0 at the top) to the row's end, 8px clear of the guide beside it (6px at xs); the row itself, the hit area, spans the whole width. Radius chip at xs and sm, control at md and lg (the highlight's too). Hover: the glide (pointer cursor; touch-action manipulation). Press: hover-2. Selected: hover-2 fill, ink text. Focus ring inside the fill. Disabled: half opacity, no pointer events."
+    },
+    {
+      "part": "caret",
+      "element": "div",
+      "description": "The collapsible's caret in the row's box (20px; 16px at xs; the glyph 14px at md and lg, 13 at sm, 12 at xs): right caret (ph caret-right) in ink-3 that turns down 90deg while the branch is open, mirrored right-to-left; aria-hidden; kbd-instant."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "A node's icon (React: a node; Vue and Svelte: an icon component), in the row's box on the first line: 20px box, 18px glyph at md and lg (as the sidebar nav's item icon), 16px at sm; a 16px box, 14px glyph at xs."
+    },
+    {
+      "part": "text",
+      "element": "span",
+      "description": "The node's name: wraps, never cut (a long name grows its row); the first line shares the caret's line. Author text keeps its own direction."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=group: the branch's children, in the collapsible's region (grid rows 0fr to 1fr). Closed: hidden, out of the layout once its exit has played."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "description": "The one child of the region; it clips while the region moves and holds the guide and the child rows (1px apart)."
+    },
+    {
+      "part": "guide",
+      "element": "div",
+      "description": "Ark's indent guide: a hairline (a 1px border, one device pixel at any scaling, color.line-strong) down the children, under the parent's caret, from the first child to half a row padding short of the last. It lies in the parent level's indent, where no fill, highlight or ring reaches, so a level is always one unbroken line; it takes no pointer. The level whose rows include a selected one draws its guide in ink-3 (the active guide)."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "description": "The top-level nodes: { value, label, children?, disabled?, icon? } (icon is a node, React). A node with children (even none) is a branch."
+    },
+    "expandedValue": {
+      "type": "array",
+      "model": true,
+      "default": [],
+      "description": "The values of the open branches. React: expandedValue / defaultExpandedValue / onExpandedValueChange."
+    },
+    "selectedValue": {
+      "type": "array",
+      "model": true,
+      "default": [],
+      "description": "The values of the selected nodes. React: selectedValue / defaultSelectedValue / onSelectedValueChange."
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": [
+        "single",
+        "multiple"
+      ],
+      "default": "single",
+      "description": "multiple: Ctrl / Cmd + click and Shift + arrows add to the selection."
+    },
+    "label": {
+      "type": "string",
+      "description": "The tree's name, shown above it."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "Row height on the control scale: xs 24 (12px text; the dense rows of a side pane, a code editor's explorer), sm 28 (13px), md 32 (14px), lg 36 (14px). Dimensions only: padding, text, caret and icon box, indent; never the look."
+    }
+  },
+  "events": {
+    "expandedValueChange": "(value: string[]) the open branches, after a click or a key",
+    "selectedValueChange": "(value: string[]) the selected nodes, after a click or a key"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "selected",
+    "disabled"
+  ],
+  "tokens": [
+    "color.line-strong",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.hover",
+    "color.hover-2",
+    "color.accent",
+    "radius.control",
+    "radius.chip",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.fast",
+    "duration.base",
+    "duration.move",
+    "duration.reveal",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "collapsible"
+  ],
+  "a11y": {
+    "role": "tree (treeitem, group)",
+    "keyboard": [
+      "Tab reaches the tree once (the focused or first row); Tab again leaves it",
+      "ArrowDown / ArrowUp move to the next / previous visible row; Home / End to the first / last",
+      "ArrowRight opens a closed branch, or moves to its first child; ArrowLeft closes an open branch, or moves to the parent",
+      "Enter / Space select the focused row (and open or close a branch); * opens every sibling branch",
+      "Typing a letter moves to the next row whose name starts with it",
+      "Opening and closing from the keyboard is instant (no reveal, no caret turn); the highlight still glides"
+    ],
+    "notes": [
+      "Every row carries aria-level; a branch carries aria-expanded; a selected row aria-selected=true.",
+      "A closed branch's rows leave the layout and the accessibility tree once the exit has played."
+    ]
+  },
+  "motion": [
+    "branch: the collapsible's reveal (grid-template-rows 0fr -> 1fr over duration.reveal easing.out-strong, opacity over duration.base) and its held exit",
+    "caret: rotate 0 -> 90deg (right-to-left 180 -> 90deg) over duration.move easing.out-strong",
+    "highlight: the shared glide, under the pointer and the keyboard alike (transform and height over duration.move); between levels its inline offset (translate) and width move with it on the same timing; a first appearance lands on the row's level without travelling",
+    "row fills (selected, press) and the active guide's colour over duration.fast; instant under the keyboard",
+    "keyboard: region and caret are instant (kbd-instant)",
+    "first paint: nothing plays (branches open at mount are shown open)"
+  ]
+}

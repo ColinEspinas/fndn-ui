@@ -1,0 +1,252 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "streaming-text",
+  "title": "Streaming Text",
+  "summary": "An agent's answer as it streams in, with sources and follow-up questions.",
+  "description": "An agent's answer as it streams in, with inline sources, then actions and suggested follow-ups. Host-driven: the host feeds the tokens and flips done. A caret follows the words, cite chips pop in where they land, and once done the actions fade in, the follow-ups rise in a short stagger and the sources list can be revealed. Space for the actions and follow-ups is held from the start, so finishing never moves anything.",
+  "kind": "block",
+  "category": "agent",
+  "order": 2,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-state=streaming|done; aria-busy while streaming"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status, sr-only; says the status label once done (the words themselves are not announced)"
+    },
+    {
+      "part": "text",
+      "element": "p"
+    },
+    {
+      "part": "caret",
+      "element": "span",
+      "description": "follows the words; keeps its box (hidden) when done"
+    },
+    {
+      "part": "cite",
+      "element": "a",
+      "repeat": true,
+      "description": "inline source chip: avatar + domain, on the text baseline; pops in"
+    },
+    {
+      "part": "cite-avatar",
+      "element": "span",
+      "description": "The source's Avatar (12px square, decorative): its image over its initials"
+    },
+    {
+      "part": "actions",
+      "element": "div",
+      "description": "hidden (but holding its space) while streaming; fades in when done"
+    },
+    {
+      "part": "action",
+      "element": "button",
+      "repeat": true,
+      "description": "copy · retry · thumbs up · thumbs down: a Button (xs, square, ghost, rounded, muted) with aria-label, a tooltip of the same text, and data-action"
+    },
+    {
+      "part": "sources",
+      "element": "div",
+      "optional": true,
+      "description": "A collapsible (variant inline, no caret) whose root lays out as part of the actions row (display: contents): its trigger (avatar stack + label) follows the actions, its region wraps onto its own line below them. aria-expanded, aria-controls and data-state from the engine; a closed list is hidden. It opens only once done"
+    },
+    {
+      "part": "avatars",
+      "element": "span",
+      "description": "first three source images, aria-hidden"
+    },
+    {
+      "part": "avatar",
+      "element": "span",
+      "repeat": true,
+      "description": "An Avatar, 14px round, ringed in the page colour; the first three sources"
+    },
+    {
+      "part": "sources-label",
+      "element": "span"
+    },
+    {
+      "part": "sources-list",
+      "element": "div"
+    },
+    {
+      "part": "source",
+      "element": "a",
+      "repeat": true
+    },
+    {
+      "part": "source-avatar",
+      "element": "span",
+      "description": "An Avatar, 16px square, decorative"
+    },
+    {
+      "part": "source-name",
+      "element": "span"
+    },
+    {
+      "part": "source-domain",
+      "element": "span"
+    },
+    {
+      "part": "followups",
+      "element": "div"
+    },
+    {
+      "part": "followups-title",
+      "element": "p"
+    },
+    {
+      "part": "followups-list",
+      "element": "div"
+    },
+    {
+      "part": "followup",
+      "element": "button",
+      "repeat": true,
+      "description": "--fndn-row-index (set at render) staggers the entrance when done"
+    },
+    {
+      "part": "followup-text",
+      "element": "span"
+    }
+  ],
+  "props": {
+    "content": {
+      "type": "array",
+      "items": {
+        "text": "string",
+        "cite": "number (source index) | true (first source)"
+      },
+      "description": "The tokens streamed so far (host-driven)."
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "name": "string",
+        "domain": "string",
+        "href": "string",
+        "image": "string"
+      }
+    },
+    "followUps": {
+      "type": "array",
+      "items": {
+        "0": "string"
+      }
+    },
+    "done": {
+      "type": "boolean",
+      "default": false,
+      "description": "data-state=streaming|done"
+    },
+    "sourcesOpen": {
+      "type": "boolean",
+      "default": false,
+      "part": "sources",
+      "model": true,
+      "description": "The sources list is open (it opens only once done)."
+    },
+    "fill": {
+      "type": "boolean",
+      "default": false,
+      "description": "Fill the parent width (and drop the reserved height) instead of the 380px measure."
+    },
+    "sourcesLabel": {
+      "type": "string",
+      "default": "Sources"
+    },
+    "followUpsLabel": {
+      "type": "string",
+      "default": "Follow-ups"
+    },
+    "statusLabel": {
+      "type": "string",
+      "default": "Answer complete",
+      "description": "Announced once done."
+    },
+    "appear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether what is present at mount enters: the caret fades in, cites already streamed pop in, the follow-ups of an answer mounted done rise. Off by default: set it on the answer your code adds live, never on one rendered from history or with the page (a mount is not an arrival). Cites streamed after mount and the follow-ups that come with done enter either way."
+    }
+  },
+  "events": {
+    "followUp": "(text, index)",
+    "action": "(name: copy|retry|up|down)",
+    "sourcesOpenChange": "(open)"
+  },
+  "states": [
+    "streaming",
+    "done",
+    "sources-open",
+    "cite-hover",
+    "cite-press",
+    "action-press",
+    "followup-hover",
+    "followup-press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.inset",
+    "color.hover",
+    "color.hover-2",
+    "color.surface",
+    "color.canvas",
+    "color.line",
+    "shadow.hairline",
+    "radius.pill",
+    "radius.chip",
+    "radius.card",
+    "text.xs",
+    "text.sm",
+    "font.mono",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "duration.popup",
+    "duration.reveal",
+    "duration.slow",
+    "duration.enter",
+    "duration.stagger",
+    "motion.stagger-max",
+    "motion.press-scale",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "avatar",
+    "button",
+    "collapsible",
+    "tooltip"
+  ],
+  "motion": [
+    "caret: fndn-fade-in over duration.base, on mount only with appear; when done it fades out over duration.fast (easing.out-strong) and is hidden, keeping its box",
+    "caret stall: while streaming, when no word has arrived for duration.enter × 2 the caret blinks (fndn-caret-blink, 1s steps(1), a loop; the stalled variant, set by the adapter through streaming-text.logic.ts); the next word or done stops it",
+    "cite chip: fndn-pop-in over duration.popup when it streams in (a cite present at mount pops only with appear) (fill backwards, so :active can press afterwards); presses with --fndn-hover-2 and motion.press-scale",
+    "actions: opacity + visibility over duration.slow when done; the buttons press with the Button's scale",
+    "follow-ups: title fndn-fade-in and rows fndn-fade-up over duration.enter when done arrives (an answer mounted done shows them at once unless appear), rows staggered by duration.stagger capped at motion.stagger-max; rows hover --fndn-hover and press --fndn-hover-2",
+    "sources: the collapsible's reveal recipe (rows below move with it; instant from the keyboard)",
+    "words: no animation (they arrive too often)"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Actions, the sources toggle and follow-ups are buttons (Enter / Space); while streaming they are hidden and out of the tab order",
+      "Sources toggle: Enter / Space reveal the list at once; focus stays on the toggle (aria-expanded, aria-controls); the closed list is hidden",
+      "Each action shows a tooltip with its name on hover and keyboard focus",
+      "Cite chips and sources are links"
+    ],
+    "notes": [
+      "aria-busy while streaming; the words are not announced one by one, the status label is announced once done.",
+      "Every icon button has an aria-label and a tooltip with the same text; the avatars are aria-hidden next to their labels."
+    ]
+  }
+}

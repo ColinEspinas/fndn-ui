@@ -1,0 +1,21 @@
+{
+  "playground": {
+    "props": {
+      "placeholder": "billing-api",
+      "aria-label": "Project name",
+      "size": "md",
+      "variant": "outline",
+      "mono": false,
+      "invalid": false,
+      "disabled": false
+    },
+    "width": 280
+  },
+  "examples": [
+    { "file": "project-name", "title": "Project name" },
+    { "file": "filter-toolbar", "title": "Filter in a toolbar" },
+    { "file": "environment-variable", "title": "Environment variable" },
+    { "file": "build-settings", "title": "Build settings in a side panel" },
+    { "file": "locked-for-members", "title": "Locked for members" }
+  ]
+}

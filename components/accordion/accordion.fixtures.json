@@ -1,0 +1,104 @@
+{
+  "examples": [
+    {
+      "name": "Plain",
+      "width": 360,
+      "props": {
+        "items": [
+          { "value": "shipping", "label": "How long does shipping take?", "detail": "Orders leave the roastery within two working days and arrive three to five days later." },
+          { "value": "returns", "label": "Can I return an opened bag?", "detail": "Yes, within 30 days. We refund the bag and keep the beans for the staff room." },
+          { "value": "grind", "label": "Do you grind to order?", "detail": "Pick a grind at checkout: whole bean, espresso, filter or cafetière." }
+        ]
+      }
+    },
+    {
+      "name": "Card, one open",
+      "width": 360,
+      "props": {
+        "variant": "card",
+        "value": ["returns"],
+        "items": [
+          { "value": "shipping", "label": "How long does shipping take?", "meta": "2–5 days", "detail": "Orders leave the roastery within two working days and arrive three to five days later." },
+          { "value": "returns", "label": "Can I return an opened bag?", "meta": "30 days", "detail": "Yes, within 30 days. We refund the bag and keep the beans for the staff room." },
+          { "value": "grind", "label": "Do you grind to order?", "detail": "Pick a grind at checkout: whole bean, espresso, filter or cafetière." }
+        ]
+      }
+    },
+    {
+      "name": "Multiple, caret first",
+      "width": 360,
+      "props": {
+        "multiple": true,
+        "caret": "start",
+        "value": ["a", "b"],
+        "items": [
+          { "value": "a", "label": "Workspace", "detail": "Members, billing and limits." },
+          { "value": "b", "label": "Account", "detail": "Your profile and sign-in." },
+          { "value": "c", "label": "Notifications", "detail": "Email, push and the weekly digest." }
+        ]
+      }
+    },
+    {
+      "name": "A disabled item",
+      "width": 360,
+      "props": {
+        "items": [
+          { "value": "a", "label": "Draft", "detail": "Write the first version." },
+          { "value": "b", "label": "Review", "meta": "Locked", "disabled": true, "detail": "Opens once the draft is done." },
+          { "value": "c", "label": "Publish", "detail": "Send it to the list." }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label and meta",
+      "width": 280,
+      "props": {
+        "value": ["a"],
+        "items": [
+          { "value": "a", "label": "Reconcile the supplier invoices for the third quarter against the purchase orders and flag every mismatch", "meta": "12,480 rows", "detail": "averyveryveryveryveryveryveryveryverylongunbreakablesupplierreference@example-supplier-domain.com was not found in the ledger." },
+          { "value": "b", "label": "B" }
+        ]
+      }
+    },
+    {
+      "name": "Many items",
+      "width": 320,
+      "props": {
+        "variant": "card",
+        "items": [
+          { "value": "1", "label": "One", "detail": "1" }, { "value": "2", "label": "Two", "detail": "2" }, { "value": "3", "label": "Three", "detail": "3" },
+          { "value": "4", "label": "Four", "detail": "4" }, { "value": "5", "label": "Five", "detail": "5" }, { "value": "6", "label": "Six", "detail": "6" },
+          { "value": "7", "label": "Seven", "detail": "7" }, { "value": "8", "label": "Eight", "detail": "8" }, { "value": "9", "label": "Nine", "detail": "9" },
+          { "value": "10", "label": "Ten", "detail": "10" }, { "value": "11", "label": "Eleven", "detail": "11" }, { "value": "12", "label": "Twelve", "detail": "12" }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 320,
+      "props": {
+        "value": ["a"],
+        "items": [
+          { "value": "a", "label": "كم يستغرق الشحن؟", "meta": "٢–٥ أيام", "detail": "تغادر الطلبات المحمصة خلال يومي عمل." },
+          { "value": "b", "label": "هل يمكنني إرجاع كيس مفتوح؟", "detail": "نعم، خلال ٣٠ يومًا." }
+        ]
+      }
+    },
+    {
+      "name": "No items",
+      "width": 320,
+      "props": { "items": [] }
+    },
+    {
+      "name": "Narrow",
+      "width": 120,
+      "props": {
+        "items": [
+          { "value": "a", "label": "How long does shipping take?", "meta": "2–5 days", "detail": "Three to five days." }
+        ]
+      }
+    }
+  ]
+}

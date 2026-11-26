@@ -1,0 +1,10 @@
+{
+  "playground": { "props": { "label": "Replicas of billing-api", "showValue": true, "value": [3], "min": 1, "max": 10, "size": "md", "disabled": false }, "width": 320 },
+  "examples": [
+    { "file": "spend-limit", "title": "Monthly spend limit" },
+    { "file": "response-time", "title": "Filter by response time (range)" },
+    { "file": "replicas", "title": "Replicas, with the price" },
+    { "file": "sample-rates", "title": "Sample rates in a dense panel (small)" },
+    { "file": "free-plan", "title": "Locked on the Free plan (disabled)" }
+  ]
+}

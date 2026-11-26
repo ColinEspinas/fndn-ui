@@ -1,0 +1,87 @@
+{
+  "examples": [
+    {
+      "name": "Row",
+      "width": 320,
+      "props": {
+        "variant": "row",
+        "label": "Draft the launch email",
+        "meta": "3 steps",
+        "detail": "Pulled the feature list from the brief, wrote a subject line and two paragraphs, and left the pricing line for review."
+      }
+    },
+    {
+      "name": "Inline",
+      "width": 320,
+      "props": {
+        "variant": "inline",
+        "open": true,
+        "label": "Thought for 12s",
+        "detail": "Compared the three suppliers on price per litre and delivery time, then checked which ones stock oat milk."
+      }
+    },
+    {
+      "name": "Section",
+      "width": 240,
+      "props": {
+        "variant": "section",
+        "caret": "start",
+        "open": true,
+        "label": "Chats",
+        "detail": "Summer menu ideas · Supplier follow-up · Pricing for the kiosk"
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 320,
+      "props": {
+        "variant": "row",
+        "disabled": true,
+        "label": "Waiting for approval",
+        "meta": "Locked",
+        "detail": "The details open once the step is approved."
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label, long meta",
+      "width": 280,
+      "props": {
+        "variant": "row",
+        "open": true,
+        "label": "Reconcile the supplier invoices for the third quarter against the purchase orders and flag mismatches",
+        "meta": "12,480 steps",
+        "detail": "averyveryveryveryveryveryveryveryverylongunbreakablesupplierreference@example-supplier-domain.com was not found in the ledger."
+      }
+    },
+    {
+      "name": "One letter, inline",
+      "width": 280,
+      "props": {
+        "variant": "inline",
+        "label": "A",
+        "detail": "B"
+      }
+    },
+    {
+      "name": "Right-to-left text",
+      "width": 280,
+      "props": {
+        "variant": "section",
+        "caret": "start",
+        "open": true,
+        "label": "المحادثات الأخيرة في مساحة العمل",
+        "detail": "أفكار قائمة الصيف · متابعة المورد"
+      }
+    },
+    {
+      "name": "No detail",
+      "width": 280,
+      "props": {
+        "variant": "inline",
+        "label": "Thought for 2m 41s"
+      }
+    }
+  ]
+}

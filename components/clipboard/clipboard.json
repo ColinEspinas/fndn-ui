@@ -1,0 +1,145 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "clipboard",
+  "title": "Clipboard",
+  "summary": "Copies a value such as an API key, a link or a command.",
+  "description": "Copy a value: an API key, a link, a command. Copy a value. The trigger is the code block's Copy button: the Button with two states in one cell (Copy, then Copied, cross-fading and tinted green while the copied state lasts). variant button is that button alone; variant field puts an icon-only Copy button inside the end of a read-only Input that shows the value (an API key, a link). The change is announced through a status region. Behaviour comes from the Zag clipboard machine, through Ark UI.",
+  "kind": "component",
+  "category": "actions",
+  "order": 3,
+  "status": "beta",
+  "engine": "clipboard",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-copied while the copied state lasts (from the engine)"
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "field only: names the field"
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "optional": true,
+      "description": "field only: holds the input and the trigger"
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "optional": true,
+      "description": "field only: the real Input, read-only, marked data-clipboard=\"input\"; its end padding keeps the trigger's room (28px xs, 30px sm, 34px md, 36px lg), so a long value is cut before the button"
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "The real Button (ghost, xs, muted), marked data-clipboard=\"trigger\", swapped while copied: copy and check icons share one cell and cross-fade; green while copied. button: rounded, with the two labels (Copy, Copied) in one cell; as wide as the label it shows. field: square, icon only, in the real Tooltip, 4px inside the field's end (1px at sm). aria-label stays Copy; disabled when the value is empty."
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "Visually hidden role=status: says Copied while the copied state lasts"
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "string",
+      "description": "The text placed on the clipboard (and shown in the field)."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "button",
+        "field"
+      ],
+      "default": "button",
+      "description": "button: the code block's Copy button. field: a read-only Input showing the value, with an icon-only Copy button inside its end."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "field only: the Input's sizes (`lib/control.ts`): xs 24px, sm 28px, md 32px, lg 36px."
+    },
+    "label": {
+      "type": "string",
+      "description": "field only: visible label; otherwise pass aria-label."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ copy, copied }: the button's labels and the announcement. Default Copy / Copied."
+    },
+    "timeout": {
+      "type": "number",
+      "default": 1500,
+      "description": "How long Copied shows, in ms (the code block's)."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "events": {
+    "copy": "(text: string) once the text is on the clipboard"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "copied",
+    "disabled"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-3",
+    "color.green",
+    "color.accent",
+    "color.accent-tint",
+    "shadow.hairline",
+    "radius.control",
+    "radius.chip",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale"
+  ],
+  "dependencies": [
+    "button",
+    "input",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "button",
+    "keyboard": [
+      "Tab reaches the field (read-only, its text selectable) and the button",
+      "Space / Enter on the button copy"
+    ],
+    "notes": [
+      "The button's name stays Copy (its two stacked labels are aria-hidden); the status region announces Copied.",
+      "The field's icon-only button is named by its Tooltip and its aria-label.",
+      "A read-only field keeps its text selectable, so the value can also be copied by hand."
+    ]
+  },
+  "motion": [
+    "the two states cross-fade: opacity and a 2px blur over duration.base (the Button's swapped)",
+    "colour: green while copied, over duration.fast",
+    "press: the Button's (motion.press-scale over duration.press, easing.out-strong)",
+    "a copy from the keyboard swaps the same way: the change is the feedback"
+  ]
+}

@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: port-select-to-solid
+expected_outcome: |
+  A Solid Select on Ark UI for Solid (or @zag-js/select through @zag-js/solid), with the recipe reused unchanged (and the shared popup, option and control recipes and the highlight classes it composes, from lib/), every part carrying its data-slot, the gliding highlight moved by the glide helper, keyboard-opened popups instant through the modality tracker, and the caller's class merged on the base slot.

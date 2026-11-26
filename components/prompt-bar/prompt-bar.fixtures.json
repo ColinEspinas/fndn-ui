@@ -1,0 +1,482 @@
+{
+  "examples": [
+    {
+      "name": "Rounded",
+      "width": 420,
+      "props": {
+        "shape": "rounded",
+        "model": "lite-1",
+        "models": [
+          {
+            "value": "nimbus-5",
+            "label": "Nimbus 5",
+            "meta": "Flagship"
+          },
+          {
+            "value": "lite-1",
+            "label": "Lite 1",
+            "meta": "Basic"
+          },
+          {
+            "value": "legacy-draft",
+            "label": "Legacy Draft 0.4",
+            "meta": "Stale"
+          }
+        ],
+        "sources": [
+          {
+            "value": "sales",
+            "label": "Sales Data",
+            "description": "Bookings & usage metrics",
+            "icon": "chart-bar"
+          },
+          {
+            "value": "accounts",
+            "label": "Account records",
+            "description": "26 makers, tags, links",
+            "icon": "stack"
+          },
+          {
+            "value": "web",
+            "label": "Web search",
+            "description": "Real-time news and info",
+            "icon": "globe"
+          }
+        ],
+        "commands": [
+          {
+            "value": "compare",
+            "description": "Plan vs. last summer"
+          },
+          {
+            "value": "billing-plan",
+            "description": "Draft a billing schedule"
+          },
+          {
+            "value": "restock",
+            "description": "Build a reorder list"
+          },
+          {
+            "value": "draft-email",
+            "description": "Write a supplier email"
+          },
+          {
+            "value": "summarize",
+            "description": "Digest the thread so far"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pill",
+      "width": 420,
+      "props": {
+        "shape": "pill",
+        "busy": true,
+        "value": "Compare enterprise signups to last summer",
+        "model": "nimbus-5",
+        "models": [
+          {
+            "value": "nimbus-5",
+            "label": "Nimbus 5",
+            "meta": "Flagship"
+          },
+          {
+            "value": "lite-1",
+            "label": "Lite 1",
+            "meta": "Basic"
+          }
+        ],
+        "sources": [
+          {
+            "value": "sales",
+            "label": "Sales Data",
+            "description": "Bookings & usage metrics",
+            "icon": "chart-bar"
+          }
+        ],
+        "commands": [
+          {
+            "value": "compare",
+            "description": "Plan vs. last summer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "With attachments",
+      "width": 420,
+      "props": {
+        "shape": "rounded",
+        "value": "Summarise these for the Thursday stand-up",
+        "attachments": [
+          "revenue-chart.png",
+          "summer-plan.pdf",
+          "pos-export.csv"
+        ],
+        "model": "lite-1",
+        "models": [
+          {
+            "value": "nimbus-5",
+            "label": "Nimbus 5",
+            "meta": "Flagship"
+          },
+          {
+            "value": "lite-1",
+            "label": "Lite 1",
+            "meta": "Basic"
+          }
+        ],
+        "sources": [
+          {
+            "value": "sales",
+            "label": "Sales Data",
+            "description": "Bookings & usage metrics",
+            "icon": "chart-bar"
+          },
+          {
+            "value": "web",
+            "label": "Web search",
+            "description": "Real-time news and info",
+            "icon": "globe"
+          }
+        ],
+        "commands": [
+          {
+            "value": "summarize",
+            "description": "Digest the thread so far"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Command list open",
+      "width": 420,
+      "props": {
+        "shape": "rounded",
+        "value": "/",
+        "model": "lite-1",
+        "models": [
+          {
+            "value": "nimbus-5",
+            "label": "Nimbus 5",
+            "meta": "Flagship"
+          },
+          {
+            "value": "lite-1",
+            "label": "Lite 1",
+            "meta": "Basic"
+          }
+        ],
+        "sources": [
+          {
+            "value": "sales",
+            "label": "Sales Data",
+            "description": "Bookings & usage metrics",
+            "icon": "chart-bar"
+          }
+        ],
+        "commands": [
+          {
+            "value": "compare",
+            "description": "Plan vs. last summer"
+          },
+          {
+            "value": "billing-plan",
+            "description": "Draft a billing schedule"
+          },
+          {
+            "value": "restock",
+            "description": "Build a reorder list"
+          },
+          {
+            "value": "draft-email",
+            "description": "Write a supplier email"
+          },
+          {
+            "value": "summarize",
+            "description": "Digest the thread so far"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Narrow pane, long placeholder",
+      "width": 300,
+      "props": {
+        "shape": "rounded",
+        "model": "lite-1",
+        "models": [
+          {
+            "value": "nimbus-5",
+            "label": "Nimbus 5",
+            "meta": "Flagship"
+          },
+          {
+            "value": "lite-1",
+            "label": "Lite 1",
+            "meta": "Basic"
+          },
+          {
+            "value": "legacy-draft",
+            "label": "Legacy Draft 0.4",
+            "meta": "Stale"
+          }
+        ],
+        "sources": [
+          {
+            "value": "sales",
+            "label": "Sales Data",
+            "description": "Bookings & usage metrics",
+            "icon": "chart-bar"
+          },
+          {
+            "value": "accounts",
+            "label": "Account records",
+            "description": "26 makers, tags, links",
+            "icon": "stack"
+          },
+          {
+            "value": "web",
+            "label": "Web search",
+            "description": "Real-time news and info",
+            "icon": "globe"
+          }
+        ],
+        "commands": [
+          {
+            "value": "compare",
+            "description": "Plan vs. last summer"
+          },
+          {
+            "value": "billing-plan",
+            "description": "Draft a billing schedule"
+          },
+          {
+            "value": "restock",
+            "description": "Build a reorder list"
+          },
+          {
+            "value": "draft-email",
+            "description": "Write a supplier email"
+          },
+          {
+            "value": "summarize",
+            "description": "Digest the thread so far"
+          }
+        ],
+        "placeholder": "Ask about this code or a selection"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long and many",
+      "width": 420,
+      "props": {
+        "shape": "pill",
+        "value": "Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, split by weather, promotion and staffing, and flag anything that looks like a supply problem rather than demand. Compare enterprise signups to last summer across every store, spl\nThanks!!!",
+        "attachments": [
+          "q3-regional-sales-breakdown-by-plan-and-region-final-final-v12.xlsx",
+          "a.png",
+          "supplier-contract-northern-hemisphere-summer-2026-signed-scan.pdf",
+          "تقرير-المبيعات-الأسبوعي.csv",
+          "🍦-photo-from-the-tasting-session.heic",
+          "pos-export.csv",
+          "very_long_file_name_without_any_spaces_or_dashes_at_all_whatsoever.txt",
+          "plan.pdf",
+          "revenue-chart.png",
+          "renewal-model-notebook-with-annotations-and-comments.ipynb",
+          "b",
+          "inventory-snapshot-2026-11-13T09-41-07Z.json"
+        ],
+        "model": "legacy-draft",
+        "models": [
+          {
+            "value": "legacy-draft",
+            "label": "Legacy Draft 0.4 Extended Context Preview",
+            "meta": "Stale"
+          },
+          {
+            "value": "v",
+            "label": "V",
+            "meta": "Basic"
+          }
+        ],
+        "sources": [
+          {
+            "value": "a",
+            "label": "A",
+            "icon": "at"
+          },
+          {
+            "value": "long",
+            "label": "Quarterly supplier scorecards for the northern-hemisphere summer launch",
+            "description": "An unusually long description that has to truncate before it pushes anything out",
+            "icon": "folder"
+          },
+          {
+            "value": "ar",
+            "label": "سجلات الحسابات",
+            "description": "٢٦ صانعاً ووسوماً وروابط",
+            "icon": "stack"
+          }
+        ],
+        "commands": [
+          {
+            "value": "compare",
+            "description": "Run compare"
+          },
+          {
+            "value": "billing-plan",
+            "description": "A very long description that keeps going well past the width of the list so it has to truncate cleanly"
+          },
+          {
+            "value": "restock",
+            "description": "Run restock"
+          },
+          {
+            "value": "draft-email",
+            "description": "Run draft email"
+          },
+          {
+            "value": "summarize",
+            "description": "Run summarize"
+          },
+          {
+            "value": "forecast",
+            "description": "Run forecast"
+          },
+          {
+            "value": "reorder",
+            "description": "Run reorder"
+          },
+          {
+            "value": "price-check",
+            "description": "Run price check"
+          },
+          {
+            "value": "audit",
+            "description": "Run audit"
+          },
+          {
+            "value": "rollup",
+            "description": "Run rollup"
+          },
+          {
+            "value": "translate",
+            "description": "Run translate"
+          },
+          {
+            "value": "explain",
+            "description": "Run explain"
+          },
+          {
+            "value": "outline",
+            "description": "Run outline"
+          },
+          {
+            "value": "rewrite",
+            "description": "Run rewrite"
+          },
+          {
+            "value": "shorten",
+            "description": "Run shorten"
+          },
+          {
+            "value": "expand",
+            "description": "Run expand"
+          },
+          {
+            "value": "tabulate",
+            "description": "Run tabulate"
+          },
+          {
+            "value": "chart",
+            "description": "Run chart"
+          },
+          {
+            "value": "schedule",
+            "description": "Run schedule"
+          },
+          {
+            "value": "remind",
+            "description": "Run remind"
+          },
+          {
+            "value": "assign",
+            "description": "Run assign"
+          },
+          {
+            "value": "triage",
+            "description": "Run triage"
+          },
+          {
+            "value": "dedupe",
+            "description": "Run dedupe"
+          },
+          {
+            "value": "normalise",
+            "description": "Run normalise"
+          },
+          {
+            "value": "export",
+            "description": "Run export"
+          },
+          {
+            "value": "import",
+            "description": "Run import"
+          },
+          {
+            "value": "archive",
+            "description": "Run archive"
+          },
+          {
+            "value": "tag",
+            "description": "Run tag"
+          },
+          {
+            "value": "search-everything-in-every-connected-workspace-at-once",
+            "description": "Run search everything in every connected workspace at once"
+          },
+          {
+            "value": "x"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 420,
+      "props": {
+        "shape": "rounded",
+        "value": "قارن مبيعات المؤسسات في عطلات نهاية الأسبوع بالصيف الماضي",
+        "attachments": [
+          "تقرير-المبيعات.pdf"
+        ],
+        "model": "lite-1",
+        "models": [
+          {
+            "value": "lite-1",
+            "label": "لايت ١",
+            "meta": "أساسي"
+          }
+        ],
+        "sources": [
+          {
+            "value": "sales",
+            "label": "بيانات المبيعات",
+            "description": "مقاييس المبيعات",
+            "icon": "chart-bar"
+          }
+        ],
+        "commands": [
+          {
+            "value": "compare",
+            "description": "قارن بالصيف الماضي"
+          }
+        ]
+      }
+    }
+  ]
+}

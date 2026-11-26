@@ -1,0 +1,93 @@
+{
+  "playground": {
+    "props": {
+      "shape": "rounded",
+      "value": "Draft a renewal reminder for workspaces whose usage fell this month",
+      "model": "atlas-reason",
+      "models": [
+        {
+          "value": "atlas-large",
+          "label": "Atlas Large",
+          "meta": "Most capable"
+        },
+        {
+          "value": "atlas-small",
+          "label": "Atlas Small",
+          "meta": "Fastest"
+        },
+        {
+          "value": "atlas-reason",
+          "label": "Atlas Reason",
+          "meta": "Thinks longer"
+        }
+      ],
+      "sources": [
+        {
+          "value": "accounts",
+          "label": "Customer accounts",
+          "description": "1,284 workspaces, plans and MRR",
+          "icon": "users"
+        },
+        {
+          "value": "tickets",
+          "label": "Support tickets",
+          "description": "Open and closed, last 90 days",
+          "icon": "chat-circle"
+        },
+        {
+          "value": "metrics",
+          "label": "Product metrics",
+          "description": "Bookings, activation, churn",
+          "icon": "chart-bar"
+        },
+        {
+          "value": "web",
+          "label": "Web search",
+          "description": "Public pages and news",
+          "icon": "globe"
+        }
+      ],
+      "commands": [
+        {
+          "value": "summarize",
+          "description": "Summarize this conversation"
+        },
+        {
+          "value": "draft-email",
+          "description": "Write an email to a customer"
+        },
+        {
+          "value": "query",
+          "description": "Ask the data warehouse in SQL"
+        },
+        {
+          "value": "chart",
+          "description": "Chart the last result"
+        },
+        {
+          "value": "ticket",
+          "description": "Open a support ticket"
+        }
+      ]
+    },
+    "width": 420
+  },
+  "examples": [
+    {
+      "file": "rounded",
+      "title": "Ask about churn risk"
+    },
+    {
+      "file": "pill",
+      "title": "Stop an answer in progress"
+    },
+    {
+      "file": "with-attachments",
+      "title": "Reconcile attached invoices"
+    },
+    {
+      "file": "command-list-open",
+      "title": "Pick a slash command"
+    }
+  ]
+}

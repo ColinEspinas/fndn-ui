@@ -1,0 +1,121 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "summary": "A short label that names a control on hover or focus.",
+  "description": "A dark chip that names a control, with an optional keyboard-shortcut hint. Opens after a short delay on hover and at once on keyboard focus; once one tooltip is open its neighbours open with no delay and no animation. Never holds interactive content. Behaviour comes from the Zag tooltip machine, through Ark UI in React, Vue and Svelte.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 1,
+  "engine": "tooltip",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The chip itself (data-slot=\"tooltip\"): role=tooltip, data-state=open|closed, data-instant for a neighbour, kbd-instant. Rendered in a portal on first open."
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Placed by the engine; exposes --transform-origin"
+    },
+    {
+      "part": "label",
+      "element": "span"
+    },
+    {
+      "part": "shortcut",
+      "element": "kbd",
+      "optional": true,
+      "description": "Keyboard shortcut hint: the real Kbd (plain, one key holding the hint), marked data-tooltip=\"shortcut\", in the muted tooltip colour"
+    }
+  ],
+  "props": {
+    "content": {
+      "type": "string",
+      "description": "The label."
+    },
+    "shortcut": {
+      "type": "string",
+      "description": "Shortcut hint, e.g. ⌘C."
+    },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "top",
+        "top-start",
+        "top-end",
+        "bottom",
+        "bottom-start",
+        "bottom-end",
+        "left",
+        "right"
+      ],
+      "default": "top",
+      "description": "Preferred side; flips when there is no room."
+    },
+    "openDelay": {
+      "type": "number",
+      "default": 400,
+      "description": "Milliseconds before the first tooltip opens on hover."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "triggerLabel": {
+      "type": "string",
+      "description": "Renders a default Button trigger with this label. Otherwise the trigger is your own element (child / default slot / trigger snippet)."
+    },
+    "id": {
+      "type": "string",
+      "description": "Machine id; generated when omitted. Set it when several React roots or Vue apps on one page each render tooltips, so their generated ids cannot collide."
+    }
+  },
+  "slots": {
+    "default": "The trigger element (React child, Vue default slot). Svelte: a `trigger` snippet that spreads the props it receives. React and Vue pass any other props and listeners (with the ref) on to the trigger, so a Tooltip can be the as-child trigger of a Menu or a Dialog close button; in Svelte merge both props functions on your element.",
+    "content": "Vue: rich label instead of the content prop"
+  },
+  "states": [
+    "open",
+    "instant",
+    "disabled"
+  ],
+  "tokens": [
+    "color.tooltip-bg",
+    "color.tooltip-fg",
+    "color.tooltip-muted",
+    "color.tooltip-border",
+    "radius.chip",
+    "text.xs",
+    "duration.tooltip",
+    "duration.fast",
+    "easing.out-strong",
+    "motion.popup-scale"
+  ],
+  "dependencies": [
+    "button",
+    "kbd"
+  ],
+  "a11y": {
+    "role": "tooltip",
+    "keyboard": [
+      "Focus on the trigger (keyboard) shows the tooltip at once, with no animation",
+      "Escape hides it",
+      "Blur hides it"
+    ],
+    "notes": [
+      "The trigger is described by the tooltip (aria-describedby) while it is open; an icon-only trigger still needs its own aria-label.",
+      "Not shown on touch: put essential information elsewhere.",
+      "Hovering from one trigger to the next skips both the delay and the animation.",
+      "A press on the trigger closes the tooltip, and cancels one still waiting out its delay (also when the trigger's own engine prevents the press's default, as a date picker's or a menu's does); none opens again until the pointer leaves."
+    ]
+  },
+  "motion": [
+    "chip: opacity + scale from motion.popup-scale out of the trigger (--transform-origin), duration.tooltip, easing.out-strong; closes at duration.fast",
+    "neighbour of an open tooltip: no delay, no transition (data-instant)",
+    "keyboard focus: no transition (kbd-instant)"
+  ]
+}

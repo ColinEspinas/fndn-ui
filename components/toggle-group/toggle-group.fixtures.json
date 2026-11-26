@@ -1,0 +1,19 @@
+{
+  "examples": [
+    { "name": "One at most", "props": { "aria-label": "Show", "items": [{ "value": "all", "label": "All" }, { "value": "open", "label": "Open" }, { "value": "closed", "label": "Closed" }], "value": ["open"] } },
+    { "name": "Multiple, ghost, icon-only", "props": { "aria-label": "Text style", "multiple": true, "variant": "ghost", "size": "sm", "square": true, "muted": true, "items": [{ "value": "bold", "label": "B", "tooltip": "Bold" }, { "value": "italic", "label": "I", "tooltip": "Italic" }, { "value": "underline", "label": "U", "tooltip": "Underline" }], "value": ["bold"] } },
+    { "name": "Ghost, small, rounded", "props": { "aria-label": "Density", "variant": "ghost", "size": "sm", "shape": "rounded", "items": ["Compact", "Comfortable", "Spacious"], "value": ["Comfortable"] } },
+    { "name": "Vertical", "width": 180, "props": { "aria-label": "Sort by", "orientation": "vertical", "variant": "ghost", "size": "sm", "shape": "rounded", "items": ["Newest", "Oldest", "Most replies"], "value": ["Newest"] } },
+    { "name": "Nothing pressed", "props": { "aria-label": "Show", "items": ["All", "Open", "Closed"] } },
+    { "name": "Disabled item", "props": { "aria-label": "Show", "items": [{ "value": "all", "label": "All" }, { "value": "open", "label": "Open" }, { "value": "archived", "label": "Archived", "disabled": true }], "value": ["all"] } },
+    { "name": "Disabled", "props": { "aria-label": "Show", "disabled": true, "items": ["All", "Open", "Closed"], "value": ["All"] } },
+    { "name": "Extra small", "props": { "aria-label": "Range", "variant": "ghost", "size": "xs", "items": ["1D", "1W", "1M", "1Y"], "value": ["1W"] } }
+  ],
+  "worstCase": [
+    { "name": "Long labels in 260px", "width": 260, "props": { "aria-label": "Show", "items": ["Everything in this workspace", "Only conversations I started", "Archived"], "value": ["Archived"] } },
+    { "name": "Many items in 320px", "width": 320, "props": { "aria-label": "Month", "variant": "ghost", "size": "sm", "items": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "value": ["Mar"] } },
+    { "name": "Unbreakable label", "width": 200, "props": { "aria-label": "Show", "items": ["all-conversations-in-every-workspace", "mine"], "value": ["mine"] } },
+    { "name": "One item", "props": { "aria-label": "Pin", "items": ["Pinned"], "value": ["Pinned"] } },
+    { "name": "Right-to-left labels", "props": { "aria-label": "عرض", "items": ["الكل", "مفتوح", "مغلق"], "value": ["مفتوح"] } }
+  ]
+}

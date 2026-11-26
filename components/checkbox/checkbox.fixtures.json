@@ -1,0 +1,116 @@
+{
+  "examples": [
+    {
+      "name": "Checked",
+      "props": {
+        "checked": true,
+        "label": "Audit logs"
+      }
+    },
+    {
+      "name": "Unchecked",
+      "props": {
+        "checked": false,
+        "label": "Usage alerts"
+      }
+    },
+    {
+      "name": "Indeterminate",
+      "props": {
+        "checked": "indeterminate",
+        "label": "All add-ons"
+      }
+    },
+    {
+      "name": "Disabled",
+      "props": {
+        "checked": true,
+        "disabled": true,
+        "label": "Webhooks"
+      }
+    },
+    {
+      "name": "Invalid",
+      "props": {
+        "checked": false,
+        "invalid": true,
+        "label": "I accept the supplier terms"
+      }
+    },
+    {
+      "name": "No visible label",
+      "props": {
+        "checked": false,
+        "aria-label": "Select row"
+      }
+    },
+    {
+      "name": "Row",
+      "width": 240,
+      "props": {
+        "checked": true,
+        "layout": "row",
+        "label": "Audit logs"
+      }
+    },
+    {
+      "name": "Remove (red, md)",
+      "props": {
+        "checked": true,
+        "tone": "red",
+        "size": "md",
+        "aria-label": "Remove Legacy SSO"
+      }
+    },
+    {
+      "name": "Add (green, md)",
+      "props": {
+        "checked": true,
+        "tone": "green",
+        "size": "md",
+        "aria-label": "Add Data residency"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "width": 220,
+      "props": {
+        "checked": true,
+        "label": "Automatically approve every edit the agent proposes to supplier records without asking first"
+      }
+    },
+    {
+      "name": "Unbreakable",
+      "width": 200,
+      "props": {
+        "checked": false,
+        "label": "maximilian.wisniewska-kowalczyk@example-supplier-network.com"
+      }
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "checked": false,
+        "label": "A"
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "checked": true,
+        "label": "رقائق الشوكولاتة"
+      }
+    },
+    {
+      "name": "Row with a long label",
+      "width": 220,
+      "props": {
+        "checked": false,
+        "layout": "row",
+        "label": "Automatically approve every edit the agent proposes to supplier records"
+      }
+    }
+  ]
+}

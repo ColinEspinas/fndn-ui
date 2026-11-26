@@ -1,0 +1,391 @@
+{
+  "examples": [
+    {
+      "name": "Pill",
+      "props": {
+        "items": [
+          {
+            "value": "chat",
+            "label": "Chat",
+            "content": "Ask about this supplier’s last three orders."
+          },
+          {
+            "value": "notes",
+            "label": "Notes",
+            "content": "Two notes from the tasting on Tuesday."
+          },
+          {
+            "value": "files",
+            "label": "Files",
+            "content": "Spec sheet, price list and the signed contract."
+          }
+        ],
+        "value": "chat",
+        "aria-label": "Panel"
+      }
+    },
+    {
+      "name": "Underline",
+      "props": {
+        "items": [
+          {
+            "value": "overview",
+            "label": "Overview",
+            "content": "Pricing card, margin and the launch plan."
+          },
+          {
+            "value": "activity",
+            "label": "Activity",
+            "content": "12 edits this week, 3 waiting for review."
+          },
+          {
+            "value": "settings",
+            "label": "Settings",
+            "content": "Who can edit, and what needs approval."
+          }
+        ],
+        "value": "overview",
+        "variant": "underline",
+        "aria-label": "Sections"
+      }
+    },
+    {
+      "name": "Disabled tab",
+      "props": {
+        "items": [
+          {
+            "value": "draft",
+            "label": "Draft",
+            "content": "The draft you are editing."
+          },
+          {
+            "value": "review",
+            "label": "Review",
+            "content": "Comments from reviewers.",
+            "disabled": true
+          },
+          {
+            "value": "published",
+            "label": "Published",
+            "content": "The version customers see."
+          }
+        ],
+        "value": "draft",
+        "aria-label": "Versions"
+      }
+    },
+    {
+      "name": "Closable",
+      "width": 320,
+      "props": {
+        "items": [
+          {
+            "value": "src/middleware/rate-limit.ts",
+            "label": "rate-limit.ts",
+            "content": "src/middleware/rate-limit.ts"
+          },
+          {
+            "value": "src/routes/invoices.ts",
+            "label": "invoices.ts",
+            "content": "src/routes/invoices.ts"
+          },
+          {
+            "value": "test/rate-limit.test.ts",
+            "label": "rate-limit.test.ts",
+            "content": "test/rate-limit.test.ts"
+          },
+          {
+            "value": "src/webhooks/deliver.ts",
+            "label": "deliver.ts",
+            "content": "src/webhooks/deliver.ts"
+          },
+          {
+            "value": "package.json",
+            "label": "package.json",
+            "content": "package.json"
+          }
+        ],
+        "value": "src/middleware/rate-limit.ts",
+        "variant": "underline",
+        "closable": true,
+        "aria-label": "Open files"
+      }
+    },
+    {
+      "name": "Fill",
+      "props": {
+        "style": {
+          "height": 160,
+          "width": 320
+        },
+        "fill": true,
+        "variant": "underline",
+        "items": [
+          {
+            "value": "build",
+            "label": "Build",
+            "content": "10:42:01 Step 1 of the build finished without warnings. 10:42:02 Step 2 of the build finished without warnings. 10:42:03 Step 3 of the build finished without warnings. 10:42:04 Step 4 of the build finished without warnings. 10:42:05 Step 5 of the build finished without warnings. 10:42:06 Step 6 of the build finished without warnings. 10:42:07 Step 7 of the build finished without warnings. 10:42:08 Step 8 of the build finished without warnings. 10:42:09 Step 9 of the build finished without warnings. 10:42:00 Step 10 of the build finished without warnings. 10:42:01 Step 11 of the build finished without warnings. 10:42:02 Step 12 of the build finished without warnings. 10:42:03 Step 13 of the build finished without warnings. 10:42:04 Step 14 of the build finished without warnings. 10:42:05 Step 15 of the build finished without warnings. 10:42:06 Step 16 of the build finished without warnings. 10:42:07 Step 17 of the build finished without warnings. 10:42:08 Step 18 of the build finished without warnings. 10:42:09 Step 19 of the build finished without warnings. 10:42:00 Step 20 of the build finished without warnings. 10:42:01 Step 21 of the build finished without warnings. 10:42:02 Step 22 of the build finished without warnings. 10:42:03 Step 23 of the build finished without warnings. 10:42:04 Step 24 of the build finished without warnings. 10:42:05 Step 25 of the build finished without warnings. 10:42:06 Step 26 of the build finished without warnings. 10:42:07 Step 27 of the build finished without warnings. 10:42:08 Step 28 of the build finished without warnings. 10:42:09 Step 29 of the build finished without warnings."
+          },
+          {
+            "value": "runtime",
+            "label": "Runtime",
+            "content": "10:51:03 POST /api/webhooks 200 in 84 ms"
+          }
+        ],
+        "value": "build",
+        "aria-label": "Logs"
+      }
+    },
+    {
+      "name": "Attached (browser tabs)",
+      "props": {
+        "variant": "attached",
+        "size": "sm",
+        "closable": true,
+        "style": {
+          "width": 520,
+          "background": "var(--fndn-canvas)",
+          "--fndn-tabs-surface": "var(--fndn-surface)"
+        },
+        "items": [
+          {
+            "value": "deploys",
+            "label": "Deploys · web-app",
+            "icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Crect%20width%3D%2716%27%20height%3D%2716%27%20rx%3D%274%27%20fill%3D%27%232563eb%27/%3E%3Ctext%20x%3D%278%27%20y%3D%2712%27%20font-family%3D%27sans-serif%27%20font-size%3D%2710%27%20font-weight%3D%27700%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%3EN%3C/text%3E%3C/svg%3E",
+            "content": "dpl_7f3a9c is live on Production."
+          },
+          {
+            "value": "pr",
+            "label": "#482 Add retry to webhook delivery",
+            "icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Crect%20width%3D%2716%27%20height%3D%2716%27%20rx%3D%274%27%20fill%3D%27%2316a34a%27/%3E%3Ctext%20x%3D%278%27%20y%3D%2712%27%20font-family%3D%27sans-serif%27%20font-size%3D%2710%27%20font-weight%3D%27700%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%3EG%3C/text%3E%3C/svg%3E",
+            "content": "2 approvals, checks passing."
+          },
+          {
+            "value": "billing",
+            "label": "Billing",
+            "icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Crect%20width%3D%2716%27%20height%3D%2716%27%20rx%3D%274%27%20fill%3D%27%239333ea%27/%3E%3Ctext%20x%3D%278%27%20y%3D%2712%27%20font-family%3D%27sans-serif%27%20font-size%3D%2710%27%20font-weight%3D%27700%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%3EB%3C/text%3E%3C/svg%3E",
+            "content": "INV-2024-0117, $1,240.00 due Nov 14, 2026."
+          },
+          {
+            "value": "status",
+            "label": "Status",
+            "icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Crect%20width%3D%2716%27%20height%3D%2716%27%20rx%3D%274%27%20fill%3D%27%23ea580c%27/%3E%3Ctext%20x%3D%278%27%20y%3D%2712%27%20font-family%3D%27sans-serif%27%20font-size%3D%2710%27%20font-weight%3D%27700%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%3ES%3C/text%3E%3C/svg%3E",
+            "content": "All systems operational."
+          }
+        ],
+        "value": "pr",
+        "aria-label": "Open tabs"
+      }
+    },
+    {
+      "name": "Attached, fit (editor tabs)",
+      "props": {
+        "variant": "attached",
+        "size": "sm",
+        "closable": true,
+        "tabSizing": "fit",
+        "style": {
+          "width": 460,
+          "background": "var(--fndn-canvas)",
+          "--fndn-tabs-surface": "var(--fndn-surface)"
+        },
+        "aria-label": "Open files",
+        "value": "rate-limit.ts",
+        "items": [
+          {
+            "value": "rate-limit.ts",
+            "label": "rate-limit.ts",
+            "content": "rate-limit.ts — editor"
+          },
+          {
+            "value": "rate-limit.test.ts",
+            "label": "rate-limit.test.ts",
+            "content": "rate-limit.test.ts — editor"
+          },
+          {
+            "value": "retry-policy.ts",
+            "label": "retry-policy.ts",
+            "content": "retry-policy.ts — editor"
+          },
+          {
+            "value": "webhooks.md",
+            "label": "webhooks.md",
+            "content": "webhooks.md — editor"
+          },
+          {
+            "value": "package.json",
+            "label": "package.json",
+            "content": "package.json — editor"
+          },
+          {
+            "value": "tsconfig.json",
+            "label": "tsconfig.json",
+            "content": "tsconfig.json — editor"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long labels",
+      "width": 280,
+      "props": {
+        "items": [
+          {
+            "value": "a",
+            "label": "Supplier records and every proposed change",
+            "content": "A long tab label stays one line; it truncates when the tab is narrower than its text (a max-width from the composing component) and the list scrolls sideways."
+          },
+          {
+            "value": "b",
+            "label": "A",
+            "content": "One letter."
+          },
+          {
+            "value": "c",
+            "label": "maximilian.wisniewska-kowalczyk@example.com",
+            "content": "An unbreakable label."
+          }
+        ],
+        "value": "a",
+        "aria-label": "Worst case"
+      }
+    },
+    {
+      "name": "Many tabs",
+      "width": 300,
+      "props": {
+        "items": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Every weekday",
+          "Custom"
+        ],
+        "value": "Wed",
+        "variant": "underline",
+        "aria-label": "Days"
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "items": [
+          {
+            "value": "chat",
+            "label": "محادثة",
+            "content": "اسأل عن آخر ثلاثة طلبات."
+          },
+          {
+            "value": "notes",
+            "label": "ملاحظات",
+            "content": "ملاحظتان من التذوق."
+          }
+        ],
+        "value": "chat",
+        "aria-label": "اللوحة"
+      }
+    },
+    {
+      "name": "One tab",
+      "props": {
+        "items": [
+          {
+            "value": "all",
+            "label": "All",
+            "content": "A single tab still reads as a tab strip."
+          }
+        ],
+        "value": "all",
+        "aria-label": "Single"
+      }
+    },
+    {
+      "name": "Closable, long and many",
+      "width": 260,
+      "props": {
+        "closable": true,
+        "items": [
+          {
+            "value": "a",
+            "label": "maximilian.wisniewska-kowalczyk@example.com",
+            "content": "An unbreakable label."
+          },
+          {
+            "value": "b",
+            "label": "A",
+            "content": "One letter."
+          },
+          {
+            "value": "c",
+            "label": "billing-api / src / webhooks / deliver.ts",
+            "content": "A path."
+          },
+          {
+            "value": "d",
+            "label": "ملاحظات",
+            "content": "Right to left text."
+          },
+          {
+            "value": "e",
+            "label": "package.json",
+            "content": "Last tab."
+          }
+        ],
+        "value": "e",
+        "aria-label": "Open files"
+      }
+    },
+    {
+      "name": "Attached, many files",
+      "props": {
+        "variant": "attached",
+        "size": "xs",
+        "closable": true,
+        "style": {
+          "width": 300,
+          "background": "var(--fndn-canvas)"
+        },
+        "items": [
+          {
+            "value": "rate-limit.ts",
+            "label": "rate-limit.ts",
+            "content": "rate-limit.ts"
+          },
+          {
+            "value": "src/middleware/a-very-long-file-name-for-the-webhook-delivery-retry-policy.ts",
+            "label": "src/middleware/a-very-long-file-name-for-the-webhook-delivery-retry-policy.ts",
+            "content": "src/middleware/a-very-long-file-name-for-the-webhook-delivery-retry-policy.ts"
+          },
+          {
+            "value": "index.ts",
+            "label": "index.ts",
+            "content": "index.ts"
+          },
+          {
+            "value": "x.ts",
+            "label": "x.ts",
+            "content": "x.ts"
+          },
+          {
+            "value": "README.md",
+            "label": "README.md",
+            "content": "README.md"
+          },
+          {
+            "value": "package.json",
+            "label": "package.json",
+            "content": "package.json"
+          }
+        ],
+        "value": "index.ts",
+        "aria-label": "Open files"
+      }
+    }
+  ]
+}

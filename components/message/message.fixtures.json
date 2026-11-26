@@ -1,0 +1,59 @@
+{
+  "examples": [
+    {
+      "name": "Assistant answer",
+      "width": 360,
+      "props": {
+        "role": "assistant",
+        "name": "Assistant",
+        "avatar": true,
+        "time": "2 min ago",
+        "text": "The deploy failed because billing-api could not reach the database: DATABASE_URL is missing from Production. Add it in Settings → Environment variables and redeploy.",
+        "actions": ["copy", "retry", "good", "bad"]
+      }
+    },
+    {
+      "name": "Your question",
+      "width": 360,
+      "props": {
+        "role": "user",
+        "text": "Why did the last deploy of billing-api fail?",
+        "actions": ["copy", "edit"]
+      }
+    },
+    {
+      "name": "Streaming, nothing yet",
+      "width": 360,
+      "props": { "role": "assistant", "name": "Assistant", "streaming": true, "actions": ["copy", "retry"] }
+    },
+    {
+      "name": "Step with a source",
+      "width": 360,
+      "props": { "role": "assistant", "name": "Read the deploy log", "source": "dpl_7f3a9c/build.log", "time": "for 2s", "text": "Step 3 of 5 exited with code 1 after 41 seconds." }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long name, long unbroken text, narrow",
+      "width": 240,
+      "props": {
+        "role": "assistant",
+        "name": "Northwind deploy assistant for the billing-api production environment",
+        "avatar": true,
+        "source": "packages/billing-api/src/middleware/rate-limit-with-a-very-long-name.ts",
+        "time": "Nov 14, 2026, 10:42",
+        "text": "https://northwind.example/web-app/deploys/dpl_7f3a9c/logs?step=install&line=1284&filter=errors-and-warnings-only",
+        "actions": ["copy", "retry", "edit", "good", "bad"]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 320,
+      "props": { "role": "user", "text": "لماذا فشل آخر نشر لـ billing-api؟", "actions": ["copy", "edit"] }
+    },
+    {
+      "name": "One letter",
+      "props": { "role": "user", "text": "y" }
+    }
+  ]
+}

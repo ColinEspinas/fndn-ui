@@ -1,0 +1,225 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "select",
+  "title": "Select",
+  "summary": "Pick one value from a list that opens from a field.",
+  "description": "Pick one value from a list. A field-style trigger opens a raised popup that scales out of the trigger; a single highlight glides between options under the pointer and the arrow keys alike; opening from the keyboard and the caret stay instant. Behaviour, focus and ARIA come from the Zag select machine, through Ark UI in React, Vue and Svelte.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 2,
+  "engine": "select",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true
+    },
+    {
+      "part": "control",
+      "element": "div"
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "role=combobox; data-state=open|closed; data-placeholder-shown while empty"
+    },
+    {
+      "part": "value",
+      "element": "span",
+      "description": "Selected label, or the placeholder"
+    },
+    {
+      "part": "indicator",
+      "element": "span",
+      "description": "Caret; flips while open. Carries kbd-instant: instant when the popup opens from the keyboard"
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Placed by the engine; rendered in a portal so cards cannot clip it. Exposes --transform-origin, --reference-width, --available-height"
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=listbox popup; the shared popup surface (`lib/popup.ts`: surface, motion, keyboard-instant; stacking from base.css). data-state=open|closed; sizes xs and sm: 26px rows (--option-height). Width: never narrower than the trigger (or 120px), then as wide as its longest option, up to 360px"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "Shared gliding highlight layer (`glideLayer` of `lib/glide.ts`); glides under the pointer and the keyboard"
+    },
+    {
+      "part": "group",
+      "element": "div",
+      "optional": true,
+      "repeat": true
+    },
+    {
+      "part": "group-label",
+      "element": "div",
+      "optional": true,
+      "description": "the shared option row's group label (`lib/option.ts`)"
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "role=option; data-highlighted, data-state=checked|unchecked, data-disabled; composes the shared option row (`lib/option.ts`: 30px, text.dense (12.5px), gap 8)"
+    },
+    {
+      "part": "item-text",
+      "element": "span",
+      "description": "The shared option row's text (`lib/option.ts`). Never cut with an ellipsis: an option longer than the popup's 360px cap wraps"
+    },
+    {
+      "part": "item-meta",
+      "element": "span",
+      "optional": true,
+      "description": "Trailing muted note (e.g. a model tier); the shared option row's meta (`lib/option.ts`)"
+    },
+    {
+      "part": "item-indicator",
+      "element": "span",
+      "description": "Check on the selected option, shown through the item's data-state; keeps its space on other rows so trailing notes stay aligned; the shared option row's indicator (`lib/option.ts`)"
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "meta": "string?",
+        "disabled": "boolean?"
+      },
+      "description": "Options in order. Strings are accepted as value=label."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "Selected value, or null."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Select"
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label; otherwise pass aria-label."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The shared control's sizes (`lib/control.ts`), dimensions only: xs 24px, sm 28px, md 32px, lg 36px. Up to 28px the list's rows are 26px."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: reads as text until touched (the model picker); open, it keeps the darker fill an open ghost button keeps, with no ring or field fill. With no width it is as wide as its value, the caret right after it; given a width (a property row in a side panel) it fills it and the caret sits at the end, as the ghost combobox's does.",
+      "part": "trigger"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name; renders a hidden native select."
+    },
+    "placement": {
+      "type": "string",
+      "default": "bottom-start",
+      "description": "Preferred side; flips when there is no room."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string | null)",
+    "openChange": "(open: boolean)",
+    "ui:set-value": "No adapter handles it (control `value` instead). { value: string | null }",
+    "ui:set-open": "No adapter handles it. { open: boolean }"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "highlighted",
+    "selected",
+    "disabled",
+    "invalid"
+  ],
+  "tokens": [
+    "color.field",
+    "color.inset",
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "shadow.raised",
+    "radius.control",
+    "radius.chip",
+    "radius.card",
+    "text.2xs",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.popup",
+    "duration.move",
+    "easing.out-strong",
+    "motion.popup-scale",
+    "color.line",
+    "text.md"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "combobox + listbox",
+    "keyboard": [
+      "Enter / Space / ArrowDown / ArrowUp on the trigger open the list",
+      "ArrowDown / ArrowUp move the highlight; Home / End jump",
+      "Typing jumps to the matching option (type-ahead), open or closed",
+      "Enter / Space select and close; Escape closes; focus returns to the trigger",
+      "Tab closes and moves on"
+    ],
+    "notes": [
+      "Give it a visible label or an aria-label.",
+      "Opening and closing from the keyboard are instant; the pointer gets the scale-in. The highlight glides for the pointer and the arrow keys alike.",
+      "Every option is readable in full: the list grows to its longest option and wraps anything longer than its cap. The trigger shows one line and may shorten the selected label; the list shows it whole."
+    ]
+  },
+  "motion": [
+    "popup: the shared popup surface (`lib/popup.ts`): opacity + scale from motion.popup-scale out of the trigger (--transform-origin), along the block axis only (the list is as wide as the trigger, and its sides stay on the trigger's sides however wide it is), duration.popup, easing.out-strong; closes at duration.fast; instant when opened or closed from the keyboard",
+    "caret: rotate 180deg over duration.move, easing.out-strong; instant from the keyboard",
+    "highlight: one layer glides between options over duration.move, easing.out-strong, under the pointer and the arrow keys alike",
+    "rows: a pressed option darkens to color.hover-2 over duration.fast",
+    "trigger: colour and ring over duration.fast / duration.base; the shared control's motion (`lib/control.ts`): press darkens, in every look; a trigger never scales"
+  ]
+}

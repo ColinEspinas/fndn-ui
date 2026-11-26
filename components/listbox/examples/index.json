@@ -1,0 +1,59 @@
+{
+  "playground": {
+    "props": {
+      "label": "Region",
+      "selectionMode": "single",
+      "size": "md",
+      "disabled": false,
+      "items": [
+        {
+          "value": "iad1",
+          "label": "Washington, D.C. (iad1)",
+          "meta": "18 ms"
+        },
+        {
+          "value": "fra1",
+          "label": "Frankfurt (fra1)",
+          "meta": "96 ms"
+        },
+        {
+          "value": "gru1",
+          "label": "São Paulo (gru1)",
+          "meta": "Business plan",
+          "disabled": true
+        }
+      ]
+    },
+    "width": 280
+  },
+  "examples": [
+    {
+      "file": "region",
+      "title": "Deploy region"
+    },
+    {
+      "file": "notifications",
+      "title": "Email notifications"
+    },
+    {
+      "file": "alert-channels",
+      "title": "Where to send deploy alerts"
+    },
+    {
+      "file": "group-by",
+      "title": "Group by, in a side panel"
+    },
+    {
+      "file": "export-projects",
+      "title": "Projects to export"
+    },
+    {
+      "file": "changed-files",
+      "title": "Changed files, with status letters"
+    },
+    {
+      "file": "source-control",
+      "title": "Flush, in a source-control pane"
+    }
+  ]
+}

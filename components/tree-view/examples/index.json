@@ -1,0 +1,26 @@
+{
+  "playground": {
+    "props": {
+      "label": "billing-api",
+      "selectionMode": "single",
+      "expandedValue": ["src"],
+      "items": [
+        {
+          "value": "src", "label": "src",
+          "children": [
+            { "value": "src/webhooks", "label": "webhooks", "children": [{ "value": "src/webhooks/deliver.ts", "label": "deliver.ts" }] },
+            { "value": "src/invoices", "label": "invoices", "children": [{ "value": "src/invoices/render-pdf.ts", "label": "render-pdf.ts" }] }
+          ]
+        },
+        { "value": "package.json", "label": "package.json" }
+      ]
+    },
+    "width": 280
+  },
+  "examples": [
+    { "file": "repository-files", "title": "Files of a repository" },
+    { "file": "explorer-pane", "title": "Dense explorer in an editor's side pane" },
+    { "file": "settings-pages", "title": "Settings pages beside their content" },
+    { "file": "redeploy-targets", "title": "Pick several environments, one frozen" }
+  ]
+}

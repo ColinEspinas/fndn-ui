@@ -1,0 +1,16 @@
+{
+  "playground": {
+    "props": {
+      "checked": true,
+      "label": "Email me when a deploy fails"
+    }
+  },
+  "examples": [
+    { "file": "email-notifications", "title": "Email notifications" },
+    { "file": "select-environments", "title": "Select all environments (mixed state)" },
+    { "file": "select-rows", "title": "Selecting table rows" },
+    { "file": "access-changes", "title": "Access changes to apply (add / remove)" },
+    { "file": "confirm-delete", "title": "Confirm before deleting (invalid)" },
+    { "file": "plan-locked", "title": "Not on your plan (disabled)" }
+  ]
+}

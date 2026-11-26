@@ -1,0 +1,13 @@
+{
+  "examples": [
+    { "name": "Default", "props": {}, "text": "Email address" },
+    { "name": "For a control", "props": { "htmlFor": "project" }, "text": "Project name" }
+  ],
+  "worstCase": [
+    { "name": "Long label", "props": {}, "text": "The email address we should send the weekly supplier report and every invoice to", "width": 240 },
+    { "name": "Unbreakable label", "props": {}, "text": "supplier-notification-email-address-for-invoices", "width": 160 },
+    { "name": "One letter", "props": {}, "text": "X" },
+    { "name": "Right-to-left label", "props": {}, "text": "عنوان البريد الإلكتروني", "width": 240 },
+    { "name": "Emoji label", "props": {}, "text": "🚀 Favourite project" }
+  ]
+}

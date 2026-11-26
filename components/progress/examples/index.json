@@ -1,0 +1,10 @@
+{
+  "playground": { "props": { "value": 2140, "max": 3000, "label": "Build minutes this month", "showValue": true, "valueText": "2,140 of 3,000 min", "tone": "accent", "size": "md" }, "width": 320 },
+  "examples": [
+    { "file": "build-minutes", "title": "Build minutes this month" },
+    { "file": "plan-limits", "title": "Close to the plan’s limits" },
+    { "file": "upload-file", "title": "Uploading a file" },
+    { "file": "preparing-export", "title": "Preparing an export" },
+    { "file": "migration-steps", "title": "Steps of a migration" }
+  ]
+}

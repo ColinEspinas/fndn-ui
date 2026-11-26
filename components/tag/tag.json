@@ -1,0 +1,153 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "tag",
+  "title": "Tag",
+  "summary": "A small label attached to something: a category, an environment, a file.",
+  "description": "A small bordered label attached to something: a category, an environment, an attachment. The squarer, bordered label of tables and fields (a category, an attachment, a value in a tags input) in neutral, accent or one of the eight tag hues, with an optional remove button. One line, never wraps or shrinks. Sizes md (24px) and sm (22px); rounded by default, pill in a pill-shaped host.",
+  "kind": "component",
+  "category": "display",
+  "order": 4,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span"
+    },
+    {
+      "part": "dot",
+      "element": "span",
+      "optional": true,
+      "description": "6px dot in the tag's hue; aria-hidden. Only when dot is set."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "A glyph before the label (12px, 11px at sm) in the tag's colour, aria-hidden; takes the dot's place (an attachment's file glyph)."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "Text of the tag; truncates at the end when the tag has less room than its text, and then carries its full text as a title."
+    },
+    {
+      "part": "remove",
+      "element": "button",
+      "optional": true,
+      "description": "The real Button (ghost, xs, square), marked data-tag=\"remove\", with an x icon and an aria-label; its shape follows the tag's (round on a pill, rounded on a rounded tag). The tag grows to 26px to hold it (the button is 20px at sm, and the tag stays 22px). Under a coarse pointer its hit area reaches 36px (a transparent ::after); the tag does not grow. With removeTooltip it sits inside the real Tooltip."
+    }
+  ],
+  "props": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "accent",
+        "blue",
+        "green",
+        "orange",
+        "red",
+        "purple",
+        "cyan",
+        "yellow",
+        "pink"
+      ],
+      "default": "neutral",
+      "description": "neutral (ink-3), accent and the eight tag hues (from --fndn-tag-*). The fill is 14% of the hue on the surface, the 1px border 30%, the text the hue mixed with ink; dark: a richer fill (26%), border (34%) and lighter text."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "tint",
+        "outline"
+      ],
+      "default": "tint",
+      "description": "tint: the box takes the hue (fill 14%, border 30%, text mixed with ink). outline (Linear's labels): a neutral box (no fill, the strong hairline, ink-2 text) with the hue only in its dot, which shows without `dot` (an icon still takes its place): for many labels of many hues in a row, an issue's labels, a filter."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "md",
+        "sm"
+      ],
+      "default": "md",
+      "description": "md 24px / 13px; sm 22px / 11.5px."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "rounded",
+        "pill"
+      ],
+      "default": "rounded",
+      "description": "Radius only: rounded is radius.control (radius.chip at sm); pill for a tag in a pill-shaped host (a prompt-bar attachment)."
+    },
+    "dot": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render the leading dot part in the tag's hue. Always shown in the outline variant."
+    },
+    "removable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render the remove button at the end."
+    },
+    "removeLabel": {
+      "type": "string",
+      "default": "Remove",
+      "description": "aria-label of the remove button, e.g. \"Remove invoice.pdf\"."
+    },
+    "removeTooltip": {
+      "type": "string",
+      "description": "A tooltip on the remove button (the real Tooltip around it), e.g. \"Remove\". None by default."
+    },
+    "removeProps": {
+      "type": "object",
+      "description": "Attributes for the remove button (React and Svelte: spread on it; Vue: v-bind), e.g. a data attribute the owner uses to move focus after a removal, or an engine's delete-trigger props."
+    }
+  },
+  "slots": {
+    "default": "Label",
+    "icon": "A glyph before the label (React: icon node; Vue: #icon slot; Svelte: icon snippet). Replaces the dot."
+  },
+  "states": [],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-3",
+    "color.accent",
+    "color.tag-blue",
+    "color.tag-green",
+    "color.tag-orange",
+    "color.tag-red",
+    "color.tag-purple",
+    "color.tag-cyan",
+    "color.tag-yellow",
+    "color.tag-pink",
+    "radius.pill",
+    "radius.control",
+    "radius.chip",
+    "text.sm",
+    "color.line-strong",
+    "color.ink-2"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "notes": [
+      "The dot and the icon are aria-hidden; the label carries the meaning. Tone alone never does.",
+      "The remove button needs an aria-label that names the tag (removeLabel), and focus must go somewhere sensible after removal (the owner of the list decides)."
+    ]
+  },
+  "events": {
+    "remove": "the remove button was clicked (React onRemove, Vue @remove, Svelte onremove)"
+  },
+  "motion": [
+    "remove button: the button's press scale; hover and press tint the tag's own colour at duration.fast, ease",
+    "no other motion"
+  ]
+}

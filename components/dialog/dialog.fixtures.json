@@ -1,0 +1,122 @@
+{
+  "examples": [
+    {
+      "name": "Confirm",
+      "props": {
+        "triggerLabel": "Delete project",
+        "role": "alertdialog",
+        "closable": false,
+        "title": "Delete the staging project?",
+        "description": "This removes the project from the workspace and cancels 3 scheduled deploys. You cannot undo it.",
+        "actions": [
+          {
+            "label": "Cancel",
+            "value": "cancel",
+            "variant": "ghost"
+          },
+          {
+            "label": "Delete project",
+            "value": "delete",
+            "variant": "danger"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Message",
+      "props": {
+        "triggerLabel": "Review the plan",
+        "title": "Rollout plan for this weekend",
+        "description": "The agent drafted this from last summer's sales.",
+        "actions": [
+          {
+            "label": "Not now",
+            "value": "dismiss",
+            "variant": "ghost"
+          },
+          {
+            "label": "Approve plan",
+            "value": "approve",
+            "variant": "primary"
+          }
+        ]
+      },
+      "text": "Billing deploys first on Saturday so the build has time to settle before the afternoon release. Search follows in the evening maintenance window."
+    },
+    {
+      "name": "Mounted open",
+      "props": {
+        "open": true,
+        "triggerLabel": "Show the summary",
+        "title": "Deploy finished",
+        "description": "All 14 services are live in production.",
+        "actions": [
+          {
+            "label": "Done",
+            "value": "done",
+            "variant": "primary"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Submits a form",
+      "props": {
+        "triggerLabel": "Rename",
+        "size": "sm",
+        "title": "Rename project",
+        "actions": [
+          {
+            "label": "Cancel",
+            "value": "cancel",
+            "variant": "ghost"
+          },
+          {
+            "label": "Rename",
+            "value": "rename",
+            "variant": "primary",
+            "form": "rename-project-form"
+          }
+        ]
+      },
+      "text": "Its URL changes with the name."
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long everything",
+      "props": {
+        "triggerLabel": "Open",
+        "title": "Remove Aleksandra Wiśniewska-Kowalczyk Confectionery Holdings and every purchase order that references it?",
+        "description": "bartholomew.fitzgerald@northwind-industries-holdings.example.com will be notified. 12,480 rows change.",
+        "actions": [
+          {
+            "label": "Keep the supplier for now",
+            "value": "cancel",
+            "variant": "ghost"
+          },
+          {
+            "label": "Remove the supplier and cancel all orders",
+            "value": "remove",
+            "variant": "danger"
+          }
+        ]
+      },
+      "text": "Pneumonoultramicroscopicsilicovolcanoconiosis-grade workloads are not covered by the standard SOC 2 attestation. إعادة الطلب تتطلب مراجعة يدوية قبل يوم الجمعة."
+    },
+    {
+      "name": "Title only",
+      "props": {
+        "triggerLabel": "Go",
+        "title": "Ok?",
+        "actions": [
+          {
+            "label": "Ok",
+            "value": "ok",
+            "variant": "primary"
+          }
+        ]
+      }
+    }
+  ]
+}

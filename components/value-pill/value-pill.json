@@ -1,0 +1,58 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "value-pill",
+  "title": "Value Pill",
+  "summary": "A plain value, such as a date or an amount, set off in text.",
+  "description": "Inline value badge: a plain value (a date, a name, a count) set off in prose. Softer than a status pill (no dot) and not a mono token. Stays on one line while it fits; a value longer than its container wraps inside the pill and is never truncated. The value reads in its own direction (unicode-bidi: plaintext): a signed number stays \"-4.41%\" on a right-to-left page.",
+  "kind": "component",
+  "category": "display",
+  "order": 4,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span"
+    }
+  ],
+  "props": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "green",
+        "orange",
+        "red",
+        "accent"
+      ],
+      "default": "neutral"
+    }
+  },
+  "slots": {
+    "default": "Value"
+  },
+  "states": [],
+  "tokens": [
+    "color.field",
+    "color.ink-2",
+    "color.green",
+    "color.green-tint",
+    "color.orange",
+    "color.orange-tint",
+    "color.red",
+    "color.red-tint",
+    "color.accent",
+    "color.accent-ink",
+    "color.accent-tint",
+    "shadow.hairline",
+    "radius.pill",
+    "text.xs"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "Plain text in a span; tone is decoration.",
+      "unicode-bidi: plaintext on the pill: a value with no strong direction (a signed number, a date) is laid out left to right on either page, and a right-to-left value right to left."
+    ]
+  }
+}

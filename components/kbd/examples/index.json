@@ -1,0 +1,16 @@
+{
+  "playground": {
+    "props": {
+      "keys": [
+        "⌘",
+        "K"
+      ],
+      "variant": "boxed"
+    }
+  },
+  "examples": [
+    { "file": "shortcut-list", "title": "Keyboard shortcuts" },
+    { "file": "in-a-sentence", "title": "In a sentence" },
+    { "file": "composer-hint", "title": "Hint under a comment box (plain)" }
+  ]
+}

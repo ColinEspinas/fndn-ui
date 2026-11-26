@@ -1,0 +1,41 @@
+{
+  "examples": [
+    {
+      "name": "Label",
+      "props": {
+        "content": "Copy to clipboard",
+        "triggerLabel": "Copy"
+      }
+    },
+    {
+      "name": "Shortcut",
+      "props": {
+        "content": "Send message",
+        "shortcut": "⌘↵",
+        "placement": "bottom",
+        "triggerLabel": "Send"
+      }
+    },
+    {
+      "name": "Toolbar",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "props": {
+        "content": "Regenerate the answer using every source attached to this conversation, including the archived supplier exports",
+        "shortcut": "⌘⇧R",
+        "triggerLabel": "Regenerate"
+      }
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "content": "B",
+        "triggerLabel": "B"
+      }
+    }
+  ]
+}

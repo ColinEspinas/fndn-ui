@@ -1,0 +1,22 @@
+{
+  "playground": {
+    "props": {
+      "size": "sm",
+      "label": "Building"
+    }
+  },
+  "examples": [
+    {
+      "file": "deploy-list",
+      "title": "A build running in a list"
+    },
+    {
+      "file": "busy-button",
+      "title": "Deploy in progress"
+    },
+    {
+      "file": "loading-panel",
+      "title": "Loading a panel"
+    }
+  ]
+}

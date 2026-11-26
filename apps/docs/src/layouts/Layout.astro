@@ -1,0 +1,97 @@
+---
+/* The shell: top bar, tree, and the page. Theme and direction are applied before the first paint
+ * (inline script), and transitions stay frozen until the islands have taken the stored options.
+ * Pages change through Astro's client router: the top bar's controls, the menu button and the tree
+ * are persisted islands (their state, the filter and the tree's scroll position stay), and the
+ * <html> attributes the options wrote (theme, direction, slowed timings) are carried onto each new
+ * page before it is swapped in, so nothing flashes. data-shape is the page's own (a showcase app's
+ * shape, which its dialogs and menus in <body> must take too) and is never carried. */
+/* the stylesheet is linked, never inlined (the dev server would put all of it into every page) */
+import cssHref from "../styles/global.css?url";
+import { ClientRouter } from "astro:transitions";
+import interUrl from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import monoUrl from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url";
+import { themeBootScript } from "../../../../packages/core/src/theme";
+import TopBar from "../components/TopBar";
+import MenuButton from "../components/MenuButton";
+import Tree from "../components/Tree";
+import { guides, sections, specOf } from "../lib/catalog";
+import { KEYS } from "../lib/store";
+import { showcases } from "../lib/showcase";
+import { FOUNDATIONS } from "../lib/types";
+
+type Props = { title: string; description?: string; current: string; shape?: "rounded" };
+const { title, description, current, shape } = Astro.props;
+
+/* Components are grouped by category; the blocks are one list (few, and their categories repeat the
+ * components' ones: "Navigation" under both read as one group) */
+const item = (x: { name: string; title: string; status: string; category: string }) => ({ name: x.name, title: x.title, status: x.status, category: x.category });
+const tree = sections().map((s) => ({
+  heading: s.heading,
+  groups: s.kind === "block"
+    ? [{ label: "", items: s.groups.flatMap((g) => g.specs).sort((a, b) => a.title.localeCompare(b.title)).map(item) }]
+    : s.groups.map((g) => ({ label: g.label, items: g.specs.map(item) })),
+}));
+
+const allGuides = guides();
+const apps = showcases();
+const guideRows = allGuides.map((g) => ({ id: g.id, title: g.title }));
+
+/* where you are, next to the wordmark (nothing on the overview) */
+function crumbs(path: string): string[] {
+  const [, kind, ...rest] = path.split("/");
+  const id = rest.join("/");
+  if (kind === "components") { const s = specOf(id); return [s?.kind === "block" ? "Blocks" : "Components", s?.title ?? id]; }
+  if (kind === "foundations") return ["Foundations", FOUNDATIONS.find(([f]) => f === id)?.[1] ?? id];
+  if (kind === "guides") return ["Guides", allGuides.find((g) => g.id === id)?.title ?? id];
+  if (kind === "showcase") return ["Showcase", apps.find((a) => a.name === id)?.title ?? id];
+  if (kind === "installation") return ["Installation"];
+  return [];
+}
+const crumb = crumbs(current);
+const showcaseRows = apps.map((a) => ({ name: a.name, title: a.title }));
+/* every page has a Markdown twin (the .md.ts endpoints): / is /index.md, else the path + .md */
+const twin = current === "/" ? "/index.md" : `${current.replace(/\/$/, "")}.md`;
+
+const boot = `${themeBootScript};(function(){var h=document.documentElement;h.setAttribute("data-fndn-theme-switching","");try{if(localStorage.getItem("${KEYS.dir}")==="rtl")h.dir="rtl"}catch(e){}setTimeout(function(){h.removeAttribute("data-fndn-theme-switching")},4000);if(window.__docsSwap)return;window.__docsSwap=1;document.addEventListener("astro:before-swap",function(e){var n=e.newDocument.documentElement;for(var i=0;i<h.attributes.length;i++){var a=h.attributes[i];if(a.name!=="lang"&&a.name!=="data-shape"&&a.name.indexOf("data-astro")!==0)n.setAttribute(a.name,a.value)}})})()`;
+---
+<!doctype html>
+<html lang="en" dir="ltr" data-shape={shape}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === "fndn/ui" ? "fndn/ui — a spec-first component system" : `${title} · fndn/ui`}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="alternate" type="text/markdown" href={twin} />
+    <script is:inline set:html={boot} />
+    <link rel="stylesheet" href={cssHref} />
+    <link rel="preload" as="font" type="font/woff2" href={interUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={monoUrl} crossorigin />
+    <ClientRouter fallback="none" />
+  </head>
+  <body class="min-h-dvh">
+    <header class="sticky top-0 z-30 h-12 border-b border-line bg-page">
+      <div class="flex h-full items-center gap-2 px-4 md:gap-3 md:ps-5">
+        <span class="flex md:hidden"><MenuButton client:load transition:persist="docs-menu" /></span>
+        <a href="/" class="flex shrink-0 items-baseline gap-1.5 rounded-control text-ink no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-label="ui, overview">
+          <span class="text-lg font-semibold tracking-tight">fndn/ui</span>
+          <span class="hidden text-xs text-ink-2 sm:inline">v0.1</span>
+        </a>
+        <nav aria-label="Breadcrumb" class="hidden min-w-0 items-center gap-1.5 ps-2 text-sm text-ink-2 min-[900px]:flex" data-docs-crumb>
+          {crumb.map((c, i) => i === crumb.length - 1
+            ? <span aria-current="page" class="truncate text-ink">{c}</span>
+            : <><span class="shrink-0">{c}</span><span aria-hidden="true" class="text-line-strong">/</span></>)}
+        </nav>
+        <div class="ms-auto flex shrink-0 items-center">
+          <TopBar client:load transition:persist="docs-top" />
+        </div>
+      </div>
+    </header>
+    <div class="md:grid md:grid-cols-[15rem_minmax(0,1fr)]">
+      <Tree client:load transition:persist="docs-tree" transition:persist-props sections={tree} guides={guideRows} showcase={showcaseRows} current={current} />
+      <main class="min-w-0">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "drawer",
+  "title": "Drawer",
+  "summary": "A panel that slides in from an edge of the screen and can be swiped away.",
+  "description": "A sheet that slides in from an edge over a dimmed page: from the bottom on a phone (with a grabber), from the end or the start for a side panel. It follows the finger: drag it towards its edge to dismiss it, release short of a quarter and it settles back. Otherwise it is the Dialog: title, description, body and actions, focus trapped inside, Escape closes, focus returns to the trigger, the page behind is inert and does not scroll. Behaviour comes from the Zag drawer machine through Ark UI.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 6,
+  "status": "beta",
+  "engine": "drawer",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Layout-neutral hook around the trigger (display: contents)."
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "aria-haspopup=dialog, aria-expanded. The default trigger is the real Button (outline, sm), marked data-drawer=\"trigger\"."
+    },
+    {
+      "part": "backdrop",
+      "element": "div",
+      "description": "Dims the page with color.scrim; rendered in a portal. While the sheet is dragged it fades with the drag (1 − --drawer-swipe-progress)."
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Fixed over the viewport, rendered in a portal; places the sheet against its edge. A press on it (outside the sheet) closes."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=dialog, aria-modal; data-state=open|closed, data-swipe-direction, data-dragging. Surface, shadow.overlay, radius.window on the corners away from its edge. bottom: full width up to 640px, centred, at most the viewport less 48px high, scrolls inside. end / start: full height, 400px wide (at most the viewport less 48px). Carries kbd-instant. The engine's inline transform holds the drag offset; the slide itself is the translate property, so the two never fight."
+    },
+    {
+      "part": "grabber",
+      "element": "div",
+      "optional": true,
+      "description": "bottom only: a strip along the top edge (8px above the handle) that starts a drag (touch-action: none), holding the indicator. aria-hidden. The whole sheet can be dragged too; the grabber is the visible cue."
+    },
+    {
+      "part": "grabber-indicator",
+      "element": "div",
+      "optional": true,
+      "description": "The visible handle: 36×4px pill in color.line-strong, centred in the grabber."
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "description": "The Dialog's header: title and close button on one line."
+    },
+    {
+      "part": "title",
+      "element": "h2",
+      "description": "text.md, weight 600 (the Dialog's title)."
+    },
+    {
+      "part": "close",
+      "element": "button",
+      "optional": true,
+      "description": "The Dialog's close button: a Button (ghost, sm, square, rounded, muted) with a Tooltip, aria-label=Close. Marked data-drawer=\"close\"."
+    },
+    {
+      "part": "description",
+      "element": "div",
+      "optional": true,
+      "description": "text.sm, ink-2 (the Dialog's description)."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "optional": true,
+      "description": "The default slot: takes the free height and scrolls inside the sheet (overscroll contained)."
+    },
+    {
+      "part": "footer",
+      "element": "div",
+      "optional": true,
+      "description": "Actions as Buttons (sm), at the end of the row; on a phone they share the row, as in the Dialog. Sits above the safe-area inset."
+    }
+  ],
+  "props": {
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "Controlled: open with onOpenChange. Uncontrolled: defaultOpen."
+    },
+    "side": {
+      "type": "enum",
+      "values": [
+        "bottom",
+        "end",
+        "start"
+      ],
+      "default": "bottom",
+      "description": "The edge it slides from, and towards which a drag dismisses it. end and start follow the writing direction."
+    },
+    "title": {
+      "type": "string",
+      "description": "Required: it names the sheet."
+    },
+    "description": {
+      "type": "string"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "label": "string",
+        "value": "string?",
+        "variant": "button variant?",
+        "close": "boolean?"
+      },
+      "description": "Footer Buttons in order, least destructive first. Each closes the sheet unless close is false."
+    },
+    "closable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show the close button in the header."
+    },
+    "triggerLabel": {
+      "type": "string",
+      "description": "Renders a default Button trigger with this label. Otherwise pass your own trigger, or control `open`."
+    }
+  },
+  "slots": {
+    "default": "Body content",
+    "trigger": "Your own trigger element (React: the trigger prop; Vue: trigger slot; Svelte: trigger snippet receiving the props to spread)",
+    "footer": "Custom footer instead of `actions`"
+  },
+  "events": {
+    "openChange": "(open: boolean) after a trigger press, Escape, a press outside, a dismissing drag, an action",
+    "action": "(value: string) when a footer action is pressed"
+  },
+  "states": [
+    "open",
+    "dragging",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.scrim",
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.line-strong",
+    "shadow.overlay",
+    "radius.window",
+    "radius.pill",
+    "text.sm",
+    "text.md",
+    "duration.base",
+    "duration.slow",
+    "easing.drawer",
+    "motion.sheet-shift",
+    "z.dialog"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip",
+    "dialog"
+  ],
+  "a11y": {
+    "role": "dialog",
+    "keyboard": [
+      "Enter / Space on the trigger open it; focus moves to the first control in the sheet",
+      "Tab and Shift+Tab cycle inside the sheet; focus cannot leave it",
+      "Escape closes and returns focus to the trigger",
+      "A press outside the sheet closes it; focus returns to the trigger"
+    ],
+    "notes": [
+      "Labelled by its title and described by its description; aria-modal.",
+      "While open the rest of the page is inert and does not scroll.",
+      "Dragging is an extra way to close, never the only one: the close button, Escape and a press outside always work. The grabber is decorative (aria-hidden).",
+      "Opening and closing from the keyboard are instant."
+    ]
+  },
+  "motion": [
+    "open from the pointer: the sheet slides in from its edge (translate motion.sheet-shift, 100% → 0) over duration.slow with easing.drawer; the backdrop fades in with it",
+    "close: it slides back out, shorter, over duration.base with easing.drawer; the backdrop fades over the same time",
+    "drag: the sheet follows the finger 1:1 with no transition (the engine zeroes it while dragging) and the backdrop fades with the drag; on release it settles back, or leaves from where it is, over duration.slow with easing.drawer",
+    "keyboard: open and close are instant (kbd-instant)",
+    "reduced motion: no travel (motion.sheet-shift is 0%): the sheet fades in over duration.slow and out over duration.base, the backdrop with it",
+    "mounted open (defaultOpen, or open at mount): sheet and backdrop are drawn at once, with no entrance (data-mounted-open until it first closes); its close, and every later open, animate as above"
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "date-picker",
+  "title": "Date Picker",
+  "summary": "A date field that opens a calendar, for one date, several dates or a range.",
+  "description": "A date field with a calendar in a popup. The field reads as words in the locale: a date (\"Mar 10, 2025\") or a range as one phrase (\"Mar 10 – 28, 2025\", \"Mar 28 – Apr 2, 2025\", \"Dec 30, 2025 – Jan 2, 2026\"), with the calendar icon at its start. A press anywhere on the field opens the calendar and leaves the caret in the text, so a date can still be typed: the shown text, the locale's numeric date, ISO, month names, a range with a dash or \"to\"; it is read on Enter and when focus leaves. The calendar is the shared popup with the calendar's views (days, months, years); it grows out of the field from the pointer and is instant from the keyboard. Choosing a date writes it and closes the popup. Single dates, several dates or a range, min / max, unavailable days, week start and locale. Behaviour, focus and ARIA come from the Zag date-picker machine, through Ark UI; the text is the component's own (helper `date-text.ts`).",
+  "kind": "component",
+  "category": "inputs",
+  "order": 10,
+  "status": "beta",
+  "engine": "date-picker",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The engine's root; data-state=open|closed. Never narrower than its dates (min-width: min-content), so a caller's width widens the field but never cuts a date."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "The shared control (`lib/control.ts`), field kind: its sizes (xs 24 · sm 28 · md 32 · lg 36) and looks (outline, subtle, ghost) holding the input and the icon. A text field: the accent ring shows for every kind of focus and while the calendar is open. data-invalid, data-disabled from the engine."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "One text input over the whole control, as wide as its text (field-sizing: content) and growing into a wider field. Shows the dates in words in the locale; a range is one phrase (Intl formatRange). role=combobox, aria-haspopup=dialog, aria-expanded; it is the engine's trigger (focus comes back to it). Placeholder \"Select date\" / \"Select dates\". dir=auto; 16px on coarse pointers. With a name, one hidden input per date carries the ISO date."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "description": "The calendar icon (Phosphor calendar-blank, bold) at the field's start, 14px ink-3 like an input group's icon, drawn over the input's start padding (control padding + 14px + 8px gap); takes no pointer, aria-hidden. Mirrors to the right end right-to-left."
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Placed by the engine under the control; rendered in a portal. Exposes --transform-origin, --available-height."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=application, named by triggerLabel; the shared popup surface (`lib/popup.ts`) with 8px padding, holding the calendar's views (the Calendar adapter's CalendarViews: header, grid, dates)."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "model": true,
+      "description": "Selected dates as ISO strings (\"2025-03-12\"). single: one; range: the start and the end."
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": [
+        "single",
+        "multiple",
+        "range"
+      ],
+      "default": "single",
+      "description": "range: a start and an end, shown as one phrase in the one input; the calendar stays open until the end is chosen. multiple: the dates joined by a middle dot."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label; otherwise pass aria-label."
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Shown while no date is chosen. Without it: \"Select date\" (\"Select dates\" for a range)."
+    },
+    "triggerLabel": {
+      "type": "string",
+      "default": "Choose date",
+      "description": "The calendar popup's accessible name (the field itself is the trigger)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The shared control's sizes (`lib/control.ts`), dimensions only: xs 24px, sm 28px, md 32px, lg 36px."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "min": {
+      "type": "string",
+      "description": "Earliest date that can be chosen (ISO)."
+    },
+    "max": {
+      "type": "string",
+      "description": "Latest date that can be chosen (ISO)."
+    },
+    "unavailable": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Dates that cannot be chosen (ISO). Also takes isDateUnavailable(date)."
+    },
+    "defaultFocusedValue": {
+      "type": "string",
+      "description": "The date the calendar opens on when no value is set. Without it: today."
+    },
+    "startOfWeek": {
+      "type": "number",
+      "description": "0 Sunday … 6 Saturday. Without it: the locale's."
+    },
+    "locale": {
+      "type": "string",
+      "description": "BCP 47 tag for the field's words and digits, the calendar's names and the typed forms it reads. Without it: the LocaleProvider's."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Where \"today\" is taken. Without it: the browser's."
+    },
+    "fixedWeeks": {
+      "type": "boolean",
+      "default": true
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false
+    },
+    "required": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name: one hidden input per date carries it, as an ISO date (\"2025-03-12\")."
+    },
+    "placement": {
+      "type": "string",
+      "default": "bottom-start",
+      "description": "Preferred side; flips when there is no room."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": false,
+      "description": "The calendar is open at mount: it lands with no entrance (nothing plays on first paint) and takes no focus; until it first closes it stays on its placement's side (no flip), in the room its host reserved. For an example or a page whose subject is the calendar; it closes as usual (Escape, a press outside, a choice)."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[]) ISO dates",
+    "openChange": "(open: boolean)"
+  },
+  "states": [
+    "hover",
+    "focus",
+    "open",
+    "selected",
+    "disabled",
+    "invalid",
+    "read-only"
+  ],
+  "tokens": [
+    "color.field",
+    "color.inset",
+    "color.surface",
+    "color.hover",
+    "color.ink",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "shadow.raised",
+    "radius.control",
+    "radius.chip",
+    "radius.card",
+    "text.sm",
+    "text.xs",
+    "duration.fast",
+    "duration.base",
+    "duration.popup",
+    "easing.out-strong",
+    "motion.popup-scale"
+  ],
+  "dependencies": [
+    "calendar"
+  ],
+  "a11y": {
+    "role": "combobox (the text input, aria-haspopup=dialog) + dialog-like grid (role=application)",
+    "keyboard": [
+      "Tab reaches the input (one tab stop; Chrome selects its text, so typing replaces it)",
+      "Typing writes a date or a range; the calendar follows what is read so far; Enter or leaving the field takes it (text that is not a date, or an unavailable date, gives the field its value back). Escape while typing restores the value",
+      "Arrow Down opens the calendar at once (no animation) with focus on the selected date, or the focused one",
+      "In the calendar: the calendar's keys (arrows, Page Up / Down, Home / End, Enter / Space), all instant",
+      "Choosing a date closes the calendar (in range mode, the end date does) and focus returns to the input",
+      "Escape closes the calendar and returns focus to the input; Tab moves through the calendar's header and grid"
+    ],
+    "notes": [
+      "Give it a visible label or an aria-label; the input carries the name.",
+      "A press anywhere on the field (the icon included) opens the calendar and keeps the caret in the text; a tap on a touch screen opens it without the on-screen keyboard (focus goes to the calendar), and a tap while it is open is for typing.",
+      "Opening and closing from the keyboard are instant; the pointer gets the popup's scale-in out of the field."
+    ]
+  },
+  "motion": [
+    "popup: the shared popup surface (`lib/popup.ts`): opacity + scale from motion.popup-scale out of the field, duration.popup, easing.out-strong; closes at duration.fast; instant when opened or closed from the keyboard",
+    "control: fill over duration.fast, ring over duration.base; nothing else in the field moves (the text changes at once: it is a value)",
+    "calendar: the calendar's own motion (colour on hover and selection, press scale from the pointer; paging instant)"
+  ]
+}

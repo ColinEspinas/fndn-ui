@@ -1,0 +1,196 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "task-rows",
+  "title": "Task Rows",
+  "summary": "The live status of an agent's tasks, each row opening to its steps.",
+  "description": "The live status of an agent's tasks as rows (running, failed, completed), each opening to its steps. Capsules (each row its own surface, the radius morphing 22 → 14 while open) or one list card; each row is a disclosure that reveals a hairline rail of detail lines. Fully controlled: the host owns every row's status and which rows are open.",
+  "kind": "block",
+  "category": "agent",
+  "order": 5,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-variant capsules | list"
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "repeat": true,
+      "description": "A collapsible (variant row) with this class on its root: its trigger is the whole row (badge · label · status · amount in the trigger's label part, then the caret), its region holds the detail grid. data-state=open|closed on the row from the engine; the capsule radius follows it."
+    },
+    {
+      "part": "badge",
+      "element": "span",
+      "description": "24px aria-hidden slot; the mark or the ring replace each other in place"
+    },
+    {
+      "part": "mark",
+      "element": "span",
+      "optional": true,
+      "description": "22px filled badge, data-tone green | red; scales in from 0.5 on a status swap"
+    },
+    {
+      "part": "ring",
+      "element": "span",
+      "optional": true,
+      "description": "24px progress ring; data-active spins (also under reduced motion)"
+    },
+    {
+      "part": "ring-track",
+      "element": "circle",
+      "optional": true
+    },
+    {
+      "part": "ring-arc",
+      "element": "circle",
+      "optional": true
+    },
+    {
+      "part": "step",
+      "element": "span",
+      "optional": true,
+      "description": "step number inside the ring"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "Truncates; full text in title"
+    },
+    {
+      "part": "amount",
+      "element": "span",
+      "description": "Tabular figures, never truncated"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status live region that stays mounted; holds a status-pill (sm; green Completed, red Failed + retry glyph) or, while running, sr-only words. Sits before the amount so a pill that arrives moves nothing"
+    },
+    {
+      "part": "detail-grid",
+      "element": "div"
+    },
+    {
+      "part": "rail",
+      "element": "span"
+    },
+    {
+      "part": "detail-list",
+      "element": "div"
+    },
+    {
+      "part": "detail",
+      "element": "div",
+      "repeat": true
+    },
+    {
+      "part": "detail-label",
+      "element": "span"
+    },
+    {
+      "part": "detail-meta",
+      "element": "span"
+    }
+  ],
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "capsules",
+        "list"
+      ],
+      "default": "capsules"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "key": "string",
+        "label": "string",
+        "amount": "string",
+        "status": "done | running | failed",
+        "step": "number?",
+        "details": "{ label, meta }[]"
+      },
+      "description": "Rows in order; the host updates status as work progresses. A row appended later enters without a stagger delay."
+    },
+    "open": {
+      "type": "array",
+      "model": true,
+      "description": "Keys of expanded rows. Each row is a collapsible: aria-expanded on its trigger, data-state on the row."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ completed, failed, running }"
+    },
+    "appear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the rows present at mount fade up, staggered. Off by default: set it on the list your code adds live, never on one rendered from history or with the page (a mount is not an arrival). Rows added after mount enter either way."
+    }
+  },
+  "events": {
+    "toggleRow": "(key: string, open: boolean)",
+    "openChange": "(keys: string[]) (React; Vue/Svelte through v-model:open / bind:open)"
+  },
+  "states": [
+    "row-hover",
+    "row-press",
+    "row-focus-visible",
+    "row-open",
+    "running",
+    "failed",
+    "done"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.green",
+    "color.red",
+    "color.on-accent",
+    "shadow.card",
+    "radius.card",
+    "radius.window",
+    "text.xs",
+    "font.mono",
+    "easing.out-strong",
+    "duration.base",
+    "duration.press",
+    "duration.reveal",
+    "duration.enter",
+    "duration.stagger",
+    "motion.stagger-max",
+    "text.sm"
+  ],
+  "dependencies": [
+    "collapsible",
+    "status-pill"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Tab moves through the row triggers",
+      "Enter / Space expand or collapse a row; focus stays on the trigger"
+    ],
+    "notes": [
+      "Each trigger is a real button with aria-expanded and aria-controls pointing at its details.",
+      "Status text sits in a role=status region per row that stays mounted; the pill inside it is swapped, so a change (running → failed → completed) is announced once. While running the region holds a visually hidden 'Running'.",
+      "The badge slot (mark, ring, step number) is aria-hidden.",
+      "Collapsed details are visibility: hidden, so they are not read out."
+    ]
+  },
+  "motion": [
+    "mount: nothing plays unless appear is set; with appear, rows present at first render fade up over duration.enter (easing.out-strong, fill both), staggered by duration.stagger and capped at motion.stagger-max; a row added after mount always enters, with no delay",
+    "expand / collapse: each row's collapsible reveals the details (its reveal recipe; instant from the keyboard); the detail lines do not enter again; the capsule radius morphs 22 → radius.window over duration.reveal easing.out-strong and the caret turns from right to down over duration.move",
+    "status swap: transitions armed by data-ready (never first paint), interruptible: a new mark scales in from 0.5 with opacity (duration.press / duration.base), a ring fades in, a status-pill arrives out of opacity 0 + blur(2px) over duration.base; the pill sits before the amount, so nothing to its right moves",
+    "loops: the running ring spins (1.1s linear) and keeps spinning under reduced motion; the retry glyph on a failed pill is static",
+    "hover (gated) and press: the collapsible trigger's (--fndn-hover, --fndn-hover-2)"
+  ],
+  "notes": [
+    "The rows are fully controlled by rows[].status: to show a pending → failed → completed sequence on one row, change its status."
+  ]
+}

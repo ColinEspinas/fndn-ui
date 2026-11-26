@@ -1,0 +1,111 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "width": 280,
+      "props": {
+        "placeholder": "Atlas redesign",
+        "aria-label": "Project name"
+      }
+    },
+    {
+      "name": "Small",
+      "width": 280,
+      "props": {
+        "size": "sm",
+        "placeholder": "Search projects",
+        "aria-label": "Search projects"
+      }
+    },
+    {
+      "name": "Invalid",
+      "width": 280,
+      "props": {
+        "value": "joy@north",
+        "invalid": true,
+        "aria-label": "Supplier email"
+      }
+    },
+    {
+      "name": "Mono",
+      "width": 280,
+      "props": {
+        "size": "sm",
+        "mono": true,
+        "value": "npm run freeze",
+        "aria-label": "Command"
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 280,
+      "props": {
+        "placeholder": "Locked while the agent runs",
+        "disabled": true,
+        "aria-label": "Notes"
+      }
+    },
+    {
+      "name": "Multiline",
+      "width": 280,
+      "props": {
+        "multiline": true,
+        "placeholder": "Tasting notes",
+        "aria-label": "Tasting notes"
+      }
+    },
+    {
+      "name": "Field",
+      "frameworks": false
+    },
+    {
+      "name": "Field with error",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long value",
+      "width": 280,
+      "props": {
+        "value": "bartholomew.fitzgerald@northwind-industries-holdings.example.com",
+        "aria-label": "Supplier email"
+      }
+    },
+    {
+      "name": "Long placeholder",
+      "width": 280,
+      "props": {
+        "size": "sm",
+        "placeholder": "Describe the project, its owner and the quarter it belongs to",
+        "aria-label": "Description"
+      }
+    },
+    {
+      "name": "One character",
+      "width": 280,
+      "props": {
+        "value": "J",
+        "aria-label": "Initial"
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 280,
+      "props": {
+        "value": "فستق حلبي مع العسل",
+        "dir": "rtl",
+        "aria-label": "Project name"
+      }
+    },
+    {
+      "name": "Long text area",
+      "width": 280,
+      "props": {
+        "multiline": true,
+        "value": "Analytics holds the top slot all weekend. Merge it first thing Saturday so the build has time to settle before the afternoon release, then recheck seat usage before promoting the annual-plan discount.",
+        "aria-label": "Tasting notes"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "playground": {
+    "props": {
+      "items": [
+        { "value": "production", "label": "Production", "meta": "main" },
+        { "value": "staging", "label": "Staging", "meta": "release/2026.11" },
+        { "value": "preview", "label": "Preview", "meta": "feat/usage-alerts" }
+      ],
+      "placeholder": "Choose an environment",
+      "label": "Deploy to",
+      "size": "md",
+      "variant": "outline",
+      "disabled": false,
+      "invalid": false
+    },
+    "width": 240
+  },
+  "examples": [
+    { "file": "environment", "title": "Deploy environment" },
+    { "file": "deploy-filters", "title": "Filters in a toolbar" },
+    { "file": "member-roles", "title": "Member roles in a list" },
+    { "file": "plan", "title": "Plan, with prices" }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "examples": [
+    {
+      "name": "Single",
+      "width": 220,
+      "props": {
+        "label": "Card type",
+        "items": [
+          {
+            "value": "invoice",
+            "label": "Invoice card"
+          },
+          {
+            "value": "supplier",
+            "label": "Supplier card"
+          },
+          {
+            "value": "order",
+            "label": "Order summary"
+          },
+          {
+            "value": "archive",
+            "label": "Archived layout",
+            "disabled": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Multiple, with notes",
+      "width": 240,
+      "props": {
+        "label": "Add-ons",
+        "selectionMode": "multiple",
+        "value": [
+          "seats",
+          "audit"
+        ],
+        "items": [
+          {
+            "value": "seats",
+            "label": "Extra seats",
+            "meta": "+$0.50"
+          },
+          {
+            "value": "audit",
+            "label": "Audit log",
+            "meta": "+$1.00"
+          },
+          {
+            "value": "alerts",
+            "label": "Usage alerts",
+            "meta": "+$0.75"
+          },
+          {
+            "value": "backups",
+            "label": "Backups",
+            "meta": "Free"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Small",
+      "width": 160,
+      "props": {
+        "size": "sm",
+        "aria-label": "Align",
+        "value": [
+          "center"
+        ],
+        "items": [
+          {
+            "value": "start",
+            "label": "Start"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "end",
+            "label": "End"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 220,
+      "props": {
+        "label": "Region",
+        "disabled": true,
+        "value": [
+          "North"
+        ],
+        "items": [
+          "North",
+          "South",
+          "East",
+          "West"
+        ]
+      }
+    },
+    {
+      "name": "Descriptions",
+      "props": {
+        "label": "Send failed deploy alerts to",
+        "selectionMode": "multiple",
+        "value": [
+          "email"
+        ],
+        "items": [
+          {
+            "value": "email",
+            "label": "Email",
+            "description": "maya@northwind.example and 3 teammates"
+          },
+          {
+            "value": "sms",
+            "label": "Text message",
+            "description": "+1 (555) 014-2290"
+          },
+          {
+            "value": "inbox",
+            "label": "Workspace inbox"
+          }
+        ]
+      },
+      "width": 320
+    },
+    {
+      "name": "Changes (xs, status letters)",
+      "width": 260,
+      "props": {
+        "size": "xs",
+        "aria-label": "Changes",
+        "items": [
+          {
+            "value": "rate-limit",
+            "label": "rate-limit.ts",
+            "description": "src/middleware",
+            "meta": "M",
+            "metaTone": "orange"
+          },
+          {
+            "value": "retry",
+            "label": "retry-policy.ts",
+            "description": "src/webhooks",
+            "meta": "A",
+            "metaTone": "green"
+          },
+          {
+            "value": "legacy",
+            "label": "legacy-queue.ts",
+            "description": "src/webhooks",
+            "meta": "D",
+            "metaTone": "red"
+          },
+          {
+            "value": "pkg",
+            "label": "package.json",
+            "meta": "M",
+            "metaTone": "orange"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Flush (a pane's change list)",
+      "width": 260,
+      "props": {
+        "size": "xs",
+        "aria-label": "Changes",
+        "items": [
+          {
+            "value": "rate-limit",
+            "label": "rate-limit.ts",
+            "description": "src/middleware",
+            "meta": "M",
+            "metaTone": "orange"
+          },
+          {
+            "value": "retry",
+            "label": "retry-policy.ts",
+            "description": "src/webhooks",
+            "meta": "A",
+            "metaTone": "green"
+          },
+          {
+            "value": "legacy",
+            "label": "legacy-queue.ts",
+            "description": "src/webhooks",
+            "meta": "D",
+            "metaTone": "red"
+          },
+          {
+            "value": "pkg",
+            "label": "package.json",
+            "meta": "M",
+            "metaTone": "orange"
+          }
+        ],
+        "variant": "flush",
+        "value": [
+          "rate-limit"
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long options",
+      "width": 180,
+      "props": {
+        "aria-label": "Report",
+        "items": [
+          {
+            "value": "a",
+            "label": "Weekly"
+          },
+          {
+            "value": "b",
+            "label": "Seasonal revenue performance across every regional store for the whole of last year"
+          },
+          {
+            "value": "c",
+            "label": "supplier-contracts-renewal-schedule-and-pricing-history-export"
+          },
+          {
+            "value": "d",
+            "label": "Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Many options",
+      "width": 220,
+      "props": {
+        "label": "Currency",
+        "selectionMode": "multiple",
+        "items": [
+          "US dollar",
+          "Euro",
+          "British pound",
+          "Japanese yen",
+          "Swiss franc",
+          "Canadian dollar",
+          "Mexican peso",
+          "Swedish krona",
+          "Australian dollar",
+          "Danish krone",
+          "Norwegian krone",
+          "Polish zloty",
+          "Czech koruna",
+          "Indian rupee",
+          "Korean won",
+          "Brazilian real",
+          "Turkish lira",
+          "Thai baht",
+          "Israeli shekel",
+          "South African rand"
+        ]
+      }
+    },
+    {
+      "name": "One option",
+      "props": {
+        "aria-label": "Only",
+        "items": [
+          "A"
+        ]
+      }
+    },
+    {
+      "name": "No options",
+      "width": 220,
+      "props": {
+        "label": "Empty",
+        "items": []
+      }
+    },
+    {
+      "name": "Right-to-left options",
+      "width": 220,
+      "props": {
+        "label": "العملة",
+        "items": [
+          "دولار",
+          "يورو",
+          "Swiss franc",
+          "الدولار الأمريكي مع رسوم التحويل"
+        ]
+      }
+    },
+    {
+      "name": "Long descriptions",
+      "props": {
+        "label": "Send failed deploy alerts to",
+        "items": [
+          {
+            "value": "webhook",
+            "label": "Webhook",
+            "description": "POST https://hooks.northwind.example/deploys/web-app/production/failed?token=nw_live_8f2c4a91d7e3b6058a1f"
+          },
+          {
+            "value": "pager",
+            "label": "On-call rotation for the billing-api and data-pipeline projects across every region",
+            "description": "Pages the engineer on call, then escalates to Maya Chen after 15 minutes without an acknowledgement"
+          },
+          {
+            "value": "x",
+            "label": "X",
+            "description": ""
+          }
+        ]
+      },
+      "width": 280
+    },
+    {
+      "name": "Wrapped label with a description",
+      "width": 240,
+      "props": {
+        "aria-label": "Plan",
+        "items": [
+          {
+            "value": "business",
+            "label": "Business with audit log export and single sign-on",
+            "description": "$1,240.00 a month"
+          },
+          {
+            "value": "team",
+            "label": "Team",
+            "description": "$240.00 a month"
+          }
+        ]
+      }
+    }
+  ]
+}

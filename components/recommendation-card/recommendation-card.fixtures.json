@@ -1,0 +1,304 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "title": "Want me to place this restock order?",
+        "options": [
+          {
+            "key": "high",
+            "body": [
+              "Move the build cache to ",
+              {
+                "entity": "Northwind Cloud"
+              },
+              " with lead time ",
+              {
+                "value": "7 days",
+                "tone": "green"
+              }
+            ],
+            "short": "Move to Northwind Cloud · 7-day migration",
+            "signal": 3,
+            "tone": "green",
+            "label": "High confidence",
+            "cta": "Accept",
+            "ctaVariant": "accent"
+          },
+          {
+            "key": "review",
+            "body": [
+              "Switch the plan to ",
+              {
+                "value": "Business Annual"
+              },
+              " for peak season."
+            ],
+            "short": "Switch to Business Annual",
+            "signal": 2,
+            "tone": "orange",
+            "label": "Needs review",
+            "cta": "Configure",
+            "ctaVariant": "primary"
+          },
+          {
+            "key": "none",
+            "body": [
+              "Fall back to a ",
+              {
+                "strong": "full restock"
+              },
+              " across every SKU."
+            ],
+            "short": "Full restock across every SKU",
+            "signal": 0,
+            "tone": "neutral",
+            "label": "No signal",
+            "cta": "Accept full restock",
+            "ctaVariant": "primary"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Alternatives",
+      "props": {
+        "title": "Want me to place this restock order?",
+        "options": [
+          {
+            "key": "high",
+            "body": [
+              "Move the build cache to ",
+              {
+                "entity": "Northwind Cloud"
+              },
+              " with lead time ",
+              {
+                "value": "7 days",
+                "tone": "green"
+              }
+            ],
+            "short": "Move to Northwind Cloud · 7-day migration",
+            "signal": 3,
+            "tone": "green",
+            "label": "High confidence",
+            "cta": "Accept",
+            "ctaVariant": "accent"
+          },
+          {
+            "key": "review",
+            "body": [
+              "Switch the plan to ",
+              {
+                "value": "Business Annual"
+              },
+              " for peak season."
+            ],
+            "short": "Switch to Business Annual",
+            "signal": 2,
+            "tone": "orange",
+            "label": "Needs review",
+            "cta": "Configure",
+            "ctaVariant": "primary"
+          },
+          {
+            "key": "none",
+            "body": [
+              "Fall back to a ",
+              {
+                "strong": "full restock"
+              },
+              " across every SKU."
+            ],
+            "short": "Full restock across every SKU",
+            "signal": 0,
+            "tone": "neutral",
+            "label": "No signal",
+            "cta": "Accept full restock",
+            "ctaVariant": "primary"
+          }
+        ],
+        "open": true
+      }
+    },
+    {
+      "name": "Accepted",
+      "props": {
+        "title": "Want me to place this restock order?",
+        "options": [
+          {
+            "key": "high",
+            "body": [
+              "Move the build cache to ",
+              {
+                "entity": "Northwind Cloud"
+              },
+              " with lead time ",
+              {
+                "value": "7 days",
+                "tone": "green"
+              }
+            ],
+            "short": "Move to Northwind Cloud · 7-day migration",
+            "signal": 3,
+            "tone": "green",
+            "label": "High confidence",
+            "cta": "Accept",
+            "ctaVariant": "accent"
+          },
+          {
+            "key": "review",
+            "body": [
+              "Switch the plan to ",
+              {
+                "value": "Business Annual"
+              },
+              " for peak season."
+            ],
+            "short": "Switch to Business Annual",
+            "signal": 2,
+            "tone": "orange",
+            "label": "Needs review",
+            "cta": "Configure",
+            "ctaVariant": "primary"
+          },
+          {
+            "key": "none",
+            "body": [
+              "Fall back to a ",
+              {
+                "strong": "full restock"
+              },
+              " across every SKU."
+            ],
+            "short": "Full restock across every SKU",
+            "signal": 0,
+            "tone": "neutral",
+            "label": "No signal",
+            "cta": "Accept full restock",
+            "ctaVariant": "primary"
+          }
+        ],
+        "selected": 1,
+        "accepted": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long entity names",
+      "props": {
+        "title": "Want me to place this restock order with the regional distributor before the summer peak?",
+        "options": [
+          {
+            "key": "long",
+            "body": [
+              "Move the build cache to ",
+              {
+                "entity": "Northwind Frozen Dessert Logistics & Distribution Cooperative of Greater Rotterdam"
+              },
+              " with lead time ",
+              {
+                "value": "7–10 business days, weather permitting",
+                "tone": "orange"
+              }
+            ],
+            "short": "Reorder from Northwind Frozen Dessert Logistics & Distribution Cooperative",
+            "signal": 1,
+            "tone": "red",
+            "label": "Low confidence — supplier unverified",
+            "cta": "Accept and notify procurement",
+            "ctaVariant": "accent"
+          },
+          {
+            "key": "review",
+            "body": [
+              "Switch the plan to ",
+              {
+                "value": "Business Annual"
+              },
+              " for peak season."
+            ],
+            "short": "Switch to Business Annual",
+            "signal": 2,
+            "tone": "orange",
+            "label": "Needs review",
+            "cta": "Configure",
+            "ctaVariant": "primary"
+          }
+        ],
+        "open": true
+      }
+    },
+    {
+      "name": "Single option",
+      "props": {
+        "title": "Restock?",
+        "options": [
+          {
+            "key": "none",
+            "body": [
+              "Fall back to a ",
+              {
+                "strong": "full restock"
+              },
+              " across every SKU."
+            ],
+            "short": "Full restock across every SKU",
+            "signal": 0,
+            "tone": "neutral",
+            "label": "No signal",
+            "cta": "Accept full restock",
+            "ctaVariant": "primary"
+          }
+        ],
+        "open": true
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "title": "לבצע את הזמנת המלאי?",
+        "options": [
+          {
+            "key": "a",
+            "body": [
+              "להזמין גביעי וופל מ־",
+              {
+                "entity": "מלך הגביעים"
+              },
+              " עם זמן אספקה ",
+              {
+                "value": "7 ימים",
+                "tone": "green"
+              }
+            ],
+            "short": "הזמנה ממלך הגביעים",
+            "signal": 3,
+            "tone": "green",
+            "label": "ביטחון גבוה",
+            "cta": "אישור",
+            "ctaVariant": "accent"
+          },
+          {
+            "key": "b",
+            "body": [
+              "التحول إلى ",
+              {
+                "value": "فانيليا مدغشقر"
+              },
+              " لموسم الذروة."
+            ],
+            "short": "التحول إلى فانيليا مدغشقر",
+            "signal": 2,
+            "tone": "orange",
+            "label": "يحتاج مراجعة",
+            "cta": "تهيئة",
+            "ctaVariant": "primary"
+          }
+        ],
+        "open": true
+      }
+    }
+  ]
+}

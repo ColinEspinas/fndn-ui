@@ -1,0 +1,46 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "label",
+  "title": "Label",
+  "summary": "The name of a form control, shown above or beside it.",
+  "description": "The name of a form control, shown above or beside it. Its type is text-sm, medium, ink (the label of Input's field wrapper). Ark UI's Field.Label: inside a Field it is wired to the control (for / id) and fades with a disabled control; on its own, point it at a control with htmlFor. It wraps rather than being cut.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 8,
+  "status": "beta",
+  "engine": "field",
+  "element": "label",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "label",
+      "description": "A <label>: text.sm, medium, ink. Author text keeps its own direction and wraps (an unbreakable name breaks anywhere); never truncated. Inside a disabled Field it is at half opacity (data-disabled from Ark)."
+    }
+  ],
+  "props": {
+    "htmlFor": {
+      "type": "string",
+      "description": "id of the control it names. Set by the Field when the label is inside one."
+    }
+  },
+  "slots": {
+    "default": "The label text (and, inside a Field, its required indicator)."
+  },
+  "states": [
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "text.sm"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "A <label> names its control: a click on it focuses (or toggles) the control, and assistive technology reads it as the control's name.",
+      "Not focusable itself."
+    ]
+  },
+  "motion": [
+    "none"
+  ]
+}

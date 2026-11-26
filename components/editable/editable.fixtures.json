@@ -1,0 +1,111 @@
+{
+  "examples": [
+    {
+      "name": "Field",
+      "width": 260,
+      "props": {
+        "label": "Board name",
+        "value": "Summer launch"
+      }
+    },
+    {
+      "name": "Empty",
+      "width": 260,
+      "props": {
+        "aria-label": "Notes",
+        "placeholder": "Add a note"
+      }
+    },
+    {
+      "name": "Small",
+      "width": 200,
+      "props": {
+        "size": "sm",
+        "aria-label": "Layer name",
+        "value": "Header"
+      }
+    },
+    {
+      "name": "With controls",
+      "width": 280,
+      "props": {
+        "label": "Title",
+        "value": "Q3 revenue report",
+        "controls": true,
+        "activationMode": "dblclick"
+      }
+    },
+    {
+      "name": "Inline",
+      "props": {
+        "variant": "inline",
+        "aria-label": "Owner",
+        "value": "Joy Martín"
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 260,
+      "props": {
+        "label": "Board name",
+        "value": "Summer launch",
+        "disabled": true
+      }
+    },
+    {
+      "name": "Description",
+      "width": 360,
+      "props": {
+        "aria-label": "Description",
+        "multiline": true,
+        "size": "sm",
+        "placeholder": "Add a description…",
+        "value": "Webhook deliveries that time out are dropped today.\nRetry them three times with backoff, then mark the event failed."
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long text",
+      "width": 200,
+      "props": {
+        "aria-label": "Title",
+        "value": "Seasonal revenue performance across every regional store for the whole of last year"
+      }
+    },
+    {
+      "name": "Unbreakable text",
+      "width": 200,
+      "props": {
+        "aria-label": "File",
+        "value": "supplier-contracts-renewal-schedule-and-pricing-history-export.csv",
+        "controls": true
+      }
+    },
+    {
+      "name": "One letter",
+      "width": 200,
+      "props": {
+        "aria-label": "Initial",
+        "value": "J"
+      }
+    },
+    {
+      "name": "Right-to-left text",
+      "width": 260,
+      "props": {
+        "label": "اسم اللوحة",
+        "value": "إطلاق الصيف"
+      }
+    },
+    {
+      "name": "Empty with controls",
+      "width": 260,
+      "props": {
+        "aria-label": "Notes",
+        "controls": true,
+        "activationMode": "click"
+      }
+    }
+  ]
+}

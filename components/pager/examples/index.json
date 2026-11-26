@@ -1,0 +1,20 @@
+{
+  "playground": {
+    "props": {
+      "count": 4,
+      "page": 0,
+      "loop": false,
+      "layout": "start",
+      "unit": "Comment",
+      "label": "Unresolved comments",
+      "prevLabel": "Previous comment",
+      "nextLabel": "Next comment"
+    }
+  },
+  "examples": [
+    { "file": "review-comments", "title": "Step through review comments" },
+    { "file": "usage-insights", "title": "Insights that wrap around" },
+    { "file": "incident-alerts", "title": "Up and down through stacked alerts" },
+    { "file": "one-result", "title": "Only one match" }
+  ]
+}

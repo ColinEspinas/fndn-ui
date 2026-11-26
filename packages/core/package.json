@@ -1,0 +1,27 @@
+{
+  "name": "@fndn/core",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The stylesheet (tokens, the Tailwind preset, base rules) and the token and icon tables, generated from spec/tokens.json and spec/icons.json.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/tokens.ts",
+    "./css": "./css/index.css",
+    "./css/*": "./css/*"
+  },
+  "files": [
+    "css",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

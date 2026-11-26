@@ -1,0 +1,31 @@
+{
+  "examples": [
+    {
+      "name": "Small",
+      "props": {
+        "size": "sm"
+      }
+    },
+    {
+      "name": "Medium",
+      "props": {
+        "size": "md"
+      }
+    },
+    {
+      "name": "Large",
+      "props": {
+        "size": "lg"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Descriptive label",
+      "props": {
+        "size": "md",
+        "label": "Loading 12,480 supplier records"
+      }
+    }
+  ]
+}

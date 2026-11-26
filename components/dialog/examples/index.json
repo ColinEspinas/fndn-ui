@@ -1,0 +1,22 @@
+{
+  "playground": {
+    "props": {
+      "triggerLabel": "Invite teammates",
+      "title": "Invite teammates",
+      "description": "They get an email with a link to join Northwind. Invites expire after 7 days.",
+      "role": "dialog",
+      "closable": true,
+      "size": "md",
+      "actions": [
+        { "label": "Cancel", "value": "cancel", "variant": "ghost" },
+        { "label": "Send invites", "value": "send", "variant": "primary" }
+      ]
+    }
+  },
+  "examples": [
+    { "file": "invite-teammates", "title": "Invite teammates" },
+    { "file": "deploy-details", "title": "Deploy details" },
+    { "file": "rename-project", "title": "Rename a project" },
+    { "file": "keyboard-shortcuts", "title": "Keyboard shortcuts" }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "examples": [
+    {
+      "name": "Diff preview",
+      "props": {
+        "triggerLabel": "InvoiceSchedule.tsx",
+        "title": "InvoiceSchedule.tsx",
+        "add": 74,
+        "del": 41,
+        "lines": [
+          {
+            "text": "const slots = coldSlots(week);",
+            "tone": "ctx"
+          },
+          {
+            "text": "const windows = slots;",
+            "tone": "del"
+          },
+          {
+            "text": "const windows = slots.filter(",
+            "tone": "add"
+          },
+          {
+            "text": "  (s) => s.temp <= -12,",
+            "tone": "add"
+          },
+          {
+            "text": ");",
+            "tone": "add"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Text",
+      "props": {
+        "triggerLabel": "Northwind Cloud",
+        "placement": "top-start"
+      },
+      "text": "Cloud hosting provider. 7-day migration, SOC 2 attested, 4.8 rating across 212 reviews."
+    },
+    {
+      "name": "Mounted open",
+      "props": {
+        "open": true,
+        "triggerLabel": "Northwind Cloud",
+        "placement": "bottom-start"
+      },
+      "text": "Cloud hosting provider. 7-day migration, SOC 2 attested."
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long diff",
+      "props": {
+        "triggerLabel": "packages/billing-operations/src/scheduling/weekly/InvoiceScheduleWithBillingWindows.tsx",
+        "title": "packages/billing-operations/src/scheduling/weekly/InvoiceScheduleWithBillingWindows.tsx",
+        "add": 12480,
+        "del": 1,
+        "lines": [
+          {
+            "text": "export const veryLongIdentifierThatDoesNotFitAnywhereOnOneLineOfThePreview = computeBillingWindowsForEveryPlan(week, { first: \"annual\" });",
+            "tone": "add"
+          },
+          {
+            "text": "x",
+            "tone": "del"
+          },
+          {
+            "text": "",
+            "tone": "ctx"
+          },
+          {
+            "text": "// النكهات الموسمية",
+            "tone": "ctx"
+          }
+        ]
+      }
+    },
+    {
+      "name": "No header",
+      "props": {
+        "triggerLabel": "J"
+      },
+      "text": "Jo"
+    }
+  ]
+}

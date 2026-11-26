@@ -1,0 +1,185 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "segmented-control",
+  "title": "Segmented Control",
+  "summary": "Pick one of a few options that sit side by side.",
+  "description": "Pick one of a few options that sit side by side. Content-sized segments on a field track, with a surface thumb that slides to the selected one. It is a radio group: one tab stop, arrow keys move and select. Behaviour comes from the Zag radio-group machine, through Ark UI's SegmentGroup in React, Vue and Svelte. Without JavaScript the native radios still work and the selected segment paints itself.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 4,
+  "engine": "radio-group",
+  "status": "stable",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=radiogroup. The track: its height is the segments' height plus 2px padding (chips: no track, a 4px-padded row that scrolls sideways). Labels are never cut: when the options do not fit, the engine glue (segmented-control.logic.ts) sets data-overflow and the row scrolls sideways with no scrollbar, a veil in the track colour on the edge(s) with more, the focus ring on the option's edge, and the selected option scrolled into view at mount and when it changes. Options that fit: nothing changes."
+    },
+    {
+      "part": "thumb",
+      "element": "div",
+      "description": "The engine's indicator. It is given the selected segment's box as --left / --top / --width / --height on itself and travels on transform; hidden until measured. Carries kbd-instant."
+    },
+    {
+      "part": "option",
+      "element": "label",
+      "repeat": true,
+      "description": "One segment; data-state=checked|unchecked, data-focus-visible, data-disabled. An icon may precede the label."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "The segment's text and accessible name; with icons it is also visually hidden (sr-only). In chips it is the label slot: an optional status dot, the text and an optional count."
+    },
+    {
+      "part": "dot",
+      "element": "span",
+      "optional": true,
+      "description": "Status dot inside the label (aria-hidden): 6px, coloured by the option's dot tone: blue|green|orange|red|purple|cyan|yellow|pink (the tag hues), ink-3 without a tone."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "Native radio, visually hidden: focus, arrow keys and form value come from it."
+    }
+  ],
+  "props": {
+    "options": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "disabled": "boolean?",
+        "dot": "string?",
+        "count": "number|string?"
+      },
+      "description": "Segments in order. Strings are accepted as value = label. Each may carry an icon (a node in React, the `icon` slot in Vue, the `icon` snippet in Svelte), a status `dot` (a tag hue: blue, green, orange, red, purple, cyan, yellow, pink; true for ink-3) and a `count` (a plain `count`), both rendered inside the label."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "Selected value. Defaults to the first option."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "segments",
+        "chips"
+      ],
+      "default": "segments",
+      "description": "segments: content-sized segments on a field track. chips: separate 26px chips with a 4px gap and no track, for a filter row; the thumb still slides between them, and the row scrolls sideways when it overflows. size does not apply to chips."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The track's height, on the one control scale (an sm segmented control lines up with an sm Button or Select): xs 24px (20px segments, 12px labels; the compact switcher), sm 28px (24px, 12px), md 32px (28px, 13px), lg 36px (32px, 14px). Dimensions only: the track, thumb, hover, press and focus are the same at every size. Does not apply to chips."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "pill",
+        "rounded"
+      ],
+      "description": "Left out, the app's shape: a pill, or rounded in a rounded app (\"shape\": \"rounded\" in the project's fndn.json). Named, it is that shape whatever the app's. pill: fully round track and thumb. rounded: the radius of a field of the same height on the track (radius.chip at xs and sm, radius.control at md and lg). The thumb is concentric (the track's radius less the 2px padding)."
+    },
+    "fill": {
+      "type": "boolean",
+      "default": false,
+      "description": "Equal-width segments that share the root's width."
+    },
+    "icons": {
+      "type": "boolean",
+      "default": false,
+      "description": "Icon-only square segments; each label stays as the accessible name."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name of the radios."
+    }
+  },
+  "slots": {
+    "icon": "Icon of an option (Vue slot / Svelte snippet, called with the option). In React an option carries `icon` itself."
+  },
+  "events": {
+    "valueChange": "(value: string)"
+  },
+  "states": [
+    "selected",
+    "hover",
+    "press",
+    "press-selected",
+    "focus-visible",
+    "disabled",
+    "rounded",
+    "chips"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "shadow.btn",
+    "radius.pill",
+    "radius.shape",
+    "radius.shape-sm",
+    "radius.control",
+    "radius.chip",
+    "text.sm",
+    "text.md",
+    "duration.base",
+    "duration.press",
+    "duration.move",
+    "easing.move",
+    "easing.out-strong",
+    "motion.press-scale",
+    "text.xs",
+    "color.tag-blue",
+    "color.tag-green",
+    "color.tag-orange",
+    "color.tag-red",
+    "color.tag-purple",
+    "color.tag-cyan",
+    "color.tag-yellow",
+    "color.tag-pink"
+  ],
+  "dependencies": [
+    "count"
+  ],
+  "a11y": {
+    "role": "radiogroup",
+    "keyboard": [
+      "Tab reaches the selected segment; the group is one tab stop",
+      "ArrowRight / ArrowDown select the next segment, ArrowLeft / ArrowUp the previous; they wrap",
+      "Home / End select the first / last enabled segment",
+      "Space selects the focused segment"
+    ],
+    "notes": [
+      "Give the group an aria-label (or aria-labelledby).",
+      "Icon-only segments keep their label as the accessible name.",
+      "A selection made from the keyboard moves the thumb instantly; the slide is for the pointer.",
+      "To select from outside, control `value`: React value / onValueChange, Vue v-model:value, Svelte bind:value."
+    ]
+  },
+  "motion": [
+    "thumb: transform and width over duration.move with easing.move, only when the user selects; no slide on mount and none when fonts load or the container resizes",
+    "segment text: colour over duration.base",
+    "press: no background anywhere in the control. The pressed segment's label goes to ink and the segment scales to motion.press-scale over duration.press; pressing the selected segment also scales the thumb (its ::before, with the individual scale property, so the engine's translate is untouched)",
+    "chips: the same thumb, hover, press and keyboard rules as segments; an unselected chip never paints the thumb's look",
+    "overflow: the edge veils show and hide on a scroll-driven timeline (no time involved); the selected option is scrolled into view instantly at mount, from the keyboard and under reduced motion, smoothly after a pointer pick; the thumb rides the scrolled content and never re-measures for a scroll; an option wider than the room between the veils shows its start, in both directions",
+    "mount: the thumb and data-overflow are measured before the first paint (a layout effect), so a fresh control (a docs page swap) never paints a frame without its thumb"
+  ]
+}

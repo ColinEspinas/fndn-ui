@@ -1,0 +1,16 @@
+{
+  "examples": [
+    { "name": "Horizontal", "props": {}, "width": 240 },
+    { "name": "Vertical", "props": { "orientation": "vertical", "style": { "height": 24 } } },
+    { "name": "With a label", "props": {}, "text": "or", "width": 280 },
+    { "name": "Decorative", "props": { "decorative": true }, "width": 240 },
+    { "name": "Vertical with a label", "props": { "orientation": "vertical", "style": { "height": 96 } }, "text": "or" }
+  ],
+  "worstCase": [
+    { "name": "Long label", "props": {}, "text": "Or continue with a single sign-on provider that your organisation has configured for this workspace", "width": 280 },
+    { "name": "Unbreakable label", "props": {}, "text": "averyveryveryverylongunbrokenlabelwithoutanyspacesatall", "width": 200 },
+    { "name": "Narrow", "props": {}, "text": "or", "width": 64 },
+    { "name": "Right-to-left label", "props": {}, "text": "أو تابع باستخدام", "width": 280 },
+    { "name": "Emoji label", "props": {}, "text": "✨ new since yesterday ✨", "width": 280 }
+  ]
+}

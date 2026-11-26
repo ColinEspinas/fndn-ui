@@ -1,0 +1,64 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "kbd",
+  "title": "Kbd",
+  "summary": "Shows a keyboard key or shortcut, such as ⌘ K.",
+  "description": "Keyboard hint: one or more keys, as in \"⌘ K\". boxed draws each key as a small raised key (docs, palettes, empty states); plain is text in the surrounding colour (tooltips, menu rows).",
+  "kind": "component",
+  "category": "display",
+  "order": 12,
+  "status": "beta",
+  "element": "kbd",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "kbd",
+      "description": "The whole shortcut. Nested <kbd> keys are how HTML marks up a key combination. dir=\"ltr\": the keys keep their reading order on a right-to-left page (⌘ then K), as printed on the keyboard."
+    },
+    {
+      "part": "key",
+      "element": "kbd",
+      "repeat": true,
+      "description": "One key or one run of keys (\"⌘\", \"K\", \"Ctrl+K\")."
+    }
+  ],
+  "props": {
+    "keys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "The keys in order; each becomes one key part."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "boxed",
+        "plain"
+      ],
+      "default": "boxed",
+      "description": "boxed: 18px key, radius.chip, surface with shadow.btn, mono 11px ink-2. plain: 11px text in the inherited font and colour."
+    }
+  },
+  "slots": {},
+  "states": [],
+  "tokens": [
+    "color.surface",
+    "color.ink-2",
+    "shadow.btn",
+    "radius.chip",
+    "font.mono",
+    "text.2xs"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "Pair the hint with aria-keyshortcuts on the control it belongs to; the hint is for sight.",
+      "Write symbols the platform shows (⌘ on Apple, Ctrl elsewhere); screen readers read the characters."
+    ]
+  },
+  "motion": [
+    "none"
+  ]
+}

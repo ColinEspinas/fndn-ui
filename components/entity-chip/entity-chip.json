@@ -1,0 +1,55 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "entity-chip",
+  "title": "Entity Chip",
+  "summary": "A person, team or company named inline, with its monogram.",
+  "description": "A person, team or company named inline, with its monogram. Monogram (our avatar) + name in a soft field pill. Names a supplier, person or record inside running text. A name longer than the container truncates at the end; the root carries the full name as its title. The name reads in its own direction (unicode-bidi: plaintext), so a right-to-left name or a signed value stays intact on either page.",
+  "kind": "component",
+  "category": "display",
+  "order": 5,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span",
+      "description": "Holds the monogram, our Avatar (16px, round, aria-hidden, initials only), then the name. Sets the avatar's default fill to the orange token"
+    },
+    {
+      "part": "name",
+      "element": "span",
+      "description": "Truncates at the end; unicode-bidi: plaintext"
+    }
+  ],
+  "props": {
+    "name": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string",
+      "description": "Any CSS color for the monogram (the avatar's color); defaults to the orange token."
+    },
+    "monogram": {
+      "type": "string",
+      "description": "Glyph in the disc; defaults to the first grapheme of the name, upper-cased (so emoji and accented letters survive)."
+    }
+  },
+  "states": [],
+  "tokens": [
+    "color.field",
+    "color.ink",
+    "color.orange",
+    "shadow.hairline",
+    "radius.pill",
+    "text.xs"
+  ],
+  "dependencies": [
+    "avatar"
+  ],
+  "a11y": {
+    "notes": [
+      "The monogram (our avatar) is aria-hidden; the name is the text.",
+      "The root's title exposes the full name when it is truncated."
+    ]
+  }
+}

@@ -1,0 +1,407 @@
+{
+  "examples": [
+    {
+      "name": "Links and panels",
+      "props": {
+        "items": [
+          {
+            "value": "products",
+            "label": "Products",
+            "links": [
+              {
+                "label": "Analytics",
+                "href": "#analytics",
+                "description": "Dashboards and reports for every team"
+              },
+              {
+                "label": "Automations",
+                "href": "#automations",
+                "description": "Run work on a schedule or on events"
+              },
+              {
+                "label": "Integrations",
+                "href": "#integrations",
+                "description": "Connect the tools you already use"
+              }
+            ]
+          },
+          {
+            "value": "resources",
+            "label": "Resources",
+            "links": [
+              {
+                "label": "Documentation",
+                "href": "#docs"
+              },
+              {
+                "label": "Changelog",
+                "href": "#changelog"
+              },
+              {
+                "label": "Status",
+                "href": "#status"
+              }
+            ]
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing",
+            "href": "#pricing"
+          },
+          {
+            "value": "blog",
+            "label": "Blog",
+            "href": "#blog"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Open panel",
+      "props": {
+        "value": "products",
+        "items": [
+          {
+            "value": "products",
+            "label": "Products",
+            "links": [
+              {
+                "label": "Analytics",
+                "href": "#analytics",
+                "description": "Dashboards and reports for every team",
+                "current": true
+              },
+              {
+                "label": "Automations",
+                "href": "#automations",
+                "description": "Run work on a schedule or on events"
+              }
+            ]
+          },
+          {
+            "value": "company",
+            "label": "Company",
+            "links": [
+              {
+                "label": "About",
+                "href": "#about"
+              },
+              {
+                "label": "Careers",
+                "href": "#careers"
+              }
+            ]
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing",
+            "href": "#pricing"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Current page in the row",
+      "props": {
+        "items": [
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home"
+          },
+          {
+            "value": "docs",
+            "label": "Docs",
+            "href": "#docs",
+            "current": true
+          },
+          {
+            "value": "more",
+            "label": "More",
+            "links": [
+              {
+                "label": "Support",
+                "href": "#support"
+              },
+              {
+                "label": "Contact",
+                "href": "#contact"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Three panels",
+      "props": {
+        "items": [
+          {
+            "value": "products",
+            "label": "Products",
+            "links": [
+              {
+                "label": "Analytics",
+                "href": "#analytics",
+                "description": "Dashboards and reports for every team"
+              },
+              {
+                "label": "Automations",
+                "href": "#automations",
+                "description": "Run work on a schedule or on events"
+              },
+              {
+                "label": "Integrations",
+                "href": "#integrations",
+                "description": "Connect the tools you already use"
+              }
+            ]
+          },
+          {
+            "value": "company",
+            "label": "Company",
+            "links": [
+              {
+                "label": "About",
+                "href": "#about"
+              },
+              {
+                "label": "Careers",
+                "href": "#careers"
+              }
+            ]
+          },
+          {
+            "value": "developers",
+            "label": "Developers",
+            "links": [
+              {
+                "label": "API reference",
+                "href": "#api"
+              },
+              {
+                "label": "SDKs",
+                "href": "#sdks"
+              },
+              {
+                "label": "Webhooks",
+                "href": "#webhooks"
+              },
+              {
+                "label": "Status",
+                "href": "#status"
+              }
+            ]
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing",
+            "href": "#pricing"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Current section",
+      "props": {
+        "currentHref": "#billing-api",
+        "items": [
+          {
+            "value": "projects",
+            "label": "Projects",
+            "links": [
+              {
+                "label": "web-app",
+                "href": "#web-app"
+              },
+              {
+                "label": "billing-api",
+                "href": "#billing-api"
+              }
+            ]
+          },
+          {
+            "value": "team",
+            "label": "Team",
+            "links": [
+              {
+                "label": "Members",
+                "href": "#members"
+              }
+            ]
+          },
+          {
+            "value": "billing",
+            "label": "Billing",
+            "href": "#billing"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Current plain link by href",
+      "props": {
+        "currentHref": "#billing",
+        "items": [
+          {
+            "value": "projects",
+            "label": "Projects",
+            "links": [
+              {
+                "label": "web-app",
+                "href": "#web-app"
+              }
+            ]
+          },
+          {
+            "value": "billing",
+            "label": "Billing",
+            "href": "#billing"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names",
+      "width": 320,
+      "props": {
+        "value": "a",
+        "items": [
+          {
+            "value": "a",
+            "label": "Infrastructure and platform services",
+            "links": [
+              {
+                "label": "Background synchronisation of every workspace across regions",
+                "href": "#a",
+                "description": "A description that runs far longer than the panel is wide, so it wraps over several lines instead of being cut"
+              },
+              {
+                "label": "averyveryveryverylongunbrokenlinknamewithoutspaces",
+                "href": "#b"
+              }
+            ]
+          },
+          {
+            "value": "b",
+            "label": "Pricing",
+            "href": "#p"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Many entries",
+      "width": 320,
+      "props": {
+        "items": [
+          {
+            "value": "1",
+            "label": "Overview",
+            "href": "#1"
+          },
+          {
+            "value": "2",
+            "label": "Product",
+            "links": [
+              {
+                "label": "One",
+                "href": "#o"
+              }
+            ]
+          },
+          {
+            "value": "3",
+            "label": "Solutions",
+            "href": "#3"
+          },
+          {
+            "value": "4",
+            "label": "Customers",
+            "href": "#4"
+          },
+          {
+            "value": "5",
+            "label": "Pricing",
+            "href": "#5"
+          },
+          {
+            "value": "6",
+            "label": "Docs",
+            "href": "#6"
+          },
+          {
+            "value": "7",
+            "label": "Blog",
+            "href": "#7"
+          },
+          {
+            "value": "8",
+            "label": "Changelog",
+            "href": "#8"
+          },
+          {
+            "value": "9",
+            "label": "Careers",
+            "href": "#9"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "value": "x",
+        "items": [
+          {
+            "value": "x",
+            "label": "المنتجات",
+            "links": [
+              {
+                "label": "التحليلات",
+                "href": "#a",
+                "description": "لوحات وتقارير لكل فريق"
+              },
+              {
+                "label": "الأتمتة",
+                "href": "#b"
+              }
+            ]
+          },
+          {
+            "value": "y",
+            "label": "الأسعار",
+            "href": "#y"
+          }
+        ]
+      }
+    },
+    {
+      "name": "One link",
+      "props": {
+        "items": [
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Empty panel",
+      "props": {
+        "value": "e",
+        "items": [
+          {
+            "value": "e",
+            "label": "Nothing yet",
+            "links": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {}
+    },
+    {
+      "name": "Edited",
+      "props": {
+        "layout": "grid",
+        "values": {
+          "width": 280,
+          "opacity": 80
+        },
+        "type": "Featured"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long copy and big numbers",
+      "props": {
+        "labels": {
+          "title": "Product launch announcement card for the spring release",
+          "type": "Card type for the printed menu"
+        },
+        "fields": [
+          {
+            "key": "w",
+            "label": "Width",
+            "value": 12480,
+            "min": 0,
+            "max": 99999
+          },
+          {
+            "key": "h",
+            "label": "H",
+            "value": 1,
+            "min": 1,
+            "max": 9
+          },
+          {
+            "key": "spacing",
+            "label": "Letter spacing",
+            "value": 0,
+            "min": -50,
+            "max": 50,
+            "suffix": "‰"
+          },
+          {
+            "key": "o",
+            "label": "Opacity",
+            "value": 100,
+            "min": 0,
+            "max": 100,
+            "suffix": "%"
+          }
+        ],
+        "types": [
+          "Limited launch edition with add-ons",
+          "C"
+        ],
+        "type": "Limited launch edition with add-ons"
+      }
+    },
+    {
+      "name": "One field",
+      "props": {
+        "fields": [
+          {
+            "key": "r",
+            "label": "R",
+            "value": 4,
+            "min": 0,
+            "max": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "labels": {
+          "title": "بطاقة النكهة",
+          "layout": "التخطيط",
+          "type": "النوع",
+          "placeholder": "اختر النوع",
+          "adjust": "اضبط",
+          "edited": "معدّل",
+          "reset": "إعادة"
+        }
+      }
+    }
+  ]
+}

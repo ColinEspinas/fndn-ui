@@ -1,0 +1,171 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "slider",
+  "title": "Slider",
+  "summary": "Pick a number, or a range, by dragging along a track.",
+  "description": "Pick a number, or a range between two, by dragging a thumb along a track; arrow keys step it. The control and thumb sizes are the switch's (md 24px with a 20px thumb, sm 18px with 14px), the rail is the switch's colours (line-strong, the filled range in ink) and the thumb is the segmented control's (surface with shadow.btn). An optional label and value sit on one row above. Behaviour by Ark UI's slider (Zag). Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 7,
+  "status": "beta",
+  "engine": "slider",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's slider root: a grid, the label at the start and the value at the end of the first row (baselines shared), the control below. data-disabled, data-dragging, data-focus from the engine. As wide as its container."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Visible name (the label prop): text.sm, medium, ink. Names every thumb (aria-labelledby). It wraps, never truncates; a click on it focuses the first thumb."
+    },
+    {
+      "part": "value-text",
+      "element": "span",
+      "optional": true,
+      "description": "The current value (showValue), at the end of the label row: text.sm, tabular figures, ink-2, never wrapped. Two thumbs read \"20 – 80\". formatValue (React) formats each value, and the same text is announced (aria-valuetext)."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "The hit area: full width, 24px high (sm 18px), cursor pointer; a press anywhere on it moves the nearest thumb there and starts a drag. The engine puts touch-action: none on it, so a horizontal drag never scrolls the page. On a coarse pointer it reaches 8px above and below (40px), without changing its look."
+    },
+    {
+      "part": "track",
+      "element": "div",
+      "description": "The 4px rail, radius.pill, color.line-strong; under a mouse hovering the control it darkens a little (the switch's hover)."
+    },
+    {
+      "part": "range",
+      "element": "div",
+      "description": "The filled part of the rail, in ink: from the start to the thumb, or between two thumbs. Positioned by the engine."
+    },
+    {
+      "part": "thumb",
+      "element": "div",
+      "repeat": true,
+      "description": "role=slider, one per value, focusable (the shared focus ring, round). 20px circle (sm 14px), surface with shadow.btn, kept inside the track by the engine. Pointer: cursor grab, grabbing while dragged. On a coarse pointer its hit area is 40px (md). Carries kbd-instant."
+    },
+    {
+      "part": "hidden-input",
+      "element": "input",
+      "repeat": true,
+      "optional": true,
+      "description": "Ark's hidden input per thumb, carrying the value for a form (name)."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "default": [
+        50
+      ],
+      "model": true,
+      "description": "One number per thumb: [40] is a slider, [20, 80] a range. Controlled: value with onValueChange. Uncontrolled: defaultValue."
+    },
+    "min": {
+      "type": "number",
+      "default": 0
+    },
+    "max": {
+      "type": "number",
+      "default": 100
+    },
+    "step": {
+      "type": "number",
+      "default": 1,
+      "description": "Arrow keys move one step; Page Up / Page Down ten steps; Home / End to the ends."
+    },
+    "minStepsBetweenThumbs": {
+      "type": "number",
+      "default": 0,
+      "description": "A range: how many steps the two thumbs keep between them."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "md: 24px control, 20px thumb (the switch md). sm: 18px control, 14px thumb (the switch sm)."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label, above at the start; names the thumbs."
+    },
+    "showValue": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show the value at the end of the label row."
+    },
+    "thumbLabels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Names of the thumbs of a range (\"Minimum\", \"Maximum\"), one per thumb. Without them every thumb is named by the label, or by aria-label."
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name (the hidden inputs)."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Inert at half opacity; the thumbs leave the tab order."
+    }
+  },
+  "events": {
+    "valueChange": "(value: number[]) while dragging and on every key",
+    "valueChangeEnd": "(value: number[]) when a drag ends or after a key"
+  },
+  "states": [
+    "hover",
+    "dragging",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.line-strong",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.surface",
+    "shadow.btn",
+    "radius.pill",
+    "text.sm",
+    "duration.fast",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale-sm"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "slider",
+    "keyboard": [
+      "Tab moves to each thumb in turn",
+      "Arrow Right: one step up; Arrow Left: one step down (right-to-left, Arrow Left goes up); Arrow Up / Down do nothing on a horizontal slider (the engine's keys)",
+      "Page Up / Page Down: a large step (ten steps, on the step grid)",
+      "Home / End: the minimum / the maximum"
+    ],
+    "notes": [
+      "Each thumb is role=slider with aria-valuemin, aria-valuemax, aria-valuenow and aria-orientation; a range's thumbs are bounded by each other (aria-valuemin / max follow the other thumb).",
+      "Name it with label (visible), aria-label, or thumbLabels for the thumbs of a range.",
+      "formatValue gives the text announced (aria-valuetext) as well as the text shown.",
+      "To set it from outside, control `value`: React value / onValueChange."
+    ]
+  },
+  "motion": [
+    "thumb travel: none; it follows the pointer 1:1, jumps where the track is pressed, and keys move it instantly (kbd-instant)",
+    "thumb (pointer only): gives to motion.press-scale-sm over duration.press with easing.out-strong while it is dragged",
+    "thumb hover (a real pointer only): shadow.btn → shadow.raised over duration.fast",
+    "rail hover (pointer only): colour over duration.fast"
+  ]
+}

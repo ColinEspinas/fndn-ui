@@ -1,0 +1,521 @@
+{
+  "examples": [
+    {
+      "name": "Code",
+      "props": {
+        "variant": "code",
+        "filename": "invoice.ts",
+        "lines": [
+          "export async function sendInvoice() {",
+          "  const account = await getAccount(\"northwind\");",
+          "  const base = await billing.fetch({ account });",
+          "  await ledger.store(base, { terms: \"net-30\" });",
+          "  if (!base.approved) return null;",
+          "  return base.total;",
+          "}"
+        ]
+      }
+    },
+    {
+      "name": "Diff",
+      "props": {
+        "variant": "diff",
+        "filename": "invoice.ts",
+        "diff": [
+          {
+            "old": 1,
+            "cur": 1,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "export async function sendInvoice() {"
+              }
+            ]
+          },
+          {
+            "old": 2,
+            "cur": 2,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "  const account = await getAccount(\"northwind\");"
+              }
+            ]
+          },
+          {
+            "old": 3,
+            "cur": 3,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "  const base = await billing.fetch({ account });"
+              }
+            ]
+          },
+          {
+            "old": 4,
+            "cur": null,
+            "type": "del",
+            "pieces": [
+              {
+                "text": "  await ledger.store(base, { terms: "
+              },
+              {
+                "text": "\"net-14\"",
+                "change": "del"
+              },
+              {
+                "text": " });"
+              }
+            ]
+          },
+          {
+            "old": null,
+            "cur": 4,
+            "type": "add",
+            "pieces": [
+              {
+                "text": "  await ledger.store(base, { terms: "
+              },
+              {
+                "text": "\"net-30\"",
+                "change": "add"
+              },
+              {
+                "text": " });"
+              }
+            ]
+          },
+          {
+            "old": null,
+            "cur": 5,
+            "type": "add",
+            "pieces": [
+              {
+                "text": "  if (!base.approved) return null;"
+              }
+            ]
+          },
+          {
+            "old": 5,
+            "cur": 6,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "  return base.total;"
+              }
+            ]
+          },
+          {
+            "old": 6,
+            "cur": 7,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "}"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Scrolling",
+      "props": {
+        "variant": "code",
+        "filename": "invoice.ts",
+        "lines": [
+          "// Weekly billing run, one batch per line",
+          "charge(\"batch-1\", { amount: 4 });",
+          "charge(\"batch-2\", { amount: 8 });",
+          "charge(\"batch-3\", { amount: 12 });",
+          "charge(\"batch-4\", { amount: 16 });",
+          "charge(\"batch-5\", { amount: 20 });",
+          "charge(\"batch-6\", { amount: 24 });",
+          "charge(\"batch-7\", { amount: 28 });",
+          "charge(\"batch-8\", { amount: 32 });",
+          "charge(\"batch-9\", { amount: 36 });",
+          "charge(\"batch-10\", { amount: 40 });",
+          "charge(\"batch-11\", { amount: 44 });",
+          "charge(\"batch-12\", { amount: 48 });"
+        ],
+        "maxHeight": 160
+      }
+    },
+    {
+      "name": "Files",
+      "props": {
+        "files": [
+          {
+            "path": "src/invoice.ts",
+            "label": "invoice.ts",
+            "lines": [
+              "export const invoice = (amount: number) => amount * 2;"
+            ]
+          },
+          {
+            "path": "src/ledger.ts",
+            "label": "ledger.ts",
+            "highlighted": [
+              "<span style=\"color: var(--fndn-accent-ink)\">export</span> const terms = <span style=\"color: var(--fndn-orange)\">30</span>;"
+            ],
+            "code": "export const terms = 30;"
+          }
+        ],
+        "height": 120
+      }
+    },
+    {
+      "name": "Command",
+      "props": {
+        "variant": "command",
+        "code": "npx shadcn add https://your-domain.com/r/react/code-block.json"
+      }
+    },
+    {
+      "name": "Current line",
+      "props": {
+        "variant": "code",
+        "filename": "src/middleware/rate-limit.ts",
+        "lines": [
+          "const WINDOW_MS = 60_000;",
+          "const LIMIT = 120;",
+          "",
+          "export function rateLimit(key: string, now = Date.now()) {",
+          "  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };",
+          "  if (now - bucket.windowStart >= WINDOW_MS) {",
+          "    bucket.count = 0;",
+          "    bucket.windowStart = now;",
+          "  }",
+          "  bucket.count += 1;",
+          "  buckets.set(key, bucket);",
+          "  return bucket.count <= LIMIT;",
+          "}"
+        ],
+        "currentLine": 11,
+        "maxHeight": 140
+      }
+    },
+    {
+      "name": "Fill",
+      "props": {
+        "fill": true,
+        "currentLine": 2,
+        "style": {
+          "height": 220
+        },
+        "files": [
+          {
+            "path": "src/middleware/rate-limit.ts",
+            "label": "rate-limit.ts",
+            "lines": [
+              "const WINDOW_MS = 60_000;",
+              "const LIMIT = 120;",
+              "",
+              "export function rateLimit(key: string, now = Date.now()) {",
+              "  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };",
+              "  if (now - bucket.windowStart >= WINDOW_MS) {",
+              "    bucket.count = 0;",
+              "    bucket.windowStart = now;",
+              "  }",
+              "  bucket.count += 1;",
+              "  buckets.set(key, bucket);",
+              "  return bucket.count <= LIMIT;",
+              "}"
+            ]
+          },
+          {
+            "path": "package.json",
+            "label": "package.json",
+            "lines": [
+              "{",
+              "  \"name\": \"billing-api\",",
+              "  \"private\": true",
+              "}"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Editor body",
+      "props": {
+        "editor": true,
+        "filename": "rate-limit.ts",
+        "lines": [
+          "import { buckets } from \"./store\";",
+          "",
+          "const WINDOW_MS = 60_000;",
+          "const LIMIT = 120;",
+          "",
+          "export function rateLimit(key: string, now = Date.now(), options: { limit?: number; windowMs?: number } = {}) {",
+          "  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };",
+          "  if (now - bucket.windowStart >= (options.windowMs ?? WINDOW_MS)) {",
+          "    bucket.count = 0;",
+          "    bucket.windowStart = now;",
+          "  }",
+          "  bucket.count += 1;",
+          "  buckets.set(key, bucket);",
+          "  return bucket.count <= (options.limit ?? LIMIT);",
+          "}"
+        ],
+        "currentLine": 7,
+        "style": {
+          "height": 220,
+          "width": 360
+        }
+      }
+    },
+    {
+      "name": "Diff, no wrap",
+      "width": 360,
+      "props": {
+        "variant": "diff",
+        "filename": "invoice.ts",
+        "diff": [
+          {
+            "old": 1,
+            "cur": 1,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "export async function sendInvoice() {"
+              }
+            ]
+          },
+          {
+            "old": 2,
+            "cur": 2,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "  const account = await getAccount(\"northwind\");"
+              }
+            ]
+          },
+          {
+            "old": 3,
+            "cur": 3,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "  const base = await billing.fetch({ account });"
+              }
+            ]
+          },
+          {
+            "old": 4,
+            "cur": null,
+            "type": "del",
+            "pieces": [
+              {
+                "text": "  await ledger.store(base, { terms: "
+              },
+              {
+                "text": "\"net-14\"",
+                "change": "del"
+              },
+              {
+                "text": " });"
+              }
+            ]
+          },
+          {
+            "old": null,
+            "cur": 4,
+            "type": "add",
+            "pieces": [
+              {
+                "text": "  await ledger.store(base, { terms: "
+              },
+              {
+                "text": "\"net-30\"",
+                "change": "add"
+              },
+              {
+                "text": " });"
+              }
+            ]
+          },
+          {
+            "old": null,
+            "cur": 5,
+            "type": "add",
+            "pieces": [
+              {
+                "text": "  if (!base.approved) throw new Error(`Batch ${base.id} was not approved by finance before it was stored`);"
+              }
+            ]
+          },
+          {
+            "old": 5,
+            "cur": 6,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "  return base.total;"
+              }
+            ]
+          },
+          {
+            "old": 6,
+            "cur": 7,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "}"
+              }
+            ]
+          }
+        ],
+        "wrap": false
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "400-character line, long filename, non-Latin and right-to-left",
+      "props": {
+        "variant": "code",
+        "filename": "northwind-industries-holdings-wholesale-cloud-services-division-billing-schedule.ts",
+        "lines": [
+          "  const note = \"invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-ok\";",
+          "  const name = \"請求書と領収書のまとめ\";",
+          "  const label = \"فواتير الشهر\";",
+          "  return { name, label };"
+        ]
+      }
+    },
+    {
+      "name": "Sixty lines",
+      "props": {
+        "variant": "code",
+        "filename": "batches.ts",
+        "lines": [
+          "charge(\"batch-1\");",
+          "charge(\"batch-2\");",
+          "charge(\"batch-3\");",
+          "charge(\"batch-4\");",
+          "charge(\"batch-5\");",
+          "charge(\"batch-6\");",
+          "charge(\"batch-7\");",
+          "charge(\"batch-8\");",
+          "charge(\"batch-9\");",
+          "charge(\"batch-10\");",
+          "charge(\"batch-11\");",
+          "charge(\"batch-12\");",
+          "charge(\"batch-13\");",
+          "charge(\"batch-14\");",
+          "charge(\"batch-15\");",
+          "charge(\"batch-16\");",
+          "charge(\"batch-17\");",
+          "charge(\"batch-18\");",
+          "charge(\"batch-19\");",
+          "charge(\"batch-20\");",
+          "charge(\"batch-21\");",
+          "charge(\"batch-22\");",
+          "charge(\"batch-23\");",
+          "charge(\"batch-24\");",
+          "charge(\"batch-25\");",
+          "charge(\"batch-26\");",
+          "charge(\"batch-27\");",
+          "charge(\"batch-28\");",
+          "charge(\"batch-29\");",
+          "charge(\"batch-30\");",
+          "charge(\"batch-31\");",
+          "charge(\"batch-32\");",
+          "charge(\"batch-33\");",
+          "charge(\"batch-34\");",
+          "charge(\"batch-35\");",
+          "charge(\"batch-36\");",
+          "charge(\"batch-37\");",
+          "charge(\"batch-38\");",
+          "charge(\"batch-39\");",
+          "charge(\"batch-40\");",
+          "charge(\"batch-41\");",
+          "charge(\"batch-42\");",
+          "charge(\"batch-43\");",
+          "charge(\"batch-44\");",
+          "charge(\"batch-45\");",
+          "charge(\"batch-46\");",
+          "charge(\"batch-47\");",
+          "charge(\"batch-48\");",
+          "charge(\"batch-49\");",
+          "charge(\"batch-50\");",
+          "charge(\"batch-51\");",
+          "charge(\"batch-52\");",
+          "charge(\"batch-53\");",
+          "charge(\"batch-54\");",
+          "charge(\"batch-55\");",
+          "charge(\"batch-56\");",
+          "charge(\"batch-57\");",
+          "charge(\"batch-58\");",
+          "charge(\"batch-59\");",
+          "charge(\"batch-60\");"
+        ],
+        "maxHeight": 320
+      }
+    },
+    {
+      "name": "One line",
+      "props": {
+        "variant": "code",
+        "filename": "a.ts",
+        "lines": [
+          "export {};"
+        ]
+      }
+    },
+    {
+      "name": "Zero lines",
+      "props": {
+        "variant": "code",
+        "filename": "empty.ts",
+        "lines": []
+      }
+    },
+    {
+      "name": "Five files, long path",
+      "props": {
+        "files": [
+          {
+            "path": "packages/core/src/behaviors/some/really/deeply/nested/directory/structure/invoice-batch-scheduler.ts",
+            "label": "invoice-batch-scheduler.ts",
+            "lines": [
+              "export const invoice = (amount: number) => amount * 2;"
+            ]
+          },
+          {
+            "path": "src/ledger.ts",
+            "label": "ledger.ts",
+            "lines": [
+              "export const terms = 30;"
+            ]
+          },
+          {
+            "path": "src/billing.ts",
+            "label": "billing.ts",
+            "lines": [
+              "export const billing = {};"
+            ]
+          },
+          {
+            "path": "src/accounts.ts",
+            "label": "accounts.ts",
+            "lines": [
+              "export const accounts = [];"
+            ]
+          },
+          {
+            "path": "src/index.ts",
+            "label": "index.ts",
+            "lines": [
+              "export * from \"./invoice\";"
+            ]
+          }
+        ],
+        "height": 120
+      }
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "examples": [
+    {
+      "name": "Steps",
+      "props": {
+        "variant": "steps",
+        "working": true,
+        "expanded": true,
+        "activeLabel": "Thinking",
+        "rows": [
+          {
+            "primary": "Reading pricing briefs"
+          },
+          {
+            "primary": "Scanning supplier lists"
+          },
+          {
+            "primary": "Comparing tasting notes",
+            "secondary": "6 plans"
+          },
+          {
+            "primary": "Writing the pricing report"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "after": 1100,
+          "props": {
+            "rows": [
+              {
+                "primary": "Reading pricing briefs"
+              },
+              {
+                "primary": "Scanning supplier lists"
+              },
+              {
+                "primary": "Comparing tasting notes",
+                "secondary": "6 plans"
+              },
+              {
+                "primary": "Writing the pricing report"
+              },
+              {
+                "primary": "Checking margins against last summer"
+              }
+            ]
+          }
+        },
+        {
+          "after": 1200,
+          "props": {
+            "rows": [
+              {
+                "primary": "Reading pricing briefs"
+              },
+              {
+                "primary": "Scanning supplier lists"
+              },
+              {
+                "primary": "Comparing tasting notes",
+                "secondary": "6 plans"
+              },
+              {
+                "primary": "Writing the pricing report"
+              },
+              {
+                "primary": "Checking margins against last summer"
+              },
+              {
+                "primary": "Formatting the report",
+                "secondary": "2 pages"
+              }
+            ]
+          }
+        },
+        {
+          "after": 1400,
+          "props": {
+            "working": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reasoning",
+      "props": {
+        "variant": "reasoning",
+        "expanded": true,
+        "doneLabel": "Thought for 4 seconds",
+        "rows": [
+          {
+            "primary": "Q4 demand spikes for annual plans — Team and Business lead."
+          },
+          {
+            "primary": "I should check seat usage before promoting an annual-plan discount."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Search",
+      "props": {
+        "variant": "search",
+        "expanded": true,
+        "doneLabel": "Searched the web",
+        "query": "best payment processor",
+        "more": "+7 more",
+        "rows": [
+          {
+            "primary": "Northwind",
+            "secondary": "northwind.example.com",
+            "href": "https://northwind.example.com/"
+          },
+          {
+            "primary": "WebstaurantStore",
+            "secondary": "webstaurantstore.com",
+            "href": "https://www.webstaurantstore.com/"
+          },
+          {
+            "primary": "The Konery",
+            "secondary": "thekonery.com",
+            "href": "https://www.thekonery.com/"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Coding",
+      "props": {
+        "variant": "coding",
+        "expanded": true,
+        "selected": 1,
+        "doneLabel": "Ran 3 tools",
+        "rows": [
+          {
+            "primary": "Read",
+            "secondary": "plans.ts",
+            "mono": true
+          },
+          {
+            "primary": "Edit",
+            "secondary": "InvoiceSchedule.tsx",
+            "mono": true,
+            "add": 74,
+            "del": 41
+          },
+          {
+            "primary": "Run",
+            "secondary": "npm run freeze",
+            "mono": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Arrives live (appear)",
+      "props": {
+        "variant": "steps",
+        "working": true,
+        "expanded": true,
+        "activeLabel": "Thinking",
+        "rows": [
+          {
+            "primary": "Reading pricing briefs"
+          },
+          {
+            "primary": "Scanning supplier lists"
+          },
+          {
+            "primary": "Comparing tasting notes",
+            "secondary": "6 plans"
+          },
+          {
+            "primary": "Writing the pricing report"
+          }
+        ],
+        "appear": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "40 long steps",
+      "props": {
+        "variant": "steps",
+        "working": true,
+        "expanded": true,
+        "activeLabel": "Reconciling 12,480 supplier invoices against the purchase-order ledger for fiscal year 2026",
+        "rows": [
+          {
+            "primary": "Reconciling invoice batch 01 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "312 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 02 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "624 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 03 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "936 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 04 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "1,248 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 05 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "1,560 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 06 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "1,872 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 07 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "2,184 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 08 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "2,496 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 09 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "2,808 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 10 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "3,120 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 11 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "3,432 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 12 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "3,744 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 13 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "4,056 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 14 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "4,368 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 15 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "4,680 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 16 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "4,992 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 17 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "5,304 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 18 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "5,616 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 19 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "5,928 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 20 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "6,240 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 21 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "6,552 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 22 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "6,864 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 23 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "7,176 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 24 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "7,488 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 25 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "7,800 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 26 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "8,112 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 27 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "8,424 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 28 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "8,736 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 29 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "9,048 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 30 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "9,360 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 31 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "9,672 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 32 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "9,984 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 33 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "10,296 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 34 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "10,608 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 35 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "10,920 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 36 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "11,232 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 37 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "11,544 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 38 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "11,856 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 39 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "12,168 line items"
+          },
+          {
+            "primary": "Reconciling invoice batch 40 of 40 against the purchase-order ledger for Northwind Industries Holdings (EMEA)",
+            "secondary": "12,480 line items"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Long paths",
+      "props": {
+        "variant": "coding",
+        "expanded": true,
+        "doneLabel": "Ran 3 tools",
+        "rows": [
+          {
+            "primary": "Read",
+            "secondary": "apps/storefront/src/features/billing/components/InvoiceReminderScheduleTable.generated.tsx",
+            "mono": true
+          },
+          {
+            "primary": "Edit",
+            "secondary": "packages/pricing-engine/src/adapters/legacy/SeasonalDiscountReconciliationService.ts",
+            "mono": true,
+            "add": 12480,
+            "del": 9731
+          },
+          {
+            "primary": "Regenerate the internationalised pricing snapshots",
+            "secondary": "pnpm --filter @northwind/pricing-engine run snapshots:update -- --locale=all --force",
+            "mono": true
+          },
+          {
+            "primary": "R",
+            "secondary": "x",
+            "mono": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "No rows",
+      "props": {
+        "variant": "steps",
+        "working": true,
+        "expanded": true,
+        "activeLabel": "Thinking",
+        "rows": []
+      }
+    },
+    {
+      "name": "One long word",
+      "props": {
+        "variant": "reasoning",
+        "expanded": true,
+        "doneLabel": "Thought for 1 hour 12 minutes",
+        "rows": [
+          {
+            "primary": "Donaudampfschifffahrtsgesellschaftskapitänsmützenabzeichenherstellungsbetriebsvereinbarungsentwurf_and_no_break_opportunity_anywhere_in_this_token"
+          },
+          {
+            "primary": "J"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "variant": "search",
+        "expanded": true,
+        "doneLabel": "تم البحث في الويب",
+        "query": "أفضل مورد لأقماع الوافل في المنطقة",
+        "more": "+١٢٬٤٨٠",
+        "rows": [
+          {
+            "primary": "مصنع الأقماع الذهبية للحلويات والمثلجات",
+            "secondary": "golden-gate-cloud-and-data-services.example.com",
+            "href": "https://example.com/"
+          },
+          {
+            "primary": "Jo",
+            "secondary": "x.co",
+            "href": "https://example.com/"
+          }
+        ]
+      }
+    }
+  ]
+}

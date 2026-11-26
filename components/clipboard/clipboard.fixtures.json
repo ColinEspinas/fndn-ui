@@ -1,0 +1,47 @@
+{
+  "examples": [
+    {
+      "name": "Button",
+      "props": { "value": "npm install @fndn/react" }
+    },
+    {
+      "name": "Field",
+      "width": 320,
+      "props": { "variant": "field", "label": "API key", "value": "sk_live_51HcK2pL8x0VQ7rT" }
+    },
+    {
+      "name": "Small field",
+      "width": 240,
+      "props": { "variant": "field", "size": "sm", "aria-label": "Share link", "value": "https://your-domain.com/r/b/42" }
+    },
+    {
+      "name": "Other labels",
+      "props": { "value": "#4F46E5", "labels": { "copy": "Copy hex", "copied": "Hex copied" } }
+    },
+    {
+      "name": "Disabled",
+      "width": 320,
+      "props": { "variant": "field", "label": "API key", "value": "sk_live_51HcK2pL8x0VQ7rT", "disabled": true }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long value in a field",
+      "width": 220,
+      "props": { "variant": "field", "aria-label": "Link", "value": "https://your-domain.com/r/boards/quarterly-plan-performance-across-every-regional-team?view=grid&sort=desc" }
+    },
+    {
+      "name": "Empty value",
+      "props": { "value": "" }
+    },
+    {
+      "name": "Long labels",
+      "props": { "value": "x", "labels": { "copy": "Copy the whole configuration", "copied": "Configuration copied" } }
+    },
+    {
+      "name": "Right-to-left field",
+      "width": 260,
+      "props": { "variant": "field", "label": "الرابط", "value": "https://your-domain.com/r/b/42", "labels": { "copy": "نسخ", "copied": "تم النسخ" } }
+    }
+  ]
+}

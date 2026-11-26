@@ -1,0 +1,220 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "calendar",
+  "title": "Calendar",
+  "summary": "A month grid to pick a date, several dates or a range.",
+  "description": "A month grid to pick a date, several dates or a range, shown inline. A header with the pager's previous and next buttons around the month, which switches to a month and then a year view; seven columns of days, six weeks so the grid never changes height. The selected date is filled with ink, the hovered one takes the hover colour, today carries a dot. Arrow keys, Page Up / Down, Home and End move through the days at once. Behaviour, focus and ARIA come from the Zag date-picker machine, through Ark UI. The date picker shows the same views in its popup.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 9,
+  "status": "beta",
+  "files": {
+    "react": [
+      "calendar.tsx"
+    ],
+    "vue": [
+      "Calendar.vue",
+      "CalendarViews.vue"
+    ],
+    "svelte": [
+      "Calendar.svelte",
+      "CalendarViews.svelte"
+    ]
+  },
+  "engine": "date-picker",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The engine's root, inline. data-disabled at half opacity."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "The engine's content element: role=application, named by the caller's aria-label; it holds the views (the engine finds the focused date inside it). In the date picker, its popup is this element."
+    },
+    {
+      "part": "view",
+      "element": "div",
+      "repeat": true,
+      "description": "One per view (day, month, year); the engine hides all but the current one. 224px wide (280px on coarse pointers), the same size in every view and every month."
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "description": "prev · title · next, spread across the view (the pager's between layout)."
+    },
+    {
+      "part": "prev",
+      "element": "button",
+      "description": "The real Button (ghost, sm, square, muted), marked data-calendar=\"prev\", with a Tooltip and an aria-label naming what it pages (Previous month / year / decade). Disabled by the engine past min. The caret mirrors right-to-left."
+    },
+    {
+      "part": "title",
+      "element": "button",
+      "description": "A ghost sm Button, marked data-calendar=\"title\": the month and year (day view), the year (month view), the decade (year view), xs medium ink. Switches to the next view up; disabled in the year view, where it reads as plain text."
+    },
+    {
+      "part": "next",
+      "element": "button",
+      "description": "As prev, marked data-calendar=\"next\"."
+    },
+    {
+      "part": "grid",
+      "element": "table",
+      "description": "role=grid labelled with the visible month; keyboard handling lives here. Months and years fill the day grid's height (216px, 264px on coarse pointers)."
+    },
+    {
+      "part": "head",
+      "element": "thead",
+      "description": "aria-hidden (every date's label says its weekday)."
+    },
+    {
+      "part": "weekday",
+      "element": "th",
+      "repeat": true,
+      "description": "Short weekday name in the locale: 2xs, ink-2, 24px high."
+    },
+    {
+      "part": "body",
+      "element": "tbody"
+    },
+    {
+      "part": "row",
+      "element": "tr",
+      "repeat": true
+    },
+    {
+      "part": "cell",
+      "element": "td",
+      "repeat": true,
+      "description": "role=gridcell, aria-selected, aria-current=date on today. Carries the range band (color.hover-2), rounded at the range's ends and at the ends of each week; color.hover while the second end is being chosen."
+    },
+    {
+      "part": "cell-trigger",
+      "element": "div",
+      "repeat": true,
+      "description": "role=button, the date (or month, or year): 32px square, 40px on coarse pointers; a 40px-high full-width row in the month and year views. data-selected: ink fill, on-ink text, weight 500. data-today: a 4px dot under the number. data-outside-range (the other month's days): ink-3, not selectable. data-unavailable: ink-3, struck through. Hover: color.hover."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "model": true,
+      "description": "Selected dates as ISO strings (\"2025-03-12\"). single: one; range: the start and the end."
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": [
+        "single",
+        "multiple",
+        "range"
+      ],
+      "default": "single"
+    },
+    "min": {
+      "type": "string",
+      "description": "Earliest date that can be chosen (ISO). Paging stops at its month."
+    },
+    "max": {
+      "type": "string",
+      "description": "Latest date that can be chosen (ISO)."
+    },
+    "unavailable": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Dates that cannot be chosen (ISO). Also takes isDateUnavailable(date)."
+    },
+    "defaultFocusedValue": {
+      "type": "string",
+      "description": "The date the calendar opens on when no value is set (its month is shown; the keyboard starts there). Without it: today."
+    },
+    "startOfWeek": {
+      "type": "number",
+      "description": "0 Sunday … 6 Saturday. Without it: the locale's."
+    },
+    "locale": {
+      "type": "string",
+      "description": "BCP 47 tag for the names and digits. Without it: the LocaleProvider's."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Where \"today\" is taken. Without it: the browser's."
+    },
+    "fixedWeeks": {
+      "type": "boolean",
+      "default": true,
+      "description": "Always six weeks, so the grid keeps its height from month to month."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[]) ISO dates"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "selected",
+    "today",
+    "in-range",
+    "outside-month",
+    "unavailable",
+    "disabled"
+  ],
+  "tokens": [
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.on-ink",
+    "radius.chip",
+    "text.2xs",
+    "text.sm",
+    "duration.fast",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "application + grid",
+    "keyboard": [
+      "Tab reaches previous, the title, next, then the focused date of the grid (one tab stop)",
+      "ArrowLeft / ArrowRight move one day (swapped right-to-left), ArrowUp / ArrowDown one week; past the edge the month changes",
+      "Page Up / Page Down move one month (Shift: one year); in the month and year views, one year and one decade",
+      "Home / End move to the first and the last day of the month (the first and last month or year in the other views)",
+      "Enter / Space choose the focused date; in the month and year views they open that month or year",
+      "Every move is instant: the focus ring jumps, nothing slides. The ring is drawn inside the date (the dates touch), never over its neighbour"
+    ],
+    "notes": [
+      "Give the calendar an aria-label. Each date is labelled with its full date and its state (Selected date, In range, Not available); the grid with the visible month.",
+      "Today is marked by a dot and aria-current=\"date\", not by colour alone; selected dates by an ink fill and aria-selected.",
+      "The previous and next buttons have tooltips and aria-labels naming the step; the title's name is its visible text."
+    ]
+  },
+  "motion": [
+    "dates: hover and selection colour over duration.fast; instant from the keyboard (kbd-instant)",
+    "range band: the cell's colour changes with the dates it holds, over duration.fast; instant from the keyboard",
+    "press: a date scales by motion.press-scale over duration.press, from the pointer only",
+    "paging, switching views, moving focus: instant; nothing slides or fades",
+    "header buttons: the Button's own hover and press"
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "button",
+  "title": "Button",
+  "summary": "Triggers an action, from the main call to action to a small icon button.",
+  "description": "The button for every action: primary for the main one, outline, ghost or danger for the rest. The app's core button, in the app's shape: a pill unless the app is rounded. Height comes from symmetric padding plus a minimum, so the label is always centred and every size lands on a whole pixel, on the one control scale (xs 24, sm 28, md 32, lg 36). Icon-only (square) at every size; shape rounded for card headers and toolbars; ghost + muted for the small icon buttons in headers, fields and rows. Works on <button> and <a>.",
+  "kind": "component",
+  "category": "actions",
+  "order": 1,
+  "status": "stable",
+  "element": "button",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "button",
+      "description": "The button itself; may also be an <a>."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "Wraps and centres the leading (or only) icon; aria-hidden. A trailing icon (a caret after the label: menu and popover triggers) is a second icon part after the label, with data-trailing; the same size and gap rules apply. The icon inside is 1em of the label, a size larger when it stands alone (14px at xs, 15px at sm, 16px at md, 18px at lg). Two icons in it share one cell and cross-fade (see the swapped prop)."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "Text of the button; truncates at the end when the button has less room than its label. Optional in hand-written markup. Two label parts nested in it share one cell and cross-fade: the first shows until the button is swapped (Copy / Copied); the button is as wide as the label it shows."
+    },
+    {
+      "part": "spinner",
+      "element": "span",
+      "optional": true,
+      "description": "While busy: the real Spinner (decorative), marked data-button=\"spinner\", 1em in the button's own ink. It takes the leading icon's cell (the glyph stays, transparent); without a leading icon it is centred over the button and the label stays, transparent, so the width never changes."
+    }
+  ],
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "primary",
+        "outline",
+        "secondary",
+        "accent",
+        "success",
+        "danger",
+        "danger-outline",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The names follow shadcn's (outline, secondary, ghost), and the default is outline (shadcn's unnamed default is our primary). ghost: transparent, hover fill hover, press hover-2 plus the press scale, hover-2 while open (aria-expanded). danger: filled red, for the confirmation of a destructive action (the alert dialog's action). danger-outline: the surface with red text and a red edge, filled red on hover, for the button that starts a destructive action in a danger zone (GitHub's \"Delete this repository\")."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The one control height scale (every pressable or typed-into control shares it, so an sm Button and an sm Select line up): xs 24px (12px text, 6px inline padding, 4px gap), sm 28px (13px, 12px, 6px), md 32px (14px, 16px, 8px), lg 36px (14px, 18px, 8px). Weight 500 at every size. Size changes dimensions only (height, padding, text, gap, icon; rounded takes radius.chip at xs and sm, as a field of that height does), never the fill, ring or focus."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "pill",
+        "rounded"
+      ],
+      "description": "Radius only. Left out, the app's shape: a pill, or rounded in a rounded app (\"shape\": \"rounded\" in the project's fndn.json). Named, it is that shape whatever the app's. pill: fully round, so a pill square is a circle. rounded: the radius of a field of the same height, so a Button and a Select in one row have the same corners: radius.chip at xs and sm, radius.control at md and lg."
+    },
+    "square": {
+      "type": "boolean",
+      "default": false,
+      "description": "Icon-only: as wide as it is tall at every size (24, 28, 32, 36). Needs an aria-label."
+    },
+    "muted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Quiet at rest, ink when hovered, pressed or open (with variant ghost). An icon-only button (square) rests in ink-3: the small icon buttons in card headers, fields and rows. A button with a label rests in ink-2, since its label is read."
+    },
+    "swapped": {
+      "type": "boolean",
+      "default": false,
+      "description": "Two states in one cell (Copy / Copied): the icon part holds two icons and the label part two label parts; swapped shows the second of each, cross-fading. The button is as wide as the label it shows. Announce the change through a status region."
+    },
+    "iconSize": {
+      "type": "number",
+      "attr": "--fndn-button-icon-size",
+      "description": "Square buttons: the icon's size in px, for a host whose glyphs follow another rhythm (sidebar-nav's 18px rail). Defaults to 14 (xs), 15 (sm), 16 (md), 18 (lg)."
+    },
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "attr": "aria-busy",
+      "description": "Work under way (Saving…, Deploying…): the spinner replaces the leading icon, or covers the label (an icon button: its icon), aria-busy=\"true\", a press is dropped (a submit button does not submit) and does not scale. The button keeps its width and its focus; change the label yourself if the verb changes."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "attr": "disabled"
+    }
+  },
+  "slots": {
+    "default": "Label",
+    "icon": "Leading icon (wrapped in the icon part)",
+    "trailingIcon": "Trailing icon after the label, e.g. a caret (wrapped in an icon part with data-trailing). React: the trailingIcon prop (a node); Vue: the trailingIcon slot; Svelte: the trailingIcon snippet."
+  },
+  "events": {
+    "click": "native click"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled",
+    "expanded",
+    "swapped",
+    "busy"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.on-ink",
+    "color.inset",
+    "color.hover",
+    "color.hover-2",
+    "color.line-strong",
+    "color.accent",
+    "color.accent-ink",
+    "color.on-accent",
+    "color.green",
+    "color.red",
+    "shadow.btn",
+    "radius.pill",
+    "radius.shape",
+    "radius.shape-sm",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale",
+    "color.ink-3",
+    "radius.control",
+    "radius.chip"
+  ],
+  "dependencies": [
+    "spinner"
+  ],
+  "a11y": {
+    "role": "button",
+    "keyboard": [
+      "Enter / Space activate"
+    ],
+    "notes": [
+      "An icon-only button needs an accessible name (aria-label).",
+      "Use aria-expanded on a button that opens something; the outline variant styles it.",
+      "A link that looks like a button is an <a> with the button recipe's classes, not a button with a click handler.",
+      "Disabled buttons are inert: no hover, no press, not clickable.",
+      "Two states in one cell: the stacked icons and labels are aria-hidden, the button keeps a fixed aria-label, and the change is announced through a role=\"status\" region (code-block does this).",
+      "Busy: aria-busy=\"true\" and the click is dropped, but the button stays focusable and named (not disabled), so focus is not lost while the work runs. Announce the outcome through a status region."
+    ]
+  },
+  "motion": [
+    "press: scale to motion.press-scale over duration.press, easing.out-strong (label and icon scale with the surface); ghost also darkens to hover-2",
+    "hover (pointer only): fill, colour, opacity or brightness over duration.fast, ease",
+    "keyboard: a popup or disclosure trigger (aria-haspopup or aria-expanded) changes at once when the keyboard opens or closes it (kbd-instant): the open fill appears with Enter or ArrowDown, not over duration.fast. Other Buttons keep their transitions (prompt-bar's send travels while the user types)",
+    "two states in one cell: opacity and a 2px blur cross-fade over duration.base, ease",
+    "no entrance and no other motion",
+    "two states (swapped, e.g. Copy / Copied): the labels and icons cross-fade with a 2px blur at duration.base, and the button's width eases from the old label's to the new one's in the same frames (duration.base, out-strong); from the keyboard the swap is instant",
+    "busy: the spinner and what it replaces swap at once, both ways (no fade: from the keyboard it is instant, and a button that is busy at mount plays nothing); the spinner turns (the Spinner's loop)"
+  ]
+}

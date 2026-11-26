@@ -1,0 +1,68 @@
+{
+  "examples": [
+    {
+      "name": "Plain",
+      "props": {
+        "variant": "plain"
+      },
+      "text": "12"
+    },
+    {
+      "name": "Boxed",
+      "props": {
+        "variant": "boxed"
+      },
+      "text": "3"
+    },
+    {
+      "name": "More",
+      "props": {
+        "variant": "boxed"
+      },
+      "text": "+4"
+    },
+    {
+      "name": "Selected",
+      "props": {
+        "variant": "boxed",
+        "selected": true
+      },
+      "text": "28"
+    },
+    {
+      "name": "In a chip",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Huge",
+      "props": {
+        "variant": "boxed"
+      },
+      "text": "12,480,000"
+    },
+    {
+      "name": "Huge plain in a narrow box",
+      "width": 24,
+      "props": {
+        "variant": "plain"
+      },
+      "text": "1,284,000"
+    },
+    {
+      "name": "Zero",
+      "props": {
+        "variant": "boxed"
+      },
+      "text": "0"
+    },
+    {
+      "name": "Arabic digits",
+      "props": {
+        "variant": "boxed"
+      },
+      "text": "١٢٤"
+    }
+  ]
+}

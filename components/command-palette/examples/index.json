@@ -1,0 +1,19 @@
+{
+  "playground": {
+    "props": {
+      "items": [
+        { "value": "/projects/web-app", "label": "web-app", "group": "Projects", "meta": "Production" },
+        { "value": "/projects/billing-api", "label": "billing-api", "group": "Projects", "meta": "Staging" },
+        { "value": "deploy", "label": "Deploy web-app to Production", "group": "Actions", "shortcut": ["⌘", "D"], "keywords": ["ship", "release"] },
+        { "value": "invite", "label": "Invite teammates", "group": "Actions", "shortcut": ["⌘", "I"] },
+        { "value": "/settings", "label": "Workspace settings", "group": "Settings", "keywords": ["billing", "plan"] }
+      ],
+      "recent": ["deploy"],
+      "placeholder": "Search projects, settings and actions…",
+      "hotkey": false
+    }
+  },
+  "examples": [
+    { "file": "workspace", "title": "⌘K across the workspace" }
+  ]
+}

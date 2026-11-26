@@ -1,0 +1,104 @@
+{
+  "examples": [
+    {
+      "name": "16 : 9",
+      "props": {
+        "style": {
+          "width": 320,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "16 : 9"
+    },
+    {
+      "name": "Square",
+      "props": {
+        "ratio": 1,
+        "style": {
+          "width": 200,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "1 : 1"
+    },
+    {
+      "name": "Portrait 3 : 4",
+      "props": {
+        "ratio": 0.75,
+        "style": {
+          "width": 180,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "3 : 4"
+    },
+    {
+      "name": "Wide 21 : 9",
+      "props": {
+        "ratio": 2.3333333333333335,
+        "style": {
+          "width": 360,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "21 : 9"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Content taller than the box",
+      "props": {
+        "ratio": 4,
+        "style": {
+          "width": 200,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "A long caption that would need many lines in a box this short, and must not stretch it: the box keeps its ratio and clips the rest of the text."
+    },
+    {
+      "name": "Zero ratio",
+      "props": {
+        "ratio": 0,
+        "style": {
+          "width": 240,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "falls back to 16 : 9"
+    },
+    {
+      "name": "Negative ratio",
+      "props": {
+        "ratio": -2,
+        "style": {
+          "width": 240,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "falls back to 16 : 9"
+    },
+    {
+      "name": "Very tall",
+      "props": {
+        "ratio": 0.1,
+        "style": {
+          "width": 64,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "1 : 10"
+    },
+    {
+      "name": "Unbreakable text",
+      "props": {
+        "ratio": 1,
+        "style": {
+          "width": 120,
+          "background": "var(--fndn-hover-2)"
+        }
+      },
+      "text": "averyveryveryverylongunbrokenlabelwithoutanyspacesatall"
+    }
+  ]
+}

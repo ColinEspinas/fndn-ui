@@ -1,0 +1,217 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "menu",
+  "title": "Menu",
+  "summary": "A list of actions that opens from a button.",
+  "description": "A list of actions that opens from a button. The raised popup scales out of its trigger and a single highlight glides between rows under the pointer and the arrow keys alike; opening and closing from the keyboard stay instant. Items can carry an icon and a trailing hint, be destructive, or be checkbox and radio options. Behaviour, focus and ARIA come from the Zag menu machine, through Ark UI in React, Vue and Svelte.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 1,
+  "engine": "menu",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Inline wrapper around the trigger"
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "Any button; aria-haspopup=menu, data-state=open|closed. The default trigger is the real Button (outline, sm) with a caret, marked data-menu=\"trigger\""
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Placed by the engine and rendered in a portal. Exposes --transform-origin and --available-height"
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=menu popup; the shared popup surface (`lib/popup.ts`: surface, motion, keyboard-instant; stacking from base.css)"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "Shared gliding highlight layer (`glideLayer` of `lib/glide.ts`); glides under the pointer and the keyboard"
+    },
+    {
+      "part": "group",
+      "element": "div",
+      "optional": true,
+      "repeat": true,
+      "description": "role=group, labelled by its label"
+    },
+    {
+      "part": "label",
+      "element": "div",
+      "optional": true,
+      "description": "Group heading; the shared option row's group label (`lib/option.ts`)"
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "role=menuitem | menuitemcheckbox | menuitemradio; data-highlighted, data-state=checked|unchecked on options, data-disabled; composes the shared option row (`lib/option.ts`; the tone prop is its danger variant)"
+    },
+    {
+      "part": "item-icon",
+      "element": "span",
+      "optional": true,
+      "description": "Leading icon of an action or a sub-menu row (the `icon` of the entry): the shared option row's icon (`lib/option.ts`), 14px glyph in ink-3, the row's red on a danger action; aria-hidden. React: a node (a Phosphor icon with data-slot=\"icon\" weight=\"bold\"); Vue and Svelte: an icon component, drawn bold. Checkbox and radio options lead with their control instead"
+    },
+    {
+      "part": "item-text",
+      "element": "span",
+      "description": "The shared option row's text (`lib/option.ts`)"
+    },
+    {
+      "part": "item-meta",
+      "element": "span",
+      "optional": true,
+      "description": "Trailing hint, e.g. a keyboard shortcut; the shared option row's meta (`lib/option.ts`)"
+    },
+    {
+      "part": "item-caret",
+      "element": "span",
+      "optional": true,
+      "description": "Ends a row that opens a sub-menu; a 12px caret (caret-right, mirrored under rtl) in ink-3, aria-hidden"
+    },
+    {
+      "part": "item-control",
+      "element": "div",
+      "optional": true,
+      "description": "Checkbox options lead with the checkbox's own control (data-slot=checkbox-control, the checkbox recipe's control classes, with its checkbox-mark), radio options with the radio's (data-slot=radio-group-control); data-state=checked|unchecked follows the option, so the mark is drawn exactly as in those components"
+    },
+    {
+      "part": "separator",
+      "element": "hr",
+      "optional": true,
+      "repeat": true,
+      "description": "the shared option row's separator (`lib/option.ts`)"
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "'checkbox' | 'group' | 'radio-group' | 'separator' | 'submenu' | undefined (action)",
+        "value": "string",
+        "label": "string",
+        "icon": "icon? (action, submenu; also an action inside a group). React: a node; Vue / Svelte: a component",
+        "meta": "string?",
+        "tone": "'danger'?",
+        "disabled": "boolean?",
+        "checked": "boolean? (checkbox)",
+        "name": "string (radio-group)",
+        "items": "entries (group, radio-group, submenu)",
+        "closeOnSelect": "boolean? (radio-group): close the menu when an option is picked; default false."
+      },
+      "description": "Entries in order: actions, checkbox options, groups with a label, radio groups, separators, and sub-menus: a row that opens a nested menu to its side. An action or a sub-menu row may lead with an icon; give icons to every action of a menu or to none, so the labels line up."
+    },
+    "triggerLabel": {
+      "type": "string",
+      "description": "Label of the default trigger. Pass your own trigger element instead when you need one (children / trigger slot / trigger snippet)."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "default",
+        "danger"
+      ],
+      "default": "default",
+      "part": "item",
+      "description": "Per item: danger marks a destructive action."
+    },
+    "placement": {
+      "type": "string",
+      "default": "bottom-start",
+      "description": "Preferred side; flips when there is no room."
+    },
+    "open": {
+      "type": "boolean",
+      "model": true
+    }
+  },
+  "slots": {
+    "trigger": "Your own trigger element (React: children; Vue: trigger slot; Svelte: trigger snippet receiving the props to spread)"
+  },
+  "events": {
+    "select": "(value: string) an action was chosen",
+    "checkedChange": "(value: string, checked: boolean)",
+    "radioChange": "(name: string, value: string)",
+    "openChange": "(open: boolean)",
+    "ui:set-open": "No adapter handles it (control `open` instead). { open: boolean }",
+    "ui:set-checked": "No adapter handles it. { value, checked } set a checkbox option without a checkedChange",
+    "ui:set-value": "No adapter handles it. { name, value } set a radio group without a radioChange"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "highlighted",
+    "checked",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-3",
+    "color.line",
+    "color.red",
+    "shadow.raised",
+    "radius.card",
+    "radius.chip",
+    "text.2xs",
+    "text.md",
+    "duration.fast",
+    "duration.popup",
+    "easing.out-strong",
+    "motion.popup-scale"
+  ],
+  "dependencies": [
+    "button",
+    "checkbox",
+    "radio-group"
+  ],
+  "files": {
+    "react": [
+      "menu.tsx"
+    ],
+    "vue": [
+      "Menu.vue",
+      "MenuPanel.vue"
+    ],
+    "svelte": [
+      "Menu.svelte",
+      "MenuPanel.svelte"
+    ]
+  },
+  "a11y": {
+    "role": "menu",
+    "keyboard": [
+      "Enter / Space / ArrowDown on the trigger open the menu and move focus into it; ArrowUp opens on the last item",
+      "ArrowDown / ArrowUp move the highlight; Home / End jump",
+      "Typing jumps to the matching item (type-ahead)",
+      "Enter / Space activate the highlighted item; checkbox and radio options toggle",
+      "On a sub-menu row: ArrowRight (ArrowLeft under rtl), Enter or Space open the sub-menu on its first item; ArrowLeft (ArrowRight under rtl) or Escape close it and return to the row. Hovering the row opens it",
+      "Escape closes; focus returns to the trigger. Tab closes and moves on"
+    ],
+    "notes": [
+      "An icon-only trigger needs an aria-label.",
+      "Opening and closing from the keyboard are instant; the highlight glides under the pointer and the keyboard alike."
+    ]
+  },
+  "motion": [
+    "popup: the shared popup surface (`lib/popup.ts`): opacity + scale from motion.popup-scale out of the trigger (--transform-origin), duration.popup, easing.out-strong; closes at duration.fast; instant when opened or closed from the keyboard",
+    "mounted open (defaultOpen, or open at mount): the popup is drawn at once, with no entrance (menu-content carries data-mounted-open until it first closes); its close, and every later open, animate as above",
+    "sub-menu: the same popup, growing from the row that opened it; its first row on the same line as that row, its edge 4px clear of the parent panel; that row keeps the highlight while the sub-menu is open",
+    "highlight: one layer glides between rows over duration.move, easing.out-strong, under the pointer and the arrow keys alike",
+    "rows: a pressed row darkens to color.hover-2 over duration.fast",
+    "checkbox and radio options: the checkbox's and the radio's own mark recipe (the fill leads, the mark is drawn); instant from the keyboard",
+    "items: no entrance animation and no stagger (a menu is opened many times a day)"
+  ]
+}

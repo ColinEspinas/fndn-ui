@@ -1,0 +1,91 @@
+{
+  "examples": [
+    {
+      "name": "Plain",
+      "props": {
+        "count": 3,
+        "page": 0,
+        "loop": true,
+        "layout": "start",
+        "label": "Choose insight",
+        "prevLabel": "Previous insight",
+        "nextLabel": "Next insight"
+      }
+    },
+    {
+      "name": "Rolling",
+      "props": {
+        "count": 3,
+        "page": 1,
+        "reel": true,
+        "orientation": "vertical",
+        "separator": "/",
+        "unit": "Question",
+        "label": "Questions",
+        "prevLabel": "Previous question",
+        "nextLabel": "Next question"
+      }
+    },
+    {
+      "name": "Many pages",
+      "props": {
+        "count": 12,
+        "page": 8,
+        "reel": true
+      }
+    },
+    {
+      "name": "Last page",
+      "props": {
+        "count": 3,
+        "page": 2
+      }
+    },
+    {
+      "name": "Slash",
+      "props": {
+        "count": 3,
+        "page": 0,
+        "separator": "/",
+        "label": "Pages",
+        "prevProps": { "aria-controls": "pager-slides" },
+        "nextProps": { "aria-controls": "pager-slides", "data-test": "next" }
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "One page",
+      "props": {
+        "count": 1,
+        "page": 0
+      }
+    },
+    {
+      "name": "No pages",
+      "props": {
+        "count": 0,
+        "page": 0,
+        "reel": true
+      }
+    },
+    {
+      "name": "Huge count",
+      "props": {
+        "count": 12480,
+        "page": 12479,
+        "reel": true
+      }
+    },
+    {
+      "name": "Long labels",
+      "props": {
+        "count": 3,
+        "page": 1,
+        "label": "Choose which of the generated supplier summaries to read",
+        "prevLabel": "Show the previous supplier summary",
+        "nextLabel": "Show the next supplier summary"
+      }
+    }
+  ]
+}

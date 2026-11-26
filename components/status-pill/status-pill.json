@@ -1,0 +1,137 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "status-pill",
+  "title": "Status Pill",
+  "summary": "A tinted pill with a dot for a status, such as Active or Failed.",
+  "description": "Tinted pill with a leading status dot: relationship status, run state, health. One line, never wraps or shrinks. Sizes md (24px) and sm (22px); a mark (circle with a check) for a finished state. The squarer, bordered label of tables and fields is the Tag.",
+  "kind": "component",
+  "category": "display",
+  "order": 3,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span"
+    },
+    {
+      "part": "dot",
+      "element": "span",
+      "optional": true,
+      "description": "6px dot in the tone's colour; aria-hidden."
+    },
+    {
+      "part": "mark",
+      "element": "span",
+      "optional": true,
+      "description": "18px circle (16px at sm) with a check, in the tone's colour; replaces the dot for a finished state (\"Sent\", \"Applied\"). aria-hidden; it pops in (motion.popup-scale) only when it appears after the pill has been painted."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "Text of the status; truncates at the end when the pill has less room than its text. Pass title with the full text when it can truncate."
+    },
+    {
+      "part": "trailing",
+      "element": "span",
+      "optional": true,
+      "description": "A glyph after the label (12px, 11px at sm), aria-hidden (a failed task's retry arrow)."
+    }
+  ],
+  "props": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "accent",
+        "green",
+        "orange",
+        "red",
+        "blue"
+      ],
+      "default": "neutral",
+      "description": "neutral (inset fill, ink-2 text), the four status tones with their tint pairs (accent: accent-tint and accent-ink; green, orange, red), and blue, whose fill and text mix from color.tag-blue (a beta badge, for instance)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "md",
+        "sm"
+      ],
+      "default": "md",
+      "description": "md 24px / 13px; sm 22px / 11.5px."
+    },
+    "dot": {
+      "type": "boolean",
+      "description": "Render the leading dot part.",
+      "default": true
+    },
+    "mark": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render the mark (circle with a check) in place of the dot; it pops in when it appears after the first paint (a status change)."
+    },
+    "dotTone": {
+      "type": "enum",
+      "values": [
+        "accent",
+        "green",
+        "orange",
+        "red",
+        "blue",
+        "purple",
+        "cyan",
+        "yellow",
+        "pink"
+      ],
+      "description": "A neutral pill whose dot alone takes this colour: the status tones or one of the tag hues (a diff-table category). Set only when given."
+    }
+  },
+  "slots": {
+    "default": "Label",
+    "trailingIcon": "A glyph after the label (React: trailingIcon node; Vue: #trailing slot; Svelte: trailingIcon snippet)."
+  },
+  "states": [],
+  "tokens": [
+    "color.inset",
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.on-accent",
+    "color.accent",
+    "color.accent-tint",
+    "color.accent-ink",
+    "color.green",
+    "color.green-tint",
+    "color.orange",
+    "color.orange-tint",
+    "color.red",
+    "color.red-tint",
+    "color.tag-blue",
+    "color.tag-green",
+    "color.tag-orange",
+    "color.tag-red",
+    "color.tag-purple",
+    "color.tag-cyan",
+    "color.tag-yellow",
+    "color.tag-pink",
+    "radius.pill",
+    "text.sm",
+    "duration.popup",
+    "motion.popup-scale",
+    "easing.out-strong"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "The dot and the mark are aria-hidden; the label carries the state. Tone alone never does.",
+      "When the status changes while the user waits, put the pill in a role=\"status\" region."
+    ]
+  },
+  "motion": [
+    "the mark pops in when it appears after the pill has been painted (a status change): opacity and scale from motion.popup-scale, duration.popup, easing.out-strong, from @starting-style; data-enter marks a painted pill (lib/paint.ts), so nothing plays on first paint and setting data-enter starts nothing; reduced motion: fade only",
+    "no other motion"
+  ]
+}

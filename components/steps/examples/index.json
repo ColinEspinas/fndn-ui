@@ -1,0 +1,23 @@
+{
+  "playground": {
+    "props": {
+      "orientation": "horizontal",
+      "linear": false,
+      "controls": true,
+      "step": 1,
+      "nextLabel": "Continue",
+      "completed": "web-app is live on Production.",
+      "items": [
+        { "title": "Repository", "description": "From GitHub", "content": "northwind/web-app, 1,284 commits on main." },
+        { "title": "Configure", "description": "Build and env", "content": "Next.js detected. Build with pnpm build, output .next." },
+        { "title": "Deploy", "description": "Production", "content": "The first deploy builds main and gives it a URL." }
+      ]
+    },
+    "width": 360
+  },
+  "examples": [
+    { "file": "create-project", "title": "Create a project" },
+    { "file": "deploy-progress", "title": "Deploy progress, read-only" },
+    { "file": "import-members", "title": "Import members with your own buttons" }
+  ]
+}

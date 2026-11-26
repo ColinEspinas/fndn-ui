@@ -1,0 +1,297 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "prompt-bar",
+  "title": "Prompt Bar",
+  "summary": "The composer of an agent: a growing text field with attachments, a model picker and send.",
+  "description": "The composer of an agent surface: a growing textarea with an attach menu, a model picker, dictation and send. Typing @ opens a list of sources and / a list of commands; the textarea keeps focus and the list follows the combobox pattern. Enter sends, Shift+Enter adds a line, and while the agent works the send button becomes a stop button. The model picker is our quiet select and the attach menu is our menu, so their behaviour comes from Zag in every target; the suggestion lists share one framework-neutral controller (prompt-suggest.ts).",
+  "kind": "block",
+  "category": "agent",
+  "order": 0,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-slot=\"prompt-bar\"; shape, busy and the expanded layout (the text, or the placeholder while it is empty, needs the full width: controls drop to a second row, so a hint is never cut beside them) are recipe variants"
+    },
+    {
+      "part": "composer",
+      "element": "div",
+      "description": "The bordered surface; anchors the suggestion lists"
+    },
+    {
+      "part": "sweep",
+      "element": "canvas",
+      "description": "glimm shader canvas behind the content, invisible at rest; data-sweeping while the send sweep plays"
+    },
+    {
+      "part": "attachments",
+      "element": "div",
+      "optional": true,
+      "description": "role=list of attached files"
+    },
+    {
+      "part": "attachment",
+      "element": "span",
+      "repeat": true,
+      "description": "The real Tag (tone neutral; shape pill in a pill bar, rounded otherwise) as role=listitem, marked data-prompt-bar=\"attachment\"; the file glyph is its icon; a path-like name is middle-truncated"
+    },
+    {
+      "part": "attachment-remove",
+      "element": "button",
+      "description": "The Tag's remove button (the real Button, ghost xs square, following the pill shape) with its tooltip Remove <name>; marked data-prompt-bar=\"attachment-remove\" through removeProps (an attribute object passed to Tag)"
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "description": "Grid of the input and the controls"
+    },
+    {
+      "part": "attach",
+      "element": "div",
+      "description": "The real Menu, marked data-prompt-bar=\"attach\", with the attach trigger"
+    },
+    {
+      "part": "attach-trigger",
+      "element": "button",
+      "description": "The real Button (ghost sm square muted, rounded unless the bar is a pill), marked data-prompt-bar=\"attach-trigger\"; aria-label Add attachments and sources"
+    },
+    {
+      "part": "input",
+      "element": "textarea",
+      "description": "role=combobox, aria-autocomplete=list, aria-expanded, aria-controls and aria-activedescendant while a list is open; grows to a maximum, then scrolls"
+    },
+    {
+      "part": "model",
+      "element": "div",
+      "description": "The real Select, sm and ghost, marked data-prompt-bar=\"model\" on its root"
+    },
+    {
+      "part": "dictate",
+      "element": "button",
+      "description": "A <button> with the button recipe classes (ghost sm square muted, rounded unless the bar is a pill: its level bars must be its own flex item), data-slot=\"button\", marked data-prompt-bar=\"dictate\"; aria-pressed while dictating, when it keeps an accent tint; aria-label Start/Stop dictation and our tooltip"
+    },
+    {
+      "part": "bars",
+      "element": "span",
+      "description": "Level bars shown while dictating, in place of the microphone"
+    },
+    {
+      "part": "bar",
+      "element": "span",
+      "repeat": true
+    },
+    {
+      "part": "send",
+      "element": "button",
+      "description": "The real Button (primary sm square, rounded unless the bar is a pill), marked data-prompt-bar=\"send\"; aria-label Send, or Stop generating while busy, and our tooltip"
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Fixed over the composer, rendered in a portal; one per list. Carries data-scope=\"prompt-bar\" data-part=\"positioner\", so it stacks like every popup (base.css). Exposes --available-height"
+    },
+    {
+      "part": "list",
+      "element": "div",
+      "description": "The popup: the shared popup surface (`lib/popup.ts`). data-kind=source|command; data-state=open|closed; hidden while closed. Opened by typing, so it shows at once"
+    },
+    {
+      "part": "options",
+      "element": "div",
+      "description": "role=listbox; scrolls"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "Shared gliding highlight layer (`glideLayer` of `lib/glide.ts`); glides under the pointer and the keyboard"
+    },
+    {
+      "part": "option",
+      "element": "div",
+      "repeat": true,
+      "description": "role=option; composes the shared option row (`lib/option.ts`, 36px through --option-height on the list: two runs of text). data-highlighted and aria-selected on the active option; hidden when filtered out"
+    },
+    {
+      "part": "option-icon",
+      "element": "span",
+      "optional": true,
+      "description": "The shared option row's icon (`lib/option.ts`)"
+    },
+    {
+      "part": "option-label",
+      "element": "span",
+      "description": "The shared option row's text (`lib/option.ts`)"
+    },
+    {
+      "part": "option-description",
+      "element": "span",
+      "optional": true,
+      "description": "the shared option row's description (`lib/option.ts`)"
+    },
+    {
+      "part": "empty",
+      "element": "div",
+      "description": "The real EmptyState (size row, start-aligned, 36px from the list --option-height), marked data-prompt-bar=\"empty\"; shown when nothing matches"
+    },
+    {
+      "part": "footer",
+      "element": "div"
+    }
+  ],
+  "props": {
+    "shape": {
+      "type": "enum",
+      "values": [
+        "pill",
+        "rounded"
+      ],
+      "default": "rounded",
+      "description": "Radius only. rounded: card radius. pill: fully round while it is one line, 24px once it holds attachments or more lines."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "default": "",
+      "description": "The prompt text."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Write a message…"
+    },
+    "model": {
+      "type": "string",
+      "model": true,
+      "description": "Value of the selected model."
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "meta": "string?"
+      },
+      "description": "Model picker options (our select, sm and ghost)."
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "description": "string?",
+        "icon": "'database' | 'chart-bar' | 'stack' | 'globe' | 'file-text' | 'folder' | 'link' | 'users' | 'envelope-simple' | 'chat-circle' | 'at'?"
+      },
+      "description": "Typing @ lists them (matched anywhere in the label); accepting inserts @Label. Also listed in the attach menu."
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string? (default /value)",
+        "description": "string?"
+      },
+      "description": "Typing / lists them (matched from the start); accepting inserts /value."
+    },
+    "attachments": {
+      "type": "array",
+      "model": true,
+      "items": {
+        "name": "string"
+      },
+      "description": "Attached files, shown as removable chips. Strings are accepted as names."
+    },
+    "dictating": {
+      "type": "boolean",
+      "model": true,
+      "default": false,
+      "attr": "aria-pressed",
+      "part": "dictate"
+    },
+    "busy": {
+      "type": "boolean",
+      "default": false,
+      "description": "The agent is working: the send button becomes a stop button and Enter does not send."
+    },
+    "aria-label": {
+      "type": "string",
+      "default": "Prompt",
+      "description": "Accessible name of the textarea."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string)",
+    "modelChange": "(model: string)",
+    "attachmentsChange": "(attachments: Attachment[])",
+    "dictatingChange": "(dictating: boolean)",
+    "submit": "({ value, model, attachments }) Enter or the send button; the bar then clears its text and attachments",
+    "stop": "() the stop button while busy",
+    "attach": "() 'Add photos & files' was chosen in the attach menu"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "focus-within",
+    "open",
+    "highlighted",
+    "busy",
+    "dictating",
+    "expanded",
+    "disabled"
+  ],
+  "tokens": [
+    "duration.sweep",
+    "motion.popup-scale",
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.line-strong",
+    "color.accent-tint",
+    "color.accent-ink",
+    "shadow.card",
+    "radius.window",
+    "radius.pill",
+    "text.2xs",
+    "text.sm",
+    "duration.base",
+    "duration.popup",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "select",
+    "menu",
+    "button",
+    "tag",
+    "empty-state",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "combobox (textarea) + listbox",
+    "keyboard": [
+      "Typing @ or / after a space (or at the start) opens the matching list; the first option is active; focus stays in the textarea",
+      "ArrowDown / ArrowUp move the active option (wrapping); the textarea announces it through aria-activedescendant",
+      "Enter or Tab accept the active option and insert @Label or /command; Escape closes the list until the text changes",
+      "With no list open: Enter sends, Shift+Enter inserts a newline; nothing sends while an IME composition is active or while busy",
+      "Model picker: our select (Enter / Space / ArrowDown open, arrows move, Enter selects, Escape closes)",
+      "Attach: our menu (Enter / Space / ArrowDown open, arrows move, Enter activates, Escape closes); choosing a source returns focus to the textarea",
+      "Each button is a tab stop: attach, model, dictation (aria-pressed), send / stop"
+    ],
+    "notes": [
+      "Icon-only buttons carry aria-label and our tooltip with the same text: Add attachments and sources, Start / Stop dictation, Send / Stop generating, Remove <file>.",
+      "The suggestion lists open from typing, so they open and close without animation; the highlight glides between options for pointer and arrow-key moves alike.",
+      "16px text on coarse pointers so iOS does not zoom the page; enterkeyhint=send."
+    ]
+  },
+  "motion": [
+    "suggestion lists: the shared popup surface; opened by typing, so they show and hide at once (keyboard-instant). One highlight glides between options over duration.move, easing.out-strong, for pointer and arrow-key moves alike (the highlight is the one exception to keyboard-instant); a pressed option darkens to color.hover-2; \"No matches\" is the empty-state and fades in over duration.base",
+    "buttons: our button's press (scale to motion.press-scale over duration.press) and colour over duration.fast",
+    "composer: border colour and radius over duration.base (focus, pill growing past one line)",
+    "layout switch: when the text needs the full width (or no longer does) the controls and the input travel to their new place (translate) and the composer's height follows, together over duration.move, easing.out-strong (FLIP, flipRow in prompt-bar.logic.ts). Typing triggers it, so it is not keyboard-instant; typing back and forth across the threshold retargets from where things are. Never on first paint; instant under reduced motion",
+    "attachments: a tag pops in (fndn-pop-in, duration.popup) when it arrives",
+    "send: one glimm sweep across the composer per send, over duration.sweep (1000ms) at an even ease-in-out pace, then a fade-out at duration.slow; skipped under reduced motion and when WebGL is missing",
+    "dictation bars: loop while dictating; static under reduced motion"
+  ]
+}

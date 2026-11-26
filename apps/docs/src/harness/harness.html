@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>ui — test page</title>
+    <style>
+      body { display: grid; min-height: 100vh; place-items: center; }
+      #stage { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; padding: 48px; }
+    </style>
+  </head>
+  <body>
+    <!-- One example of one component in one framework, from the component's test fixtures:
+         /harness.html?c=select&fw=react&ex=0&theme=dark&dir=rtl
+         fw=react|vue|svelte; &data=worst renders the fixtures' worstCase[ex] instead
+         Scenarios (examples with steps): &step=<n> renders the state after n steps, no timers;
+         &play=1 plays the steps in real time (data-harness-step on <html> follows) -->
+    <div id="stage"></div>
+    <script type="module" src="/src/harness/main.ts"></script>
+  </body>
+</html>

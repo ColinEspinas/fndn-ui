@@ -1,0 +1,74 @@
+{
+  "examples": [
+    {
+      "name": "Neutral",
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "updated_at"
+    },
+    {
+      "name": "Accent",
+      "props": {
+        "tone": "accent"
+      },
+      "text": "score"
+    },
+    {
+      "name": "Green",
+      "props": {
+        "tone": "green"
+      },
+      "text": "+12%"
+    },
+    {
+      "name": "Orange",
+      "props": {
+        "tone": "orange"
+      },
+      "text": "stale"
+    },
+    {
+      "name": "Red",
+      "props": {
+        "tone": "red"
+      },
+      "text": "deprecated"
+    },
+    {
+      "name": "In a sentence",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long token",
+      "width": 220,
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "customer_lifetime_value_usd_trailing_12_months_including_refunds"
+    },
+    {
+      "name": "One character",
+      "props": {
+        "tone": "accent"
+      },
+      "text": "x"
+    },
+    {
+      "name": "Non-Latin",
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "数量_合計"
+    },
+    {
+      "name": "Huge number",
+      "props": {
+        "tone": "green"
+      },
+      "text": "+12,480,000.00%"
+    }
+  ]
+}

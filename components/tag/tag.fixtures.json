@@ -1,0 +1,90 @@
+{
+  "examples": [
+    {
+      "name": "Tag",
+      "props": {
+        "tone": "purple"
+      },
+      "text": "Seasonal"
+    },
+    {
+      "name": "Tag with dot",
+      "props": {
+        "tone": "cyan",
+        "dot": true
+      },
+      "text": "In progress"
+    },
+    {
+      "name": "Removable tag",
+      "props": {
+        "tone": "neutral",
+        "removable": true,
+        "removeLabel": "Remove supplier-list.csv"
+      },
+      "text": "supplier-list.csv"
+    },
+    {
+      "name": "Small tag",
+      "props": {
+        "tone": "blue",
+        "size": "sm"
+      },
+      "text": "Vegan"
+    },
+    {
+      "name": "Pill tag",
+      "props": {
+        "tone": "neutral",
+        "shape": "pill",
+        "removable": true,
+        "removeLabel": "Remove notes.md"
+      },
+      "text": "notes.md"
+    },
+    {
+      "name": "Removable with tooltip",
+      "props": {
+        "shape": "pill",
+        "tone": "neutral",
+        "removable": true,
+        "removeLabel": "Remove notes.md",
+        "removeTooltip": "Remove",
+        "removeProps": {
+          "data-attachment": "0"
+        }
+      },
+      "text": "notes.md"
+    },
+    {
+      "name": "Outline tag",
+      "props": {
+        "tone": "orange",
+        "variant": "outline"
+      },
+      "text": "priority: high"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long tag",
+      "width": 140,
+      "props": {
+        "tone": "yellow",
+        "title": "Limited release for the northern hemisphere summer"
+      },
+      "text": "Limited release for the northern hemisphere summer"
+    },
+    {
+      "name": "Long removable tag",
+      "width": 160,
+      "props": {
+        "tone": "neutral",
+        "removable": true,
+        "removeLabel": "Remove quarterly-supplier-reconciliation-final-v3.xlsx",
+        "title": "quarterly-supplier-reconciliation-final-v3.xlsx"
+      },
+      "text": "quarterly-supplier-reconciliation-final-v3.xlsx"
+    }
+  ]
+}

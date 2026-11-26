@@ -1,0 +1,18 @@
+{
+  "examples": [
+    { "name": "One-time code", "props": { "label": "Verification code", "otp": true } },
+    { "name": "Filled", "props": { "label": "Verification code", "value": ["4", "8", "1", "5", "9", "2"] } },
+    { "name": "PIN, masked, four cells", "props": { "aria-label": "PIN", "length": 4, "mask": true } },
+    { "name": "Small", "props": { "aria-label": "Code", "size": "sm", "length": 4, "value": ["1", "2", "", ""] } },
+    { "name": "Invalid", "props": { "label": "Verification code", "value": ["4", "8", "1", "5", "9", "0"], "invalid": true } },
+    { "name": "Disabled", "props": { "label": "Verification code", "disabled": true } },
+    { "name": "Letters and digits", "props": { "aria-label": "Invite code", "type": "alphanumeric", "length": 5, "placeholder": "·" } }
+  ],
+  "worstCase": [
+    { "name": "Long label, narrow", "width": 160, "props": { "label": "Enter the verification code we just sent to your recovery email address", "value": ["4", "8", "1", "5", "9", "2"] } },
+    { "name": "Many cells in 300px", "width": 300, "props": { "aria-label": "Licence key", "type": "alphanumeric", "length": 12 } },
+    { "name": "One cell", "props": { "aria-label": "Digit", "length": 1, "value": ["7"] } },
+    { "name": "Right-to-left label", "props": { "label": "رمز التحقق", "value": ["1", "2", "3", "", "", ""] } },
+    { "name": "Wide characters", "props": { "aria-label": "Code", "type": "alphabetic", "length": 4, "value": ["W", "M", "W", "M"] } }
+  ]
+}

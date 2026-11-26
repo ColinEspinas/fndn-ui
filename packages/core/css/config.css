@@ -1,0 +1,4 @@
+/* ui — what a project's fndn.json says about the look, as CSS.
+ * Here, in the library itself, nothing is set: buttons, toggles and segmented controls are pills.
+ * In a project the tool writes this file from fndn.json ("shape": "rounded" gives them a field's
+ * corners): change the setting there and run `update`. */

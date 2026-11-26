@@ -1,0 +1,9 @@
+{
+  "playground": { "props": { "label": "Authentication code", "length": 6, "type": "numeric", "otp": true, "mask": false, "size": "md", "variant": "outline", "invalid": false, "disabled": false } },
+  "examples": [
+    { "file": "two-factor-code", "title": "Two-factor code" },
+    { "file": "verify-email", "title": "Verify an email, checked when complete" },
+    { "file": "invite-code", "title": "Invite code, letters and digits" },
+    { "file": "security-pin", "title": "Masked PIN" }
+  ]
+}

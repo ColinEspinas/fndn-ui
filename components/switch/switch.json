@@ -1,0 +1,108 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "switch",
+  "title": "Switch",
+  "summary": "Turns a setting on or off, taking effect at once.",
+  "description": "An on/off toggle that takes effect immediately. The track fills with ink when on and the thumb travels across; pressing squeezes the thumb. It is a native button with role=switch, so state lives in aria-checked and no engine is needed. An optional label wrapper makes the text part of the hit area.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 3,
+  "status": "stable",
+  "element": "button",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "button",
+      "description": "role=switch; aria-checked Wrapper rule: class and style land on this outermost element (what a caller sizes and places); every other attribute stays on the control."
+    },
+    {
+      "part": "thumb",
+      "element": "span",
+      "description": "Travels on translate, squeezes on scale while pressed. Carries kbd-instant."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Wraps the switch and its text; a click on the text toggles and the text is the accessible name. In the adapters it is rendered when there is a visible label, and `class` and `style` then land on it (the outermost element: what a caller sizes and places); every other attribute stays on the button."
+    },
+    {
+      "part": "label-text",
+      "element": "span",
+      "optional": true
+    }
+  ],
+  "props": {
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "attr": "aria-checked",
+      "model": true
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "md: 40×24. sm: 32×18."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "attr": "disabled"
+    },
+    "label": {
+      "type": "string",
+      "attr": "aria-label",
+      "description": "Accessible name when there is no visible label."
+    }
+  },
+  "slots": {
+    "default": "Visible label. When given, the switch is wrapped in the label part."
+  },
+  "events": {
+    "checkedChange": "(checked: boolean) after a toggle"
+  },
+  "states": [
+    "checked",
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-3",
+    "color.on-ink",
+    "color.on-accent",
+    "color.line-strong",
+    "radius.pill",
+    "text.sm",
+    "duration.base",
+    "duration.move",
+    "duration.press",
+    "easing.move",
+    "easing.out-strong",
+    "motion.press-scale-sm"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "switch",
+    "keyboard": [
+      "Space / Enter toggle"
+    ],
+    "notes": [
+      "Name it with the label wrapper, aria-labelledby, or the label prop (aria-label).",
+      "State is aria-checked, which is also what the recipe keys on.",
+      "A toggle from the keyboard moves the thumb instantly.",
+      "To set it from outside, control `checked`: React checked / onCheckedChange, Vue v-model:checked, Svelte bind:checked."
+    ]
+  },
+  "motion": [
+    "thumb: translate over duration.move with easing.move (pointer only)",
+    "press (pointer only): thumb scales to motion.press-scale-sm over duration.press with easing.out-strong; none from Space / Enter",
+    "track: colour over duration.base"
+  ]
+}

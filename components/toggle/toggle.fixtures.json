@@ -1,0 +1,137 @@
+{
+  "examples": [
+    {
+      "name": "Outline",
+      "props": {
+        "variant": "outline"
+      },
+      "text": "Notify me"
+    },
+    {
+      "name": "Outline, pressed",
+      "props": {
+        "variant": "outline",
+        "pressed": true
+      },
+      "text": "Notify me"
+    },
+    {
+      "name": "Ghost",
+      "props": {
+        "variant": "ghost",
+        "size": "sm"
+      },
+      "text": "Bold"
+    },
+    {
+      "name": "Ghost, pressed",
+      "props": {
+        "variant": "ghost",
+        "size": "sm",
+        "pressed": true
+      },
+      "text": "Bold"
+    },
+    {
+      "name": "Icon-only with a tooltip",
+      "props": {
+        "variant": "ghost",
+        "size": "sm",
+        "square": true,
+        "muted": true,
+        "tooltip": "Bold"
+      },
+      "text": "B"
+    },
+    {
+      "name": "Rounded",
+      "props": {
+        "variant": "outline",
+        "size": "sm",
+        "shape": "rounded"
+      },
+      "text": "Pin"
+    },
+    {
+      "name": "Disabled",
+      "props": {
+        "variant": "outline",
+        "disabled": true,
+        "pressed": true
+      },
+      "text": "Notify me"
+    },
+    {
+      "name": "Extra small",
+      "props": {
+        "variant": "ghost",
+        "size": "xs",
+        "pressed": true
+      },
+      "text": "Mine"
+    },
+    {
+      "name": "Ink, activity bar",
+      "props": {
+        "variant": "ink",
+        "size": "md",
+        "square": true,
+        "indicator": "start",
+        "pressed": true,
+        "aria-label": "Explorer"
+      },
+      "text": "E"
+    },
+    {
+      "name": "Ink, toolbar",
+      "props": {
+        "variant": "ink",
+        "size": "sm",
+        "indicator": "bottom"
+      },
+      "text": "Panel"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "props": {
+        "variant": "outline"
+      },
+      "text": "Notify me about every reply, mention and status change in this thread",
+      "width": 180
+    },
+    {
+      "name": "Unbreakable label",
+      "props": {
+        "variant": "ghost",
+        "pressed": true
+      },
+      "text": "notifications-for-everything-everywhere-all-at-once",
+      "width": 160
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "variant": "ghost",
+        "size": "xs"
+      },
+      "text": "I"
+    },
+    {
+      "name": "Right-to-left label",
+      "props": {
+        "variant": "outline",
+        "pressed": true
+      },
+      "text": "أعلمني بالردود"
+    },
+    {
+      "name": "Emoji label",
+      "props": {
+        "variant": "outline"
+      },
+      "text": "🔔 Notify me"
+    }
+  ]
+}

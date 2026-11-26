@@ -1,0 +1,225 @@
+{
+  "examples": [
+    {
+      "name": "Actions",
+      "props": {
+        "triggerLabel": "Options",
+        "items": [
+          {
+            "value": "rename",
+            "label": "Rename",
+            "meta": "R"
+          },
+          {
+            "value": "duplicate",
+            "label": "Duplicate",
+            "meta": "D"
+          },
+          {
+            "value": "share",
+            "label": "Share link",
+            "disabled": true
+          },
+          {
+            "type": "separator"
+          },
+          {
+            "value": "delete",
+            "label": "Delete",
+            "tone": "danger"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Options",
+      "props": {
+        "triggerLabel": "View",
+        "items": [
+          {
+            "type": "radio-group",
+            "name": "sort",
+            "label": "Sort by",
+            "value": "name",
+            "items": [
+              {
+                "value": "name",
+                "label": "Name"
+              },
+              {
+                "value": "date",
+                "label": "Date added"
+              },
+              {
+                "value": "status",
+                "label": "Status"
+              }
+            ]
+          },
+          {
+            "type": "separator"
+          },
+          {
+            "type": "group",
+            "label": "Columns",
+            "items": [
+              {
+                "type": "checkbox",
+                "value": "supplier",
+                "label": "Supplier",
+                "checked": true
+              },
+              {
+                "type": "checkbox",
+                "value": "category",
+                "label": "Category",
+                "checked": true
+              },
+              {
+                "type": "checkbox",
+                "value": "notes",
+                "label": "Notes"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Close on select",
+      "props": {
+        "triggerLabel": "Density",
+        "items": [
+          {
+            "type": "radio-group",
+            "name": "density",
+            "label": "Row density",
+            "value": "comfortable",
+            "closeOnSelect": true,
+            "items": [
+              {
+                "value": "compact",
+                "label": "Compact"
+              },
+              {
+                "value": "comfortable",
+                "label": "Comfortable"
+              },
+              {
+                "value": "spacious",
+                "label": "Spacious"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mounted open",
+      "props": {
+        "open": true,
+        "triggerLabel": "Options",
+        "items": [
+          {
+            "value": "rename",
+            "label": "Rename",
+            "meta": "R"
+          },
+          {
+            "value": "duplicate",
+            "label": "Duplicate",
+            "meta": "D"
+          },
+          {
+            "type": "separator"
+          },
+          {
+            "value": "delete",
+            "label": "Delete",
+            "tone": "danger"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long and many",
+      "props": {
+        "triggerLabel": "Move to",
+        "items": [
+          {
+            "value": "a",
+            "label": "Pricing changes for the northern-hemisphere fiscal year (draft 12, do not publish)",
+            "meta": "Ctrl+Shift+M"
+          },
+          {
+            "value": "b",
+            "label": "B"
+          },
+          {
+            "value": "c",
+            "label": "مجموعة النكهات الموسمية"
+          },
+          {
+            "type": "separator"
+          },
+          {
+            "type": "group",
+            "label": "Workspaces with very long names that need truncating too",
+            "items": [
+              {
+                "value": "w1",
+                "label": "Platform Ops"
+              },
+              {
+                "value": "w2",
+                "label": "Aurora Analytics — Reykjavík"
+              },
+              {
+                "value": "w3",
+                "label": "Kumo Systems"
+              },
+              {
+                "value": "w4",
+                "label": "Maple Orbit"
+              },
+              {
+                "value": "w5",
+                "label": "Coral Coast Software"
+              },
+              {
+                "value": "w6",
+                "label": "Moonlight Data"
+              },
+              {
+                "value": "w7",
+                "label": "Alpine Analytics — Zürich"
+              },
+              {
+                "value": "w8",
+                "label": "Amber Labs — Prague"
+              },
+              {
+                "value": "w9",
+                "label": "Andes Cloud Systems — Quito"
+              },
+              {
+                "value": "w10",
+                "label": "Apricot Atlas — Algiers"
+              },
+              {
+                "value": "w11",
+                "label": "Baltic Berry — Tallinn"
+              },
+              {
+                "value": "w12",
+                "label": "Black Sesame Social — Bandung"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

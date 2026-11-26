@@ -1,0 +1,104 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "button-group",
+  "title": "Button Group",
+  "summary": "Buttons joined into one control, such as a split button or a toolbar segment.",
+  "description": "Buttons joined into one control: a split button, a set of related actions, a toolbar segment. The children are real Buttons (or Toggles, or a Menu's trigger); the group only joins them: the inner corners go square, neighbours share one hairline, a focused button rises above its neighbours. Horizontal or vertical. JSON specs can list the buttons as items. Not a single choice: that is the segmented control.",
+  "kind": "component",
+  "category": "actions",
+  "order": 3,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=group with an aria-label; an inline flex row (a column when vertical) with no gap. Its direct children lose the radius of their inner corners (logical: start and end, mirrored right-to-left; top and bottom when vertical). Each child's ring overlaps the previous child's edge, so a join is one 1px hairline. A focused child (and the pressed one) sits above its neighbours. Vertical: children stretch to the widest and use radius.control (a pill cannot be split top to bottom)."
+    },
+    {
+      "part": "item",
+      "element": "button",
+      "optional": true,
+      "repeat": true,
+      "description": "A Button made from the items prop, marked data-button-group=\"item\"; it takes the group's variant, size and shape."
+    }
+  ],
+  "props": {
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal"
+    },
+    "label": {
+      "type": "string",
+      "description": "The group's accessible name (aria-label)."
+    },
+    "items": {
+      "type": "array",
+      "description": "Buttons as data, rendered before the children: { value, label, disabled? }. A click calls onItemClick(value)."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "primary",
+        "secondary",
+        "ghost"
+      ],
+      "default": "outline",
+      "part": "item",
+      "description": "The Button variant of the items (children set their own)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "part": "item",
+      "description": "The Button size of the items: xs 24px, sm 28px, md 32px, lg 36px."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "pill",
+        "rounded"
+      ],
+      "part": "item",
+      "description": "The Button shape of the items. Left out, the app's shape: a pill, or rounded in a rounded app (\"shape\": \"rounded\" in the project's fndn.json). Named: pill (the group's outer ends are round) or rounded."
+    }
+  },
+  "slots": {
+    "default": "Buttons, Toggles or a Menu with its trigger, after the items."
+  },
+  "events": {
+    "itemClick": "(value: string) after a click on an item"
+  },
+  "states": [],
+  "tokens": [],
+  "dependencies": [
+    "button"
+  ],
+  "a11y": {
+    "role": "group",
+    "keyboard": [
+      "Tab reaches each button in turn (a group is not a single tab stop: it is several actions, not one choice)",
+      "Enter / Space activate the focused button"
+    ],
+    "notes": [
+      "Give the group a label that names what its buttons act on (\"Text alignment\", \"Merge options\").",
+      "Icon-only buttons in it still need their own name (tooltip or aria-label)."
+    ]
+  },
+  "motion": [
+    "press: nothing moves. A joined button never scales (the join would open) and the group is not scaled either; the pressed button dims (brightness 0.93) at the Button's filter timing (duration.fast)",
+    "hover: the Buttons' own fills over duration.fast (pointer only)",
+    "the group adds no motion"
+  ]
+}

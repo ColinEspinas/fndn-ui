@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ui/icons",
+  "title": "fndn/ui icon vocabulary",
+  "type": "object",
+  "required": ["source", "defaultWeight", "icons"],
+  "properties": {
+    "$schema": { "type": "string" }, "$description": { "type": "string" },
+    "source": { "type": "string" },
+    "defaultWeight": { "enum": ["thin", "light", "regular", "bold", "fill", "duotone"] },
+    "icons": { "type": "object", "additionalProperties": { "type": "object", "required": ["phosphor"], "additionalProperties": false, "properties": { "phosphor": { "type": "string" }, "weight": { "enum": ["thin", "light", "regular", "bold", "fill", "duotone"] } } } }
+  }
+}

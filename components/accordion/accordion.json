@@ -1,0 +1,161 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "accordion",
+  "title": "Accordion",
+  "summary": "A stack of sections that open and close, one at a time or several.",
+  "description": "A stack of disclosures where the rows know about each other: one open at a time (or several with multiple), arrow keys move between the headers. Each item is the collapsible's row (44px trigger, the right caret that turns down, the same reveal), with a hairline between items; plain on the page or in one card. Behaviour and ARIA from the Zag accordion machine through Ark UI.",
+  "kind": "component",
+  "category": "display",
+  "order": 15,
+  "status": "beta",
+  "engine": "accordion",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's accordion root; data-orientation=vertical. plain: no surface. card: one surface card (radius.card, shadow.card) that clips its rows."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "description": "One disclosure (Ark's item, a collapsible root): data-state=open|closed, data-disabled. A 1px line under every item but the last."
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "The collapsible's row trigger (the classes of collapsible.trigger, variant row): 44px minimum, padding 10, hover fill hover, press hover-2, focus ring inside. aria-expanded, aria-controls, data-state from the engine; native disabled."
+    },
+    {
+      "part": "caret",
+      "element": "span",
+      "description": "The collapsible's caret: right caret (ph caret-right) that turns down 90deg while the item is open, mirrored right-to-left; first or last child of the trigger; aria-hidden; kbd-instant."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "The item's heading text: 14px/500 ink, wraps (never cut); its first line shares the caret's 24px line. Author text keeps its own direction."
+    },
+    {
+      "part": "meta",
+      "element": "span",
+      "optional": true,
+      "description": "Trailing quiet note in the trigger (12px ink-2), never wraps."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=region, aria-labelledby its trigger; the collapsible's region (grid rows 0fr to 1fr). Closed: hidden, out of the layout and the tab order."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "description": "The one child of the region; it clips while the region moves. Holds the detail text, then the item's free content."
+    },
+    {
+      "part": "text",
+      "element": "p",
+      "optional": true,
+      "description": "The item's detail text: 12px ink-2, inset to line up with the label (padding 0 10px 10px)."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "description": "The items in order: { value, label, meta?, detail?, disabled? }. Free content in an item's body, after the detail text: React, the item's content (a node); Vue, the content slot; Svelte, the content snippet (both receive the item)."
+    },
+    "value": {
+      "type": "array",
+      "model": true,
+      "default": [],
+      "description": "The values of the open items. React: value / defaultValue / onValueChange; Vue: v-model:value; Svelte: bind:value."
+    },
+    "multiple": {
+      "type": "boolean",
+      "default": false,
+      "description": "Several items may be open at once. Without it, opening one closes the other."
+    },
+    "collapsible": {
+      "type": "boolean",
+      "default": true,
+      "description": "The open item closes when its trigger is pressed again. false: one item always stays open once one has been opened (single mode only)."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "plain",
+        "card"
+      ],
+      "default": "plain",
+      "description": "plain: rows on the page, hairlines between them. card: the rows in one surface card (the task-rows list look)."
+    },
+    "caret": {
+      "type": "enum",
+      "values": [
+        "start",
+        "end"
+      ],
+      "default": "end",
+      "description": "Where the caret sits in each trigger, as the collapsible."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Every item is disabled (an item can be disabled on its own with its disabled field)."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[]) the open items, after a click, Enter or Space"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.line",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.hover",
+    "color.hover-2",
+    "shadow.card",
+    "radius.card",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.move",
+    "duration.reveal",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "collapsible"
+  ],
+  "a11y": {
+    "role": "button (aria-expanded, aria-controls) + region per item",
+    "keyboard": [
+      "Tab reaches the triggers one by one; nothing inside a closed item is reachable",
+      "Enter / Space toggle the focused item; the change is instant (no reveal, no caret turn)",
+      "ArrowDown / ArrowUp move focus to the next / previous trigger; Home / End to the first / last",
+      "A disabled item's trigger is skipped by Tab and by the arrows"
+    ],
+    "notes": [
+      "Each trigger is a real button whose whole content is its name; each region is labelled by its trigger.",
+      "A closed region leaves the layout once its exit has played, which also takes it out of the accessibility tree.",
+      "Set it from outside by controlling value (React value / onValueChange)."
+    ]
+  },
+  "motion": [
+    "the collapsible's: reveal grid-template-rows 0fr -> 1fr over duration.reveal easing.out-strong with opacity over duration.base; the items below move with it",
+    "exit: the same transition back, held by fndn-collapsible-exit before the region is hidden; in single mode the item that closes and the one that opens move at the same time",
+    "caret: rotate 0 -> 90deg (right-to-left 180 -> 90deg) over duration.move easing.out-strong",
+    "trigger hover and press fills over duration.fast (hover gated to a fine pointer)",
+    "keyboard: region and caret are instant (kbd-instant)",
+    "first paint: nothing plays"
+  ]
+}

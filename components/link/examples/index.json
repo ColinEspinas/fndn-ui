@@ -1,0 +1,12 @@
+{
+  "playground": {
+    "props": { "href": "#deploy-log", "variant": "inline", "tone": "accent" },
+    "text": "read the deploy log"
+  },
+  "examples": [
+    { "file": "deploy-failed", "title": "Deploy failed (links in a sentence)" },
+    { "file": "view-all-deploys", "title": "View all deploys (standalone)" },
+    { "file": "status-page", "title": "Status page (opens in a new tab)" },
+    { "file": "terms-hint", "title": "Terms under a form (neutral)" }
+  ]
+}

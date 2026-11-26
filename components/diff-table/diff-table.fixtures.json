@@ -1,0 +1,593 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "rows": [
+          {
+            "key": "audit",
+            "name": "Audit log export",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "sso",
+            "name": "Legacy SSO",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "alerts",
+            "name": "Usage alerts",
+            "category": "Core",
+            "tone": "accent",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "residency",
+            "name": "Data residency",
+            "category": "Add-on",
+            "tone": "green",
+            "value": "platform-ops",
+            "change": "added"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names, unbreakable slug, non-Latin and right-to-left",
+      "props": {
+        "title": "Proposed cleanup of every retired add-on across all regional billing catalogs",
+        "rows": [
+          {
+            "key": "long",
+            "name": "Customer-managed encryption keys with per-region rotation, audit trails and break-glass access",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "northwind-industries-holdings-enterprise-billing-platform-division",
+            "change": "removed"
+          },
+          {
+            "key": "one",
+            "name": "A",
+            "category": "B",
+            "tone": "neutral",
+            "value": "c",
+            "change": "removed"
+          },
+          {
+            "key": "cjk",
+            "name": "監査ログのエクスポート",
+            "category": "追加機能",
+            "tone": "accent",
+            "value": "株式会社クモ",
+            "change": "unchanged"
+          },
+          {
+            "key": "rtl",
+            "name": "تصدير سجل التدقيق",
+            "category": "إضافة",
+            "tone": "green",
+            "value": "فوترة-الشروق",
+            "change": "added"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sixty rows",
+      "props": {
+        "rows": [
+          {
+            "key": "f1",
+            "name": "Add-on 1",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f2",
+            "name": "Add-on 2",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f3",
+            "name": "Add-on 3",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f4",
+            "name": "Add-on 4",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f5",
+            "name": "Add-on 5",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f6",
+            "name": "Add-on 6",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f7",
+            "name": "Add-on 7",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f8",
+            "name": "Add-on 8",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f9",
+            "name": "Add-on 9",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f10",
+            "name": "Add-on 10",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f11",
+            "name": "Add-on 11",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f12",
+            "name": "Add-on 12",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f13",
+            "name": "Add-on 13",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f14",
+            "name": "Add-on 14",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f15",
+            "name": "Add-on 15",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f16",
+            "name": "Add-on 16",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f17",
+            "name": "Add-on 17",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f18",
+            "name": "Add-on 18",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f19",
+            "name": "Add-on 19",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f20",
+            "name": "Add-on 20",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f21",
+            "name": "Add-on 21",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f22",
+            "name": "Add-on 22",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f23",
+            "name": "Add-on 23",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f24",
+            "name": "Add-on 24",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f25",
+            "name": "Add-on 25",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f26",
+            "name": "Add-on 26",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f27",
+            "name": "Add-on 27",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f28",
+            "name": "Add-on 28",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f29",
+            "name": "Add-on 29",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f30",
+            "name": "Add-on 30",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f31",
+            "name": "Add-on 31",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f32",
+            "name": "Add-on 32",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f33",
+            "name": "Add-on 33",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f34",
+            "name": "Add-on 34",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f35",
+            "name": "Add-on 35",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f36",
+            "name": "Add-on 36",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f37",
+            "name": "Add-on 37",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f38",
+            "name": "Add-on 38",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f39",
+            "name": "Add-on 39",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f40",
+            "name": "Add-on 40",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f41",
+            "name": "Add-on 41",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f42",
+            "name": "Add-on 42",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f43",
+            "name": "Add-on 43",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f44",
+            "name": "Add-on 44",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f45",
+            "name": "Add-on 45",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f46",
+            "name": "Add-on 46",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f47",
+            "name": "Add-on 47",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f48",
+            "name": "Add-on 48",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f49",
+            "name": "Add-on 49",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          },
+          {
+            "key": "f50",
+            "name": "Add-on 50",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f51",
+            "name": "Add-on 51",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f52",
+            "name": "Add-on 52",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f53",
+            "name": "Add-on 53",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "unchanged"
+          },
+          {
+            "key": "f54",
+            "name": "Add-on 54",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "removed"
+          },
+          {
+            "key": "f55",
+            "name": "Add-on 55",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f56",
+            "name": "Add-on 56",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f57",
+            "name": "Add-on 57",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "unchanged"
+          },
+          {
+            "key": "f58",
+            "name": "Add-on 58",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "unchanged"
+          },
+          {
+            "key": "f59",
+            "name": "Add-on 59",
+            "category": "Legacy",
+            "tone": "neutral",
+            "value": "identity-svc",
+            "change": "removed"
+          },
+          {
+            "key": "f60",
+            "name": "Add-on 60",
+            "category": "Add-on",
+            "tone": "orange",
+            "value": "platform-ops",
+            "change": "added"
+          }
+        ]
+      }
+    },
+    {
+      "name": "One row",
+      "props": {
+        "rows": [
+          {
+            "key": "audit",
+            "name": "Audit log export",
+            "category": "Core",
+            "tone": "accent",
+            "value": "billing-core",
+            "change": "removed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Zero rows",
+      "props": {
+        "rows": []
+      }
+    }
+  ]
+}

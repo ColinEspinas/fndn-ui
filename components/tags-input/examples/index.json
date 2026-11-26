@@ -1,0 +1,41 @@
+{
+  "playground": {
+    "props": {
+      "label": "Labels",
+      "value": [
+        "billing",
+        "webhooks"
+      ],
+      "placeholder": "Add a label",
+      "size": "md",
+      "variant": "outline",
+      "editable": true,
+      "disabled": false,
+      "invalid": false,
+      "tagVariant": "tint"
+    },
+    "width": 320
+  },
+  "examples": [
+    {
+      "file": "labels",
+      "title": "Project labels"
+    },
+    {
+      "file": "issue-labels",
+      "title": "Issue labels, outline"
+    },
+    {
+      "file": "invite-emails",
+      "title": "Invite by email"
+    },
+    {
+      "file": "required-reviewers",
+      "title": "Up to three reviewers"
+    },
+    {
+      "file": "label-filter",
+      "title": "Label filter in a toolbar"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "examples": [
+    { "name": "Destructive", "props": { "triggerLabel": "Delete project", "title": "Delete the staging project?", "description": "This removes the project from the workspace and cancels 3 scheduled deploys. You cannot undo it.", "actionLabel": "Delete project" } },
+    { "name": "Neutral", "props": { "triggerLabel": "Leave", "tone": "neutral", "title": "Leave without sending?", "description": "Your draft to Northwind Cloud is kept for 30 days.", "actionLabel": "Leave", "cancelLabel": "Stay" } },
+    { "name": "Small", "props": { "triggerLabel": "Archive", "size": "sm", "tone": "neutral", "title": "Archive the winter menu?", "actionLabel": "Archive" } }
+  ],
+  "worstCase": [
+    { "name": "Long everything", "props": { "triggerLabel": "Open", "title": "Remove Aleksandra Wiśniewska-Kowalczyk Confectionery Holdings and every purchase order that references it?", "description": "bartholomew.fitzgerald@northwind-industries-holdings.example.com will be notified. 12,480 rows change.", "actionLabel": "Remove the supplier and cancel all orders", "cancelLabel": "Keep the supplier for now" } },
+    { "name": "Title only", "props": { "triggerLabel": "Go", "title": "Ok?", "actionLabel": "Yes" } },
+    { "name": "Right-to-left", "props": { "triggerLabel": "حذف", "title": "حذف النكهة؟", "description": "لا يمكن التراجع عن ذلك.", "actionLabel": "حذف", "cancelLabel": "إلغاء" } }
+  ]
+}

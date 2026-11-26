@@ -1,0 +1,132 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "alert",
+  "title": "Alert",
+  "summary": "A message in the page: a note, a success, a warning or an error.",
+  "description": "A message that sits in the page: a note, a success, a warning, an error. A tone icon, a title, a description and optional actions, on the card's box (radius.card, 12px padding). The tones are status-pill's four status tones and their tint pairs: neutral is the card itself (surface on shadow.card); accent, green, orange and red fill with their tint, the icon takes the tone's colour and the text stays ink, so it reads at any length. Static: no engine, no motion.",
+  "kind": "component",
+  "category": "feedback",
+  "order": 5,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=\"alert\" for orange and red (announced when it appears), role=\"status\" otherwise; the role prop overrides it. A row: the icon, then the content. Radius.card, padding 12px, gap 10px."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "16px Phosphor glyph (bold) in the tone's colour (ink-3 when neutral), centred on the title's first line; aria-hidden. Default per tone: info (neutral, accent), check-circle (green), warning (orange), warning-circle (red). The icon prop replaces it; icon={false} removes it."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "Takes the free space; holds the title, the description and the actions. min-width 0, so long text wraps inside it."
+    },
+    {
+      "part": "title",
+      "element": "div",
+      "optional": true,
+      "description": "text.sm, weight 500, ink, line-height 20px. Wraps (never cut); author text keeps its own direction."
+    },
+    {
+      "part": "description",
+      "element": "div",
+      "optional": true,
+      "description": "The default slot: text.sm, ink-2, line-height 20px, 2px under the title. Wraps anywhere (an unbreakable address never overflows)."
+    },
+    {
+      "part": "actions",
+      "element": "div",
+      "optional": true,
+      "description": "Buttons (sm) in a wrapping row under the text, inside the content column so they line up with the title; 10px above them."
+    }
+  ],
+  "props": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "accent",
+        "green",
+        "orange",
+        "red"
+      ],
+      "default": "neutral",
+      "description": "status-pill's status tones. neutral: the card (surface, shadow.card), ink-3 icon. accent / green / orange / red: the tone's tint fill (accent-tint, green-tint, orange-tint, red-tint) and the tone's colour on the icon; text stays ink and ink-2."
+    },
+    "title": {
+      "type": "string",
+      "description": "The headline. An alert may have only a title, only a description, or both."
+    },
+    "icon": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show the tone's icon. Your own glyph: a node (React), the icon slot (Vue), a snippet (Svelte)."
+    },
+    "role": {
+      "type": "enum",
+      "values": [
+        "alert",
+        "status",
+        "none"
+      ],
+      "description": "Default: alert for orange and red, status for the others. none for an alert that is part of the page from the start and must not be announced."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "label": "string",
+        "value": "string?",
+        "variant": "button variant?"
+      },
+      "description": "Buttons under the text (sm; outline unless given). Your own controls instead: the action prop (React, a node; Svelte, a snippet) or the action slot (Vue)."
+    }
+  },
+  "slots": {
+    "default": "Description",
+    "actions": "Your own controls in place of `actions` (React: the action prop, a node; Vue: the action slot; Svelte: the action snippet)"
+  },
+  "events": {
+    "action": "(value: string) when an action is pressed"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.green",
+    "color.green-tint",
+    "color.orange",
+    "color.orange-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.card",
+    "radius.card",
+    "text.sm"
+  ],
+  "dependencies": [
+    "button"
+  ],
+  "a11y": {
+    "role": "alert | status",
+    "notes": [
+      "role=\"alert\" (orange, red) is announced at once when the alert appears; role=\"status\" politely. An alert rendered with the page is read in place; pass role=\"none\" if it must not be announced at all.",
+      "The icon is decorative (aria-hidden): the title says what happened. Colour is never the only signal: the title and the icon carry it too.",
+      "Not focusable itself; its actions are ordinary Buttons in the tab order."
+    ]
+  },
+  "motion": [
+    "none: an alert is part of the page; a component that shows or hides one decides how"
+  ]
+}

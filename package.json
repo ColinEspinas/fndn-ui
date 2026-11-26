@@ -1,0 +1,31 @@
+{
+  "name": "fndn-ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Spec-first UI system for AI agents: Tailwind recipes with React, Vue and Svelte adapters that render the same DOM, and one tool (a command line and an MCP server) that finds, documents, adds and checks them.",
+  "license": "MIT",
+  "author": "Colin Espinas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colinespinas/fndn-ui.git"
+  },
+  "type": "module",
+  "packageManager": "pnpm@11.15.1",
+  "scripts": {
+    "build:tokens": "node scripts/build-tokens.mjs && node scripts/build-icons.mjs",
+    "build:indexes": "node scripts/build-indexes.mjs",
+    "build:bundle": "node scripts/build-bundle.mjs",
+    "build": "pnpm build:tokens && pnpm build:indexes && pnpm validate && pnpm build:bundle",
+    "validate": "node scripts/validate.mjs",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "node --test \"packages/cli/test/*.test.js\"",
+    "check": "pnpm build && pnpm typecheck && pnpm test",
+    "fndn": "node packages/cli/bin/fndn.js",
+    "docs": "pnpm --filter docs dev"
+  },
+  "devDependencies": {
+    "@phosphor-icons/core": "^2.1.1",
+    "postcss": "8.5.32",
+    "typescript": "^5.9.3"
+  }
+}

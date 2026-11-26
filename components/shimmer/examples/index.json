@@ -1,0 +1,13 @@
+{
+  "playground": {
+    "props": {
+      "speed": "normal"
+    },
+    "text": "Writing a retry with backoff…"
+  },
+  "examples": [
+    { "file": "agent-steps", "title": "Agent working through a fix" },
+    { "file": "thinking", "title": "A short wait" },
+    { "file": "suggest-a-fix", "title": "A hint that invites an action" }
+  ]
+}

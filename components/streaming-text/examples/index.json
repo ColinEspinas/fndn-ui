@@ -1,0 +1,179 @@
+{
+  "playground": {
+    "props": {
+      "content": [
+        {
+          "text": "Kestrel"
+        },
+        {
+          "text": "Logistics"
+        },
+        {
+          "text": "booked"
+        },
+        {
+          "text": "41%"
+        },
+        {
+          "text": "fewer"
+        },
+        {
+          "text": "appointments"
+        },
+        {
+          "text": "in"
+        },
+        {
+          "text": "October"
+        },
+        {
+          "text": "than"
+        },
+        {
+          "text": "in"
+        },
+        {
+          "text": "September."
+        },
+        {
+          "text": "",
+          "cite": 0
+        },
+        {
+          "text": "Their"
+        },
+        {
+          "text": "admin"
+        },
+        {
+          "text": "turned"
+        },
+        {
+          "text": "off"
+        },
+        {
+          "text": "SMS"
+        },
+        {
+          "text": "reminders"
+        },
+        {
+          "text": "on"
+        },
+        {
+          "text": "October"
+        },
+        {
+          "text": "3,"
+        },
+        {
+          "text": "and"
+        },
+        {
+          "text": "no-shows"
+        },
+        {
+          "text": "rose"
+        },
+        {
+          "text": "from"
+        },
+        {
+          "text": "6%"
+        },
+        {
+          "text": "to"
+        },
+        {
+          "text": "19%"
+        },
+        {
+          "text": "the"
+        },
+        {
+          "text": "same"
+        },
+        {
+          "text": "week."
+        },
+        {
+          "text": "",
+          "cite": 1
+        },
+        {
+          "text": "Two"
+        },
+        {
+          "text": "open"
+        },
+        {
+          "text": "tickets"
+        },
+        {
+          "text": "ask"
+        },
+        {
+          "text": "how"
+        },
+        {
+          "text": "to"
+        },
+        {
+          "text": "turn"
+        },
+        {
+          "text": "the"
+        },
+        {
+          "text": "reminders"
+        },
+        {
+          "text": "back"
+        },
+        {
+          "text": "on."
+        },
+        {
+          "text": "",
+          "cite": 2
+        }
+      ],
+      "sources": [
+        {
+          "name": "Booking analytics",
+          "domain": "analytics.harbor.dev",
+          "href": "https://analytics.harbor.dev/accounts/kestrel-logistics",
+          "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+        },
+        {
+          "name": "Workspace audit log",
+          "domain": "admin.harbor.dev",
+          "href": "https://admin.harbor.dev/workspaces/kestrel-logistics/audit-log",
+          "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M20 22h24M20 32h24M20 42h16' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E"
+        },
+        {
+          "name": "Tickets #8812, #8830",
+          "domain": "support.harbor.dev",
+          "href": "https://support.harbor.dev/tickets?account=kestrel-logistics",
+          "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M19 18h26a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H31l-9 7v-7h-3a5 5 0 0 1-5-5V23a5 5 0 0 1 5-5Z' fill='%23fff'/%3E%3C/svg%3E"
+        }
+      ],
+      "followUps": [
+        "Turn SMS reminders back on for Kestrel",
+        "Which other accounts turned reminders off"
+      ],
+      "done": true,
+      "sourcesLabel": "3 sources"
+    }
+  },
+  "examples": [
+    {
+      "file": "streaming",
+      "title": "Answer why an account's bookings dropped"
+    },
+    {
+      "file": "done",
+      "title": "Finished answer with its sources open"
+    }
+  ]
+}

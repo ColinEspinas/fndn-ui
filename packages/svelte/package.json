@@ -1,0 +1,15 @@
+{
+  "name": "@fndn/svelte",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The Svelte adapters under one name, for the examples, the docs and the tests: an index of components/. A project gets the source files through fndn.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "svelte": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  }
+}

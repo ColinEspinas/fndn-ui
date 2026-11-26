@@ -1,0 +1,340 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "records-table",
+  "title": "Records Table",
+  "summary": "A spreadsheet-style table of records with sorting, selection and column menus.",
+  "description": "A grid of records such as accounts, contacts or orders, in the spreadsheet manner: one quiet surface, precise rules, colour kept for meaning. Headers sort (aria-sort), rows are selected with a checkbox that takes the place of the row number, a select-all carries the indeterminate state, and each column and row has a menu (the menu component with its own trigger) for sorting, hiding columns and row actions. The first column and the header stay put while both axes scroll. Rows never animate on sort or load; only the selection bar reveals.",
+  "kind": "block",
+  "category": "data",
+  "order": 3,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The bordered surface"
+    },
+    {
+      "part": "scroll",
+      "element": "div",
+      "description": "role=region, focusable; scrolls both ways; at its top or bottom the page scrolls on (sideways overscroll is kept in)"
+    },
+    {
+      "part": "table",
+      "element": "table",
+      "description": "table-layout: fixed; min-width is the sum of the visible column widths"
+    },
+    {
+      "part": "head-row",
+      "element": "tr"
+    },
+    {
+      "part": "th",
+      "element": "th",
+      "repeat": true,
+      "description": "scope=col; aria-sort=ascending|descending|none on sortable columns; data-col (the column key). The first column (primary), a number column (numeric) and the trailing menus column (actions) are recipe variants"
+    },
+    {
+      "part": "th-inner",
+      "element": "div"
+    },
+    {
+      "part": "sort",
+      "element": "button",
+      "optional": true,
+      "description": "Sorts by the column (Enter / Space / click)"
+    },
+    {
+      "part": "th-label",
+      "element": "span"
+    },
+    {
+      "part": "sort-icon",
+      "element": "span",
+      "optional": true,
+      "description": "Shown while the column is sorted; turns over for descending. kbd-instant"
+    },
+    {
+      "part": "col-menu",
+      "element": "div",
+      "optional": true,
+      "description": "The real Menu, marked data-records-table=\"col-menu\": sort ascending, sort descending, hide column"
+    },
+    {
+      "part": "columns-menu",
+      "element": "div",
+      "optional": true,
+      "description": "The real Menu in the trailing header cell, marked data-records-table=\"columns-menu\": one checkbox option per hideable column"
+    },
+    {
+      "part": "menu-trigger",
+      "element": "button",
+      "repeat": true,
+      "description": "Icon-only trigger of the column, Columns and row menus: the real Button (ghost, xs, square, rounded, muted) with a Tooltip of its name, marked data-menu=\"trigger\" data-records-table=\"menu-trigger\""
+    },
+    {
+      "part": "row",
+      "element": "tr",
+      "repeat": true,
+      "description": "data-id; selected (its checkbox is on) and openable (onRowOpen given: pointer cursor, focus ring inside its edge, one tab stop for all rows) are recipe variants"
+    },
+    {
+      "part": "cell",
+      "element": "td",
+      "repeat": true,
+      "description": "data-col; data-value on number and status cells (the sort key). The first column (primary, sticky), a number column (numeric) and the trailing actions cell are recipe variants"
+    },
+    {
+      "part": "primary",
+      "element": "div",
+      "description": "First cell: gutter + value. Sticky at the inline start"
+    },
+    {
+      "part": "gutter",
+      "element": "span",
+      "description": "Row number at rest; the checkbox takes its place on hover, focus or selection"
+    },
+    {
+      "part": "rownum",
+      "element": "span",
+      "description": "Position in the displayed order: a CSS counter (::before), so a sort only moves rows; tabular numbers"
+    },
+    {
+      "part": "check",
+      "element": "label",
+      "repeat": true,
+      "description": "The real Checkbox (select all in the header, one per row), marked data-records-table=\"check\" on its root"
+    },
+    {
+      "part": "text",
+      "element": "span",
+      "optional": true,
+      "description": "Truncates at the end; the full value is in title"
+    },
+    {
+      "part": "number",
+      "element": "span",
+      "optional": true,
+      "description": "Tabular numbers, end-aligned, never truncated"
+    },
+    {
+      "part": "tags",
+      "element": "span",
+      "optional": true,
+      "description": "Up to two tags and a +n; every tag is in title. Tags are the real Tag (tone = one of the eight tag hues, the same for the same word; neutral when the column says tagTone: neutral); +n is a boxed Count"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "optional": true,
+      "description": "Dot + label; its tone (green|orange|red|accent|neutral) is a recipe variant"
+    },
+    {
+      "part": "dot",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "link",
+      "element": "a",
+      "optional": true,
+      "description": "Opens in a new tab; truncates, full value in title"
+    },
+    {
+      "part": "link-text",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "blank",
+      "element": "span",
+      "optional": true,
+      "description": "An empty value (—)"
+    },
+    {
+      "part": "row-menu",
+      "element": "div",
+      "optional": true,
+      "description": "One menu popup shared by every row (Zag menu, one trigger per row whose value is the row id), drawn with the menu recipe; its positioner (data-slot=\"menu-positioner\") is marked data-records-table=\"row-menu\" and is portaled"
+    },
+    {
+      "part": "empty-row",
+      "element": "tr",
+      "optional": true
+    },
+    {
+      "part": "empty",
+      "element": "td",
+      "optional": true,
+      "description": "Spans every visible column; holds an empty-state block (icon table) that keeps to the visible width of the region"
+    },
+    {
+      "part": "selection",
+      "element": "div",
+      "description": "Reveal region under the table; open while rows are selected (a recipe variant), inert otherwise"
+    },
+    {
+      "part": "selection-inner",
+      "element": "div"
+    },
+    {
+      "part": "selection-count",
+      "element": "span",
+      "description": "role=status; tabular numbers"
+    },
+    {
+      "part": "selection-actions",
+      "element": "div",
+      "optional": true,
+      "description": "The caller's bulk actions, after the count (React: selectionActions, a node or a function of the selected ids; Vue: slot selectionActions with { selected }; Svelte: snippet selectionActions(selected)): Buttons (ghost sm), a Menu."
+    },
+    {
+      "part": "selection-clear",
+      "element": "button",
+      "description": "The real Button (ghost sm), marked data-records-table=\"selection-clear\""
+    }
+  ],
+  "props": {
+    "columns": {
+      "type": "array",
+      "attr": "--fndn-col-width",
+      "items": {
+        "key": "string",
+        "label": "string",
+        "type": "text|number|tags|status|link (default text)",
+        "sortable": "boolean? (default true)",
+        "hideable": "boolean? (default true; the first column never hides)",
+        "width": "number? px",
+        "options": "{ value, label, tone? }[] (status: also the sort order)",
+        "tagTone": "'hues' | 'neutral'? tags columns (default hues: each word keeps its own hue, the same in every table). neutral: every tag neutral, for descriptive tags such as a segment or an industry, so colour stays kept for meaning"
+      },
+      "description": "The first column is the primary one: sticky (never wider than half the region), carries the checkbox, names the row and reads as text. Widths reach the header cells as --fndn-col-width."
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "id": "string",
+        "[column key]": "string | number | string[] | null"
+      }
+    },
+    "sort": {
+      "type": "object",
+      "model": true,
+      "attr": "aria-sort",
+      "description": "{ key, direction: ascending|descending } or null. A header click sorts ascending, a second descending, a third returns to the natural order (null). Blank values sort last either way."
+    },
+    "selected": {
+      "type": "array",
+      "model": true,
+      "description": "Selected row ids."
+    },
+    "hiddenColumns": {
+      "type": "array",
+      "model": true,
+      "attr": "hidden",
+      "description": "Keys of hidden columns. Hidden columns stay in the DOM with the hidden attribute."
+    },
+    "rowActions": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "tone": "'danger'?",
+        "disabled": "boolean?",
+        "type": "'separator'?"
+      },
+      "description": "Entries of the one menu shared by every row (each row's trigger opens it for that row); no menu without them."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ region, selectAll, selectRow ({row}), columnMenu ({column}), columns, sortAscending, sortDescending, hideColumn, rowActions ({row}), selected ({count}), clearSelection, empty }"
+    },
+    "locale": {
+      "type": "string",
+      "default": "en-US",
+      "description": "Locale of the number cells (grouping, decimals)."
+    },
+    "selectionActions": {
+      "type": "node",
+      "description": "Bulk actions in the selection bar, after the count: change status, assign, delete. They receive the selected ids."
+    }
+  },
+  "events": {
+    "sortChange": "(sort)",
+    "selectedChange": "(selected: string[])",
+    "hiddenColumnsChange": "(hidden: string[])",
+    "rowAction": "(value: string, rowId: string)",
+    "rowOpen": "(rowId: string) a click on a row (not on its checkbox, link or menu trigger) or Enter on the focused row; with it the rows are one tab stop (roving tabindex)"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "sorted",
+    "selected",
+    "indeterminate",
+    "hidden-column",
+    "empty",
+    "openable"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.inset",
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.line-strong",
+    "color.accent",
+    "color.accent-ink",
+    "shadow.card",
+    "radius.card",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.move",
+    "duration.reveal",
+    "easing.out-strong",
+    "color.green",
+    "color.orange",
+    "color.red"
+  ],
+  "dependencies": [
+    "checkbox",
+    "menu",
+    "tooltip",
+    "button",
+    "tag",
+    "count",
+    "empty-state"
+  ],
+  "a11y": {
+    "role": "table (region)",
+    "keyboard": [
+      "Tab reaches the scroll region (arrow keys scroll it), then the select-all checkbox, each header's sort button and menu trigger, the Columns menu, and per row its checkbox, link and menu trigger",
+      "Enter / Space on a header sort button sorts by that column: ascending, then descending, then back to the natural order (aria-sort ascending → descending → none)",
+      "Space on a checkbox toggles the row; on select-all it selects every row, or clears them when all are selected",
+      "Column, Columns and row menus follow the menu contract: Enter / Space / ArrowDown open, arrows move, Enter activates, Escape closes and returns focus",
+      "Hiding a column from its own menu moves focus to the Columns menu trigger, where the column can be shown again",
+      "With onRowOpen: the rows are one tab stop (the last focused); ArrowUp / ArrowDown move between rows, Home / End to the first / last, Enter opens the row, Space selects it; Tab from a row goes on to its checkbox, link and menu trigger"
+    ],
+    "notes": [
+      "The sort state is on the header cell (aria-sort), not in the button name.",
+      "Row checkboxes are named after the primary column (labels.selectRow).",
+      "Truncated text, links and tag lists carry the full value in title.",
+      "The selection count is a role=status region."
+    ]
+  },
+  "motion": [
+    "rows: no animation on sort, hide or load (functional data); the row hover is instant both ways (a layer over the fill), gated to fine pointers; a selection made under the pointer eases the fill at duration.fast",
+    "gutter: row number and checkbox cross-fade at duration.fast",
+    "sort icon: opacity at duration.fast, turns over at duration.move with easing.out-strong; instant from the keyboard (kbd-instant)",
+    "selection bar: the reveal recipe (grid-template-rows 0fr → 1fr over duration.reveal, opacity over duration.base)",
+    "menus and checkboxes bring their own motion",
+    "edge veil: when columns are cut at the end of the scroll region, that edge fades into the surface; scroll-driven (animation-timeline: scroll(nearest inline)), never timed; nothing when the table fits (the start side has the sticky first column and its shadow)"
+  ]
+}

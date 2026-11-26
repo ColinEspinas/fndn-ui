@@ -1,0 +1,203 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "agent-screen",
+  "title": "Agent Screen",
+  "summary": "A live view of the screen an agent is working on, with its cursor.",
+  "description": "Watch an agent work: a framed capture of its screen with the agent's cursor and a recording badge. Pass the capture as `src`; without one the frame draws a neutral placeholder window from tokens. The cursor glides to each new position on a transform (it jumps under reduced motion), the frame carries a text alternative, and every change of state is announced through a role=status region.",
+  "kind": "block",
+  "category": "agent",
+  "order": 21,
+  "status": "beta",
+  "element": "figure",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "figure",
+      "description": "data-state=loading|live|idle, data-recording"
+    },
+    {
+      "part": "frame",
+      "element": "div",
+      "description": "role=img with the text alternative (alt, else the label); 16:10, clips its layers"
+    },
+    {
+      "part": "media",
+      "element": "img",
+      "optional": true,
+      "description": "The capture (src), covering the frame; alt is empty, the frame names it"
+    },
+    {
+      "part": "placeholder",
+      "element": "span",
+      "optional": true,
+      "description": "Neutral window drawn from tokens when there is no src"
+    },
+    {
+      "part": "chrome",
+      "element": "span",
+      "description": "Placeholder title bar"
+    },
+    {
+      "part": "page",
+      "element": "span",
+      "description": "Placeholder content"
+    },
+    {
+      "part": "line",
+      "element": "span",
+      "repeat": true
+    },
+    {
+      "part": "cursor",
+      "element": "span",
+      "description": "Layer as large as the frame, translated by --fndn-agent-screen-cursor (\"x%, y%\"); holds the pointer icon at its top-left"
+    },
+    {
+      "part": "loading",
+      "element": "span",
+      "description": "Spinner and text, shown while data-state=loading"
+    },
+    {
+      "part": "loading-text",
+      "element": "span"
+    },
+    {
+      "part": "rec",
+      "element": "span",
+      "description": "Recording badge, shown with data-recording"
+    },
+    {
+      "part": "rec-dot",
+      "element": "span",
+      "description": "Pulsing dot (opacity loop)"
+    },
+    {
+      "part": "label",
+      "element": "figcaption",
+      "description": "Visible caption; truncates, full text in title"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status, sr-only: \"<label>: Live, Recording\""
+    },
+    {
+      "part": "expand",
+      "element": "button",
+      "optional": true,
+      "description": "expandable: a Button (outline, xs, square, rounded) on the frame's bottom end corner, with our tooltip (labels.expand) and aria-haspopup=dialog; opens the viewer Marked data-agent-screen=\"expand\"."
+    },
+    {
+      "part": "viewer",
+      "element": "div",
+      "optional": true,
+      "description": "expandable: the body of our dialog (size lg, title = the label): the same frame, larger, with the root's data-state and data-recording."
+    }
+  ],
+  "props": {
+    "state": {
+      "type": "enum",
+      "values": [
+        "loading",
+        "live",
+        "idle"
+      ],
+      "default": "live",
+      "description": "loading: connecting (spinner). live: the agent works; its cursor shows. idle: the screen stays, the cursor hides."
+    },
+    "cursor": {
+      "type": "object",
+      "attr": "--fndn-agent-screen-cursor",
+      "description": "{ x, y } in percent of the screen, clamped to 0–100. Set on the cursor layer as \"x%, y%\". Defaults to { x: 42, y: 53 }."
+    },
+    "recording": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the REC badge and adds \"Recording\" to the status."
+    },
+    "label": {
+      "type": "string",
+      "default": "Agent's screen",
+      "description": "Caption under the frame; also starts the status text."
+    },
+    "alt": {
+      "type": "string",
+      "description": "Text alternative of the frame. Defaults to the label; describe the capture when you pass src."
+    },
+    "src": {
+      "type": "string",
+      "attr": "src",
+      "part": "media",
+      "description": "Image URL of the agent's screen. Without it the placeholder is drawn."
+    },
+    "labels": {
+      "type": "object",
+      "description": "Status words, badge and button: loading, live, idle, recording, rec, expand."
+    },
+    "expandable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Adds a button with a tooltip on the frame's corner that opens the screen larger in our dialog."
+    }
+  },
+  "events": {},
+  "states": [
+    "loading",
+    "live",
+    "idle",
+    "recording"
+  ],
+  "tokens": [
+    "color.inset",
+    "color.surface",
+    "color.line",
+    "color.line-strong",
+    "color.field",
+    "color.red",
+    "color.orange",
+    "color.green",
+    "color.accent-tint",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.on-accent",
+    "shadow.card",
+    "radius.window",
+    "radius.pill",
+    "text.2xs",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.popup",
+    "duration.slow",
+    "easing.in-out-strong",
+    "easing.out-strong",
+    "motion.popup-scale"
+  ],
+  "dependencies": [
+    "spinner",
+    "button",
+    "tooltip",
+    "dialog"
+  ],
+  "a11y": {
+    "role": "figure with an img frame and a status region",
+    "keyboard": [
+      "The screen itself takes no focus",
+      "expandable: Tab reaches the expand button; Enter / Space open the viewer dialog (focus moves into it); Escape or the close button close it and focus returns to the button"
+    ],
+    "notes": [
+      "The frame is role=img with an accessible name; pass alt to describe a real capture.",
+      "Changes of state and recording are announced through role=status; the cursor's moves are not announced.",
+      "expandable: the button is named (labels.expand) and shows our tooltip; the viewer is our dialog, named by the label, with its focus trap, Escape and focus return."
+    ]
+  },
+  "motion": [
+    "cursor: transform over duration.slow with easing.in-out-strong (on-screen travel); under reduced motion it jumps, the show/hide fade stays",
+    "cursor show/hide and connecting overlay: opacity over duration.base",
+    "REC badge: opacity + scale from motion.popup-scale out of its top right corner (where it is pinned) over duration.popup with easing.out-strong; leaves over duration.fast",
+    "REC dot: opacity loop (1.1s), kept under reduced motion",
+    "viewer: our dialog's motion (scale from motion.popup-scale and the scrim fade); the cursor glides in the viewer too"
+  ]
+}

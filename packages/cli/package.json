@@ -1,0 +1,47 @@
+{
+  "name": "fndn",
+  "version": "0.1.0",
+  "description": "fndn/ui, the UI toolkit for AI agents: one command line and MCP server that finds, documents, adds and checks the components. The components ship inside the package.",
+  "license": "MIT",
+  "author": "Colin Espinas",
+  "homepage": "https://github.com/colinespinas/fndn-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colinespinas/fndn-ui.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/colinespinas/fndn-ui/issues"
+  },
+  "keywords": [
+    "ui",
+    "components",
+    "react",
+    "vue",
+    "svelte",
+    "tailwindcss",
+    "ai",
+    "agents",
+    "mcp",
+    "design-system"
+  ],
+  "type": "module",
+  "bin": {
+    "fndn": "./bin/fndn.js"
+  },
+  "exports": {
+    "./rules": "./src/rules.js",
+    "./render": "./src/render.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "data"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\""
+  }
+}

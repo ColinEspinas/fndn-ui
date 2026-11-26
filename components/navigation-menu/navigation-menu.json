@@ -1,0 +1,186 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "navigation-menu",
+  "title": "Navigation Menu",
+  "summary": "A site's top navigation, with links and panels of links.",
+  "description": "A site's top navigation: a row of links and of triggers that open a panel of links. A trigger is the real Button (ghost, sm) with the menu's caret; a plain link has the same look as an anchor. The panel is the shared popup surface: it grows out of the trigger that opened it when the pointer opens it, and is instant from the keyboard; its links are option rows with an optional description, under the one gliding highlight. Panels open on hover after a short delay or on a click, and one panel box serves every trigger: moving the pointer to another trigger while a panel is open is one motion, the box following to the new trigger and the new panel's size while the content changes in the direction of travel. Behaviour by Ark UI's navigation-menu (Zag).",
+  "kind": "component",
+  "category": "navigation",
+  "order": 6,
+  "status": "beta",
+  "engine": "navigation-menu",
+  "element": "nav",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "nav",
+      "description": "Ark's root, a nav landmark named by the label prop. As wide as its content (inline-flex column), never wider than its container."
+    },
+    {
+      "part": "list",
+      "element": "div",
+      "description": "The row of items, 2px apart. A crowded row wraps rather than cutting a name."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "One entry of the row: a trigger with its panel content, or a plain link."
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "repeat": true,
+      "description": "The real Button (ghost, sm: 28px, pill) marked data-navigation-menu=\"trigger\", with a trailing caret; aria-expanded and aria-controls from the engine. While its panel is open it keeps the ghost button's darker fill (hover-2)."
+    },
+    {
+      "part": "caret",
+      "element": "svg",
+      "repeat": true,
+      "description": "The trigger's caret-down (12px, bold). It turns 180° while the panel is open, over duration.move with easing.out-strong; instant from the keyboard (kbd-instant)."
+    },
+    {
+      "part": "bar-link",
+      "element": "a",
+      "repeat": true,
+      "description": "A link straight in the row: the ghost sm button's look on an anchor (the button recipe). The current page (aria-current=page) keeps the darker fill (hover-2)."
+    },
+    {
+      "part": "viewport-positioner",
+      "element": "div",
+      "description": "Ark's viewport positioner, in a portal like every popup: placed on the root's box (its left, its bottom, its width) while a panel is open, following scroll and resizes; it carries the opening trigger's offset and width (--trigger-x, --trigger-width) for the panel's transform-origin. At the popup layer (z.popup)."
+    },
+    {
+      "part": "viewport",
+      "element": "div",
+      "description": "The one panel box, sized by the engine to the open content (--viewport-width / --viewport-height) and placed by it (--viewport-x): its start edge on the trigger's start, kept 10px inside the window. The shared popup surface: from the pointer it grows from the trigger's centre at the top edge, at duration.popup; it closes at duration.fast; from the keyboard both are instant. Moving the pointer to another trigger while open, its start edge and size ease to the new panel's (duration.move, easing.out-strong); from the keyboard, under reduced motion and on a first open the box takes them at once."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "repeat": true,
+      "description": "One trigger's panel, rendered into the viewport while open: 4px padding, as wide as its longest link (at least 220px, at most 480px or the window less 16px). It holds the gliding highlight and the links. Switching panels from the pointer, the leaving content fades toward the far side and the arriving one fades in from the side of travel (data-motion from the engine, mirrored right-to-left)."
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "The one gliding highlight of the panel (hover colour), following the pointer and the focus between links."
+    },
+    {
+      "part": "link",
+      "element": "a",
+      "repeat": true,
+      "description": "A link of a panel: the option row (30px minimum, 40px on a coarse pointer; padding 5px 8px; radius chip), its title above its description. Press: hover-2. The current page (aria-current=page) has a medium title."
+    },
+    {
+      "part": "link-title",
+      "element": "span",
+      "repeat": true,
+      "description": "The link's name: text.dense (12.5px) ink, shown whole (it wraps). Author text keeps its own direction."
+    },
+    {
+      "part": "link-description",
+      "element": "span",
+      "optional": true,
+      "repeat": true,
+      "description": "One or two lines under the title: text.xs ink-2; it wraps, never cut."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "href": "string? (a plain link)",
+        "current": "boolean? (a plain link: the current page)",
+        "links": "{ label: string, href: string, description?: string, current?: boolean }[]? (a trigger and its panel)"
+      },
+      "description": "The entries of the row in order: a plain link (href) or a trigger with a panel of links (links)."
+    },
+    "currentHref": {
+      "type": "string",
+      "description": "The current page's href. The link with that href (or with current: true) is aria-current=\"page\"; a trigger whose panel holds it is aria-current=\"true\" (the current section) and keeps the ghost button's darker fill (hover-2), as a current plain link does."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "The open panel's item value (empty: none). Controlled: value with onValueChange. Uncontrolled: defaultValue."
+    },
+    "label": {
+      "type": "string",
+      "default": "Main",
+      "description": "The nav landmark's accessible name."
+    },
+    "openDelay": {
+      "type": "number",
+      "default": 200,
+      "description": "Milliseconds a mouse rests on a trigger before its panel opens."
+    },
+    "closeDelay": {
+      "type": "number",
+      "default": 300,
+      "description": "Milliseconds after the mouse leaves before the panel closes."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string) a panel opened, switched or closed (\"\")",
+    "linkSelect": "(href: string) a link was followed"
+  },
+  "slots": {},
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "current"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "shadow.raised",
+    "radius.card",
+    "radius.chip",
+    "radius.pill",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.popup",
+    "duration.move",
+    "easing.out-strong",
+    "motion.enter-shift",
+    "motion.popup-scale",
+    "z.popup"
+  ],
+  "dependencies": [
+    "button"
+  ],
+  "a11y": {
+    "role": "navigation",
+    "keyboard": [
+      "Tab moves through the triggers and plain links of the row, and into an open panel after its trigger",
+      "Enter or Space on a trigger opens or closes its panel, at once",
+      "Arrow Left / Right move between the entries of the row (mirrored right-to-left); Home / End to the first / last",
+      "Arrow Down on the trigger of an open panel moves into it; Arrow Up / Down move between its links",
+      "Escape closes the panel and returns focus to its trigger"
+    ],
+    "notes": [
+      "The root is a nav landmark named by label. Triggers carry aria-expanded and aria-controls; a panel is labelled by its trigger.",
+      "The current page's link carries aria-current=page, in the row or in a panel.",
+      "Hover opens a panel only for a mouse, after openDelay; touch and pen open it with a tap.",
+      "The current page is aria-current=\"page\" on its link; the trigger of the panel that holds it is aria-current=\"true\" (a section, not the page), so a screen reader hears where the reader is before opening it."
+    ]
+  },
+  "motion": [
+    "panel: the shared popup (opacity + scale from motion.popup-scale at duration.popup, easing.out-strong), growing from the opening trigger's centre at the top edge; closes at duration.fast; instant when opened or closed from the keyboard",
+    "switching between open panels from the pointer, one motion (the box does not fade or grow again): the box's start edge and size ease to the new panel's over duration.move with easing.move; the leaving content fades out toward the far side (motion.enter-shift, a 2px blur) at duration.fast while the arriving one fades in from the side of travel (the same shift and blur) at duration.popup with easing.out-strong, so the two are never both fully visible; transitions, so a fast sweep across the row retargets from where each part is and ends at rest; right-to-left mirrors the direction",
+    "switching from the keyboard is instant; under reduced motion it is a fade only (no shift, the box jumps, no blur); a first open has none of it (only the popup's entrance)",
+    "caret: turns 180° over duration.move, easing.out-strong; instant from the keyboard",
+    "highlight: one layer glides between links over duration.move under the pointer and the focus",
+    "triggers and links: the Button's colour and press feedback; links in a panel press with hover-2",
+    "nothing at first paint"
+  ]
+}

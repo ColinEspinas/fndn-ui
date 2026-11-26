@@ -1,0 +1,195 @@
+{
+  "examples": [
+    {
+      "name": "Due date",
+      "width": 220,
+      "props": {
+        "label": "Due date",
+        "value": [
+          "2025-03-12"
+        ]
+      }
+    },
+    {
+      "name": "Report period, small and ghost",
+      "props": {
+        "size": "sm",
+        "variant": "ghost",
+        "aria-label": "Report period",
+        "selectionMode": "range",
+        "value": [
+          "2025-03-01",
+          "2025-03-31"
+        ]
+      }
+    },
+    {
+      "name": "Booking: the stay as one phrase",
+      "width": 260,
+      "props": {
+        "label": "Stay",
+        "selectionMode": "range",
+        "value": [
+          "2025-03-10",
+          "2025-03-14"
+        ]
+      }
+    },
+    {
+      "name": "Appointment: empty, opens on a month, limits",
+      "width": 220,
+      "props": {
+        "label": "Appointment",
+        "defaultFocusedValue": "2025-03-03",
+        "min": "2025-03-03",
+        "max": "2025-03-28",
+        "unavailable": [
+          "2025-03-14",
+          "2025-03-21"
+        ]
+      }
+    },
+    {
+      "name": "Invalid",
+      "width": 220,
+      "props": {
+        "label": "Due date",
+        "invalid": true,
+        "value": [
+          "2025-03-12"
+        ]
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 220,
+      "props": {
+        "label": "Due date",
+        "disabled": true,
+        "value": [
+          "2025-03-12"
+        ]
+      }
+    },
+    {
+      "name": "Empty range",
+      "width": 260,
+      "props": {
+        "label": "Stay",
+        "selectionMode": "range",
+        "defaultFocusedValue": "2025-03-03"
+      }
+    },
+    {
+      "name": "Extra small, subtle",
+      "props": {
+        "size": "xs",
+        "variant": "subtle",
+        "aria-label": "Due",
+        "value": [
+          "2025-03-12"
+        ]
+      }
+    },
+    {
+      "name": "Large range across years",
+      "props": {
+        "size": "lg",
+        "aria-label": "Holiday",
+        "selectionMode": "range",
+        "value": [
+          "2025-12-30",
+          "2026-01-02"
+        ]
+      }
+    },
+    {
+      "name": "Calendar open at mount",
+      "width": 220,
+      "props": {
+        "label": "Appointment",
+        "placeholder": "Pick a weekday",
+        "defaultOpen": true,
+        "defaultFocusedValue": "2025-03-03",
+        "min": "2025-03-03",
+        "max": "2025-03-28",
+        "unavailable": [
+          "2025-03-14",
+          "2025-03-21"
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Range in a narrow field",
+      "width": 160,
+      "props": {
+        "aria-label": "Trip",
+        "selectionMode": "range",
+        "value": [
+          "2025-02-24",
+          "2025-12-31"
+        ]
+      }
+    },
+    {
+      "name": "Long label, long locale",
+      "width": 220,
+      "props": {
+        "label": "Preferred go-live date for the quarterly pricing update in every regional team",
+        "locale": "ta-IN",
+        "value": [
+          "2025-09-17"
+        ]
+      }
+    },
+    {
+      "name": "One day selectable",
+      "width": 220,
+      "props": {
+        "label": "Only date",
+        "min": "2025-03-12",
+        "max": "2025-03-12",
+        "defaultFocusedValue": "2025-03-12"
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 220,
+      "props": {
+        "label": "تاريخ التسليم",
+        "locale": "ar-EG",
+        "value": [
+          "2025-03-12"
+        ]
+      }
+    },
+    {
+      "name": "German range across years",
+      "width": 200,
+      "props": {
+        "label": "Zeitraum",
+        "locale": "de-DE",
+        "placeholder": "Zeitraum wählen",
+        "selectionMode": "range",
+        "value": [
+          "2025-12-30",
+          "2026-01-02"
+        ]
+      }
+    },
+    {
+      "name": "Tamil range, no width",
+      "props": {
+        "aria-label": "காலம்",
+        "locale": "ta-IN",
+        "selectionMode": "range",
+        "value": [
+          "2025-09-17",
+          "2025-10-02"
+        ]
+      }
+    }
+  ]
+}

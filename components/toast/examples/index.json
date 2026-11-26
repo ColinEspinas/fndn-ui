@@ -1,0 +1,10 @@
+{
+  "playground": { "props": { "placement": "bottom-end", "max": 3, "duration": 5000, "overlap": false, "toasts": [{ "title": "Deployed to Production", "description": "dpl_7f3a9c is live at app.northwind.example.", "tone": "green", "duration": 0 }] } },
+  "examples": [
+    { "file": "save-settings", "title": "Changes saved" },
+    { "file": "deploy-progress", "title": "Deploy started, then done" },
+    { "file": "deploy-failed", "title": "Deploy failed, with Retry" },
+    { "file": "copy-invite-link", "title": "Link copied" },
+    { "file": "remove-member", "title": "Undo a removal" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "examples": [
+    { "name": "With a label", "width": 160, "props": { "label": "Seats", "value": "4", "min": 1, "max": 50 } },
+    { "name": "Small", "width": 120, "props": { "size": "sm", "value": "12", "aria-label": "Font size", "min": 8, "max": 72 } },
+    { "name": "At the minimum", "width": 160, "props": { "label": "Retries", "value": "0", "min": 0, "max": 5 } },
+    { "name": "Invalid", "width": 160, "props": { "label": "Seats", "value": "4", "invalid": true } },
+    { "name": "Disabled", "width": 160, "props": { "label": "Seats", "value": "4", "disabled": true } },
+    { "name": "Currency", "width": 160, "props": { "label": "Budget", "value": "1200", "step": 50, "min": 0, "formatOptions": { "style": "currency", "currency": "USD", "maximumFractionDigits": 0 } } }
+  ],
+  "worstCase": [
+    { "name": "Long label", "width": 160, "props": { "label": "Maximum concurrent background synchronisation jobs per workspace", "value": "12480" } },
+    { "name": "Huge value", "width": 120, "props": { "aria-label": "Amount", "value": "123456789012345" } },
+    { "name": "Empty", "width": 160, "props": { "label": "Seats", "placeholder": "None" } },
+    { "name": "Right-to-left label", "width": 160, "props": { "label": "عدد المقاعد", "value": "4" } },
+    { "name": "Negative", "width": 100, "props": { "size": "sm", "aria-label": "Offset", "value": "-1", "min": -10, "max": 10 } }
+  ]
+}

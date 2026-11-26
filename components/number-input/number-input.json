@@ -1,0 +1,169 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "number-input",
+  "title": "Number Input",
+  "summary": "A number field with buttons to step the value down and up.",
+  "description": "A number field with a minus and a plus button inside its end. The field is the Input (the shared control's sizes and looks: its fill, hairline, focus and invalid rings, 16px text on touch) and the buttons are ghost Buttons laid over the room kept at its end. Arrow keys step, Shift + arrow ten steps, Home / End go to the bounds; a button held down repeats. The value can be formatted (currency, percent) with Intl options. Behaviour by Ark UI's number-input (Zag). Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 8,
+  "status": "beta",
+  "engine": "number-input",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's number-input root: a column, the label above the control. As wide as its container (give it a width)."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Visible name (the label prop): text.sm, medium, ink, as the Field's label. It wraps, never truncates."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "Holds the field and the two buttons laid over its end."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "The Input (data-number-input=\"input\"): role=spinbutton, tabular figures, its end padded for the buttons (xs 42px, sm 48px, md 56px, lg 60px)."
+    },
+    {
+      "part": "decrement-trigger",
+      "element": "button",
+      "description": "The Button (data-number-input=\"decrement-trigger\"): ghost, muted, rounded, square, with a minus; xs 18px, sm 20px, md and lg 24px. Out of the tab order; disabled at the minimum. Held down it repeats. On a coarse pointer its hit area is 40px high."
+    },
+    {
+      "part": "increment-trigger",
+      "element": "button",
+      "description": "The Button (data-number-input=\"increment-trigger\") with a plus, at the very end: as the decrement trigger; disabled at the maximum."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "The text of the field (\"12\"; \"\" when empty). onValueChange also gives the number."
+    },
+    "min": {
+      "type": "number",
+      "description": "Lower bound: the minus button is disabled there, and a typed value below it is clamped on blur."
+    },
+    "max": {
+      "type": "number",
+      "description": "Upper bound."
+    },
+    "step": {
+      "type": "number",
+      "default": 1
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The Input's sizes (`lib/control.ts`): xs 24px field and 18px buttons, sm 28px and 20px, md 32px and 24px, lg 36px and 24px."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label above the field."
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "formatOptions": {
+      "type": "object",
+      "description": "Intl.NumberFormat options for the shown value (style currency / percent, grouping, fraction digits)."
+    },
+    "allowMouseWheel": {
+      "type": "boolean",
+      "default": false,
+      "description": "The wheel steps the value while the field has focus."
+    },
+    "decrementLabel": {
+      "type": "string",
+      "default": "Decrease",
+      "description": "Accessible name of the minus button."
+    },
+    "incrementLabel": {
+      "type": "string",
+      "default": "Increase",
+      "description": "Accessible name of the plus button."
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false,
+      "description": "The Input's red ring (aria-invalid)."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string, valueAsNumber: number) on every change",
+    "valueCommit": "(value: string, valueAsNumber: number) after Enter, a blur or a step"
+  },
+  "states": [
+    "hover",
+    "focus",
+    "invalid",
+    "disabled",
+    "at-min",
+    "at-max"
+  ],
+  "tokens": [
+    "color.ink",
+    "text.sm"
+  ],
+  "dependencies": [
+    "input",
+    "button"
+  ],
+  "a11y": {
+    "role": "spinbutton",
+    "keyboard": [
+      "Arrow Up / Arrow Down: one step up / down; with Shift ten steps",
+      "Home / End: the minimum / the maximum (when set)",
+      "Enter: settles the typed value (formatted and clamped)",
+      "The buttons are out of the tab order: the arrow keys do what they do"
+    ],
+    "notes": [
+      "The field is role=spinbutton with aria-valuemin, aria-valuemax, aria-valuenow and aria-roledescription \"numberfield\".",
+      "Name it with label (visible) or aria-label; the buttons are named by decrementLabel / incrementLabel and point at the field (aria-controls).",
+      "The text is 16px on touch devices (the Input's rule), so iOS does not zoom.",
+      "To set it from outside, control `value`: React value / onValueChange."
+    ]
+  },
+  "motion": [
+    "the Input's: rings over duration.base, fill over duration.fast (pointer hover only)",
+    "the Buttons': press scales to motion.press-scale; hover fill over duration.fast (pointer only)",
+    "the value changes in place, instantly"
+  ]
+}

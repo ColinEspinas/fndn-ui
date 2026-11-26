@@ -1,0 +1,40 @@
+{
+  "examples": [
+    { "name": "Actions", "props": { "style": { "padding": "32px 48px", "borderRadius": "10px", "border": "1px dashed var(--fndn-line-strong)", "color": "var(--fndn-ink-2)" }, "items": [
+      { "value": "rename", "label": "Rename", "meta": "R" },
+      { "value": "duplicate", "label": "Duplicate", "meta": "D" },
+      { "value": "share", "label": "Share link", "disabled": true },
+      { "type": "separator" },
+      { "value": "delete", "label": "Delete", "tone": "danger" }
+    ] }, "text": "Right-click Audit Logs" },
+    { "name": "With sub-menus", "props": { "style": { "padding": "32px 48px", "borderRadius": "10px", "border": "1px dashed var(--fndn-line-strong)", "color": "var(--fndn-ink-2)" }, "items": [
+      { "value": "open", "label": "Open" },
+      { "type": "submenu", "label": "Move to", "items": [
+        { "value": "move-summer", "label": "Summer menu" },
+        { "value": "move-winter", "label": "Winter menu" },
+        { "type": "submenu", "label": "Archive", "items": [{ "value": "archive-2025", "label": "2025" }, { "value": "archive-2024", "label": "2024" }] }
+      ] },
+      { "type": "submenu", "label": "Sort by", "items": [{ "type": "radio-group", "name": "sort", "value": "name", "items": [{ "value": "name", "label": "Name" }, { "value": "date", "label": "Date added" }] }] },
+      { "type": "separator" },
+      { "value": "delete", "label": "Delete", "tone": "danger" }
+    ] }, "text": "Right-click Analytics" },
+    { "name": "Disabled", "props": { "disabled": true, "style": { "padding": "32px 48px", "borderRadius": "10px", "border": "1px dashed var(--fndn-line-strong)", "color": "var(--fndn-ink-2)" }, "items": [{ "value": "rename", "label": "Rename" }] }, "text": "The browser's own menu" },
+    { "name": "Mounted open", "props": { "open": true, "style": { "padding": "32px 48px", "borderRadius": "10px", "border": "1px dashed var(--fndn-line-strong)", "color": "var(--fndn-ink-2)" }, "items": [
+      { "value": "rename", "label": "Rename", "meta": "R" },
+      { "value": "duplicate", "label": "Duplicate", "meta": "D" },
+      { "type": "separator" },
+      { "value": "delete", "label": "Delete", "tone": "danger" }
+    ] }, "text": "Opens only where it is right-clicked" }
+  ],
+  "worstCase": [
+    { "name": "Long and nested", "props": { "style": { "padding": "24px", "border": "1px dashed var(--fndn-line-strong)" }, "items": [
+      { "value": "a", "label": "Pricing changes for the northern-hemisphere fiscal year (draft 12, do not publish)", "meta": "Ctrl+Shift+M" },
+      { "type": "submenu", "label": "Move to a workspace with a very long name that wraps onto a second line", "items": [{ "value": "w1", "label": "Aurora Analytics — Reykjavík" }, { "value": "w2", "label": "مجموعة النكهات الموسمية" }] },
+      { "value": "b", "label": "B" }
+    ] }, "text": "Right-click here" },
+    { "name": "Right-to-left", "props": { "style": { "padding": "24px", "border": "1px dashed var(--fndn-line-strong)" }, "items": [
+      { "value": "open", "label": "فتح" },
+      { "type": "submenu", "label": "نقل إلى", "items": [{ "value": "s", "label": "قائمة الصيف" }, { "value": "w", "label": "قائمة الشتاء" }] }
+    ] }, "text": "انقر بزر الفأرة الأيمن" }
+  ]
+}

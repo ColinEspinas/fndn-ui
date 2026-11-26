@@ -1,0 +1,207 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "carousel",
+  "title": "Carousel",
+  "summary": "A row of slides that scrolls sideways one page at a time.",
+  "description": "A row of slides that scrolls sideways one page at a time, with the pager below (\"2 of 5\", previous, next) and optional dots. Every page change (the pager, the dots, a page set from outside, the slides advancing by themselves) travels on one fast animator, the same in every browser; a finger, a trackpad or a wheel scroll the slides themselves, and a mouse can drag them: let go while still moving (a flick), they go on to the next page at the pointer's speed. It never holds the page's vertical scroll. How a slide arrives is the effect: it slides (the default), comes forward (depth), cross-fades in place (fade) or carries a picture that lags it (parallax); the effects are drawn from where the slides are, so every way of paging draws the same thing, in every browser. With autoplay the slides advance by themselves, pausing while someone points at, focuses or cannot see them, with a pause / play button and the current dot filling as the time runs. Behaviour by Ark UI's carousel (Zag); the controls are the real Pager and Button. Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "display",
+  "order": 19,
+  "status": "beta",
+  "engine": "carousel",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's carousel root: role=region, aria-roledescription=carousel; a column, the slides above the control row (12px apart). As wide as its container."
+    },
+    {
+      "part": "item-group",
+      "element": "div",
+      "description": "The scroller (the engine's grid of columns, overflow-x auto, scroll-snap x mandatory, no scrollbar), with the slides' radius (card) so its focus ring follows their corners. When a mouse can drag it (mouseDrag), the grab cursor, grabbing while dragged. It keeps only sideways overscroll in (overscroll-x contain, from the engine), never scrolls vertically, so a vertical wheel or swipe over it moves the page. aria-live polite announces the slide that arrives."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "One slide: role=group, aria-roledescription=slide, named \"n of count\" by the engine; aria-hidden while out of view. Radius card, clipped. A slide whose content is plain text is a 160px-high inset panel (inset with the hairline drawn inside it, an inset ring in color.line: the scroller clips anything outside a slide) with the text centred in text.sm ink-2, wrapping. With an effect, a slide crossing an edge of the scroller carries data-moving and the custom properties that say where it is (--fndn-carousel-out, -lag, -shift, -show): depth scales it towards motion.carousel-depth-scale and dims it towards motion.carousel-depth-opacity the further out it is; fade keeps it on the scroller's box (translated back by its own travel) and fades the later slide in over the earlier one, coming forward by half the depth scale; parallax moves the element the slide marks data-carousel=\"picture\" (which it makes wider by motion.carousel-parallax-shift on each side) by up to that shift against the slide's travel. A slide at rest carries none of it: no transform, no property."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "The row under the slides: the pause / play button and the dots at the start, the pager at the end. Hidden when there is nothing to page (one page). With autoplay it is shown even when controls is off, holding the button alone."
+    },
+    {
+      "part": "autoplay",
+      "element": "button",
+      "optional": true,
+      "description": "With autoplay: the real Button (ghost, square, muted, sm, like the pager's), marked data-carousel=\"autoplay\", first in the control row: \"Pause\" (Phosphor pause) while the slides are meant to advance, \"Play\" (play) once paused or stopped. It has a tooltip with its name, and controls the slide group (aria-controls)."
+    },
+    {
+      "part": "indicator-group",
+      "element": "div",
+      "optional": true,
+      "description": "The dots (indicators prop); they wrap when there are many. Arrow keys on a dot page too (the engine's keys)."
+    },
+    {
+      "part": "indicator",
+      "element": "button",
+      "optional": true,
+      "repeat": true,
+      "description": "One dot per page: a round 24px button (40px on a coarse pointer; its focus ring is round) drawing a 6px dot in line-strong; the current page's dot is ink (data-current). Named \"Go to slide n\" by the engine. Hovered by a mouse: ink-3. The dots are one tab stop: only the current one is in the tab order (tabIndex), and the arrow keys move between them, focus following. With autoplay, the current dot is a 16px track in line-strong that an ink bar fills from the start edge, linear, over the time a page stays; it holds while the slides are held or paused and starts over when they start again."
+    },
+    {
+      "part": "pager",
+      "element": "div",
+      "description": "The real Pager (layout start: \"2 of 5\" then previous and next), marked data-carousel=\"pager\": the position is announced as \"Slide 2 of 5\", the buttons have tooltips, and its arrow keys page too."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "content": "node (a string is a text slide)",
+        "label": "string? (the slide's name, instead of \"n of count\")"
+      },
+      "description": "The slides in order. Strings are accepted as text slides."
+    },
+    "page": {
+      "type": "number",
+      "default": 0,
+      "model": true,
+      "description": "Current page, 0-based. Controlled: page with onPageChange. Uncontrolled: defaultPage."
+    },
+    "slidesPerPage": {
+      "type": "number",
+      "default": 1,
+      "description": "Slides shown at once; a page moves by that many."
+    },
+    "spacing": {
+      "type": "number",
+      "default": 12,
+      "description": "Pixels between slides."
+    },
+    "loop": {
+      "type": "enum",
+      "values": [
+        "none",
+        "rewind",
+        "endless"
+      ],
+      "default": "none",
+      "description": "What follows the last page. none: nothing, the pager's Next disables there. rewind: the first page again, the slides running back to it past the others (and Previous on the first runs on to the last). endless: the first slide follows the last on a strip with no end, so Next always goes on the same way and Previous back; the pager's buttons never disable with either. Endless copies no slide (each is drawn where the strip needs it) and needs more slides than one page shows; with fewer it behaves as none. In fade, endless cross-fades straight from the last slide to the first."
+    },
+    "indicators": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show the dots at the start of the control row."
+    },
+    "controls": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show the control row (pager and dots)."
+    },
+    "mouseDrag": {
+      "type": "boolean",
+      "default": true,
+      "description": "A mouse can drag the slides (touch and trackpads always can)."
+    },
+    "dragReach": {
+      "type": "enum",
+      "values": [
+        "page",
+        "free"
+      ],
+      "default": "page",
+      "description": "How far one drag takes the slides. page: the slides follow the pointer as far as the neighbouring page and stop there, however far or fast the drag is, so one drag turns one page. free: they go as far as they are dragged, and a flick adds one page more. In fade nothing follows the pointer and a drag always turns one page."
+    },
+    "effect": {
+      "type": "enum",
+      "values": [
+        "slide",
+        "depth",
+        "fade",
+        "parallax",
+        "none"
+      ],
+      "default": "slide",
+      "description": "How a slide arrives. slide: it travels sideways. depth: a slide crossing an edge is a little smaller and dimmer. fade: the slides stay in place and the later one fades in over the earlier, coming forward a little (one slide per page; with more it is slide); a sideways drag of 40px turns the page there. parallax: the element a slide marks data-carousel=\"picture\" lags the slide, by a fifth of the width of its frame (it is made that much wider on each side, so give the slide a picture that fills its width). A slide may mark several pictures, one over the other, and give each its share of the lag with --fndn-carousel-parallax (1 by default; more for a layer further back, less for a nearer one): the layers then slide past each other. none: no animation, the page changes at once, whatever turns it (the pager, a dot, a swipe of 40px, autoplay). The others are drawn from where the slides are, so they are the same in every browser and in both directions."
+    },
+    "autoplay": {
+      "type": "number",
+      "default": 0,
+      "description": "Milliseconds a page stays before the next comes by itself; 0 is off. It wraps from the last page to the first whatever loop says, holds while the pointer is over the carousel, focus is inside it, the page is hidden or it is off screen, stops for good once the user turns a page by hand or presses Pause, and does not start under reduced motion (Play starts it)."
+    },
+    "label": {
+      "type": "string",
+      "default": "Slides",
+      "description": "The pager's accessible name."
+    }
+  },
+  "events": {
+    "pageChange": "(page: number) when the page changes: at once for the pager, a dot, a key and a drag that is let go (before the slides have arrived); when the scroll ends for a swipe or a wheel"
+  },
+  "slots": {},
+  "states": [
+    "hover",
+    "press",
+    "dragging",
+    "focus-visible",
+    "playing"
+  ],
+  "tokens": [
+    "color.inset",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line-strong",
+    "color.line",
+    "radius.card",
+    "radius.pill",
+    "text.sm",
+    "duration.base",
+    "duration.press",
+    "motion.press-scale-sm",
+    "motion.carousel-depth-scale",
+    "motion.carousel-depth-opacity",
+    "motion.carousel-parallax-shift"
+  ],
+  "dependencies": [
+    "button",
+    "pager",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "region",
+    "keyboard": [
+      "Tab reaches the slides, the dots (one tab stop: the current dot) when shown, then the pager's buttons; Enter or Space on previous / next pages, at once",
+      "With autoplay, the pause / play button is first in the control row (Tab, then Enter or Space); focus anywhere in the carousel holds the slides",
+      "Arrow Left / Right on the pager or on a dot: previous / next page (mirrored right-to-left), focus following to the new current dot; Home / End on a dot: first / last page",
+      "With focus on the slides (Tab, or a press on a slide, which focuses the scroller like any focusable thing): Arrow Left / Right previous / next page, Home / End first / last page; the pager and the dots follow at once. With focus inside a slide the arrows page too (the engine's keys)",
+      "Slides the browser scrolls by itself (to a control that takes the focus in another slide, to a match of find-in-page) take the page with them: the pager and the dots say where the slides are"
+    ],
+    "notes": [
+      "The root is a region with aria-roledescription=carousel; each slide is a group named \"n of count\" (or its label), aria-hidden while out of view so a screen reader stays on the visible page.",
+      "The slide group is aria-live=polite: the slide that arrives is announced.",
+      "A page changed from the keyboard, while the focus is in the carousel, is instant; under reduced motion every page change is instant.",
+      "Autoplay: the slide group is aria-live off while the slides advance by themselves (polite again once held or paused). The pause / play button is always there while autoplay is on, even with controls off: content that moves by itself for more than five seconds needs a control to stop it (WCAG 2.2.2), and holding on hover or focus is no help to someone on a touch screen. The slides hold while the pointer is over the carousel or focus is inside it, so a reader is never paged away; a page turned by hand, or Pause, stops them until Play.",
+      "Under prefers-reduced-motion autoplay does not start, and depth and parallax do nothing; the fade stays (opacity, not travel)."
+    ]
+  },
+  "motion": [
+    "page changes (pager, dots, a page set from outside, autoplay): the slides travel on one animator, a critically damped spring that comes to rest in about 0.3s; never the browser's own smooth scroll, which differs between browsers. A swipe, a trackpad or a wheel scroll the slides themselves and snap",
+    "drag: the slides follow the pointer 1:1, as far as the neighbouring page (dragReach page, the default) or as far as they are dragged (free). Let go while the pointer is still moving (a flick, however short), they go on to the next page in its direction; let go at rest, to the nearest. The spring starts at the speed they had under the pointer, never goes back first and never past the page, and the pager and the dots change at the release. With loop rewind, a drag or a flick past the last page goes round to the first, and one before the first to the last; with loop endless there is no last page, and the drag simply goes on to the next slide. In fade nothing follows the pointer: a sideways drag of 40px (mouse or finger) turns the page, once a drag",
+    "loop endless: the first slide follows the last on a strip with no end. Next on the last page travels on to the first the same way, Previous on the first comes from the other side, a dot goes the shorter way round, and the slides advancing by themselves always go on. No slide is copied: each is drawn on the turn of the strip nearest the scroller (an offset along the strip, --fndn-carousel-round), and at rest the slides are put back one turn in, a whole number of turns away, which nothing shows. loop rewind: the slides run back to the first past the others",
+    "from the keyboard with the focus in the carousel, or under reduced motion: the page changes at once",
+    "dot: colour over duration.base; a press gives to motion.press-scale-sm over duration.press (pointer only)",
+    "nothing at first paint: the initial page is shown without scrolling to it",
+    "effects (depth, fade, parallax): drawn from where each slide is, after every change of the scroll position (custom properties on the slide, carousel.logic.ts), so the pager, a swipe and a drag all draw the same thing, in every browser and right-to-left; a slide at rest carries no transform and no property",
+    "depth: an entering slide grows from motion.carousel-depth-scale (0.94) and motion.carousel-depth-opacity (0.5) at the edge to full size; a leaving one does the reverse",
+    "fade: both slides stay on the scroller's box; the arriving one fades in (opacity, a 2px blur while faint) over the leaving one, so the two never dip to the background",
+    "parallax: the marked picture lags its slide by motion.carousel-parallax-shift, a share of the width of the picture's frame (0.2: a fifth): that far behind as the slide enters, that far ahead as it leaves, and wider than its frame by as much on each side. --fndn-carousel-parallax on a picture multiplies its lag (several pictures in one slide: the further back, the more)",
+    "autoplay: a page change by itself scrolls smoothly, even after a key was pressed (it is not a keyboard action; instant under reduced motion); the current dot's fill is linear over the dwell, holds while paused, and starts over when the slides start again, as the engine's timer does",
+    "reduced motion: depth and parallax become the plain slide (their tokens), the fade stays, autoplay does not start",
+    "effect none: nothing is animated. The page changes at once from the pager, the dots, a key, autoplay and a sideways drag of 40px; the scroller does not scroll under a wheel or a finger"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "playground": {
+    "props": {
+      "label": "Team plan",
+      "value": "$240.00",
+      "meta": "12 seats"
+    },
+    "width": 320
+  },
+  "examples": [
+    { "file": "invoice-summary", "title": "Invoice summary" },
+    { "file": "month-over-month", "title": "Month over month" },
+    { "file": "project-details", "title": "Project details in a card" },
+    { "file": "billing-contact", "title": "Long label on a billing form" }
+  ]
+}

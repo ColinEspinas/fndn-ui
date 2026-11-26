@@ -1,0 +1,6 @@
+/* The test page's stylesheet: what a user's Tailwind project gives a component, and nothing of the
+ * docs site. Tailwind with its preflight, then the system (tokens, preset, the hand-written CSS that
+ * remains). The recipes and adapters live outside this app, so their classes are scanned explicitly. */
+@import "tailwindcss";
+@import "@fndn/core/css";
+@source "../../../../components/*/*.{ts,tsx,vue,svelte}";

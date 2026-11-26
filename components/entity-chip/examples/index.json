@@ -1,0 +1,14 @@
+{
+  "playground": {
+    "props": {
+      "name": "Maya Chen",
+      "color": "var(--fndn-tag-orange)"
+    }
+  },
+  "examples": [
+    { "file": "activity-feed", "title": "Activity feed" },
+    { "file": "paused-projects", "title": "Projects in a status message" },
+    { "file": "alert-channel", "title": "Channel with a custom monogram" },
+    { "file": "owners-table", "title": "Owner column in a table" }
+  ]
+}

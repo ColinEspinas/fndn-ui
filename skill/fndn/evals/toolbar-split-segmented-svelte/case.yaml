@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: toolbar-split-segmented-svelte
+expected_outcome: |
+  A Svelte 5 component using ButtonGroup + Menu for the split button (joined, no own scaling), SegmentedControl, Select and Button at matching sizes, icon buttons with aria-labels, Phosphor icons from the vocabulary, token classes only, and a narrow-screen behaviour that keeps labels whole (wrapping or a scroller that hands the wheel to the page) rather than cutting them.

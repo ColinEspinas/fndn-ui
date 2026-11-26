@@ -1,0 +1,39 @@
+{
+  "playground": {
+    "props": {
+      "role": "assistant",
+      "name": "Assistant",
+      "avatar": true,
+      "time": "2 min ago",
+      "text": "DATABASE_URL is missing from Production. Add it in Settings → Environment variables, then redeploy.",
+      "actions": [
+        "copy",
+        "retry",
+        "good",
+        "bad"
+      ]
+    }
+  },
+  "examples": [
+    {
+      "file": "deploy-question",
+      "title": "Why did the deploy fail?"
+    },
+    {
+      "file": "answer-with-tool-calls",
+      "title": "An answer with its tool calls"
+    },
+    {
+      "file": "asks-before-running",
+      "title": "Asks before running the tests"
+    },
+    {
+      "file": "edit-your-question",
+      "title": "Edit your question"
+    },
+    {
+      "file": "thinking",
+      "title": "Thinking before the first word"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+---
+/* Guides: the Markdown files of docs/, rendered at build time. Prose styles are utilities on the
+ * article (descendant variants), so the guide's HTML needs no class of its own. */
+import Layout from "../../layouts/Layout.astro";
+import { guideOf, guides } from "../../lib/catalog";
+import { guideToc, publicMarkdown, renderGuide } from "../../lib/markdown";
+
+export function getStaticPaths() {
+  return guides().map((g) => ({ params: { id: g.id } }));
+}
+/* read at render, not passed from getStaticPaths (the dev server keeps those): a save shows on the next visit */
+const guide = guideOf(Astro.params.id!)!;
+const html = renderGuide(publicMarkdown(guide.markdown), guide.id, guide.heading);
+const toc = guideToc(guide.markdown, guide.heading);
+const prose = [
+  "max-w-[46rem] text-md leading-relaxed text-ink-2 [unicode-bidi:plaintext]",
+  "[&_h1]:mt-10 [&_h1]:mb-3 [&_h1]:text-lg [&_h1]:font-semibold [&_h1]:text-ink",
+  "[&_h2]:scroll-mt-16 [&_h3]:scroll-mt-16 [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-ink",
+  "[&_h3]:mt-8 [&_h3]:mb-2 [&_h3]:text-md [&_h3]:font-semibold [&_h3]:text-ink",
+  "[&_h4]:mt-6 [&_h4]:mb-2 [&_h4]:text-sm [&_h4]:font-semibold [&_h4]:text-ink",
+  "[&_p]:my-3 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:ps-5 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:ps-5 [&_li]:my-1 [&_li]:marker:text-ink-3",
+  "[&_strong]:font-semibold [&_strong]:text-ink",
+  "[&_a]:font-medium [&_a]:text-ink [&_a]:underline [&_a]:decoration-line-strong [&_a]:underline-offset-4 hover:[&_a]:decoration-ink-3",
+  "[&_:not(pre)>code]:rounded-chip [&_:not(pre)>code]:bg-inset [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.85em] [&_:not(pre)>code]:text-ink",
+  "[&_pre]:my-4 [&_pre]:overflow-x-auto [&_pre]:rounded-card [&_pre]:border [&_pre]:border-line [&_pre]:bg-surface [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-xs [&_pre]:leading-relaxed [&_pre]:text-ink",
+  "[&_pre]:focus-visible:outline-2 [&_pre]:focus-visible:outline-offset-2 [&_pre]:focus-visible:outline-accent",
+  "[&_blockquote]:my-4 [&_blockquote]:border-s-2 [&_blockquote]:border-line-strong [&_blockquote]:ps-4 [&_blockquote]:text-ink-2",
+  "[&_hr]:my-8 [&_hr]:border-line",
+  "[&_.docs-scroll]:my-4 [&_.docs-scroll]:overflow-x-auto [&_.docs-scroll]:rounded-card [&_.docs-scroll]:border [&_.docs-scroll]:border-line [&_.docs-scroll]:bg-surface",
+  "[&_table]:w-full [&_table]:border-collapse [&_table]:text-sm",
+  "[&_th]:border-b [&_th]:border-line [&_th]:px-3 [&_th]:py-2 [&_th]:text-start [&_th]:text-xs [&_th]:font-medium [&_th]:text-ink-2",
+  "[&_td]:border-b [&_td]:border-line-soft [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_tr:last-child>td]:border-b-0",
+].join(" ");
+---
+<Layout title={guide.title} current={`/guides/${guide.id}`}>
+  {/* the same column as every page (left edge after the tree); wide screens give the right 20rem to
+      the "On this page" rail, as the component pages give it to the inspector */}
+  <div class="xl:pe-80">
+  <div class="px-4 pt-10 pb-20 md:px-8">
+  <div class="mx-auto max-w-[55rem]" data-docs-guide={guide.id}>
+    <header class="max-w-[46rem]">
+      <p class="text-sm text-ink-2">Guides</p>
+      <h1 class="mt-1 text-2xl font-semibold tracking-tight text-ink">{guide.title}</h1>
+    </header>
+    <article class={`mt-6 ${prose}`} set:html={html} />
+  </div>
+  </div>
+  {toc.length > 1 && (
+    <nav aria-label="On this page" class="hidden xl:fixed xl:top-12 xl:bottom-0 xl:end-0 xl:block xl:w-80 xl:overflow-y-auto xl:overscroll-contain xl:px-8 xl:pt-10 xl:pb-10" data-docs-toc>
+      <p class="mb-2 text-xs font-semibold text-ink">On this page</p>
+      <ul class="flex flex-col">
+        {toc.map((t) => (
+          <li><a href={`#${t.id}`} class={`block rounded-control py-1 text-sm text-ink-2 no-underline hover:text-ink focus-visible:outline-2 focus-visible:outline-accent ${t.depth === 3 ? "ps-3" : ""}`}>{t.text}</a></li>
+        ))}
+      </ul>
+    </nav>
+  )}
+  </div>
+</Layout>

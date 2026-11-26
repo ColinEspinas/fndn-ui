@@ -1,0 +1,162 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "file-upload",
+  "title": "File Upload",
+  "summary": "Pick files by dropping them on a zone or choosing them from the system dialog.",
+  "description": "Pick files by dropping them on a zone or by choosing them from the system dialog. The drop zone is the empty state's block (icon tile, title, hint) inside a dashed frame; every picked file is a tag (a file glyph, the name, a remove button) with its size beside it, and a refused file is a red tag with the reason. Behaviour by Ark UI's file-upload (Zag): limits on count, size and type. Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 14,
+  "status": "beta",
+  "engine": "file-upload",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's file-upload root: a column (label, drop zone, files), 8px apart. As wide as its container. data-dragging while files are dragged over it, data-disabled."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Visible name (the label prop): text.sm, medium, ink, the slider's and the field's label. It wraps, never truncates."
+    },
+    {
+      "part": "dropzone",
+      "element": "div",
+      "description": "Ark's drop zone: role=button, focusable (the shared focus ring), radius card, a 1px dashed line-strong frame on the surface. A click, Enter or Space opens the system file dialog; files dropped on it are added. Holds the real EmptyState (size block): the upload-simple glyph in its tile, the title and the hint. Hovered by a mouse: color.hover; pressed: color.hover-2; while files are dragged over it: an accent frame on accent-tint. Disabled: half opacity, inert."
+    },
+    {
+      "part": "hidden-input",
+      "element": "input",
+      "description": "Ark's hidden file input, carrying the files for a form (name)."
+    },
+    {
+      "part": "item-group",
+      "element": "ul",
+      "optional": true,
+      "description": "A list of files, one per line, 6px apart: the accepted files, then (Ark's rejected group) the refused ones. Each is absent when it has none.",
+      "repeat": true
+    },
+    {
+      "part": "item",
+      "element": "li",
+      "repeat": true,
+      "description": "One file: the tag, then its size (text.xs, tabular figures, ink-2, never wrapped) at the end of the line, or for a refused file the reason in red. Keyed by the file itself, never by its position, so removing a file leaves the others in place."
+    },
+    {
+      "part": "file",
+      "element": "span",
+      "repeat": true,
+      "description": "The real Tag (md, rounded, removable, with the file glyph as its icon), marked data-file-upload=\"file\": the file's name, cut at the end with a title when the line is too narrow. Its remove button is named \"Remove <name>\" and removes the file. A refused file's tag is tone red."
+    },
+    {
+      "part": "item-size",
+      "element": "span",
+      "repeat": true,
+      "description": "The file's size (1.2 MB) or, for a refused file, why it was refused (Too large, Not an accepted type, Too many files…) in red."
+    }
+  ],
+  "props": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "File | { name: string, size: number, type?: string }"
+      },
+      "model": true,
+      "description": "The accepted files. Controlled: files with onFilesChange. Uncontrolled: defaultFiles. A plain { name, size, type } stands for a file (an upload already on the server, a fixture)."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label above the drop zone."
+    },
+    "title": {
+      "type": "string",
+      "default": "Drop files here",
+      "description": "The drop zone's title."
+    },
+    "hint": {
+      "type": "string",
+      "default": "or click to choose",
+      "description": "The drop zone's hint (what is accepted, the limits)."
+    },
+    "accept": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Accepted types: MIME types (image/png, image/*) or extensions (.pdf). Anything else is refused."
+    },
+    "maxFiles": {
+      "type": "number",
+      "default": 1,
+      "description": "How many files it takes; more are refused (Too many files)."
+    },
+    "maxFileSize": {
+      "type": "number",
+      "description": "Largest file in bytes; larger ones are refused (Too large)."
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name (the hidden input)."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Inert at half opacity; the drop zone leaves the tab order."
+    }
+  },
+  "events": {
+    "filesChange": "(files: File[]) the accepted files after a pick, a drop or a removal",
+    "reject": "(rejections: { file: File, errors: string[] }[]) files that were refused"
+  },
+  "slots": {},
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "dragging",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "color.line-strong",
+    "color.accent",
+    "color.accent-tint",
+    "color.ink",
+    "color.ink-2",
+    "color.red",
+    "radius.card",
+    "text.sm",
+    "text.xs",
+    "duration.fast",
+    "duration.base",
+    "duration.reveal",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "empty-state",
+    "tag"
+  ],
+  "a11y": {
+    "role": "button",
+    "keyboard": [
+      "Tab reaches the drop zone, then each file's remove button",
+      "Enter or Space on the drop zone opens the system file dialog",
+      "Enter or Space on a remove button removes that file"
+    ],
+    "notes": [
+      "The drop zone is role=button named by its title and hint; the label names the hidden input.",
+      "Each remove button is named \"Remove <file name>\".",
+      "A refused file stays in the list, in red with its reason, until it is removed, so the reason can be read."
+    ]
+  },
+  "motion": [
+    "drop zone: background and frame colour over duration.fast (hover, press, files dragged over it), colour only",
+    "files: a file added after the first paint makes its room as it fades in: its line opens from 0fr to 1fr over duration.reveal, easing.out-strong (the collapsible's reveal), while its opacity rises over duration.base, so what is below slides down instead of jumping; files present at first paint do not move, and removing a file never makes the others enter again",
+    "remove buttons: the tag's own (the Button's press)"
+  ]
+}

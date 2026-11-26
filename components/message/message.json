@@ -1,0 +1,207 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "message",
+  "title": "Message",
+  "summary": "One message of a conversation with an assistant.",
+  "description": "One message of a conversation with an assistant. The person's message is a bubble at the end; the assistant's is plain text at the start, with an optional avatar. A header names who wrote it (name, an optional source Chip, the time). Actions sit under it (Copy, Retry, Edit, Good / Bad response), shown on hover and on focus, always on touch; they always take their room, so showing them moves nothing. While streaming it is aria-busy, offers no actions, and shows a shimmering \"Thinking…\" until its content arrives. Plain text through text, or any content (streaming text, tool chips, a code block, an approval card) as children. chat-composer's threads are made of it.",
+  "kind": "component",
+  "category": "agent",
+  "order": 0,
+  "status": "beta",
+  "element": "article",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "article",
+      "description": "A row: the avatar (when there is one) and the main column, 8px apart. aria-busy while streaming. role=user: 56px clear of the start, everything at the end."
+    },
+    {
+      "part": "avatar",
+      "element": "span",
+      "optional": true,
+      "description": "The real Avatar (20px, the name's initials or the image), marked data-message=\"avatar\", level with the header"
+    },
+    {
+      "part": "main",
+      "element": "div",
+      "description": "Header, body and actions, 4px apart"
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "optional": true,
+      "description": "A 20px line, xs: name · source · time. Shown when one of them is given"
+    },
+    {
+      "part": "name",
+      "element": "span",
+      "optional": true,
+      "description": "Medium, ink; cut with an ellipsis and a title when the line is too narrow (free text, not a choice)"
+    },
+    {
+      "part": "source",
+      "element": "span",
+      "optional": true,
+      "description": "The real Chip (neutral), marked data-message=\"source\": where the answer came from; it gives way and is cut before the time"
+    },
+    {
+      "part": "time",
+      "element": "time",
+      "optional": true,
+      "description": "ink-2, tabular; datetime from the datetime prop"
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "description": "The content. role=user: the bubble (field fill, 12px radius, 6px × 12px padding). role=assistant: no box"
+    },
+    {
+      "part": "text",
+      "element": "p",
+      "optional": true,
+      "description": "The text prop: sm, 1.5 line height (1.4 in a bubble), wraps anywhere, keeps line breaks, keeps its own direction; 15px on coarse pointers"
+    },
+    {
+      "part": "status",
+      "element": "div",
+      "optional": true,
+      "description": "Streaming with nothing yet: role=status, a Shimmer \"Thinking…\""
+    },
+    {
+      "part": "actions",
+      "element": "div",
+      "optional": true,
+      "description": "role=group named \"Message actions\": ghost xs square muted Buttons (Copy, Retry, Edit) named by their Tooltips, and Toggles (Good response, Bad response; at most one pressed, its thumb filled). Kept inside the message's box (never pulled past its edge). Not rendered while streaming"
+    },
+    {
+      "part": "announce",
+      "element": "span",
+      "optional": true,
+      "description": "Visually hidden role=status beside Copy: says Copied while the button is swapped"
+    }
+  ],
+  "props": {
+    "role": {
+      "type": "enum",
+      "values": [
+        "user",
+        "assistant"
+      ],
+      "default": "assistant",
+      "description": "user: the person's message, a bubble at the end. assistant: plain text at the start."
+    },
+    "name": {
+      "type": "string",
+      "description": "Who wrote it, in the header (\"Maya Chen\", \"Assistant\", or a step's label)."
+    },
+    "avatar": {
+      "type": "string",
+      "ts": "boolean | string",
+      "description": "Shown beside the header: true for the name's initials, or an image URL (the initials show until it loads)."
+    },
+    "source": {
+      "type": "string",
+      "description": "Where it came from, as a neutral Chip after the name (a file, a tool, a page)."
+    },
+    "time": {
+      "type": "string",
+      "description": "When, as shown (\"2 min ago\", \"10:42\", \"for 2s\")."
+    },
+    "datetime": {
+      "type": "string",
+      "description": "The time as a machine-readable date, for the <time> element."
+    },
+    "text": {
+      "type": "string",
+      "description": "Plain text. For rich content (streaming text, tool chips, a code block) pass children / the default slot instead."
+    },
+    "streaming": {
+      "type": "boolean",
+      "default": false,
+      "description": "Still being written: aria-busy, no actions, and a shimmering \"Thinking…\" while there is no content yet."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "copy",
+          "retry",
+          "edit",
+          "good",
+          "bad"
+        ]
+      },
+      "default": [],
+      "description": "The actions offered, always shown in this order: copy (puts copyText or text on the clipboard, says Copied for 1.5s), retry, edit, good and bad (Good / Bad response, at most one pressed)."
+    },
+    "copyText": {
+      "type": "string",
+      "description": "What Copy puts on the clipboard; defaults to text (pass it when the content is children)."
+    },
+    "feedback": {
+      "type": "enum",
+      "values": [
+        "good",
+        "bad"
+      ],
+      "model": true,
+      "description": "Good / Bad response, or none (null). While one is chosen the actions stay shown."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ actions, copy, copied, retry, edit, good, bad, thinking }: the fixed strings, partial."
+    }
+  },
+  "slots": {
+    "default": "Rich content instead of text: StreamingText, ToolChips, a CodeBlock, an ApprovalCard"
+  },
+  "events": {
+    "action": "(action: 'copy' | 'retry' | 'edit' | 'good' | 'bad') an action was pressed (copy after it copied)",
+    "feedbackChange": "(feedback: 'good' | 'bad' | null)"
+  },
+  "states": [
+    "hover",
+    "focus-within",
+    "streaming",
+    "copied",
+    "feedback"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.field",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.fast"
+  ],
+  "dependencies": [
+    "avatar",
+    "button",
+    "chip",
+    "shimmer",
+    "toggle",
+    "tooltip",
+    "code-block"
+  ],
+  "a11y": {
+    "role": "article; its actions a group named \"Message actions\"",
+    "keyboard": [
+      "Tab reaches each action (the row shows at once when focus enters it); Enter / Space press it",
+      "Good / Bad response are toggle buttons (aria-pressed)"
+    ],
+    "notes": [
+      "A thread of messages is the host's: give it role=log so a new message is announced once (chat-composer does).",
+      "aria-busy while streaming, so assistive technology waits for the finished text; the Thinking status is role=status.",
+      "Every action is icon-only and named (aria-label) by the text its Tooltip shows; Copy announces Copied through a visually hidden status.",
+      "Author text keeps its own direction (unicode-bidi: plaintext)."
+    ]
+  },
+  "motion": [
+    "actions: fade in over duration.fast when the pointer is over the message (a real pointer only); at once when focus enters them (kbd-instant); always shown on touch; they keep their room, so nothing moves",
+    "copy: the Button's swap (Copy cross-fades into Check)",
+    "thinking: the Shimmer's loop (static under reduced motion)",
+    "arrival: none of its own; a host thread rises new messages in (chat-composer). Nothing plays on first paint"
+  ]
+}

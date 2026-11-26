@@ -1,0 +1,91 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "loading-state",
+  "title": "Loading State",
+  "summary": "A compact loader with an elapsed timer for long-running agent work.",
+  "description": "A compact loader for long-running agent work: a pixel grid, a shimmering label and an elapsed timer. The 3×3 grid draws a chevron wavefront (drive / dots) or a comet lapping the perimeter (orbit); the timer is in mono tabular figures.",
+  "kind": "block",
+  "category": "feedback",
+  "order": 3,
+  "status": "stable",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=status, aria-label = the label"
+    },
+    {
+      "part": "grid",
+      "element": "span",
+      "description": "aria-hidden 3×3 grid"
+    },
+    {
+      "part": "cell",
+      "element": "span",
+      "repeat": true,
+      "description": "nine 4px cells; delay by nth-child"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "The real Shimmer (fast), marked data-loading-state=\"label\"; truncates, full text in title"
+    },
+    {
+      "part": "elapsed",
+      "element": "span",
+      "optional": true,
+      "description": "aria-hidden: the ticking time is never announced"
+    }
+  ],
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "drive",
+        "dots",
+        "orbit"
+      ],
+      "default": "drive"
+    },
+    "label": {
+      "type": "string",
+      "default": "Loading",
+      "description": "Status text; also the region's accessible name."
+    },
+    "elapsed": {
+      "type": "string",
+      "description": "Formatted elapsed time from the host. When omitted, the adapters tick it from mount (7.9s · 1m 2.0s · 1h 12m)."
+    },
+    "showElapsed": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "states": [
+    "loading"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "font.mono",
+    "text.xs",
+    "text.sm"
+  ],
+  "dependencies": [
+    "shimmer"
+  ],
+  "a11y": {
+    "role": "status",
+    "notes": [
+      "The root is a role=status region named by the label; changing the label is announced once.",
+      "The elapsed time is aria-hidden so its 100ms ticks are never announced; the pixel grid is aria-hidden.",
+      "Nothing is focusable or interactive."
+    ]
+  },
+  "motion": [
+    "cells: fndn-pixel-on loop (opacity only), 650ms (orbit 950ms) with easing ease, staggered 90ms (orbit 110ms) through literal loop delays; keeps pulsing under reduced motion (it is the loading signal)",
+    "label: our shimmer at its fast speed (1.4s loop); the shimmer stops under reduced motion and shows static ink-2 text",
+    "no entrance and no other motion; the timer ticks in tabular figures so nothing shifts"
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "code-block",
+  "title": "Code Block",
+  "summary": "Code to read and copy: a listing with line numbers, a diff or a command.",
+  "description": "Code to read and copy: a listing with line numbers, a diff, or a command. A light editor panel: a line-numbered listing, or a unified diff with one gutter, a green / red accent bar and row tint, plus word-level add / del highlights. Both share syntax colouring, insets and wrapping (wrap; off in the editor look, where the body scrolls sideways). The editor look is the bare body of an editor pane: no frame, no header, no copy. Copy puts the code on the clipboard and says so for 1.5s.",
+  "kind": "component",
+  "category": "display",
+  "order": 8,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Card, max-width 420; editor: no frame, fills its container"
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "description": "44px: icon · filename · copy | stat. With files the same 44px row is the tabs' header part: file tabs · path · copy, or, when the tabs do not fit, pager · select · path · copy. Not rendered in the editor look"
+    },
+    {
+      "part": "file-icon",
+      "element": "i",
+      "description": "Phosphor code icon"
+    },
+    {
+      "part": "filename",
+      "element": "span",
+      "description": "Cut in the middle while it does not fit (a file name keeps its end: \"invoice-batch-…-scheduler.ts\"), full name in title while cut (lib/truncate.ts middleTruncation)"
+    },
+    {
+      "part": "copy",
+      "element": "button",
+      "optional": true,
+      "description": "A Button (ghost, xs, rounded, muted) with two labels in one cell (icon part: copy and check; label part: Copy and Copied); data-swapped while \"Copied\" shows; aria-label \"Copy code\". Its green while swapped is the code block's. Beside it a visually hidden role=status (sr-only) announces \"Copied\". The real Button, marked data-code-block=\"copy\"; swapped while Copied shows."
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "Visually hidden role=status beside Copy; says Copied while the button is swapped."
+    },
+    {
+      "part": "stat",
+      "element": "span",
+      "optional": true,
+      "description": "+N -M for the diff variant"
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "description": "Scrolls past --fndn-code-block-max-height; while it overflows it is a focusable role=region named by the filename Height: --fndn-code-block-height (height prop) fixes it; --fndn-code-block-max-height (maxHeight) caps it."
+    },
+    {
+      "part": "rows",
+      "element": "div",
+      "description": "Grid: gutter (as wide as the widest number) + code; rows are subgrids"
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "repeat": true,
+      "description": "data-type=ctx|add|del in the diff. The current line (currentLine) is tinted and carries aria-current=\"true\"."
+    },
+    {
+      "part": "bar",
+      "element": "span",
+      "optional": true,
+      "description": "3px accent bar: green, or red hatch"
+    },
+    {
+      "part": "num",
+      "element": "span",
+      "description": "Line number: right-aligned on the gutter edge, not selectable"
+    },
+    {
+      "part": "code",
+      "element": "code",
+      "description": "Wraps long lines"
+    },
+    {
+      "part": "piece",
+      "element": "span",
+      "optional": true,
+      "description": "data-change=add|del word highlight"
+    },
+    {
+      "part": "tok",
+      "element": "span",
+      "optional": true,
+      "description": "data-tok=kw|str|fn syntax colour"
+    },
+    {
+      "part": "path",
+      "element": "span",
+      "optional": true,
+      "description": "With files: the active file's path in the header row, pushed to the end before Copy; mono, xs, ink-2; the first thing to shrink, cut in the middle so the file name stays (\"packages/…/select.tsx\"), full path in title while cut; hidden while the pager and the select stand in for the tabs (the select names the file)"
+    },
+    {
+      "part": "pager",
+      "element": "div",
+      "optional": true,
+      "description": "With files, while the tabs do not fit (data-fit=\"select\" on the root): the pager component (loop, \"2 of 5\", Previous file / Next file) in the header, before the select"
+    },
+    {
+      "part": "file-select",
+      "element": "div",
+      "optional": true,
+      "description": "With files, while the tabs do not fit: the select component (sm, subtle) listing every file by its label, its value cut in the middle when it does not fit; it and the pager stand in for the hidden tab list (and the path) and go once the tabs fit again"
+    },
+    {
+      "part": "command",
+      "element": "div",
+      "optional": true,
+      "description": "variant=command: the one row — the code (scrolls sideways) and a trailing copy"
+    }
+  ],
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "code",
+        "diff",
+        "command"
+      ],
+      "default": "code",
+      "description": "code: line-numbered listing. diff: unified diff. command: one line to copy (an install command): no header, no line numbers, copy at the end."
+    },
+    "filename": {
+      "type": "string",
+      "default": "example.ts",
+      "description": "The file's name in the header, and the name of the scroll region."
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "0": "string"
+      },
+      "description": "Listing lines for the code variant"
+    },
+    "code": {
+      "type": "string",
+      "description": "Raw text placed on the clipboard; defaults to lines joined"
+    },
+    "diff": {
+      "type": "array",
+      "items": {
+        "old": "number|null",
+        "cur": "number|null",
+        "type": "ctx|add|del",
+        "pieces": "{ text: string; change?: 'add'|'del' }[]"
+      }
+    },
+    "maxHeight": {
+      "type": "number",
+      "attr": "--fndn-code-block-max-height",
+      "description": "Body height (px) past which the code scrolls"
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ copy, copied, copyCode, files, file, previousFile, nextFile }"
+    },
+    "highlighted": {
+      "type": "array",
+      "description": "Lines already highlighted elsewhere (shiki and the like), as trusted HTML, one string per line; shown instead of lines (Copy still takes code or lines)."
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "path": "string",
+        "label": "string?",
+        "lines": "string[]?",
+        "highlighted": "string[]?",
+        "code": "string?"
+      },
+      "description": "Files as tabs (the tabs component, underline, inHeader) in one 44px header row: the tabs at the start, their underline resting on the header's hairline, then the active file's path and the block's one Copy (it copies the active file), placed as in a single file's header. The panels hold only the body. The path shrinks first (cut in the middle). Names of choices are shown whole: when the tabs do not fit beside Copy (measured on mount and on every change of width, code-block.logic.ts), the root takes data-fit=\"select\", the tab list is hidden and a pager plus a select of every file stand in for it; the tabs come back once they fit."
+    },
+    "file": {
+      "type": "string",
+      "model": true,
+      "description": "The active file's path (defaults to the first)."
+    },
+    "height": {
+      "type": "number",
+      "attr": "--fndn-code-block-height",
+      "description": "Fixed body height in px: the box keeps its size whatever the code (loading, switching files)."
+    },
+    "fill": {
+      "type": "boolean",
+      "default": false,
+      "description": "Fill the container's height, as an editor pane does: the block is a column as tall as its parent (give the parent a height), the header keeps its 44px and the body takes the rest and scrolls; no max width. Nothing is measured: it is layout, so it follows every resize. Not for the command variant."
+    },
+    "currentLine": {
+      "type": "number",
+      "description": "The current line, 1-based (an editor's caret line, a line a link points to): its row is tinted (hover) across the gutter and the code, its number turns ink, and it carries aria-current=\"true\". In the code variant and the active file; a diff ignores it. It is kept in view: when it or the open file changes, the body scrolls just enough to show it (a line clear of the edge), at once; the page never scrolls (code-block.logic.ts revealCurrentLine)."
+    },
+    "wrap": {
+      "type": "boolean",
+      "default": true,
+      "description": "Long lines wrap (as in documentation): a wrapped line keeps its number on its first row. false: a line never wraps; the body scrolls sideways and the gutter (with a diff's accent bar) stays at the inline start, over an opaque background, as an editor's does. Defaults to false in the editor look."
+    },
+    "editor": {
+      "type": "boolean",
+      "default": false,
+      "description": "The body of an editor pane (VS Code, Zed): no frame, no shadow, no header, no copy and no path, because the host gives the file tabs; it fills its container's height (give the parent a height), code at 13px, lines do not wrap unless wrap is set. Shows lines, highlighted or diff; ignores files. Not for the command variant."
+    }
+  },
+  "events": {
+    "copy": "(text: string) after a successful copy"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled",
+    "copied",
+    "add",
+    "del",
+    "ctx",
+    "overflowing",
+    "current-line"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.hover",
+    "color.accent",
+    "color.green",
+    "color.green-tint",
+    "color.red",
+    "color.red-tint",
+    "color.orange",
+    "color.accent-ink",
+    "shadow.card",
+    "radius.card",
+    "radius.chip",
+    "font.mono",
+    "text.2xs",
+    "text.xs",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale"
+  ],
+  "dependencies": [
+    "button",
+    "tabs",
+    "pager",
+    "select"
+  ],
+  "a11y": {
+    "role": "region (while it scrolls)",
+    "keyboard": [
+      "Enter / Space on Copy copy the code; focus stays on the button",
+      "Tab reaches the code body while it overflows; the arrow keys and Page Up / Page Down scroll it"
+    ],
+    "notes": [
+      "Copy is named \"Copy code\"; its visible labels are aria-hidden. A visually hidden role=status region announces \"Copied\" politely and empties when the label reverts.",
+      "Line numbers are user-select: none, so selecting and copying by hand skips them.",
+      "The body is direction: ltr; code reads left to right in right-to-left pages."
+    ]
+  },
+  "motion": [
+    "copy: icon and label crossfade with opacity and a 2px blur over duration.base; colour over duration.fast; press scales to motion.press-scale over duration.press",
+    "\"Copied\" holds for 1.5s, then crossfades back; with files it belongs to the file that was copied: opening another file shows Copy at once (no fade) and the status empties",
+    "Code / Diff switch: no animation",
+    "current line: moves at once (no transition) and the body scrolls to it at once: it follows the caret, a high-frequency action",
+    "Tabs ↔ pager + select switch (width): no animation; nothing plays on first paint",
+    "wrap and editor: no motion; sideways scrolling is the browser's"
+  ]
+}

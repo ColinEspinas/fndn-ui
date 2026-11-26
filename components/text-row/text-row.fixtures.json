@@ -1,0 +1,75 @@
+{
+  "examples": [
+    {
+      "name": "With note",
+      "width": 320,
+      "props": {
+        "label": "Team",
+        "value": "+18%",
+        "meta": "vs Q3"
+      }
+    },
+    {
+      "name": "Value only",
+      "width": 320,
+      "props": {
+        "label": "Starter",
+        "value": "+6%"
+      }
+    },
+    {
+      "name": "Negative",
+      "width": 320,
+      "props": {
+        "label": "Enterprise",
+        "value": "−11%",
+        "meta": "retire"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "width": 260,
+      "props": {
+        "label": "Projected renewal volume for the annual and team plans this quarter",
+        "value": "+18%",
+        "meta": "vs Q3"
+      }
+    },
+    {
+      "name": "Long both",
+      "width": 260,
+      "props": {
+        "label": "Preferred supplier contact",
+        "value": "bartholomew.fitzgerald@northwind-industries-holdings.example.com"
+      }
+    },
+    {
+      "name": "Huge number",
+      "width": 260,
+      "props": {
+        "label": "Revenue",
+        "value": "12,480,000.00",
+        "meta": "USD"
+      }
+    },
+    {
+      "name": "One letter",
+      "width": 320,
+      "props": {
+        "label": "Q",
+        "value": "1"
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 320,
+      "props": {
+        "label": "الفستق",
+        "value": "+18%",
+        "meta": "مقابل الربع الثالث"
+      }
+    }
+  ]
+}

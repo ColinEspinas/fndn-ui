@@ -1,0 +1,208 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "tool-chips",
+  "title": "Tool Chips",
+  "summary": "An agent run shown as compact rows of tool calls and the files they changed.",
+  "description": "An agent run as compact rows: tool calls with inline value chips, then file-diff chips summarizing the edits. The run and every step are collapsibles (inline): hovering, focusing or opening a step swaps its tool glyph for the collapsible's caret, and it expands to show what the tool actually did. Each file chip opens a hover-card with its diff on hover or keyboard focus. Fully controlled: the host owns the steps, the diffs and which rows are open.",
+  "kind": "block",
+  "category": "agent",
+  "order": 4,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "max-width 320"
+    },
+    {
+      "part": "run",
+      "element": "div",
+      "description": "A collapsible (variant inline, caret start) on the run: its trigger is the header ('4 tool calls'), its region holds the rows and the diff chips. The engine sets aria-expanded, aria-controls and data-state; a closed run stays laid out at 0 rows (invisible, out of the tab order) so the steps do not replay their entrance when it reopens"
+    },
+    {
+      "part": "rows",
+      "element": "div"
+    },
+    {
+      "part": "step",
+      "element": "div",
+      "repeat": true,
+      "description": "One tool call: a collapsible (variant inline, caret start). --fndn-row-index (set only on steps present at mount) staggers its entrance"
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "description": "The tool glyph, laid over the trigger's caret; they crossfade on hover (gated), focus-visible and open. aria-hidden"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "Truncates; full text in title"
+    },
+    {
+      "part": "value",
+      "element": "span",
+      "description": "Field chip with the tool's argument; data-mono; truncates, full text in title"
+    },
+    {
+      "part": "lines",
+      "element": "div",
+      "description": "The step's detail inside its collapsible region; hairline on the inline-start side; data-mono"
+    },
+    {
+      "part": "line",
+      "element": "span",
+      "repeat": true,
+      "description": "data-tone=add → green; truncates, full text in title"
+    },
+    {
+      "part": "diffs",
+      "element": "div",
+      "optional": true,
+      "description": "Hairline top border; enters as one beat after the steps"
+    },
+    {
+      "part": "diff",
+      "element": "button",
+      "repeat": true,
+      "description": "File chip: a hover-card trigger (the hover-card's mono chip) whose card shows the file's diff on hover or keyboard focus; click fires diffClick"
+    },
+    {
+      "part": "add",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "del",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "file",
+      "element": "span",
+      "description": "One changed file: holds its hover-card (no box of its own). The last one also holds the more button, so the two share a line and the chip's file name truncates before the button would wrap alone",
+      "repeat": true
+    },
+    {
+      "part": "more",
+      "element": "button",
+      "optional": true,
+      "description": "Shown when labels.more is set"
+    }
+  ],
+  "props": {
+    "steps": {
+      "type": "array",
+      "items": {
+        "key": "string? (defaults to label)",
+        "icon": "'think' | 'write' | 'run' | 'read' | 'image' | 'search' | icon component",
+        "label": "string",
+        "chip": "string",
+        "mono": "boolean?",
+        "detailMono": "boolean?",
+        "detail": "{ text: string; tone?: 'add' }[]"
+      },
+      "description": "Tool calls in order. A step appended later enters without a stagger delay."
+    },
+    "diffs": {
+      "type": "array",
+      "items": {
+        "file": "string",
+        "add": "number",
+        "del": "number",
+        "lines": "{ text: string; tone?: 'add' | 'del' | 'ctx' }[]? (the hover-card preview)"
+      },
+      "description": "Changed files. Each chip opens a hover-card with the file name, the counts and the preview lines."
+    },
+    "open": {
+      "type": "boolean",
+      "default": true,
+      "part": "run",
+      "model": true,
+      "description": "The run is expanded."
+    },
+    "openRows": {
+      "type": "array",
+      "model": true,
+      "description": "Keys (step.key ?? step.label) of expanded steps; data-state=open on each step's collapsible."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ header, more }. header defaults to '<n> tool calls' ('1 tool call'); more is hidden unless set."
+    },
+    "appear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the steps and the diff row present at mount enter, staggered. Off by default: set it on the run your code adds live, never on one rendered from history or with the page (a mount is not an arrival). Steps and diffs added after mount enter either way."
+    }
+  },
+  "events": {
+    "openChange": "(open: boolean)",
+    "openRowsChange": "(keys: string[]) (Vue/Svelte through v-model:openRows / bind:openRows)",
+    "toggleRow": "(label: string, open: boolean)",
+    "diffClick": "(file: string)",
+    "moreClick": "()"
+  },
+  "states": [
+    "open",
+    "closed",
+    "row-hover",
+    "row-press",
+    "row-focus-visible",
+    "row-open",
+    "chip-hover",
+    "chip-focus-visible",
+    "chip-press"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.field",
+    "color.hover",
+    "color.hover-2",
+    "color.line",
+    "color.green",
+    "color.red",
+    "shadow.hairline",
+    "radius.control",
+    "radius.chip",
+    "font.mono",
+    "easing.out-strong",
+    "duration.fast",
+    "duration.press",
+    "duration.move",
+    "duration.enter",
+    "duration.stagger",
+    "motion.stagger-max",
+    "motion.press-scale"
+  ],
+  "dependencies": [
+    "collapsible",
+    "hover-card"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Tab reaches the run header, then every step row, then the diff chips; collapsed content is out of the tab order",
+      "Enter / Space on the header expand or collapse the run; focus stays on the header; the change is instant",
+      "Enter / Space on a step row expand or collapse its detail; focus stays on the row; the change is instant",
+      "Focusing a diff chip opens its diff card (hover-card); Escape or moving focus closes it; Enter / Space fire diffClick"
+    ],
+    "notes": [
+      "The header and every row are collapsible triggers: real buttons with aria-expanded and aria-controls pointing at the region they reveal.",
+      "Icons and the glyph/caret slot are aria-hidden.",
+      "Truncated labels, values, detail lines and file names carry the full text in title."
+    ]
+  },
+  "motion": [
+    "mount: nothing plays unless appear is set; with appear, steps present at first render fade up over duration.enter (easing.out-strong, fill both), staggered by duration.stagger and capped at motion.stagger-max; the diff row enters as one more beat. A step that arrives later enters with no delay and opens its room as it fades (its row track minmax(0,0fr) → minmax(0,1fr) over duration.reveal, easing.out-strong, from @starting-style; the adapter sets --fndn-row-room: 0fr on an arriving step only, so steps present at first render do not move), so the diffs below slide down instead of jumping",
+    "run and row expand / collapse: the collapsible's reveal recipe; the rows below move with the region; nothing inside enters again; instant from the keyboard",
+    "caret: the collapsible's right caret turns down over duration.move (easing.out-strong); on a step row it crossfades with the tool glyph over duration.fast on hover (gated), focus-visible and open",
+    "press: the header and rows take the collapsible's press (--fndn-hover-2); diff chips (the hover-card trigger) and the more button scale to motion.press-scale over duration.press",
+    "diff card: the hover-card's popup recipe; instant when opened by keyboard focus"
+  ],
+  "notes": [
+    "The diff preview is the hover-card's file-diff example: the card shows the file name, the counts and diffs[].lines."
+  ]
+}

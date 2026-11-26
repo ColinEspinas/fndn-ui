@@ -1,0 +1,15 @@
+The design language of this project (color ramps, radii, shadow stacks,
+typography and component anatomy) is derived from Beautiful UI
+(https://www.beautifului.dev, https://github.com/slev12397/beautiful-ui),
+MIT licensed, built by Turbo (https://turbodesign.co).
+
+Copyright (c) Turbo. The original license text applies to the derived parts.
+
+The design skills in `.claude/skills/` other than `house-rules` and `screen-review` (animate,
+animation-performance, animation-vocabulary, apple-design, break-ui, choreograph,
+emil-design-eng, find-animation-opportunities, gestures, improve-animations, learn-taste,
+mobile-native, pick-ui-library, prototype, remove-animations, review-animations) are copied,
+unchanged, from https://github.com/emilkowalski/skills, MIT licensed; `skills-lock.json` records
+the version of each.
+
+Copyright (c) 2026 Emil Kowalski. The original license text applies to those files.

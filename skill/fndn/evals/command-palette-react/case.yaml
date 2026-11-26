@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: command-palette-react
+expected_outcome: |
+  A React component that opens the system's Dialog and filters commands with the system's Combobox or Listbox (Ark/Zag behaviour, gliding highlight), shows shortcuts with Kbd, uses Phosphor icons from the vocabulary, never hand-rolls focus management or a per-row highlight background, and uses token classes only.

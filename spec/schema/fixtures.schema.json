@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Test fixtures of a component",
+  "description": "The props a component's tests and the docs' playground render it with (components/<name>/<name>.fixtures.json). Not part of the spec: the spec is the contract, and the docs' examples are files in the component's examples/ folder.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "examples": {
+      "type": "array",
+      "description": "Renderable examples as JSON props. The docs and the parity check mount them in React, Vue and Svelte.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "props": {
+            "type": "object",
+            "description": "JSON props, named as in the spec. Props marked `model` are bound two-way."
+          },
+          "text": {
+            "type": "string",
+            "description": "Default slot / children text."
+          },
+          "width": {
+            "type": "number",
+            "description": "Wrapper width in px for components that fill their container."
+          },
+          "frameworks": {
+            "type": "boolean",
+            "description": "false when the example needs rich children that props cannot express: no target renders it (the plain-HTML target that did is archived)."
+          },
+          "steps": {
+            "type": "array",
+            "description": "A scenario: the example changes over time. The props above are the first frame (what parity and a paused page show); each step waits `after` ms from the previous one, then merges its `props` over the current ones. The validator checks that every prop exists and is not a `model` prop, that `after` is 0 or more, and that the steps add up to under 20 seconds.",
+            "items": {
+              "type": "object",
+              "required": [
+                "after",
+                "props"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "after": {
+                  "type": "number",
+                  "description": "Milliseconds since the previous step (or since mount, for the first)."
+                },
+                "props": {
+                  "type": "object",
+                  "description": "Props merged over the current ones, named as in the spec."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "worstCase": {
+      "type": "array",
+      "description": "Worst-case data for the same component, in the shape of `examples`: long names, unbreakable strings, one-letter values, missing optional fields, huge counts, zero and one item, non-Latin text. Realistic values only. The workbench swaps to these with its worst-case toggle (break-ui).",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "props": {
+            "type": "object",
+            "description": "JSON props, named as in the spec. Props marked `model` are bound two-way."
+          },
+          "text": {
+            "type": "string",
+            "description": "Default slot / children text."
+          },
+          "width": {
+            "type": "number",
+            "description": "Wrapper width in px for components that fill their container."
+          },
+          "frameworks": {
+            "type": "boolean",
+            "description": "false when the example needs rich children that props cannot express: no target renders it (the plain-HTML target that did is archived)."
+          }
+        }
+      }
+    }
+  }
+}

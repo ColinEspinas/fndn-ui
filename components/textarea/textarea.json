@@ -1,0 +1,117 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "summary": "A multiline text field that grows with its text.",
+  "description": "A multiline text field that grows with its text: a comment, a description, a commit message. It is Input's multiline field (72px minimum; the shared control's sizes, looks, rings, hover and motion, through the input recipe) on Ark UI's Field.Textarea with autoresize. A max-height class caps the growth; past it the text scrolls. Inside a Field it is wired to the label, helper and error.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 10,
+  "status": "beta",
+  "engine": "field",
+  "element": "textarea",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "textarea",
+      "description": "The <textarea> itself (class and style land on it): 72px minimum, then as tall as its text; dir=\"auto\" so the text keeps its own direction while the alignment follows the page."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "Controlled: value with onChange. Uncontrolled: defaultValue."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The shared control's sizes (`lib/control.ts`): text and padding of xs, sm, md, lg (12 · 12 · 13 · 14px; 6 · 8 · 10 · 12px); the block padding centres one line in the size's height. Every size starts at 72px."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "mono": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false,
+      "description": "The red ring (aria-invalid). Inside a Field, the Field's invalid."
+    },
+    "autoResize": {
+      "type": "boolean",
+      "default": true,
+      "description": "Grow with the text (no resize handle). false: a fixed 72px field with a vertical resize handle."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "number",
+      "description": "Starting height in lines, when taller than 72px."
+    }
+  },
+  "events": {
+    "input": "(value: string): the native input event"
+  },
+  "states": [
+    "hover",
+    "focus",
+    "invalid",
+    "disabled"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover",
+    "color.ink",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "font.mono",
+    "duration.fast",
+    "duration.base"
+  ],
+  "dependencies": [
+    "input"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Standard text editing; Enter adds a line; Tab moves on"
+    ],
+    "notes": [
+      "Needs a name: a Field label or an aria-label.",
+      "Text is 16px on touch devices so iOS does not zoom the page on focus.",
+      "Its height follows the text; nothing moves on first paint (a long first value is sized before it)."
+    ]
+  },
+  "motion": [
+    "the Input's: focus and invalid rings over duration.base; the hover fill over duration.fast (pointer only)",
+    "growing is instant: the height follows each keystroke, never animated"
+  ]
+}

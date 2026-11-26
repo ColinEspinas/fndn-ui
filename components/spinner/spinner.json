@@ -1,0 +1,57 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "spinner",
+  "title": "Spinner",
+  "summary": "A small spinning ring for work of unknown length.",
+  "description": "A small spinning ring for work of unknown length. Ring with a single ink arc, spinning at 700ms. Fast on purpose: a quick spinner makes the wait feel shorter.",
+  "kind": "component",
+  "category": "feedback",
+  "order": 1,
+  "status": "stable",
+  "element": "span",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span",
+      "description": "role=status"
+    }
+  ],
+  "props": {
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "sm"
+    },
+    "label": {
+      "type": "string",
+      "attr": "aria-label",
+      "default": "Loading"
+    },
+    "decorative": {
+      "type": "boolean",
+      "default": false,
+      "description": "Purely visual, inside something that is already a status region (selection-actions' status): aria-hidden, no role=status and no label."
+    }
+  },
+  "states": [],
+  "tokens": [
+    "color.line-strong",
+    "color.ink-2"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "status",
+    "notes": [
+      "The label is the accessible name; make it say what is loading.",
+      "Do not show a spinner for work that finishes in under 300ms; the flash reads as a glitch."
+    ]
+  },
+  "motion": [
+    "rotate 360° every 700ms, linear, forever",
+    "keeps spinning under prefers-reduced-motion: it is the loading signal, not decoration"
+  ]
+}

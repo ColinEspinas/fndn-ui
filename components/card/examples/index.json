@@ -1,0 +1,15 @@
+{
+  "playground": {
+    "props": {
+      "elevation": "card"
+    },
+    "text": "Built in 48s from a1b2c3d by Maya Chen. Compose a card with CardHeader, CardBody and CardFooter (see the examples).",
+    "width": 320
+  },
+  "examples": [
+    { "file": "production-deploy", "title": "Production deploy" },
+    { "file": "plan-and-usage", "title": "Plan and usage" },
+    { "file": "danger-zone", "title": "Delete project in settings" },
+    { "file": "no-deploys-yet", "title": "No deploys yet" }
+  ]
+}

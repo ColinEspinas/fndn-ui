@@ -1,0 +1,18 @@
+{
+  "playground": {
+    "props": {
+      "variant": "primary",
+      "size": "md"
+    },
+    "text": "Save changes"
+  },
+  "examples": [
+    { "file": "save-changes", "title": "Save or cancel a form" },
+    { "file": "delete-project", "title": "Delete a project" },
+    { "file": "merge-pull-request", "title": "Merge a pull request whose checks passed" },
+    { "file": "row-actions", "title": "Icon buttons on a pull request row" },
+    { "file": "table-toolbar", "title": "Small buttons in a table toolbar" },
+    { "file": "deploying", "title": "Deploying to Production" },
+    { "file": "owners-only", "title": "Only owners can transfer (disabled)" }
+  ]
+}

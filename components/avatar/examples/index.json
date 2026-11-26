@@ -1,0 +1,36 @@
+{
+  "playground": {
+    "props": {
+      "name": "Maya Chen",
+      "size": "20",
+      "shape": "round",
+      "color": "var(--fndn-tag-orange)"
+    }
+  },
+  "examples": [
+    {
+      "file": "workspace-members",
+      "title": "Workspace members"
+    },
+    {
+      "file": "issue-assignees",
+      "title": "Assignees on an issue"
+    },
+    {
+      "file": "review-requests",
+      "title": "Review requests on a pull request"
+    },
+    {
+      "file": "member-profile",
+      "title": "Member profile header"
+    },
+    {
+      "file": "project-list",
+      "title": "Projects"
+    },
+    {
+      "file": "missing-photo",
+      "title": "Photo that fails to load"
+    }
+  ]
+}

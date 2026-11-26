@@ -1,0 +1,60 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "text-row",
+  "title": "Text Row",
+  "summary": "A label and its value on one row, as in a summary or an invoice.",
+  "description": "A label at the start and its value at the end: the rows of a summary, an invoice or a settings card. The workhorse of every card. The label wraps when it runs out of room; the value is never truncated and keeps tabular figures.",
+  "kind": "component",
+  "category": "display",
+  "order": 6,
+  "status": "stable",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "label",
+      "element": "span"
+    },
+    {
+      "part": "values",
+      "element": "span",
+      "description": "value + meta, baseline aligned"
+    },
+    {
+      "part": "value",
+      "element": "span"
+    },
+    {
+      "part": "meta",
+      "element": "span",
+      "optional": true
+    }
+  ],
+  "props": {
+    "label": {
+      "type": "node"
+    },
+    "value": {
+      "type": "node"
+    },
+    "meta": {
+      "type": "node"
+    }
+  },
+  "states": [],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "text.sm",
+    "text.md"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "notes": [
+      "Plain text. For a list of rows that reads as name/value pairs, wrap them in a <dl> at the page level."
+    ]
+  }
+}

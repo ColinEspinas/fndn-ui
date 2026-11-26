@@ -1,0 +1,69 @@
+{
+  "examples": [
+    {
+      "name": "Boxed",
+      "props": {
+        "keys": [
+          "⌘",
+          "K"
+        ],
+        "variant": "boxed"
+      }
+    },
+    {
+      "name": "One key",
+      "props": {
+        "keys": [
+          "Esc"
+        ],
+        "variant": "boxed"
+      }
+    },
+    {
+      "name": "Plain",
+      "props": {
+        "keys": [
+          "⌘C"
+        ],
+        "variant": "plain"
+      }
+    },
+    {
+      "name": "In a sentence",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Many keys",
+      "props": {
+        "keys": [
+          "Ctrl",
+          "Shift",
+          "Alt",
+          "Page Down"
+        ],
+        "variant": "boxed"
+      }
+    },
+    {
+      "name": "Long key",
+      "props": {
+        "keys": [
+          "Ctrl+Shift+Alt+Backspace"
+        ],
+        "variant": "plain"
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "keys": [
+          "Ctrl",
+          "ك"
+        ],
+        "variant": "boxed"
+      }
+    }
+  ]
+}

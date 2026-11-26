@@ -1,0 +1,82 @@
+{
+  "examples": [
+    {
+      "name": "Neutral",
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "Business Annual"
+    },
+    {
+      "name": "Green",
+      "props": {
+        "tone": "green"
+      },
+      "text": "7 days"
+    },
+    {
+      "name": "Orange",
+      "props": {
+        "tone": "orange"
+      },
+      "text": "Needs review"
+    },
+    {
+      "name": "Red",
+      "props": {
+        "tone": "red"
+      },
+      "text": "Overdue"
+    },
+    {
+      "name": "Accent",
+      "props": {
+        "tone": "accent"
+      },
+      "text": "Running"
+    },
+    {
+      "name": "In a sentence",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long value",
+      "width": 220,
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "Aleksandra Wiśniewska-Kowalczyk Logistics Holdings International"
+    },
+    {
+      "name": "Unbreakable",
+      "width": 220,
+      "props": {
+        "tone": "accent"
+      },
+      "text": "bartholomew.fitzgerald@northwind-industries-holdings.example.com"
+    },
+    {
+      "name": "One character",
+      "props": {
+        "tone": "green"
+      },
+      "text": "1"
+    },
+    {
+      "name": "Huge number",
+      "props": {
+        "tone": "orange"
+      },
+      "text": "12,480,000.00"
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "٧ أيام"
+    }
+  ]
+}

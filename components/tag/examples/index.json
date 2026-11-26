@@ -1,0 +1,15 @@
+{
+  "playground": {
+    "props": {
+      "tone": "red"
+    },
+    "text": "bug"
+  },
+  "examples": [
+    { "file": "issue-labels", "title": "Labels on an issue" },
+    { "file": "pull-requests-table", "title": "Labels in a pull request table" },
+    { "file": "applied-filters", "title": "Applied filters" },
+    { "file": "attachments", "title": "Attachments on a comment" },
+    { "file": "label-list", "title": "Label list with open counts" }
+  ]
+}

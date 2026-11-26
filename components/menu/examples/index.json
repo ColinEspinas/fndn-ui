@@ -1,0 +1,20 @@
+{
+  "playground": {
+    "props": {
+      "triggerLabel": "Project actions",
+      "items": [
+        { "value": "rename", "label": "Rename" },
+        { "value": "duplicate", "label": "Duplicate" },
+        { "value": "move", "label": "Move to…" },
+        { "type": "separator" },
+        { "value": "delete", "label": "Delete", "tone": "danger" }
+      ]
+    }
+  },
+  "examples": [
+    { "file": "row-actions", "title": "Project row actions" },
+    { "file": "view-options", "title": "Sort and columns of a table" },
+    { "file": "environment-picker", "title": "Pick an environment" },
+    { "file": "pull-request-actions", "title": "Request review from a sub-menu" }
+  ]
+}

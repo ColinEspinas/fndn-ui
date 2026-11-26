@@ -1,0 +1,283 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "approval-card",
+  "title": "Approval Card",
+  "summary": "Questions and actions an agent asks a person to approve before it goes on.",
+  "description": "The decisions an agent asks for before it acts, so a person can approve or steer the work. Two modes. Questions: one at a time, the card's height follows the question while the stack slides, the step counter rolls, a single-choice pick auto-advances and a multi-select waits; a custom answer row, Previous/Next, a ghost Skip and an accent Continue; settles into an 'Answers sent' pill. Approve (the action prop): one action described (title, a sentence, the exact command, its details), an optional 'Always allow' checkbox, Deny and an accent Approve; settles into an 'Approved' (green) or 'Denied' (neutral) pill.",
+  "kind": "block",
+  "category": "agent",
+  "order": 3,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-state open | sent | closed; data-measured once the slide has measured the active question"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status, sr-only; says the sent message when the answers go"
+    },
+    {
+      "part": "card",
+      "element": "div",
+      "description": "surface, rounded-card, shadow-card"
+    },
+    {
+      "part": "dismiss",
+      "element": "button",
+      "description": "A Button (ghost sm square rounded muted), pinned top right; aria-label and our tooltip (Tooltip)"
+    },
+    {
+      "part": "body",
+      "element": "div"
+    },
+    {
+      "part": "viewport",
+      "element": "div",
+      "description": "clips to the active question; its height animates to fit"
+    },
+    {
+      "part": "track",
+      "element": "div",
+      "description": "every question stacked; translates to the active one"
+    },
+    {
+      "part": "step",
+      "element": "div",
+      "description": "one question; data-active on the current one, the others are inert and transparent"
+    },
+    {
+      "part": "question",
+      "element": "div",
+      "description": "the question is the heading"
+    },
+    {
+      "part": "options",
+      "element": "div",
+      "description": "the answers. Single choice: a radio-group (data-layout=\"row\", aria-label = the question) with its own highlight and its custom row. Multi-select: role=group (aria-label = the question) holding the highlight, checkbox rows (layout=\"row\") and the custom row"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "multi-select only: the list's glide layer (`glideLayer` of `lib/glide.ts`) (a radio-group brings its own)",
+      "optional": true
+    },
+    {
+      "part": "action",
+      "element": "div",
+      "optional": true,
+      "description": "Approve mode, in the body: the question part as its heading (the action's title), then description, command and details, 8px apart"
+    },
+    {
+      "part": "description",
+      "element": "p",
+      "optional": true,
+      "description": "What the action does and why, ink-2"
+    },
+    {
+      "part": "command",
+      "element": "pre",
+      "optional": true,
+      "description": "The exact command or call: inset fill, radius.control, mono xs on a 20px line, wraps anywhere, left to right in right-to-left pages"
+    },
+    {
+      "part": "details",
+      "element": "dl",
+      "optional": true,
+      "description": "Facts about the action: a two-column grid, labels ink-2, values ink (mono when the detail says so), values wrap anywhere"
+    },
+    {
+      "part": "detail",
+      "element": "div",
+      "repeat": true,
+      "optional": true,
+      "description": "One fact (display: contents, so its term and value sit in the grid)"
+    },
+    {
+      "part": "detail-label",
+      "element": "dt",
+      "repeat": true,
+      "optional": true
+    },
+    {
+      "part": "detail-value",
+      "element": "dd",
+      "repeat": true,
+      "optional": true
+    },
+    {
+      "part": "always",
+      "element": "div",
+      "optional": true,
+      "description": "Approve mode with alwaysAllow: the real Checkbox (sm, \"Always allow\"), marked data-approval-card=\"always\", at the start of the footer where the pager sits in question mode"
+    },
+    {
+      "part": "footer",
+      "element": "div",
+      "description": "Question mode: the pager (orientation=vertical, reel, separator \"/\", unit \"Question\"; none for a single question, which needs no \"1/1\") and the actions, always at the end. Approve mode: the Always allow checkbox (or nothing) and the actions"
+    },
+    {
+      "part": "actions",
+      "element": "div",
+      "description": "Question mode: Skip (ghost sm: no fill at rest) and Continue / Send (accent sm). Approve mode: Deny (ghost sm) and Approve (accent sm)"
+    },
+    {
+      "part": "sent",
+      "element": "div",
+      "description": "The settled view: a status-pill and the reset button. Questions: \"Answers sent\" (green, mark). Approve: \"Approved\" or \"Always allowed\" (green, mark), \"Denied\" (neutral, dot)"
+    },
+    {
+      "part": "reset",
+      "element": "button",
+      "description": "Start over (questions) or Change (approve): the Button ghost sm muted, marked data-approval-card=\"reset\"; reopens the card with nothing picked",
+      "optional": true
+    },
+    {
+      "part": "reopen",
+      "element": "button",
+      "optional": true,
+      "description": "Open approval: a Button (outline sm), marked data-approval-card=\"reopen\"; shown when dismissed"
+    }
+  ],
+  "props": {
+    "questions": {
+      "type": "array",
+      "items": {
+        "q": "string",
+        "type": "radio | check",
+        "options": "string[]"
+      },
+      "description": "Question mode: the questions, one at a time. Leave it out with action."
+    },
+    "action": {
+      "type": "object",
+      "ts": "{ title: string; description?: string; command?: string; details?: { label: string; value: string; mono?: boolean }[] }",
+      "description": "Approve mode: the one action the agent asks to take. title is the heading, as a question (\"Run the migration on Production?\"); description says what it does in a sentence; command is the exact command or call; details are facts (Branch: main, Rows affected: 1,284), mono for code. Replaces the questions."
+    },
+    "alwaysAllow": {
+      "type": "boolean",
+      "default": false,
+      "description": "Approve mode: offer an \"Always allow\" checkbox beside Deny / Approve; the decision event says whether it was ticked."
+    },
+    "index": {
+      "type": "number",
+      "default": 0,
+      "model": true,
+      "description": "Active question."
+    },
+    "state": {
+      "type": "enum",
+      "values": [
+        "open",
+        "sent",
+        "closed"
+      ],
+      "default": "open",
+      "model": true,
+      "description": "open → sent after the last answer or the decision, closed after dismiss."
+    },
+    "defaultAnswers": {
+      "type": "object",
+      "description": "Answers to start with: question index → selected option indexes."
+    },
+    "resettable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show 'Start over' after sending."
+    },
+    "appear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the card fades up when it mounts. Off by default: set it on the card your code adds live, never on one rendered from history or with the page (a mount is not an arrival). A reopened card fades up either way."
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ skip, continue, send, customPlaceholder, customLabel, sentMessage, startOver, reopen, dismiss, previous, next, pager (the pager's accessible name), unit (read before the pager's position); approve mode: approve, deny, alwaysAllow, approved, alwaysAllowed, denied, change }"
+    }
+  },
+  "events": {
+    "submitted": "(answers: Record<number, number[]>, custom: Record<number, string>) when the last question is answered",
+    "answerChange": "(questionIndex, answer: number[])",
+    "dismiss": "when the card is closed",
+    "decision": "Approve mode: (decision: 'approve' | 'deny', always: boolean) when Approve or Deny is pressed; always is true only for an approval with Always allow ticked"
+  },
+  "states": [
+    "option-hover",
+    "option-press",
+    "option-checked",
+    "focus-visible",
+    "nav-disabled",
+    "continue-disabled",
+    "sliding",
+    "sent",
+    "closed",
+    "approved",
+    "denied"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "shadow.btn",
+    "shadow.card",
+    "duration.base",
+    "duration.enter",
+    "duration.fast",
+    "duration.move",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale",
+    "radius.card",
+    "radius.control",
+    "text.md",
+    "text.sm",
+    "text.xs",
+    "color.ink-2",
+    "color.inset",
+    "font.mono"
+  ],
+  "dependencies": [
+    "button",
+    "radio-group",
+    "checkbox",
+    "pager",
+    "status-pill",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "Questions: a radiogroup or a group of checkboxes per question. Approve: a heading, a description list and two buttons",
+    "keyboard": [
+      "Single choice: one tab stop; ArrowUp / ArrowDown (and Left / Right) move and select; selecting from the keyboard never auto-advances",
+      "Multi-select: each checkbox is a tab stop; Space toggles",
+      "Enter on an answered question (on a choice or in the custom field) continues; on the last question it sends",
+      "Previous / Next question are the pager's labelled buttons (Enter / Space); with focus in the pager ArrowUp / ArrowDown (and Left / Right, Home / End) move between questions; at the ends the buttons are aria-disabled and keep focus; focus follows into the new question when it was inside the old one",
+      "Skip moves on (dismisses on the last question); Dismiss closes and focus moves to 'Open approval'",
+      "Approve mode: Tab reaches Always allow (Space toggles), Deny and Approve (Enter / Space decide); focus then moves to Change in the settled view"
+    ],
+    "notes": [
+      "Each question names its group (aria-label = the question). Inactive questions are inert.",
+      "The pager's position is a status region: 'Question n / N' is announced when the question changes; its rolling digits are aria-hidden.",
+      "Sending announces the sent message through role=status and moves focus to Start over.",
+      "Keyboard moves between questions are instant (kbd-instant on viewport, track, steps and the pager's reels).",
+      "Dismiss carries our tooltip with the text of its aria-label.",
+      "Approve mode: the decision is announced through the same role=status (\"Approved\", \"Always allowed\" or \"Denied\"). Nothing takes focus when the card appears: it never steals focus from what the person was typing."
+    ]
+  },
+  "motion": [
+    "card: fndn-fade-up over duration.enter on reopen, and on mount only with appear",
+    "dismiss: with a pointer the card fades out (opacity only, duration.fast, data-leaving), then it is hidden; from the keyboard and under reduced motion it is hidden at once",
+    "question slide: viewport height + track translateY over duration.move, easing.out-strong; transitions, so rapid Next/Previous retarget",
+    "question crossfade: step opacity over duration.base (kept under reduced motion, where travel drops to 0)",
+    "counter: the pager's digit reel rolls over duration.move easing.out-strong (up going forward, down going back), with the slide",
+    "highlight: glides between rows over duration.move (radio-group's own layer, or the multi-select list's)",
+    "radio and check marks: drawn by radio-group and checkbox (fill leads, mark drawn, shorter exit)",
+    "single choice auto-advances 480ms after a pointer pick",
+    "after dismiss / send: the reopen button or the sent view fades in over duration.base where the card was (@starting-style, armed after the first render: never on first paint; instant from the keyboard)",
+    "sent pill: the status-pill's own mark pop-in over duration.popup when the sent view appears (never on first paint)",
+    "approve mode: nothing slides (one decision, no track); the card's arrival, dismissal and the settled view's fade are the question mode's"
+  ]
+}

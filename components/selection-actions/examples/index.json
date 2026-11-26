@@ -1,0 +1,55 @@
+{
+  "playground": {
+    "props": {
+      "text": "Thanks for flagging this, and sorry for the confusion on Monday. Reminders scheduled before 6 a.m. were going out an hour late after the daylight saving change, and we shipped a fix this morning.",
+      "actions": [
+        {
+          "value": "explain",
+          "label": "Explain",
+          "icon": "question"
+        },
+        {
+          "value": "improve",
+          "label": "Improve",
+          "icon": "sparkle",
+          "busyLabel": "Improving"
+        },
+        {
+          "value": "shorten",
+          "label": "Shorten",
+          "icon": "corners-in",
+          "busyLabel": "Shortening"
+        },
+        {
+          "value": "tone",
+          "label": "Tone",
+          "icon": "chat-text",
+          "busyLabel": "Changing tone"
+        }
+      ]
+    },
+    "width": 420
+  },
+  "examples": [
+    {
+      "file": "select-text",
+      "title": "Select any sentence to edit it"
+    },
+    {
+      "file": "selected",
+      "title": "Rewrite a sentence in a support reply"
+    },
+    {
+      "file": "thinking",
+      "title": "Waiting for the rewrite"
+    },
+    {
+      "file": "streaming",
+      "title": "Rewrite streaming into the reply"
+    },
+    {
+      "file": "result",
+      "title": "Keep or discard the rewrite"
+    }
+  ]
+}

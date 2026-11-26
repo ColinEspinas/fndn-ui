@@ -1,0 +1,63 @@
+{
+  "examples": [
+    {
+      "name": "Drive",
+      "props": {
+        "variant": "drive",
+        "label": "Analyzing usage",
+        "elapsed": "12.4s"
+      }
+    },
+    {
+      "name": "Dots",
+      "props": {
+        "variant": "dots",
+        "label": "Analyzing usage",
+        "elapsed": "12.4s"
+      }
+    },
+    {
+      "name": "Orbit",
+      "props": {
+        "variant": "orbit",
+        "label": "Analyzing usage",
+        "elapsed": "12.4s"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long label",
+      "width": 240,
+      "props": {
+        "variant": "drive",
+        "label": "Reconciling 12,480 supplier invoices against the purchase-order ledger for fiscal year 2026",
+        "elapsed": "59m 59.9s"
+      }
+    },
+    {
+      "name": "Huge time",
+      "props": {
+        "variant": "orbit",
+        "label": "Indexing",
+        "elapsed": "1440m 0.0s"
+      }
+    },
+    {
+      "name": "One letter, no timer",
+      "props": {
+        "variant": "dots",
+        "label": "A",
+        "showElapsed": false
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "variant": "drive",
+        "label": "جارٍ التحضير",
+        "elapsed": "7.9s"
+      }
+    }
+  ]
+}

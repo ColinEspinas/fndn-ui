@@ -1,0 +1,265 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "thinking-state",
+  "title": "Thinking",
+  "summary": "What an agent is doing while it works, with the steps behind it.",
+  "description": "An agent's trace while it works: a shimmering label that expands to the steps behind it. Four variants: steps (check / spinner rows), reasoning (prose), search (query + sources read), coding (pressable tool rows). A sparkle and a shimmering label while working that settles into a 'Thought for 4 seconds' header, over a hairline rail (the header and trace are a collapsible) that grows as rows arrive. Fully controlled: the host owns working, expanded and the rows, so it maps directly onto real agent events.",
+  "kind": "block",
+  "category": "agent",
+  "order": 1,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-variant, data-state=working|done; data-ready once mounted (arms the status transitions)"
+    },
+    {
+      "part": "disclosure",
+      "element": "div",
+      "description": "A collapsible (variant inline, caret=\"start\"): the trigger, its caret first (collapsible-caret, right turning down; before the sparkle and the label, so a label that changes length moves nothing) and the trace region (collapsible-content > collapsible-body, which holds the rail). Its engine sets aria-expanded, aria-controls and data-state, hides the closed trace (out of the tab order) and toggles instantly from the keyboard. Not marked: it is the real Collapsible’s own part (data-slot=\"collapsible\"), which takes no attribute for it",
+      "marked": false
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "The collapsible's inline trigger: hover --fndn-hover, press --fndn-hover-2. Not marked: it is the real Collapsible’s own part (data-slot=\"collapsible-trigger\"), which takes no attribute for it",
+      "marked": false
+    },
+    {
+      "part": "header",
+      "element": "span",
+      "description": "The trigger's label part: the sparkle and the live label. Not marked: it is the real Collapsible’s own part (data-slot=\"collapsible-label\"), which takes no attribute for it",
+      "marked": false
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "description": "Sparkle by default; decorative"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "role=status live region; stays mounted while its text is swapped"
+    },
+    {
+      "part": "label-text",
+      "element": "span",
+      "description": "The current label. While working it is the real Shimmer (fast), marked data-thinking-state=\"label-text\"; a replacement text arrives out of a 2px blur"
+    },
+    {
+      "part": "rail",
+      "element": "div"
+    },
+    {
+      "part": "line",
+      "element": "span",
+      "description": "Hairline under the sparkle; the adapter sets its height so it grows to meet a row that arrives"
+    },
+    {
+      "part": "rows",
+      "element": "div"
+    },
+    {
+      "part": "query",
+      "element": "div",
+      "optional": true,
+      "description": "search variant: search icon + query text"
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "repeat": true,
+      "description": "div, a (href) or button (pressable, aria-pressed). --fndn-row-index only on rows present at first render"
+    },
+    {
+      "part": "check",
+      "element": "span",
+      "optional": true,
+      "description": "steps variant: check mark, or a spinner on the last row while working"
+    },
+    {
+      "part": "primary",
+      "element": "span",
+      "description": "Truncates on one line (title carries the full text); wraps in the reasoning variant"
+    },
+    {
+      "part": "secondary",
+      "element": "span",
+      "optional": true,
+      "description": "Muted note; data-mono for file names and commands"
+    },
+    {
+      "part": "diff",
+      "element": "span",
+      "optional": true,
+      "description": "+added −removed counts"
+    },
+    {
+      "part": "dot",
+      "element": "span",
+      "optional": true,
+      "description": "search variant: colored globe disc per source, data-tone cycles accent/orange/green"
+    },
+    {
+      "part": "more",
+      "element": "span",
+      "optional": true,
+      "description": "search variant: '+7 more' trailer; fades in place"
+    }
+  ],
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "steps",
+        "reasoning",
+        "search",
+        "coding"
+      ],
+      "default": "steps",
+      "description": "steps: check/spinner rows; reasoning: prose rows; search: query + link rows with globe dots; coding: pressable tool rows"
+    },
+    "working": {
+      "type": "boolean",
+      "default": false,
+      "description": "data-state=working|done"
+    },
+    "expanded": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "The trace is open. React: expanded / defaultExpanded / onExpandedChange; Vue: v-model:expanded; Svelte: bind:expanded."
+    },
+    "activeLabel": {
+      "type": "string",
+      "default": "Thinking"
+    },
+    "doneLabel": {
+      "type": "string",
+      "default": "Done thinking"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "primary": "string",
+        "secondary": "string?",
+        "mono": "boolean?",
+        "add": "number?",
+        "del": "number?",
+        "href": "string?"
+      },
+      "description": "Controlled. Rows present at first render stagger in with appear; a row appended later fades up alone."
+    },
+    "query": {
+      "type": "string",
+      "description": "search variant: the query shown above the sources"
+    },
+    "more": {
+      "type": "string",
+      "description": "search variant: trailer text such as '+7 more'"
+    },
+    "pressable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Rows are buttons with aria-pressed (defaults on for coding)."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "accent",
+        "orange",
+        "green"
+      ],
+      "default": "accent",
+      "part": "dot",
+      "description": "search dot tint, cycles by row index"
+    },
+    "selected": {
+      "type": "number",
+      "model": true,
+      "description": "Index of the pressed row (aria-pressed), or null. Pressable rows single-select."
+    },
+    "appear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the rows (and the search query and trailer) present at mount fade up, staggered. Off by default: set it on the trace your code adds live, never on one rendered from history or with the page (a mount is not an arrival). Rows added after mount enter either way."
+    }
+  },
+  "slots": {
+    "icon": "replace the sparkle"
+  },
+  "events": {
+    "toggle": "(expanded: boolean)",
+    "rowClick": "(row, index) when a row is pressable",
+    "selectedChange": "(index | null)"
+  },
+  "states": [
+    "working",
+    "done",
+    "expanded",
+    "collapsed",
+    "row-hover",
+    "row-press",
+    "row-focus-visible",
+    "row-selected"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.hover",
+    "color.hover-2",
+    "color.inset",
+    "color.green",
+    "color.red",
+    "color.orange",
+    "color.accent",
+    "color.on-accent",
+    "radius.chip",
+    "text.2xs",
+    "text.xs",
+    "text.sm",
+    "font.mono",
+    "easing.out-strong",
+    "easing.link",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "duration.move",
+    "duration.slow",
+    "duration.enter",
+    "duration.stagger",
+    "motion.stagger-max"
+  ],
+  "dependencies": [
+    "collapsible",
+    "shimmer",
+    "spinner"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Tab reaches the header; Enter / Space expand or collapse the trace, focus stays on the header",
+      "While collapsed, the rows are out of the tab order",
+      "search: Tab moves through the source links; Enter opens one",
+      "coding: Tab moves through the tool rows; Enter / Space press one (aria-pressed), pressing it again releases it"
+    ],
+    "notes": [
+      "The header is a real button with aria-expanded and aria-controls pointing at the trace.",
+      "The label is a role=status region that stays mounted; only its text changes, so working → done is announced once.",
+      "Checks, spinners, dots and the sparkle are aria-hidden.",
+      "Truncated row text carries the full value in title."
+    ]
+  },
+  "motion": [
+    "mount: nothing plays unless appear is set; with appear, rows present at first render fade up over duration.enter, staggered by duration.stagger and capped at motion.stagger-max; the header and the rail do not move",
+    "expand / collapse: the collapsible reveals the trace as one container (its reveal recipe; instant from the keyboard); rows do not enter again; the caret turns from right to down over duration.move",
+    "working → done: the label text is swapped through a short blur (opacity + filter over duration.base); the spinner hands over to a check that scales in from 0.5 (duration.press). Transitions armed by data-ready, so nothing plays at first paint",
+    "a row added after mount always fades up alone with no delay; the rail line grows to meet it over duration.move",
+    "label shimmer while working: the Shimmer (fast); under reduced motion it stops and shows static ink-2 text",
+    "search: animated underline on the source name on hover and focus (duration.slow, easing.link)",
+    "keyboard: nothing here animates on a key press except the reveal the user asked for"
+  ]
+}

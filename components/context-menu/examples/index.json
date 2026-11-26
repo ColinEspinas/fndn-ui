@@ -1,0 +1,22 @@
+{
+  "playground": {
+    "props": {
+      "disabled": false,
+      "label": "deliver.ts",
+      "items": [
+        { "value": "open", "label": "Open" },
+        { "value": "copy-path", "label": "Copy path" },
+        { "value": "rename", "label": "Rename" },
+        { "type": "submenu", "label": "Move to", "items": [{ "value": "src/webhooks", "label": "src/webhooks" }, { "value": "src/lib", "label": "src/lib" }] },
+        { "type": "separator" },
+        { "value": "delete", "label": "Delete", "tone": "danger" }
+      ]
+    },
+    "text": "deliver.ts"
+  },
+  "examples": [
+    { "file": "file-rows", "title": "File rows in a repository" },
+    { "file": "deploy-row", "title": "Deploy row with a sub-menu" },
+    { "file": "log-options", "title": "View options of a build log" }
+  ]
+}

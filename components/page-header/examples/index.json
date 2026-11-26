@@ -1,0 +1,17 @@
+{
+  "playground": {
+    "props": {
+      "title": "Issues",
+      "description": "42 open · 3 assigned to you",
+      "back": { "label": "billing-api", "href": "#projects/billing-api" },
+      "actions": [{ "label": "Filter", "value": "filter" }, { "label": "New issue", "value": "new", "variant": "primary" }]
+    },
+    "width": 640
+  },
+  "examples": [
+    { "file": "issues", "title": "A project's issues, above their table" },
+    { "file": "deploy-detail", "title": "A deploy and its state, back through the router" },
+    { "file": "inbox-pane", "title": "The header of a pane above its list" },
+    { "file": "billing-on-a-phone", "title": "At phone width, the actions go under the title" }
+  ]
+}

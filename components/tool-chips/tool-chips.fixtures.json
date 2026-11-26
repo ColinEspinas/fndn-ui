@@ -1,0 +1,1197 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "open": true,
+        "openRows": [
+          "Write 204 lines"
+        ],
+        "labels": {
+          "header": "4 tool calls, 2 messages",
+          "more": "+2 more"
+        },
+        "steps": [
+          {
+            "icon": "think",
+            "label": "Thinking",
+            "chip": "Planning the invoice schedule…",
+            "detail": [
+              {
+                "text": "Month-end volume favours annual plans, so they bill first."
+              },
+              {
+                "text": "Batch capacity leaves two overnight billing windows."
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Write 204 lines",
+            "chip": "InvoiceSchedule.tsx",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ const windows = slots.filter((s) => s.load <= 0.6)",
+                "tone": "add"
+              },
+              {
+                "text": "+ return schedule(windows, { first: \"annual\" })",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Rebuild and verify",
+            "chip": "npm run billing:check",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "✓ built in 1.2s"
+              },
+              {
+                "text": "✓ 34 checks passed"
+              }
+            ]
+          },
+          {
+            "icon": "image",
+            "label": "Read image",
+            "chip": "revenue-chart.png",
+            "mono": true,
+            "detail": [
+              {
+                "text": "1280 × 720 · line chart, three quarters."
+              },
+              {
+                "text": "Annual plans trend up 12% through July."
+              }
+            ]
+          }
+        ],
+        "diffs": [
+          {
+            "file": "invoices.css",
+            "add": 13,
+            "del": 0,
+            "lines": [
+              {
+                "text": ".invoice-card {",
+                "tone": "ctx"
+              },
+              {
+                "text": "  gap: 14px;",
+                "tone": "del"
+              },
+              {
+                "text": "  gap: 12px;",
+                "tone": "add"
+              },
+              {
+                "text": "  container-type: inline-size;",
+                "tone": "add"
+              },
+              {
+                "text": "}",
+                "tone": "ctx"
+              }
+            ]
+          },
+          {
+            "file": "InvoiceSchedule.tsx",
+            "add": 74,
+            "del": 41,
+            "lines": [
+              {
+                "text": "const slots = idleSlots(week);",
+                "tone": "ctx"
+              },
+              {
+                "text": "const windows = slots;",
+                "tone": "del"
+              },
+              {
+                "text": "const windows = slots.filter(",
+                "tone": "add"
+              },
+              {
+                "text": "  (s) => s.load <= 0.6,",
+                "tone": "add"
+              },
+              {
+                "text": ");",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "file": "plans.ts",
+            "add": 8,
+            "del": 2,
+            "lines": [
+              {
+                "text": "export const defaultPlan = \"monthly\";",
+                "tone": "del"
+              },
+              {
+                "text": "export const defaultPlan = \"annual\";",
+                "tone": "add"
+              }
+            ]
+          }
+        ]
+      },
+      "steps": [
+        {
+          "after": 1000,
+          "props": {
+            "steps": [
+              {
+                "icon": "think",
+                "label": "Thinking",
+                "chip": "Planning the invoice schedule…",
+                "detail": [
+                  {
+                    "text": "Month-end volume favours annual plans, so they bill first."
+                  },
+                  {
+                    "text": "Batch capacity leaves two overnight billing windows."
+                  }
+                ]
+              },
+              {
+                "icon": "write",
+                "label": "Write 204 lines",
+                "chip": "InvoiceSchedule.tsx",
+                "mono": true,
+                "detailMono": true,
+                "detail": [
+                  {
+                    "text": "+ const windows = slots.filter((s) => s.load <= 0.6)",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "+ return schedule(windows, { first: \"annual\" })",
+                    "tone": "add"
+                  }
+                ]
+              },
+              {
+                "icon": "run",
+                "label": "Rebuild and verify",
+                "chip": "npm run billing:check",
+                "mono": true,
+                "detailMono": true,
+                "detail": [
+                  {
+                    "text": "✓ built in 1.2s"
+                  },
+                  {
+                    "text": "✓ 34 checks passed"
+                  }
+                ]
+              },
+              {
+                "icon": "image",
+                "label": "Read image",
+                "chip": "revenue-chart.png",
+                "mono": true,
+                "detail": [
+                  {
+                    "text": "1280 × 720 · line chart, three quarters."
+                  },
+                  {
+                    "text": "Annual plans trend up 12% through July."
+                  }
+                ]
+              },
+              {
+                "icon": "search",
+                "label": "Search logs",
+                "chip": "replica latency",
+                "detail": [
+                  {
+                    "text": "Two replicas held p95 under 14 ms overnight."
+                  },
+                  {
+                    "text": "No alarms in the last 30 days."
+                  }
+                ]
+              }
+            ],
+            "labels": {
+              "header": "5 tool calls, 2 messages",
+              "more": "+2 more"
+            }
+          }
+        },
+        {
+          "after": 1100,
+          "props": {
+            "steps": [
+              {
+                "icon": "think",
+                "label": "Thinking",
+                "chip": "Planning the invoice schedule…",
+                "detail": [
+                  {
+                    "text": "Month-end volume favours annual plans, so they bill first."
+                  },
+                  {
+                    "text": "Batch capacity leaves two overnight billing windows."
+                  }
+                ]
+              },
+              {
+                "icon": "write",
+                "label": "Write 204 lines",
+                "chip": "InvoiceSchedule.tsx",
+                "mono": true,
+                "detailMono": true,
+                "detail": [
+                  {
+                    "text": "+ const windows = slots.filter((s) => s.load <= 0.6)",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "+ return schedule(windows, { first: \"annual\" })",
+                    "tone": "add"
+                  }
+                ]
+              },
+              {
+                "icon": "run",
+                "label": "Rebuild and verify",
+                "chip": "npm run billing:check",
+                "mono": true,
+                "detailMono": true,
+                "detail": [
+                  {
+                    "text": "✓ built in 1.2s"
+                  },
+                  {
+                    "text": "✓ 34 checks passed"
+                  }
+                ]
+              },
+              {
+                "icon": "image",
+                "label": "Read image",
+                "chip": "revenue-chart.png",
+                "mono": true,
+                "detail": [
+                  {
+                    "text": "1280 × 720 · line chart, three quarters."
+                  },
+                  {
+                    "text": "Annual plans trend up 12% through July."
+                  }
+                ]
+              },
+              {
+                "icon": "search",
+                "label": "Search logs",
+                "chip": "replica latency",
+                "detail": [
+                  {
+                    "text": "Two replicas held p95 under 14 ms overnight."
+                  },
+                  {
+                    "text": "No alarms in the last 30 days."
+                  }
+                ]
+              },
+              {
+                "icon": "run",
+                "label": "Run tests",
+                "chip": "npm test",
+                "mono": true,
+                "detailMono": true,
+                "detail": [
+                  {
+                    "text": "✓ 12 tests passed"
+                  }
+                ]
+              }
+            ],
+            "labels": {
+              "header": "6 tool calls, 2 messages",
+              "more": "+2 more"
+            }
+          }
+        },
+        {
+          "after": 900,
+          "props": {
+            "diffs": [
+              {
+                "file": "invoices.css",
+                "add": 13,
+                "del": 0,
+                "lines": [
+                  {
+                    "text": ".invoice-card {",
+                    "tone": "ctx"
+                  },
+                  {
+                    "text": "  gap: 14px;",
+                    "tone": "del"
+                  },
+                  {
+                    "text": "  gap: 12px;",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "  container-type: inline-size;",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "}",
+                    "tone": "ctx"
+                  }
+                ]
+              },
+              {
+                "file": "InvoiceSchedule.tsx",
+                "add": 74,
+                "del": 41,
+                "lines": [
+                  {
+                    "text": "const slots = idleSlots(week);",
+                    "tone": "ctx"
+                  },
+                  {
+                    "text": "const windows = slots;",
+                    "tone": "del"
+                  },
+                  {
+                    "text": "const windows = slots.filter(",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "  (s) => s.load <= 0.6,",
+                    "tone": "add"
+                  },
+                  {
+                    "text": ");",
+                    "tone": "add"
+                  }
+                ]
+              },
+              {
+                "file": "plans.ts",
+                "add": 8,
+                "del": 2,
+                "lines": [
+                  {
+                    "text": "export const defaultPlan = \"monthly\";",
+                    "tone": "del"
+                  },
+                  {
+                    "text": "export const defaultPlan = \"annual\";",
+                    "tone": "add"
+                  }
+                ]
+              },
+              {
+                "file": "replica.test.ts",
+                "add": 22,
+                "del": 0,
+                "lines": [
+                  {
+                    "text": "it(\"keeps every window at -12 °C\", () => {",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "  expect(windows.every(cold)).toBe(true);",
+                    "tone": "add"
+                  },
+                  {
+                    "text": "});",
+                    "tone": "add"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Arrives live (appear)",
+      "props": {
+        "open": true,
+        "openRows": [
+          "Write 204 lines"
+        ],
+        "labels": {
+          "header": "4 tool calls, 2 messages",
+          "more": "+2 more"
+        },
+        "steps": [
+          {
+            "icon": "think",
+            "label": "Thinking",
+            "chip": "Planning the invoice schedule…",
+            "detail": [
+              {
+                "text": "Month-end volume favours annual plans, so they bill first."
+              },
+              {
+                "text": "Batch capacity leaves two overnight billing windows."
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Write 204 lines",
+            "chip": "InvoiceSchedule.tsx",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ const windows = slots.filter((s) => s.load <= 0.6)",
+                "tone": "add"
+              },
+              {
+                "text": "+ return schedule(windows, { first: \"annual\" })",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Rebuild and verify",
+            "chip": "npm run billing:check",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "✓ built in 1.2s"
+              },
+              {
+                "text": "✓ 34 checks passed"
+              }
+            ]
+          },
+          {
+            "icon": "image",
+            "label": "Read image",
+            "chip": "revenue-chart.png",
+            "mono": true,
+            "detail": [
+              {
+                "text": "1280 × 720 · line chart, three quarters."
+              },
+              {
+                "text": "Annual plans trend up 12% through July."
+              }
+            ]
+          }
+        ],
+        "diffs": [
+          {
+            "file": "invoices.css",
+            "add": 13,
+            "del": 0,
+            "lines": [
+              {
+                "text": ".invoice-card {",
+                "tone": "ctx"
+              },
+              {
+                "text": "  gap: 14px;",
+                "tone": "del"
+              },
+              {
+                "text": "  gap: 12px;",
+                "tone": "add"
+              },
+              {
+                "text": "  container-type: inline-size;",
+                "tone": "add"
+              },
+              {
+                "text": "}",
+                "tone": "ctx"
+              }
+            ]
+          },
+          {
+            "file": "InvoiceSchedule.tsx",
+            "add": 74,
+            "del": 41,
+            "lines": [
+              {
+                "text": "const slots = idleSlots(week);",
+                "tone": "ctx"
+              },
+              {
+                "text": "const windows = slots;",
+                "tone": "del"
+              },
+              {
+                "text": "const windows = slots.filter(",
+                "tone": "add"
+              },
+              {
+                "text": "  (s) => s.load <= 0.6,",
+                "tone": "add"
+              },
+              {
+                "text": ");",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "file": "plans.ts",
+            "add": 8,
+            "del": 2,
+            "lines": [
+              {
+                "text": "export const defaultPlan = \"monthly\";",
+                "tone": "del"
+              },
+              {
+                "text": "export const defaultPlan = \"annual\";",
+                "tone": "add"
+              }
+            ]
+          }
+        ],
+        "appear": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "40 long steps",
+      "props": {
+        "labels": {
+          "header": "40 tool calls, 12,480 messages",
+          "more": "+12,438 more"
+        },
+        "steps": [
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 01 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-01/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 312 of 312 line items in batch 01 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 02 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-02/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 624 of 624 line items in batch 02 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 03 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-03/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 936 of 936 line items in batch 03 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 04 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-04/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 1,248 of 1,248 line items in batch 04 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 05 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-05/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 1,560 of 1,560 line items in batch 05 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 06 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-06/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 1,872 of 1,872 line items in batch 06 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 07 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-07/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 2,184 of 2,184 line items in batch 07 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 08 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-08/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 2,496 of 2,496 line items in batch 08 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 09 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-09/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 2,808 of 2,808 line items in batch 09 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 10 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-10/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 3,120 of 3,120 line items in batch 10 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 11 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-11/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 3,432 of 3,432 line items in batch 11 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 12 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-12/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 3,744 of 3,744 line items in batch 12 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 13 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-13/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 4,056 of 4,056 line items in batch 13 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 14 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-14/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 4,368 of 4,368 line items in batch 14 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 15 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-15/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 4,680 of 4,680 line items in batch 15 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 16 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-16/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 4,992 of 4,992 line items in batch 16 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 17 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-17/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 5,304 of 5,304 line items in batch 17 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 18 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-18/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 5,616 of 5,616 line items in batch 18 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 19 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-19/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 5,928 of 5,928 line items in batch 19 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 20 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-20/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 6,240 of 6,240 line items in batch 20 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 21 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-21/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 6,552 of 6,552 line items in batch 21 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 22 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-22/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 6,864 of 6,864 line items in batch 22 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 23 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-23/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 7,176 of 7,176 line items in batch 23 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 24 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-24/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 7,488 of 7,488 line items in batch 24 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 25 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-25/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 7,800 of 7,800 line items in batch 25 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 26 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-26/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 8,112 of 8,112 line items in batch 26 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 27 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-27/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 8,424 of 8,424 line items in batch 27 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 28 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-28/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 8,736 of 8,736 line items in batch 28 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 29 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-29/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 9,048 of 9,048 line items in batch 29 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 30 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-30/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 9,360 of 9,360 line items in batch 30 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 31 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-31/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 9,672 of 9,672 line items in batch 31 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 32 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-32/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 9,984 of 9,984 line items in batch 32 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 33 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-33/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 10,296 of 10,296 line items in batch 33 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 34 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-34/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 10,608 of 10,608 line items in batch 34 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 35 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-35/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 10,920 of 10,920 line items in batch 35 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "think",
+            "label": "Reconcile invoice batch 36 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-36/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 11,232 of 11,232 line items in batch 36 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "Reconcile invoice batch 37 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-37/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 11,544 of 11,544 line items in batch 37 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "run",
+            "label": "Reconcile invoice batch 38 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-38/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 11,856 of 11,856 line items in batch 38 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "read",
+            "label": "Reconcile invoice batch 39 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-39/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 12,168 of 12,168 line items in batch 39 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          },
+          {
+            "icon": "search",
+            "label": "Reconcile invoice batch 40 of 40 against the purchase-order ledger",
+            "chip": "src/finance/reconciliation/northwind-industries-holdings/emea/batches/batch-40/ledger-entries.normalized.json",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ matched 12,480 of 12,480 line items in batch 40 without a single tolerance override",
+                "tone": "add"
+              }
+            ]
+          }
+        ],
+        "diffs": [
+          {
+            "file": "src/finance/reconciliation/northwind-industries-holdings/emea/ledger.normalized.ts",
+            "add": 12480,
+            "del": 9999
+          },
+          {
+            "file": "a.ts",
+            "add": 1,
+            "del": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "No steps",
+      "props": {
+        "labels": {
+          "header": "0 tool calls"
+        },
+        "steps": [],
+        "diffs": []
+      }
+    },
+    {
+      "name": "One long word",
+      "props": {
+        "openRows": [
+          "Read"
+        ],
+        "steps": [
+          {
+            "icon": "read",
+            "label": "Read",
+            "chip": "Supercalifragilisticexpialidociousconfigurationloaderfactoryprovider.ts",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "Supercalifragilisticexpialidociousconfigurationloaderfactoryproviderimplementation"
+              }
+            ]
+          }
+        ],
+        "diffs": [
+          {
+            "file": "Supercalifragilisticexpialidociousconfigurationloaderfactoryprovider.ts",
+            "add": 1,
+            "del": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "openRows": [
+          "كتابة 204 أسطر"
+        ],
+        "labels": {
+          "header": "4 استدعاءات أدوات"
+        },
+        "steps": [
+          {
+            "icon": "think",
+            "label": "تفكير",
+            "chip": "تخطيط جدول الإنتاج…",
+            "detail": [
+              {
+                "text": "الطلب في نهاية الشهر يرفع الخطط السنوية."
+              }
+            ]
+          },
+          {
+            "icon": "write",
+            "label": "كتابة 204 أسطر",
+            "chip": "InvoiceSchedule.tsx",
+            "mono": true,
+            "detailMono": true,
+            "detail": [
+              {
+                "text": "+ const windows = slots.filter(idle)",
+                "tone": "add"
+              }
+            ]
+          }
+        ],
+        "diffs": [
+          {
+            "file": "invoices.css",
+            "add": 13,
+            "del": 0
+          }
+        ]
+      }
+    }
+  ]
+}

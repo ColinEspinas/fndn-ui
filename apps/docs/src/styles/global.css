@@ -1,0 +1,26 @@
+/* The docs' one stylesheet: what a user's Tailwind project gives a component (Tailwind with its
+ * preflight, then the system), the fonts, and the few page rules utilities cannot say. The recipes
+ * and adapters live outside this app, so their classes are scanned explicitly. */
+@import "tailwindcss";
+@import "@fndn/core/css";
+@import "./fonts.css";
+/* the recipes, the shared recipes and the React adapters; the example files may carry a layout
+ * class or two of their own; the showcase apps */
+@source "../../../../components/*/*.{ts,tsx}";
+@source "../../../../components/*/examples/*.{tsx,vue,svelte}";
+@source "../../../../showcases/*/*.{ts,tsx}";
+
+@layer base {
+  /* the stage and the previews are laid out by their own content; nothing scrolls sideways */
+  body { overflow-x: clip; }
+  /* every scroll area of the docs: a thin scrollbar in the line colour */
+  * { scrollbar-width: thin; scrollbar-color: var(--fndn-line-strong) transparent; }
+}
+
+/* No page transition: one between docs pages reads as a flicker. The router still
+ * swaps pages without a reload and keeps the top bar and the tree; the browser's cross-fade
+ * between the old and the new page is off, so the new page is simply there. */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) { animation: none !important; }
+::view-transition-old(*) { display: none; }

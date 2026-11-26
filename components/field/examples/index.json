@@ -1,0 +1,21 @@
+{
+  "playground": {
+    "props": {
+      "label": "Billing email",
+      "helper": "Invoices and receipts are sent here.",
+      "error": "Enter a full email address, like billing@northwind.example.",
+      "invalid": false,
+      "required": false,
+      "disabled": false,
+      "readOnly": false
+    },
+    "width": 280
+  },
+  "examples": [
+    { "file": "billing-email", "title": "Billing email" },
+    { "file": "email-without-domain", "title": "Email without a domain" },
+    { "file": "workspace-id", "title": "Workspace ID, read-only" },
+    { "file": "project-description", "title": "Project description" },
+    { "file": "create-workspace", "title": "Create a workspace" }
+  ]
+}

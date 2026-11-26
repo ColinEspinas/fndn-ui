@@ -1,0 +1,1611 @@
+{
+  "examples": [
+    {
+      "name": "Streaming",
+      "props": {
+        "content": [],
+        "sources": [
+          {
+            "name": "Metric Base",
+            "domain": "metricbase.io",
+            "href": "https://metricbase.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Trends Index",
+            "domain": "trends.google.com",
+            "href": "https://trends.google.com/trends/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Market Basket",
+            "domain": "marketbasket.io",
+            "href": "https://marketbasket.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          }
+        ],
+        "followUps": [
+          "Which plans convert best in Q4",
+          "Compare annual and monthly margins"
+        ],
+        "done": false,
+        "sourcesLabel": "3 sources"
+      },
+      "steps": [
+        {
+          "after": 600,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              }
+            ]
+          }
+        },
+        {
+          "after": 72,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              }
+            ]
+          }
+        },
+        {
+          "after": 64,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              }
+            ]
+          }
+        },
+        {
+          "after": 86,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              }
+            ]
+          }
+        },
+        {
+          "after": 70,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              }
+            ]
+          }
+        },
+        {
+          "after": 78,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              }
+            ]
+          }
+        },
+        {
+          "after": 61,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              }
+            ]
+          }
+        },
+        {
+          "after": 88,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              }
+            ]
+          }
+        },
+        {
+          "after": 69,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              }
+            ]
+          }
+        },
+        {
+          "after": 75,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              }
+            ]
+          }
+        },
+        {
+          "after": 82,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              }
+            ]
+          }
+        },
+        {
+          "after": 66,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              }
+            ]
+          }
+        },
+        {
+          "after": 240,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              }
+            ]
+          }
+        },
+        {
+          "after": 180,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              },
+              {
+                "text": "Team-tier"
+              }
+            ]
+          }
+        },
+        {
+          "after": 90,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              },
+              {
+                "text": "Team-tier"
+              },
+              {
+                "text": "plans"
+              }
+            ]
+          }
+        },
+        {
+          "after": 73,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              },
+              {
+                "text": "Team-tier"
+              },
+              {
+                "text": "plans"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "trending"
+              }
+            ]
+          }
+        },
+        {
+          "after": 62,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              },
+              {
+                "text": "Team-tier"
+              },
+              {
+                "text": "plans"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "trending"
+              },
+              {
+                "text": "in"
+              }
+            ]
+          }
+        },
+        {
+          "after": 84,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              },
+              {
+                "text": "Team-tier"
+              },
+              {
+                "text": "plans"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "trending"
+              },
+              {
+                "text": "in"
+              },
+              {
+                "text": "the"
+              },
+              {
+                "text": "same"
+              }
+            ]
+          }
+        },
+        {
+          "after": 71,
+          "props": {
+            "content": [
+              {
+                "text": "Annual"
+              },
+              {
+                "text": "is"
+              },
+              {
+                "text": "your"
+              },
+              {
+                "text": "fastest-growing"
+              },
+              {
+                "text": "plan"
+              },
+              {
+                "text": "—"
+              },
+              {
+                "text": "signups"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "up"
+              },
+              {
+                "text": "23%"
+              },
+              {
+                "text": "this"
+              },
+              {
+                "text": "month"
+              },
+              {
+                "text": "and"
+              },
+              {
+                "text": "margins"
+              },
+              {
+                "text": "beat"
+              },
+              {
+                "text": "monthly"
+              },
+              {
+                "text": "by"
+              },
+              {
+                "text": "8"
+              },
+              {
+                "text": "points."
+              },
+              {
+                "text": "",
+                "cite": 0
+              },
+              {
+                "text": "Team-tier"
+              },
+              {
+                "text": "plans"
+              },
+              {
+                "text": "are"
+              },
+              {
+                "text": "trending"
+              },
+              {
+                "text": "in"
+              },
+              {
+                "text": "the"
+              },
+              {
+                "text": "same"
+              },
+              {
+                "text": "range."
+              }
+            ]
+          }
+        },
+        {
+          "after": 480,
+          "props": {
+            "done": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Done",
+      "props": {
+        "content": [
+          {
+            "text": "Annual"
+          },
+          {
+            "text": "is"
+          },
+          {
+            "text": "your"
+          },
+          {
+            "text": "fastest-growing"
+          },
+          {
+            "text": "plan"
+          },
+          {
+            "text": "—"
+          },
+          {
+            "text": "signups"
+          },
+          {
+            "text": "are"
+          },
+          {
+            "text": "up"
+          },
+          {
+            "text": "23%"
+          },
+          {
+            "text": "this"
+          },
+          {
+            "text": "month"
+          },
+          {
+            "text": "and"
+          },
+          {
+            "text": "margins"
+          },
+          {
+            "text": "beat"
+          },
+          {
+            "text": "monthly"
+          },
+          {
+            "text": "by"
+          },
+          {
+            "text": "8"
+          },
+          {
+            "text": "points."
+          },
+          {
+            "text": "",
+            "cite": 0
+          },
+          {
+            "text": "Team-tier"
+          },
+          {
+            "text": "plans"
+          },
+          {
+            "text": "are"
+          },
+          {
+            "text": "trending"
+          },
+          {
+            "text": "in"
+          },
+          {
+            "text": "the"
+          },
+          {
+            "text": "same"
+          },
+          {
+            "text": "range."
+          }
+        ],
+        "sources": [
+          {
+            "name": "Metric Base",
+            "domain": "metricbase.io",
+            "href": "https://metricbase.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Trends Index",
+            "domain": "trends.google.com",
+            "href": "https://trends.google.com/trends/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Market Basket",
+            "domain": "marketbasket.io",
+            "href": "https://marketbasket.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          }
+        ],
+        "followUps": [
+          "Which plans convert best in Q4",
+          "Compare annual and monthly margins"
+        ],
+        "done": true,
+        "sourcesLabel": "3 sources"
+      }
+    },
+    {
+      "name": "Done, arrives live (appear)",
+      "props": {
+        "content": [
+          {
+            "text": "Annual"
+          },
+          {
+            "text": "is"
+          },
+          {
+            "text": "your"
+          },
+          {
+            "text": "fastest-growing"
+          },
+          {
+            "text": "plan"
+          },
+          {
+            "text": "—"
+          },
+          {
+            "text": "signups"
+          },
+          {
+            "text": "are"
+          },
+          {
+            "text": "up"
+          },
+          {
+            "text": "23%"
+          },
+          {
+            "text": "this"
+          },
+          {
+            "text": "month"
+          },
+          {
+            "text": "and"
+          },
+          {
+            "text": "margins"
+          },
+          {
+            "text": "beat"
+          },
+          {
+            "text": "monthly"
+          },
+          {
+            "text": "by"
+          },
+          {
+            "text": "8"
+          },
+          {
+            "text": "points."
+          },
+          {
+            "text": "",
+            "cite": 0
+          },
+          {
+            "text": "Team-tier"
+          },
+          {
+            "text": "plans"
+          },
+          {
+            "text": "are"
+          },
+          {
+            "text": "trending"
+          },
+          {
+            "text": "in"
+          },
+          {
+            "text": "the"
+          },
+          {
+            "text": "same"
+          },
+          {
+            "text": "range."
+          }
+        ],
+        "sources": [
+          {
+            "name": "Metric Base",
+            "domain": "metricbase.io",
+            "href": "https://metricbase.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Trends Index",
+            "domain": "trends.google.com",
+            "href": "https://trends.google.com/trends/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Market Basket",
+            "domain": "marketbasket.io",
+            "href": "https://marketbasket.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          }
+        ],
+        "followUps": [
+          "Which plans convert best in Q4",
+          "Compare annual and monthly margins"
+        ],
+        "done": true,
+        "sourcesLabel": "3 sources",
+        "appear": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Zero sources",
+      "props": {
+        "content": [
+          {
+            "text": "Annual"
+          },
+          {
+            "text": "is"
+          },
+          {
+            "text": "up"
+          },
+          {
+            "text": "23%"
+          },
+          {
+            "text": "this"
+          },
+          {
+            "text": "month."
+          }
+        ],
+        "sources": [],
+        "followUps": [],
+        "done": true
+      }
+    },
+    {
+      "name": "Fourteen sources",
+      "props": {
+        "content": [
+          {
+            "text": "Annual"
+          },
+          {
+            "text": "is"
+          },
+          {
+            "text": "your"
+          },
+          {
+            "text": "fastest-growing"
+          },
+          {
+            "text": "plan"
+          },
+          {
+            "text": "—"
+          },
+          {
+            "text": "signups"
+          },
+          {
+            "text": "are"
+          },
+          {
+            "text": "up"
+          },
+          {
+            "text": "23%"
+          },
+          {
+            "text": "this"
+          },
+          {
+            "text": "month"
+          },
+          {
+            "text": "and"
+          },
+          {
+            "text": "margins"
+          },
+          {
+            "text": "beat"
+          },
+          {
+            "text": "monthly"
+          },
+          {
+            "text": "by"
+          },
+          {
+            "text": "8"
+          },
+          {
+            "text": "points."
+          },
+          {
+            "text": "",
+            "cite": 0
+          },
+          {
+            "text": "Team-tier"
+          },
+          {
+            "text": "plans"
+          },
+          {
+            "text": "are"
+          },
+          {
+            "text": "trending"
+          },
+          {
+            "text": "in"
+          },
+          {
+            "text": "the"
+          },
+          {
+            "text": "same"
+          },
+          {
+            "text": "range."
+          }
+        ],
+        "sources": [
+          {
+            "name": "Source 1 — regional SaaS pricing report",
+            "domain": "report-1.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 2 — regional SaaS pricing report",
+            "domain": "report-2.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 3 — regional SaaS pricing report",
+            "domain": "report-3.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 4 — regional SaaS pricing report",
+            "domain": "report-4.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 5 — regional SaaS pricing report",
+            "domain": "report-5.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 6 — regional SaaS pricing report",
+            "domain": "report-6.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 7 — regional SaaS pricing report",
+            "domain": "report-7.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 8 — regional SaaS pricing report",
+            "domain": "report-8.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 9 — regional SaaS pricing report",
+            "domain": "report-9.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 10 — regional SaaS pricing report",
+            "domain": "report-10.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 11 — regional SaaS pricing report",
+            "domain": "report-11.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 12 — regional SaaS pricing report",
+            "domain": "report-12.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 13 — regional SaaS pricing report",
+            "domain": "report-13.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Source 14 — regional SaaS pricing report",
+            "domain": "report-14.saas-pricing-insights.example.com",
+            "href": "https://example.com/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          }
+        ],
+        "followUps": [
+          "Which plans convert best in Q4",
+          "Compare annual and monthly margins",
+          "What should we retire before Q4 so the sales team's time goes to the plans that actually sell?"
+        ],
+        "done": true,
+        "sourcesOpen": true,
+        "sourcesLabel": "14 sources"
+      }
+    },
+    {
+      "name": "Unbreakable text",
+      "props": {
+        "content": [
+          {
+            "text": "See"
+          },
+          {
+            "text": "https://metricbase.io/reports/2025/q4/plan-velocity/annual-vs-monthly-margin-comparison-final.csv"
+          },
+          {
+            "text": "",
+            "cite": 0
+          }
+        ],
+        "sources": [
+          {
+            "name": "Metric Base",
+            "domain": "metricbase.io",
+            "href": "https://metricbase.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          }
+        ],
+        "done": true
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "content": [
+          {
+            "text": "שנתי"
+          },
+          {
+            "text": "הוא"
+          },
+          {
+            "text": "התוכנית"
+          },
+          {
+            "text": "הצומח"
+          },
+          {
+            "text": "ביותר"
+          },
+          {
+            "text": "—"
+          },
+          {
+            "text": "ההרשמות"
+          },
+          {
+            "text": "עלו"
+          },
+          {
+            "text": "ב־23%"
+          },
+          {
+            "text": "החודש."
+          },
+          {
+            "text": "",
+            "cite": 0
+          },
+          {
+            "text": "خطط"
+          },
+          {
+            "text": "الفرق"
+          },
+          {
+            "text": "ذات"
+          },
+          {
+            "text": "الصغيرة"
+          },
+          {
+            "text": "تتجه"
+          },
+          {
+            "text": "في"
+          },
+          {
+            "text": "النطاق"
+          },
+          {
+            "text": "نفسه."
+          }
+        ],
+        "sources": [
+          {
+            "name": "Metric Base",
+            "domain": "metricbase.io",
+            "href": "https://metricbase.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f7a5f'/%3E%3Cpath d='M20 36c0 7 5.4 12 12 12s12-5 12-12H20Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23bff3dd'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Trends Index",
+            "domain": "trends.google.com",
+            "href": "https://trends.google.com/trends/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6fec'/%3E%3Cpath d='M15 43 27 31l8 7 14-18' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+          },
+          {
+            "name": "Market Basket",
+            "domain": "marketbasket.io",
+            "href": "https://marketbasket.io/",
+            "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e56d24'/%3E%3Cpath d='M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z' fill='%23fff'/%3E%3C/svg%3E"
+          }
+        ],
+        "followUps": [
+          "אילו תוכניות נמכרות הכי טוב ברבעון הרביעי"
+        ],
+        "done": true,
+        "sourcesLabel": "3 מקורות"
+      }
+    }
+  ]
+}

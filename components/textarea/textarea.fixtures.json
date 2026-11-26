@@ -1,0 +1,18 @@
+{
+  "examples": [
+    { "name": "Default", "props": { "placeholder": "Tasting notes", "aria-label": "Tasting notes" }, "width": 280 },
+    { "name": "Small", "props": { "size": "sm", "placeholder": "Add a comment", "aria-label": "Comment" }, "width": 280 },
+    { "name": "Invalid", "props": { "invalid": true, "value": "Too short", "aria-label": "Description" }, "width": 280 },
+    { "name": "Mono", "props": { "mono": true, "value": "npm run build\nnpm run deploy -- --batch 4", "aria-label": "Commands" }, "width": 280 },
+    { "name": "Disabled", "props": { "disabled": true, "placeholder": "Locked while the agent runs", "aria-label": "Notes" }, "width": 280 },
+    { "name": "Fixed height", "props": { "autoResize": false, "placeholder": "Drag the corner to resize", "aria-label": "Notes" }, "width": 280 },
+    { "name": "With text", "props": { "value": "Analytics holds the top slot all weekend.\nMerge it first thing Saturday.\nRecheck seat usage before the release.\nPromote the annual-plan discount.", "aria-label": "Tasting notes" }, "width": 280 }
+  ],
+  "worstCase": [
+    { "name": "Long text", "props": { "value": "Analytics holds the top slot all weekend. Merge it first thing Saturday so the build has time to settle before the afternoon release, then recheck seat usage before promoting the annual-plan discount. If the supplier is late again, swap in the hazelnut base and tell the front counter before noon so the menu board can change.", "aria-label": "Tasting notes" }, "width": 280 },
+    { "name": "Unbreakable text", "props": { "value": "bartholomew.fitzgerald@northwind-industries-holdings.example.com", "aria-label": "Email" }, "width": 200 },
+    { "name": "One character", "props": { "value": "J", "aria-label": "Initial" }, "width": 280 },
+    { "name": "Right-to-left", "props": { "value": "فستق حلبي مع العسل، يُقدَّم باردًا في نهاية الأسبوع", "aria-label": "Tasting notes" }, "width": 280 },
+    { "name": "Long placeholder", "props": { "placeholder": "Describe the project, its owner, the quarter it belongs to and anything the support team should say about it", "aria-label": "Description" }, "width": 280 }
+  ]
+}

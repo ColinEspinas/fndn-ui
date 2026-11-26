@@ -1,0 +1,14 @@
+{
+  "playground": {
+    "props": {
+      "tone": "neutral"
+    },
+    "text": "DATABASE_URL"
+  },
+  "examples": [
+    { "file": "missing-env-var", "title": "Missing environment variable" },
+    { "file": "webhook-payload", "title": "Fields of a webhook payload" },
+    { "file": "migration-summary", "title": "Schema changes in a migration" },
+    { "file": "active-query", "title": "Active query in a list" }
+  ]
+}

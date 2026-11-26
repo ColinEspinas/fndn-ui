@@ -1,0 +1,35 @@
+{
+  "playground": {
+    "props": {
+      "variant": "outline",
+      "size": "md",
+      "shape": "pill",
+      "square": false,
+      "muted": false,
+      "disabled": false
+    },
+    "text": "Watch"
+  },
+  "examples": [
+    {
+      "file": "watch-pull-request",
+      "title": "Watch a pull request"
+    },
+    {
+      "file": "log-options",
+      "title": "Log options, icon-only"
+    },
+    {
+      "file": "activity-bar",
+      "title": "An editor's activity bar (ink)"
+    },
+    {
+      "file": "failed-only",
+      "title": "A filter in a list header (ghost)"
+    },
+    {
+      "file": "viewers-read-only",
+      "title": "Read-only for viewers"
+    }
+  ]
+}

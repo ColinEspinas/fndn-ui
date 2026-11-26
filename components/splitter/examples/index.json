@@ -1,0 +1,8 @@
+{
+  "playground": { "props": { "orientation": "horizontal", "grip": false, "keyboardStep": 1, "panels": [{ "id": "pull-request", "content": "#482 Add retry to webhook delivery. Daniel Okafor wants to merge 3 commits into main.", "minSize": 20 }, { "id": "checks", "content": "Build passed, 12 tests passed, preview ready.", "minSize": 30 }], "size": [40, 60], "style": { "height": 160 } } },
+  "examples": [
+    { "file": "files-and-editor", "title": "Files beside the editor" },
+    { "file": "editor-and-terminal", "title": "Editor above the terminal" },
+    { "file": "review-layout", "title": "Three panes with a reset" }
+  ]
+}

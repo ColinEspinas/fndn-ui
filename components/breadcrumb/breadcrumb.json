@@ -1,0 +1,114 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "summary": "A trail of links that shows where the current page sits.",
+  "description": "Where the current page sits: a trail of links from the top level to the page, separated by small carets that point the reading direction. Links are muted text that darkens on hover; the page itself is ink and not a link. Names wrap, never cut. A long trail can fold its middle into a ghost ⋯ button that opens a Menu of the hidden pages.",
+  "kind": "component",
+  "category": "navigation",
+  "order": 5,
+  "status": "beta",
+  "element": "nav",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "nav",
+      "description": "A navigation landmark with an aria-label (\"Breadcrumb\")."
+    },
+    {
+      "part": "list",
+      "element": "ol",
+      "description": "The ordered trail: a wrapping flex row (gap 6px across, 4px between lines), 13px text on a 20px line, ink-2."
+    },
+    {
+      "part": "item",
+      "element": "li",
+      "repeat": true,
+      "description": "One step of the trail: its link, its page or the ellipsis."
+    },
+    {
+      "part": "link",
+      "element": "a",
+      "optional": true,
+      "repeat": true,
+      "description": "A page above the current one: ink-2, ink on hover (fine pointer) and while pressed; colour over duration.fast. Wraps anywhere, never cut; keeps its own direction. A hit area 6px taller on each side (40px on coarse pointers) without changing its look. An item without an href is the same text, not a link."
+    },
+    {
+      "part": "page",
+      "element": "span",
+      "optional": true,
+      "description": "The current page (the last item): ink, aria-current=\"page\", not a link."
+    },
+    {
+      "part": "separator",
+      "element": "li",
+      "repeat": true,
+      "description": "role=presentation and aria-hidden: a 12px caret-right in ink-3 between two items, mirrored right-to-left."
+    },
+    {
+      "part": "ellipsis",
+      "element": "button",
+      "optional": true,
+      "description": "The real Button (ghost, xs, square, muted, dots-three) as the trigger of a Menu that lists the folded pages; named by its Tooltip; marked data-breadcrumb=\"ellipsis\". It sits on the 20px text line (negative block margins)."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "description": "The trail from the top level to the current page: { label, href? }. The last one is the current page."
+    },
+    "maxItems": {
+      "type": "number",
+      "description": "Show at most this many items (2 or more): the first, the ⋯ menu, then the last maxItems − 1. Omitted: every item."
+    },
+    "label": {
+      "type": "string",
+      "default": "Breadcrumb",
+      "description": "The landmark's accessible name."
+    },
+    "ellipsisLabel": {
+      "type": "string",
+      "default": "Show hidden pages",
+      "description": "The ⋯ button's name and tooltip."
+    }
+  },
+  "events": {
+    "navigate": "(href: string | undefined, item) when a link or a folded page is chosen. React onNavigate, Vue @navigate, Svelte onnavigate; given, it replaces the browser's own navigation (client routers); a click with a modifier key keeps the browser's."
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "current"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "radius.chip",
+    "text.sm",
+    "duration.fast"
+  ],
+  "dependencies": [
+    "button",
+    "menu",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "navigation (an ordered list of links)",
+    "keyboard": [
+      "Tab reaches each link, then the ⋯ button; the current page is not a stop",
+      "Enter follows a link; Enter, Space or ArrowDown on ⋯ open its menu (the Menu's keys)"
+    ],
+    "notes": [
+      "The landmark is named \"Breadcrumb\" (label); the current page carries aria-current=\"page\".",
+      "Separators are hidden from assistive technology; the list's order says the hierarchy.",
+      "The ⋯ button is named by its tooltip (ellipsisLabel); the menu lists the folded pages in order."
+    ]
+  },
+  "motion": [
+    "links: colour over duration.fast (hover gated to a fine pointer); the press darkens to ink",
+    "the ⋯ button and its menu: the Button's and the Menu's own",
+    "nothing else moves; nothing plays on first paint"
+  ]
+}

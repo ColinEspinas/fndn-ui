@@ -1,0 +1,24 @@
+{
+  "playground": {
+    "props": {
+      "items": [
+        { "value": "project:web-app", "label": "web-app", "meta": "Project" },
+        { "value": "person:priya", "label": "Priya Raman", "meta": "Member" },
+        { "value": "action:new-project", "label": "Create a project", "meta": "Action" },
+        { "value": "project:billing-api", "label": "billing-api", "meta": "Project" },
+        { "value": "person:daniel", "label": "Daniel Okafor", "meta": "Member" },
+        { "value": "action:invite", "label": "Invite teammates", "meta": "Action" }
+      ],
+      "limit": 3,
+      "placeholder": "Search projects, people and actions…",
+      "label": "Search Northwind"
+    },
+    "width": 320
+  },
+  "examples": [
+    { "file": "workspace", "title": "Search the workspace" },
+    { "file": "grouped-commands", "title": "Commands in groups, with shortcuts" },
+    { "file": "run-an-action", "title": "Run an action, one not allowed" },
+    { "file": "no-results", "title": "Nothing matches" }
+  ]
+}

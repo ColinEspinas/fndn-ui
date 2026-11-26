@@ -1,0 +1,239 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "fine-tune-card",
+  "title": "Fine-tune Card",
+  "summary": "A small inspector for the last adjustments to something an agent made.",
+  "description": "A compact inspector an agent hands over for the last adjustments to what it made. It holds a layout switch (our segmented control), scrubbable number fields and a type picker (our select). Drag a field's label to scrub it, or type, or use the arrow and page keys; the value never changes width. Once anything differs from where the card started, the header's \"Adjust\" hint crossfades to \"Edited\" with a Reset action, without moving anything. Number fields run the Zag number-input machine, through Ark UI's NumberInput in React, Vue and Svelte.",
+  "kind": "block",
+  "category": "agent",
+  "order": 20,
+  "engine": "number-input",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-slot=\"fine-tune-card\"; changed (anything differs from where the card started) is a recipe variant"
+    },
+    {
+      "part": "header",
+      "element": "div"
+    },
+    {
+      "part": "title",
+      "element": "span"
+    },
+    {
+      "part": "state",
+      "element": "div",
+      "description": "One grid cell holding both the hint and the edited group, so the swap never moves the header"
+    },
+    {
+      "part": "hint",
+      "element": "span",
+      "description": "Shown until something changes"
+    },
+    {
+      "part": "hint-icon",
+      "element": "span"
+    },
+    {
+      "part": "hint-text",
+      "element": "span",
+      "description": "\"Adjust\": the real Shimmer (speed fast, tone accent), marked data-fine-tune-card=\"hint-text\"; plain accent text under reduced motion"
+    },
+    {
+      "part": "edited",
+      "element": "span",
+      "description": "Shown once something changes: the edited text and the Reset action"
+    },
+    {
+      "part": "edited-text",
+      "element": "span"
+    },
+    {
+      "part": "reset",
+      "element": "button",
+      "description": "The real Button (ghost sm), marked data-fine-tune-card=\"reset\"; restores every field default and the layout and type the card started with, then focuses the selected layout segment"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "description": "role=status, visually hidden (sr-only); says \"Edited\" when the card becomes edited"
+    },
+    {
+      "part": "body",
+      "element": "div"
+    },
+    {
+      "part": "section",
+      "element": "span",
+      "description": "The \"Layout\" label"
+    },
+    {
+      "part": "layout",
+      "element": "div",
+      "description": "The real SegmentedControl (sm, fill, icons), marked data-fine-tune-card=\"layout\""
+    },
+    {
+      "part": "fields",
+      "element": "div",
+      "description": "Two-column grid of fields"
+    },
+    {
+      "part": "field",
+      "element": "div",
+      "repeat": true,
+      "description": "Number-input root, the shared control (`lib/control.ts`: sm, subtle; the ring for any focus); data-key; changed (differs from its default) is a recipe variant; data-focus, data-scrubbing, data-invalid from the engine"
+    },
+    {
+      "part": "scrubber",
+      "element": "div",
+      "description": "Number-input scrubber around the label: press and drag sideways to change the value"
+    },
+    {
+      "part": "field-label",
+      "element": "label"
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "role=spinbutton; tabular figures"
+    },
+    {
+      "part": "suffix",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "footer",
+      "element": "div"
+    },
+    {
+      "part": "footer-label",
+      "element": "span",
+      "description": "The \"Type\" label"
+    },
+    {
+      "part": "type",
+      "element": "div",
+      "description": "The real Select (sm, subtle, opens upwards at the end), marked data-fine-tune-card=\"type\" on its root"
+    }
+  ],
+  "props": {
+    "fields": {
+      "type": "array",
+      "items": {
+        "key": "string",
+        "label": "string",
+        "value": "number",
+        "min": "number",
+        "max": "number",
+        "step": "number?",
+        "suffix": "string?"
+      },
+      "description": "The number properties, laid out in pairs. `value` is the default, the value Reset returns to. Defaults to W, H, Radius, Opacity."
+    },
+    "values": {
+      "type": "object",
+      "model": true,
+      "description": "Current value per field key. A missing key shows the field's default."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "row",
+        "col",
+        "grid"
+      ],
+      "default": "row",
+      "model": true,
+      "description": "Selected layout segment (reaches the segmented control, not the card's CSS)."
+    },
+    "type": {
+      "type": "string",
+      "model": true,
+      "description": "Selected type, or null for the placeholder."
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string"
+      },
+      "description": "Options of the type picker. Strings are accepted as value = label. Defaults to Default, Featured, Compact."
+    },
+    "changed": {
+      "type": "boolean",
+      "model": true,
+      "description": "Shows the edited state and Reset. Uncontrolled it follows the card: true while the layout, the type or any field differs from where the card started; the change event reports every flip."
+    },
+    "labels": {
+      "type": "object",
+      "description": "Copy: title, layout, row, col, grid, type, placeholder, adjust, edited, reset."
+    }
+  },
+  "events": {
+    "layoutChange": "(layout: \"row\" | \"col\" | \"grid\")",
+    "valuesChange": "(values: Record<string, number>)",
+    "typeChange": "(type: string | null)",
+    "changedChange": "(changed: boolean)",
+    "reset": "()"
+  },
+  "states": [
+    "changed",
+    "hover",
+    "press",
+    "focus-visible",
+    "scrubbing",
+    "invalid"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.line",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-ink",
+    "color.accent-tint",
+    "color.green",
+    "color.field",
+    "color.red",
+    "shadow.raised",
+    "radius.card",
+    "radius.chip",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base"
+  ],
+  "dependencies": [
+    "segmented-control",
+    "select",
+    "button",
+    "shimmer"
+  ],
+  "a11y": {
+    "role": "group of controls: radiogroup (layout), spinbuttons (fields), combobox (type)",
+    "keyboard": [
+      "Tab moves through the layout switch (one stop), each field, Reset when shown, and the type picker",
+      "Layout: ArrowLeft / ArrowRight select, Home / End jump",
+      "Field: ArrowUp / ArrowDown change by one step, with Shift by ten; Page Up / Page Down by ten; Home / End go to the minimum / maximum; typing enters a value, clamped on blur",
+      "Type: the select contract (Enter / Space / ArrowDown open, arrows move, Enter selects, Escape closes)",
+      "Reset: Enter / Space; focus then moves to the selected layout segment"
+    ],
+    "notes": [
+      "Each field's label is its input's label; the scrubber only adds the drag.",
+      "Scrubbing is a mouse gesture (pointer lock); on touch, type the value.",
+      "Becoming edited is announced once through the role=status region."
+    ]
+  },
+  "motion": [
+    "hint ⇄ edited: opacity and a 2px blur crossfade over duration.base in one grid cell; no layout change",
+    "field changed / focus: background and ring over duration.base",
+    "hint text: the shared shimmer loop; stops under reduced motion",
+    "layout thumb and type popup: as in segmented-control and select"
+  ]
+}

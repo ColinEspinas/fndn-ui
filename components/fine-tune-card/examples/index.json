@@ -1,0 +1,57 @@
+{
+  "playground": {
+    "props": {
+      "fields": [
+        {
+          "key": "width",
+          "label": "W",
+          "value": 320,
+          "min": 200,
+          "max": 640
+        },
+        {
+          "key": "height",
+          "label": "H",
+          "value": 440,
+          "min": 240,
+          "max": 960
+        },
+        {
+          "key": "radius",
+          "label": "Radius",
+          "value": 16,
+          "min": 0,
+          "max": 48
+        },
+        {
+          "key": "gap",
+          "label": "Gap",
+          "value": 24,
+          "min": 0,
+          "max": 64
+        }
+      ],
+      "types": [
+        "Starter",
+        "Team",
+        "Business"
+      ],
+      "labels": {
+        "title": "Pricing card",
+        "type": "Plan",
+        "placeholder": "Select plan"
+      },
+      "defaultType": "Team"
+    }
+  },
+  "examples": [
+    {
+      "file": "default",
+      "title": "Tune the pricing card it generated"
+    },
+    {
+      "file": "edited",
+      "title": "Wider card in a grid, ready to reset"
+    }
+  ]
+}

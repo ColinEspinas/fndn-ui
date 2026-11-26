@@ -1,0 +1,291 @@
+{
+  "examples": [
+    {
+      "name": "Two panels",
+      "props": {
+        "style": {
+          "width": 480,
+          "height": 200
+        },
+        "panels": [
+          {
+            "id": "files",
+            "content": "Files",
+            "minSize": 20
+          },
+          {
+            "id": "editor",
+            "content": "Editor",
+            "minSize": 30
+          }
+        ],
+        "size": [
+          30,
+          70
+        ]
+      }
+    },
+    {
+      "name": "Three panels with grips",
+      "props": {
+        "style": {
+          "width": 560,
+          "height": 200
+        },
+        "grip": true,
+        "panels": [
+          {
+            "id": "nav",
+            "content": "Navigation",
+            "minSize": 15
+          },
+          {
+            "id": "main",
+            "content": "Content",
+            "minSize": 30
+          },
+          {
+            "id": "aside",
+            "content": "Details",
+            "minSize": 15
+          }
+        ],
+        "size": [
+          25,
+          50,
+          25
+        ]
+      }
+    },
+    {
+      "name": "Vertical",
+      "props": {
+        "style": {
+          "width": 360,
+          "height": 280
+        },
+        "orientation": "vertical",
+        "grip": true,
+        "panels": [
+          {
+            "id": "code",
+            "content": "Code",
+            "minSize": 20
+          },
+          {
+            "id": "terminal",
+            "content": "Terminal",
+            "minSize": 20
+          }
+        ],
+        "size": [
+          60,
+          40
+        ]
+      }
+    },
+    {
+      "name": "Keyboard steps of five",
+      "props": {
+        "style": {
+          "width": 480,
+          "height": 160
+        },
+        "keyboardStep": 5,
+        "panels": [
+          {
+            "id": "a",
+            "content": "Start"
+          },
+          {
+            "id": "b",
+            "content": "End"
+          }
+        ],
+        "size": [
+          50,
+          50
+        ]
+      }
+    },
+    {
+      "name": "Collapsible side panel",
+      "props": {
+        "style": {
+          "width": 480,
+          "height": 160
+        },
+        "panels": [
+          {
+            "id": "side",
+            "content": "Sidebar",
+            "minSize": 20,
+            "collapsible": true,
+            "collapsedSize": 0
+          },
+          {
+            "id": "page",
+            "content": "Page",
+            "minSize": 40
+          }
+        ],
+        "size": [
+          30,
+          70
+        ]
+      }
+    },
+    {
+      "name": "Starts collapsed",
+      "props": {
+        "style": {
+          "width": 480,
+          "height": 160
+        },
+        "panels": [
+          {
+            "id": "list",
+            "content": "Issues",
+            "minSize": 40
+          },
+          {
+            "id": "issue",
+            "content": "Issue",
+            "minSize": 30,
+            "maxSize": 55,
+            "collapsible": true,
+            "collapsedSize": 0
+          }
+        ],
+        "size": [
+          100,
+          0
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long text in narrow panels",
+      "props": {
+        "style": {
+          "width": 320,
+          "height": 200
+        },
+        "panels": [
+          {
+            "id": "a",
+            "content": "A panel whose text is much longer than the room it has, so it wraps and then scrolls inside the panel rather than pushing the handle away from where the user left it"
+          },
+          {
+            "id": "b",
+            "content": "averyveryverylongunbrokenwordthatcannotwrapanywhereatall"
+          }
+        ],
+        "size": [
+          50,
+          50
+        ]
+      }
+    },
+    {
+      "name": "Many panels",
+      "props": {
+        "style": {
+          "width": 320,
+          "height": 160
+        },
+        "grip": true,
+        "panels": [
+          {
+            "id": "p1",
+            "content": "1"
+          },
+          {
+            "id": "p2",
+            "content": "2"
+          },
+          {
+            "id": "p3",
+            "content": "3"
+          },
+          {
+            "id": "p4",
+            "content": "4"
+          },
+          {
+            "id": "p5",
+            "content": "5"
+          },
+          {
+            "id": "p6",
+            "content": "6"
+          }
+        ]
+      }
+    },
+    {
+      "name": "At the minimum",
+      "props": {
+        "style": {
+          "width": 320,
+          "height": 160
+        },
+        "panels": [
+          {
+            "id": "a",
+            "content": "Min",
+            "minSize": 10
+          },
+          {
+            "id": "b",
+            "content": "Rest"
+          }
+        ],
+        "size": [
+          10,
+          90
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left text",
+      "props": {
+        "style": {
+          "width": 320,
+          "height": 160
+        },
+        "grip": true,
+        "panels": [
+          {
+            "id": "a",
+            "content": "لوحة التنقل"
+          },
+          {
+            "id": "b",
+            "content": "المحتوى الرئيسي للصفحة"
+          }
+        ],
+        "size": [
+          40,
+          60
+        ]
+      }
+    },
+    {
+      "name": "One panel",
+      "props": {
+        "style": {
+          "width": 320,
+          "height": 120
+        },
+        "panels": [
+          {
+            "id": "only",
+            "content": "Nothing to split"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "playground": {"props": {"items": ["Connect the northwind/web-app repository", "Pick the branch that deploys to Production", "Add the environment variables from your .env file", "Deploy, and get a URL for every pull request"], "slidesPerPage": 1, "spacing": 12, "loop": "none", "indicators": false, "controls": true, "mouseDrag": true, "label": "Getting started", "effect": "slide", "autoplay": 0}, "width": 360},
+  "examples": [
+    {"file": "whats-new", "title": "What’s new, one card at a time"},
+    {"file": "getting-started", "title": "Getting started, step by step"},
+    {"file": "projects", "title": "Projects, three per page"},
+    {"file": "tips", "title": "Tips that run back to the first"},
+    {"file": "templates", "title": "Starter templates that come forward as they arrive"},
+    {"file": "customer-quotes", "title": "Customer quotes that cross-fade"},
+    {"file": "announcements", "title": "Announcements that advance by themselves, without end"},
+    {"file": "covers", "title": "Workspace covers, layers in parallax"},
+    {"file": "shortcuts", "title": "Editor shortcuts, changed at once with no animation"}
+  ]
+}

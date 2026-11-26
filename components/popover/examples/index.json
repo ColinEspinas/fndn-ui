@@ -1,0 +1,15 @@
+{
+  "playground": {
+    "props": {
+      "triggerLabel": "Share",
+      "title": "Share preview",
+      "description": "Anyone in Northwind with the link can open this preview."
+    },
+    "text": "The link stays valid until the branch is merged or deleted."
+  },
+  "examples": [
+    { "file": "share-link", "title": "Share a preview link" },
+    { "file": "spend-limit", "title": "Edit the spend limit in place" },
+    { "file": "uptime", "title": "Explain a number" }
+  ]
+}

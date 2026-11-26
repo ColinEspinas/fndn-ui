@@ -1,0 +1,231 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "flowchart",
+  "title": "Flowchart",
+  "summary": "An agent workflow drawn as a trigger and its conditions on a canvas.",
+  "description": "An agent workflow on a dotted canvas: a trigger node joined by a connector to an If / Else node. The trigger card opens a menu of triggers; each condition row reads as a sentence whose property and value are ghost sm selects. Rows reorder and delete through the row handle's menu (Move up, Move down, Remove), so reordering never needs a drag. Adding a condition reveals the new row once; nothing else animates. Composes select, menu and button; their behaviour comes from Zag in every target.",
+  "kind": "block",
+  "category": "agent",
+  "order": 8,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The dotted canvas"
+    },
+    {
+      "part": "node",
+      "element": "div",
+      "repeat": true,
+      "description": "Kind pill above a card; its kind (trigger or condition) is a recipe variant"
+    },
+    {
+      "part": "kind",
+      "element": "span",
+      "description": "Kind pill, tinted by the kind variant"
+    },
+    {
+      "part": "card",
+      "element": "button | div",
+      "description": "Trigger: the button that is its Menu trigger (data-state=open|closed, marked data-menu=\"trigger\"). Condition: role=group, labelled Conditions"
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "description": "Tinted 36px icon box of the trigger card"
+    },
+    {
+      "part": "text",
+      "element": "span"
+    },
+    {
+      "part": "title",
+      "element": "span",
+      "description": "Trigger label; wraps, never truncates"
+    },
+    {
+      "part": "caption",
+      "element": "span",
+      "optional": true
+    },
+    {
+      "part": "caret",
+      "element": "span",
+      "description": "Says the card opens a menu; does not rotate"
+    },
+    {
+      "part": "edge",
+      "element": "div",
+      "description": "Connector between the nodes, drawn in CSS from color.line-strong; aria-hidden"
+    },
+    {
+      "part": "conditions",
+      "element": "ol"
+    },
+    {
+      "part": "row",
+      "element": "li",
+      "repeat": true,
+      "description": "Handle, joiner, clause. data-entering (set and cleared by the shared helper) while a row the pointer added is revealed; data-collapsed for its first frame (0fr)"
+    },
+    {
+      "part": "handle",
+      "element": "button",
+      "description": "Grip; the trigger of the row Menu (Move up, Move down, Remove; marked data-menu=\"trigger\") and of our Tooltip with the same text. aria-label Condition N options"
+    },
+    {
+      "part": "joiner",
+      "element": "span",
+      "description": "'If' on the first row, 'and' after"
+    },
+    {
+      "part": "clause",
+      "element": "span",
+      "description": "Source, property select, operator, value select; wraps under itself"
+    },
+    {
+      "part": "source",
+      "element": "span",
+      "description": "The record the condition reads (e.g. order); title carries the full name"
+    },
+    {
+      "part": "source-icon",
+      "element": "span"
+    },
+    {
+      "part": "source-text",
+      "element": "span",
+      "description": "Truncates; the full name is the source's title"
+    },
+    {
+      "part": "operator",
+      "element": "span"
+    },
+    {
+      "part": "add",
+      "element": "button",
+      "description": "The real Button (ghost sm) Add condition, marked data-flowchart=\"add\""
+    }
+  ],
+  "props": {
+    "triggers": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "caption": "string?"
+      },
+      "description": "What can start the workflow."
+    },
+    "trigger": {
+      "type": "string",
+      "model": true,
+      "description": "Value of the chosen trigger."
+    },
+    "source": {
+      "type": "string",
+      "default": "record",
+      "description": "Name of the record the conditions read."
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string"
+      },
+      "description": "Properties a condition can test."
+    },
+    "choices": {
+      "type": "object",
+      "description": "Values per property: { [property]: { value, label, meta? }[] }."
+    },
+    "conditions": {
+      "type": "array",
+      "model": true,
+      "items": {
+        "id": "string",
+        "property": "string",
+        "value": "string"
+      },
+      "description": "The If / Else rows in order."
+    },
+    "labels": {
+      "type": "object",
+      "description": "The fixed strings, partial: { trigger, condition, conditions, if, and, is, addCondition, rowOptions, rowProperty, rowValue, moveUp, moveDown, remove }. {n} in rowOptions / rowProperty / rowValue is the row's number."
+    },
+    "kind": {
+      "type": "enum",
+      "values": [
+        "trigger",
+        "condition"
+      ],
+      "part": "node",
+      "description": "Set per node; tints the kind pill and picks the card."
+    }
+  },
+  "events": {
+    "triggerChange": "(value: string)",
+    "conditionsChange": "(conditions: { id, property, value }[]) after a value or property change, an add, a move or a removal"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "disabled"
+  ],
+  "tokens": [
+    "color.page",
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line-strong",
+    "color.accent",
+    "color.orange",
+    "shadow.hairline",
+    "shadow.card",
+    "shadow.raised",
+    "shadow.btn",
+    "radius.chip",
+    "radius.control",
+    "radius.card",
+    "radius.window",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.enter",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "select",
+    "menu",
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "group of conditions (ordered list) under a trigger menu button",
+    "keyboard": [
+      "Tab order: trigger card, then per row the handle, the property select and the value select, then Add condition",
+      "Trigger card: Enter / Space / ArrowDown open the trigger menu (menu contract); picking a trigger updates the card and closes the menu; focus returns to the card",
+      "Row handle: Enter / Space / ArrowDown open Move up / Move down / Remove; after a move focus follows the row's handle, after a removal it lands on the next row's handle (or Add condition)",
+      "Property and value: the select contract; a new property resets the value to that property's first choice",
+      "Add condition: Enter / Space add a row and move focus to its property select; from the keyboard the row appears without the reveal"
+    ],
+    "notes": [
+      "Reordering never needs a drag: the handle's menu moves the row.",
+      "Every select and handle is labelled with its row number ('Condition 2 value').",
+      "The connector is decoration (aria-hidden); order is carried by the DOM."
+    ]
+  },
+  "motion": [
+    "added row: it opens its room (its one grid row 0fr → 1fr over duration.reveal, easing.out-strong, clipped while it opens, so the card grows with it instead of snapping) while it fades up (fndn-fade-up over duration.enter, easing.out-strong), once (data-entering is removed when it ends, so a reorder cannot replay it); keyboard adds are instant",
+    "nothing else animates: no node drag, no connector draw, no caret rotation; reorders and removals are instant",
+    "trigger card and handle: colour / shadow feedback at duration.fast and duration.base; the selects, menus and button keep their own motion"
+  ]
+}

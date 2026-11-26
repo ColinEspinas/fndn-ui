@@ -1,0 +1,606 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "rows": [
+          {
+            "task": "Renew annual contract",
+            "date": "Dec 03",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Migrate billing API",
+            "date": "Sep 22",
+            "status": "progress",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Print Q3 invoices",
+            "date": "Jan 02",
+            "status": "todo",
+            "owner": "Coral Coast Labs"
+          },
+          {
+            "task": "Load-test build 42",
+            "date": "Nov 08",
+            "status": "progress",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Order office chairs",
+            "date": "Apr 14",
+            "status": "done",
+            "owner": "Aurora Health"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deploys by environment (generic)",
+      "width": 520,
+      "props": {
+        "labels": {
+          "filters": "Filter deploys by environment",
+          "region": "Deploys",
+          "empty": "No deploys in this environment",
+          "none": "No deploys yet"
+        },
+        "columns": [
+          {
+            "key": "commit",
+            "label": "Commit",
+            "type": "title"
+          },
+          {
+            "key": "env",
+            "label": "Environment",
+            "type": "tag"
+          },
+          {
+            "key": "author",
+            "label": "Author",
+            "type": "text"
+          },
+          {
+            "key": "duration",
+            "label": "Duration",
+            "type": "number"
+          }
+        ],
+        "filterKey": "env",
+        "filters": [
+          {
+            "key": "all",
+            "label": "All"
+          },
+          {
+            "key": "production",
+            "label": "Production",
+            "tone": "green"
+          },
+          {
+            "key": "staging",
+            "label": "Staging",
+            "tone": "orange"
+          },
+          {
+            "key": "preview",
+            "label": "Preview",
+            "tone": "blue"
+          }
+        ],
+        "rows": [
+          {
+            "commit": "a1b2c3d Add retry to webhook delivery",
+            "env": "production",
+            "author": "Priya Raman",
+            "duration": "50s"
+          },
+          {
+            "commit": "9f8e7d6 Usage alerts behind a flag",
+            "env": "staging",
+            "author": "Daniel Okafor",
+            "duration": "1m 12s"
+          },
+          {
+            "commit": "4c5d6e7 Preview of the new billing page",
+            "env": "preview",
+            "author": "Aiko Tanaka",
+            "duration": "48s"
+          },
+          {
+            "commit": "0a9b8c7 Fix tax rounding",
+            "env": "production",
+            "author": "Jonas Weber",
+            "duration": "41s"
+          }
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names, unbreakable slug, non-Latin and right-to-left",
+      "props": {
+        "rows": [
+          {
+            "task": "Reconcile Alphonso Holdings and Kashmiri Saffron invoices with refunds, credits and late fees",
+            "date": "Dec 03",
+            "status": "todo",
+            "owner": "northwind-industries-holdings-wholesale-cloud-services-division"
+          },
+          {
+            "task": "A",
+            "date": "Jan 01",
+            "status": "done",
+            "owner": "B"
+          },
+          {
+            "task": "夏季限定プランの需要予測を更新する",
+            "date": "Jul 19",
+            "status": "progress",
+            "owner": "株式会社クモ・キャピタル"
+          },
+          {
+            "task": "مراجعة تكاليف الخوادم لهذا الأسبوع",
+            "date": "Mar 08",
+            "status": "todo",
+            "owner": "حلول الشروق"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sixty rows",
+      "props": {
+        "rows": [
+          {
+            "task": "Export batch 1",
+            "date": "Jan 01",
+            "status": "todo",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 2",
+            "date": "Feb 08",
+            "status": "progress",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 3",
+            "date": "Mar 15",
+            "status": "done",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 4",
+            "date": "Apr 22",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 5",
+            "date": "May 01",
+            "status": "progress",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 6",
+            "date": "Jun 08",
+            "status": "done",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 7",
+            "date": "Jul 15",
+            "status": "todo",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 8",
+            "date": "Aug 22",
+            "status": "progress",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 9",
+            "date": "Sep 01",
+            "status": "done",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 10",
+            "date": "Oct 08",
+            "status": "todo",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 11",
+            "date": "Nov 15",
+            "status": "progress",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 12",
+            "date": "Dec 22",
+            "status": "done",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 13",
+            "date": "Jan 01",
+            "status": "todo",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 14",
+            "date": "Feb 08",
+            "status": "progress",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 15",
+            "date": "Mar 15",
+            "status": "done",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 16",
+            "date": "Apr 22",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 17",
+            "date": "May 01",
+            "status": "progress",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 18",
+            "date": "Jun 08",
+            "status": "done",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 19",
+            "date": "Jul 15",
+            "status": "todo",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 20",
+            "date": "Aug 22",
+            "status": "progress",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 21",
+            "date": "Sep 01",
+            "status": "done",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 22",
+            "date": "Oct 08",
+            "status": "todo",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 23",
+            "date": "Nov 15",
+            "status": "progress",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 24",
+            "date": "Dec 22",
+            "status": "done",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 25",
+            "date": "Jan 01",
+            "status": "todo",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 26",
+            "date": "Feb 08",
+            "status": "progress",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 27",
+            "date": "Mar 15",
+            "status": "done",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 28",
+            "date": "Apr 22",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 29",
+            "date": "May 01",
+            "status": "progress",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 30",
+            "date": "Jun 08",
+            "status": "done",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 31",
+            "date": "Jul 15",
+            "status": "todo",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 32",
+            "date": "Aug 22",
+            "status": "progress",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 33",
+            "date": "Sep 01",
+            "status": "done",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 34",
+            "date": "Oct 08",
+            "status": "todo",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 35",
+            "date": "Nov 15",
+            "status": "progress",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 36",
+            "date": "Dec 22",
+            "status": "done",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 37",
+            "date": "Jan 01",
+            "status": "todo",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 38",
+            "date": "Feb 08",
+            "status": "progress",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 39",
+            "date": "Mar 15",
+            "status": "done",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 40",
+            "date": "Apr 22",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 41",
+            "date": "May 01",
+            "status": "progress",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 42",
+            "date": "Jun 08",
+            "status": "done",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 43",
+            "date": "Jul 15",
+            "status": "todo",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 44",
+            "date": "Aug 22",
+            "status": "progress",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 45",
+            "date": "Sep 01",
+            "status": "done",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 46",
+            "date": "Oct 08",
+            "status": "todo",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 47",
+            "date": "Nov 15",
+            "status": "progress",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 48",
+            "date": "Dec 22",
+            "status": "done",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 49",
+            "date": "Jan 01",
+            "status": "todo",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 50",
+            "date": "Feb 08",
+            "status": "progress",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 51",
+            "date": "Mar 15",
+            "status": "done",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 52",
+            "date": "Apr 22",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 53",
+            "date": "May 01",
+            "status": "progress",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 54",
+            "date": "Jun 08",
+            "status": "done",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 55",
+            "date": "Jul 15",
+            "status": "todo",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 56",
+            "date": "Aug 22",
+            "status": "progress",
+            "owner": "Mango Moon Studio"
+          },
+          {
+            "task": "Export batch 57",
+            "date": "Sep 01",
+            "status": "done",
+            "owner": "Kumo Capital"
+          },
+          {
+            "task": "Export batch 58",
+            "date": "Oct 08",
+            "status": "todo",
+            "owner": "Maple Orbit"
+          },
+          {
+            "task": "Export batch 59",
+            "date": "Nov 15",
+            "status": "progress",
+            "owner": "Aurora Health"
+          },
+          {
+            "task": "Export batch 60",
+            "date": "Dec 22",
+            "status": "done",
+            "owner": "Mango Moon Studio"
+          }
+        ]
+      }
+    },
+    {
+      "name": "One row",
+      "props": {
+        "rows": [
+          {
+            "task": "Renew annual contract",
+            "date": "Dec 03",
+            "status": "todo",
+            "owner": "Mango Moon Studio"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Zero rows",
+      "props": {
+        "rows": []
+      }
+    },
+    {
+      "name": "Translated statuses, a hue that is not a pill tone, an unknown value",
+      "props": {
+        "labels": {
+          "filters": "Tickets nach Status filtern",
+          "region": "Support-Tickets",
+          "empty": "Keine Tickets mit diesem Status",
+          "none": "Noch keine Tickets",
+          "columns": {
+            "task": "Ticket",
+            "date": "Datum",
+            "status": "Status",
+            "owner": "Kunde"
+          }
+        },
+        "filters": [
+          {
+            "key": "all",
+            "label": "Alle"
+          },
+          {
+            "key": "todo",
+            "label": "Offen",
+            "tone": "orange"
+          },
+          {
+            "key": "waiting",
+            "label": "Wartet auf Rückmeldung des Kunden",
+            "tone": "purple"
+          },
+          {
+            "key": "done",
+            "label": "Erledigt",
+            "tone": "green"
+          }
+        ],
+        "rows": [
+          {
+            "task": "Rechnungsexport als CSV schlägt fehl",
+            "date": "Nov 16",
+            "status": "waiting",
+            "owner": "Brightline Dental"
+          },
+          {
+            "task": "Zweiter Standort im Tarif",
+            "date": "Nov 12",
+            "status": "todo",
+            "owner": "Juniper Health"
+          },
+          {
+            "task": "Zeitzone auf der Buchungsseite",
+            "date": "Nov 10",
+            "status": "archived_by_migration_2024",
+            "owner": "Orbit Studio"
+          },
+          {
+            "task": "SMS-Erinnerung doppelt versendet",
+            "date": "Nov 08",
+            "status": "done",
+            "owner": "Kestrel Logistics"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "examples": [
+    {
+      "name": "Active",
+      "props": {
+        "tone": "green"
+      },
+      "text": "Active"
+    },
+    {
+      "name": "Pending",
+      "props": {
+        "tone": "orange"
+      },
+      "text": "Pending"
+    },
+    {
+      "name": "Failed",
+      "props": {
+        "tone": "red"
+      },
+      "text": "Failed"
+    },
+    {
+      "name": "Running",
+      "props": {
+        "tone": "accent"
+      },
+      "text": "Running"
+    },
+    {
+      "name": "Draft",
+      "props": {
+        "tone": "neutral"
+      },
+      "text": "Draft"
+    },
+    {
+      "name": "No dot",
+      "props": {
+        "tone": "neutral",
+        "dot": false
+      },
+      "text": "Archived"
+    },
+    {
+      "name": "Small",
+      "props": {
+        "tone": "green",
+        "size": "sm"
+      },
+      "text": "Done"
+    },
+    {
+      "name": "Sent",
+      "props": {
+        "tone": "green",
+        "mark": true
+      },
+      "text": "Answers sent"
+    },
+    {
+      "name": "Dot tone",
+      "props": {
+        "tone": "neutral",
+        "size": "sm",
+        "dotTone": "accent"
+      },
+      "text": "Add-ons"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long status",
+      "props": {
+        "tone": "orange"
+      },
+      "text": "Awaiting supplier confirmation from Northwind Industries Holdings"
+    },
+    {
+      "name": "One letter",
+      "props": {
+        "tone": "green"
+      },
+      "text": "A"
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "tone": "accent"
+      },
+      "text": "قيد التشغيل"
+    },
+    {
+      "name": "Long word",
+      "props": {
+        "tone": "red"
+      },
+      "text": "Lieferverzögerung"
+    },
+    {
+      "name": "Small mark",
+      "props": {
+        "tone": "green",
+        "size": "sm",
+        "mark": true
+      },
+      "text": "Applied 12,480 changes"
+    }
+  ]
+}

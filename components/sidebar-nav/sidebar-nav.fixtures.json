@@ -1,0 +1,720 @@
+{
+  "examples": [
+    {
+      "name": "Expanded",
+      "props": {
+        "workspace": "platform",
+        "workspaces": [
+          {
+            "value": "platform",
+            "label": "Platform Ops"
+          },
+          {
+            "value": "aurora",
+            "label": "Aurora Health"
+          },
+          {
+            "value": "kumo",
+            "label": "Kumo Capital"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "New chat",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "Invite users",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "3/10"
+          }
+        ],
+        "chats": [
+          {
+            "value": "suppliers",
+            "label": "Supplier records",
+            "href": "#suppliers"
+          },
+          {
+            "value": "todos",
+            "label": "Urgent to-dos this morning",
+            "href": "#todos"
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing page ticket",
+            "href": "#pricing"
+          },
+          {
+            "value": "workload",
+            "label": "Workload summary",
+            "href": "#workload"
+          },
+          {
+            "value": "offboarding",
+            "label": "Off-board a supplier",
+            "href": "#offboarding"
+          },
+          {
+            "value": "refund",
+            "label": "Batch refund function",
+            "href": "#refund"
+          }
+        ],
+        "current": "home",
+        "collapsed": false,
+        "chatsOpen": true
+      }
+    },
+    {
+      "name": "Collapsed",
+      "props": {
+        "workspace": "platform",
+        "workspaces": [
+          {
+            "value": "platform",
+            "label": "Platform Ops"
+          },
+          {
+            "value": "aurora",
+            "label": "Aurora Health"
+          },
+          {
+            "value": "kumo",
+            "label": "Kumo Capital"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "New chat",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "Invite users",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "3/10"
+          }
+        ],
+        "chats": [
+          {
+            "value": "suppliers",
+            "label": "Supplier records",
+            "href": "#suppliers"
+          },
+          {
+            "value": "todos",
+            "label": "Urgent to-dos this morning",
+            "href": "#todos"
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing page ticket",
+            "href": "#pricing"
+          },
+          {
+            "value": "workload",
+            "label": "Workload summary",
+            "href": "#workload"
+          },
+          {
+            "value": "offboarding",
+            "label": "Off-board a supplier",
+            "href": "#offboarding"
+          },
+          {
+            "value": "refund",
+            "label": "Batch refund function",
+            "href": "#refund"
+          }
+        ],
+        "current": "home",
+        "collapsed": true,
+        "chatsOpen": true
+      }
+    },
+    {
+      "name": "Chats closed",
+      "props": {
+        "workspace": "platform",
+        "workspaces": [
+          {
+            "value": "platform",
+            "label": "Platform Ops"
+          },
+          {
+            "value": "aurora",
+            "label": "Aurora Health"
+          },
+          {
+            "value": "kumo",
+            "label": "Kumo Capital"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "New chat",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "Invite users",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "3/10"
+          }
+        ],
+        "chats": [
+          {
+            "value": "suppliers",
+            "label": "Supplier records",
+            "href": "#suppliers"
+          },
+          {
+            "value": "todos",
+            "label": "Urgent to-dos this morning",
+            "href": "#todos"
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing page ticket",
+            "href": "#pricing"
+          },
+          {
+            "value": "workload",
+            "label": "Workload summary",
+            "href": "#workload"
+          },
+          {
+            "value": "offboarding",
+            "label": "Off-board a supplier",
+            "href": "#offboarding"
+          },
+          {
+            "value": "refund",
+            "label": "Batch refund function",
+            "href": "#refund"
+          }
+        ],
+        "current": "home",
+        "collapsed": false,
+        "chatsOpen": false
+      }
+    },
+    {
+      "name": "Issue tracker with sections",
+      "props": {
+        "workspaces": [
+          {
+            "value": "northwind",
+            "label": "Northwind"
+          }
+        ],
+        "items": [
+          {
+            "value": "inbox",
+            "label": "Inbox",
+            "href": "#inbox",
+            "icon": "bell",
+            "badge": "4"
+          },
+          {
+            "value": "issues",
+            "label": "My issues",
+            "href": "#issues",
+            "icon": "note-pencil"
+          }
+        ],
+        "sections": [
+          {
+            "value": "projects",
+            "label": "Projects",
+            "items": [
+              {
+                "value": "web-app",
+                "label": "web-app",
+                "href": "#web-app",
+                "icon": "cube"
+              },
+              {
+                "value": "billing-api",
+                "label": "billing-api",
+                "href": "#billing-api",
+                "icon": "cube"
+              },
+              {
+                "value": "data-pipeline",
+                "label": "data-pipeline",
+                "href": "#data-pipeline"
+              }
+            ]
+          },
+          {
+            "value": "views",
+            "label": "Saved views",
+            "items": [
+              {
+                "value": "triage",
+                "label": "Needs triage",
+                "href": "#triage",
+                "icon": "hash"
+              }
+            ]
+          }
+        ],
+        "current": "billing-api"
+      }
+    },
+    {
+      "name": "Small (a dense app)",
+      "props": {
+        "workspace": "platform",
+        "workspaces": [
+          {
+            "value": "platform",
+            "label": "Platform Ops"
+          },
+          {
+            "value": "aurora",
+            "label": "Aurora Health"
+          },
+          {
+            "value": "kumo",
+            "label": "Kumo Capital"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "New chat",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "Invite users",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "3/10"
+          }
+        ],
+        "chats": [
+          {
+            "value": "suppliers",
+            "label": "Supplier records",
+            "href": "#suppliers"
+          },
+          {
+            "value": "todos",
+            "label": "Urgent to-dos this morning",
+            "href": "#todos"
+          },
+          {
+            "value": "pricing",
+            "label": "Pricing page ticket",
+            "href": "#pricing"
+          },
+          {
+            "value": "workload",
+            "label": "Workload summary",
+            "href": "#workload"
+          },
+          {
+            "value": "offboarding",
+            "label": "Off-board a supplier",
+            "href": "#offboarding"
+          },
+          {
+            "value": "refund",
+            "label": "Batch refund function",
+            "href": "#refund"
+          }
+        ],
+        "current": "home",
+        "collapsed": false,
+        "chatsOpen": true,
+        "size": "sm"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names and many chats",
+      "props": {
+        "workspace": "long",
+        "workspaces": [
+          {
+            "value": "long",
+            "label": "Seasonal pricing for the northern summer launch — draft 12 ok"
+          },
+          {
+            "value": "platform",
+            "label": "Platform Ops"
+          },
+          {
+            "value": "aurora",
+            "label": "Aurora Health"
+          },
+          {
+            "value": "kumo",
+            "label": "Kumo Capital"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "New chat",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "Invite users",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "128"
+          }
+        ],
+        "chats": [
+          {
+            "value": "c1",
+            "label": "Supplier records 1",
+            "href": "#c1"
+          },
+          {
+            "value": "c2",
+            "label": "Rollout plan 1",
+            "href": "#c2"
+          },
+          {
+            "value": "c3",
+            "label": "Pricing ticket 1",
+            "href": "#c3"
+          },
+          {
+            "value": "c4",
+            "label": "Margin review 1",
+            "href": "#c4"
+          },
+          {
+            "value": "c5",
+            "label": "Meeting notes 1",
+            "href": "#c5"
+          },
+          {
+            "value": "c6",
+            "label": "Access audit 1",
+            "href": "#c6"
+          },
+          {
+            "value": "c7",
+            "label": "Holiday plan 1",
+            "href": "#c7"
+          },
+          {
+            "value": "c8",
+            "label": "Price list 1",
+            "href": "#c8"
+          },
+          {
+            "value": "c9",
+            "label": "Cloud supplier 1",
+            "href": "#c9"
+          },
+          {
+            "value": "c10",
+            "label": "Beta launch 1",
+            "href": "#c10"
+          },
+          {
+            "value": "c11",
+            "label": "Supplier records 2",
+            "href": "#c11"
+          },
+          {
+            "value": "c12",
+            "label": "Rollout plan 2",
+            "href": "#c12"
+          },
+          {
+            "value": "c13",
+            "label": "Pricing ticket 2",
+            "href": "#c13"
+          },
+          {
+            "value": "c14",
+            "label": "Margin review 2",
+            "href": "#c14"
+          },
+          {
+            "value": "c15",
+            "label": "Meeting notes 2",
+            "href": "#c15"
+          },
+          {
+            "value": "c16",
+            "label": "Access audit 2",
+            "href": "#c16"
+          },
+          {
+            "value": "c17",
+            "label": "Holiday plan 2",
+            "href": "#c17"
+          },
+          {
+            "value": "c18",
+            "label": "Price list 2",
+            "href": "#c18"
+          },
+          {
+            "value": "c19",
+            "label": "Cloud supplier 2",
+            "href": "#c19"
+          },
+          {
+            "value": "c20",
+            "label": "Beta launch 2",
+            "href": "#c20"
+          },
+          {
+            "value": "c21",
+            "label": "Supplier records 3",
+            "href": "#c21"
+          },
+          {
+            "value": "c22",
+            "label": "Rollout plan 3",
+            "href": "#c22"
+          },
+          {
+            "value": "c23",
+            "label": "Pricing ticket 3",
+            "href": "#c23"
+          },
+          {
+            "value": "c24",
+            "label": "Margin review 3",
+            "href": "#c24"
+          },
+          {
+            "value": "c25",
+            "label": "Meeting notes 3",
+            "href": "#c25"
+          },
+          {
+            "value": "c26",
+            "label": "Access audit 3",
+            "href": "#c26"
+          },
+          {
+            "value": "c27",
+            "label": "Holiday plan 3",
+            "href": "#c27"
+          },
+          {
+            "value": "c28",
+            "label": "Price list 3",
+            "href": "#c28"
+          },
+          {
+            "value": "c29",
+            "label": "Cloud supplier 3",
+            "href": "#c29"
+          },
+          {
+            "value": "c30",
+            "label": "Beta launch 3",
+            "href": "#c30"
+          },
+          {
+            "value": "c31",
+            "label": "Supplier records 4",
+            "href": "#c31"
+          },
+          {
+            "value": "c32",
+            "label": "Rollout plan 4",
+            "href": "#c32"
+          },
+          {
+            "value": "c33",
+            "label": "Pricing ticket 4",
+            "href": "#c33"
+          },
+          {
+            "value": "c34",
+            "label": "Margin review 4",
+            "href": "#c34"
+          },
+          {
+            "value": "c35",
+            "label": "Meeting notes 4",
+            "href": "#c35"
+          },
+          {
+            "value": "c36",
+            "label": "Access audit 4",
+            "href": "#c36"
+          },
+          {
+            "value": "c37",
+            "label": "Holiday plan 4",
+            "href": "#c37"
+          },
+          {
+            "value": "c38",
+            "label": "Price list 4",
+            "href": "#c38"
+          },
+          {
+            "value": "c39",
+            "label": "Cloud supplier 4",
+            "href": "#c39"
+          },
+          {
+            "value": "c40",
+            "label": "Beta launch 4",
+            "href": "#c40"
+          }
+        ],
+        "current": "c3",
+        "collapsed": false,
+        "chatsOpen": true
+      }
+    },
+    {
+      "name": "No chats",
+      "props": {
+        "workspace": "platform",
+        "workspaces": [
+          {
+            "value": "platform",
+            "label": "Platform Ops"
+          },
+          {
+            "value": "aurora",
+            "label": "Aurora Health"
+          },
+          {
+            "value": "kumo",
+            "label": "Kumo Capital"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "New chat",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "Home",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "Invite users",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "3/10"
+          }
+        ],
+        "chats": [],
+        "current": "home",
+        "collapsed": false,
+        "chatsOpen": true
+      }
+    },
+    {
+      "name": "Right to left",
+      "props": {
+        "workspace": "ar",
+        "workspaces": [
+          {
+            "value": "ar",
+            "label": "عمليات المصنع"
+          }
+        ],
+        "items": [
+          {
+            "value": "new",
+            "label": "محادثة جديدة",
+            "href": "#new",
+            "icon": "note-pencil"
+          },
+          {
+            "value": "home",
+            "label": "الرئيسية",
+            "href": "#home",
+            "icon": "house"
+          },
+          {
+            "value": "invite",
+            "label": "دعوة مستخدمين",
+            "href": "#invite",
+            "icon": "user-plus",
+            "badge": "٣/١٠"
+          }
+        ],
+        "chats": [
+          {
+            "value": "a",
+            "label": "سجلات الموردين",
+            "href": "#a"
+          },
+          {
+            "value": "b",
+            "label": "مهام عاجلة هذا الصباح",
+            "href": "#b"
+          }
+        ],
+        "current": "home",
+        "collapsed": false,
+        "chatsOpen": true,
+        "chatsLabel": "المحادثات",
+        "label": "تنقل مساحة العمل"
+      }
+    }
+  ]
+}

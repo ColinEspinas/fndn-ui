@@ -1,0 +1,14 @@
+{
+  "playground": {
+    "props": {
+      "checked": true
+    },
+    "text": "Deploy on push"
+  },
+  "examples": [
+    { "file": "deploy-on-push", "title": "Deploy on push" },
+    { "file": "notifications", "title": "Notification settings" },
+    { "file": "environment-protection", "title": "Password protection per environment (no visible label)" },
+    { "file": "owner-only", "title": "Only the owner can change it (disabled)" }
+  ]
+}

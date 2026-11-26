@@ -1,0 +1,17 @@
+{
+  "examples": [
+    { "name": "Neutral", "props": { "title": "Prices change on Monday" }, "text": "The new summer menu goes live at opening time. Orders placed before then keep the old prices.", "width": 420 },
+    { "name": "Accent", "props": { "tone": "accent", "title": "The agent is drafting your weekend plan" }, "text": "You will get a notification when it is ready to review.", "width": 420 },
+    { "name": "Green", "props": { "tone": "green", "title": "Order sent to Northwind Cloud" }, "width": 420 },
+    { "name": "Orange, with actions", "props": { "tone": "orange", "title": "Seat licenses are running low", "actions": [{ "label": "Reorder", "value": "reorder" }, { "label": "Dismiss", "value": "dismiss", "variant": "ghost" }] }, "text": "Two tubs left; the next delivery is on Thursday.", "width": 420 },
+    { "name": "Red", "props": { "tone": "red", "title": "The supplier rejected this order" }, "text": "Their SOC 2 report expired yesterday. Pick another vendor or ask them to renew it.", "width": 420 },
+    { "name": "Description only, no icon", "props": { "icon": false }, "text": "Changes are saved as you type.", "width": 420 }
+  ],
+  "worstCase": [
+    { "name": "Long everything", "props": { "tone": "red", "title": "Remove Aleksandra Wiśniewska-Kowalczyk Confectionery Holdings and every purchase order that references it before the end of the quarter?", "actions": [{ "label": "Remove the supplier and cancel every open order", "value": "remove", "variant": "danger" }, { "label": "Keep", "value": "keep", "variant": "ghost" }] }, "text": "bartholomew.fitzgerald@northwind-industries-holdings.example.com will be notified. 12,480 rows change.", "width": 320 },
+    { "name": "Unbreakable", "props": { "tone": "accent", "title": "averyveryveryverylongunbrokentitlewithoutanyspacesatallthatmustwrap" }, "text": "https://northwind-industries-holdings.example.com/suppliers/aleksandra-wisniewska-kowalczyk/orders", "width": 240 },
+    { "name": "One letter", "props": { "tone": "green", "title": "A" } },
+    { "name": "Right-to-left", "props": { "tone": "orange", "title": "المخزون منخفض" }, "text": "تبقى علبتان فقط؛ التسليم التالي يوم الخميس.", "width": 320 },
+    { "name": "Empty", "props": {} }
+  ]
+}

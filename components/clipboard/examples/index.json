@@ -1,0 +1,18 @@
+{
+  "playground": {
+    "props": {
+      "value": "nw_live_4fK9qL2mX8vR7tB3",
+      "variant": "field",
+      "label": "Live API key",
+      "size": "md",
+      "disabled": false
+    }
+  },
+  "examples": [
+    { "file": "api-key", "title": "Copy an API key" },
+    { "file": "checkout-command", "title": "Copy a command" },
+    { "file": "deploy-id", "title": "Copy a deploy ID (own labels)" },
+    { "file": "invite-link", "title": "Invite link (small)" },
+    { "file": "revoked-key", "title": "Revoked key (disabled)" }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@fndn/vue",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The Vue adapters under one name, for the examples, the docs and the tests: an index of components/. A project gets the source files through fndn.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

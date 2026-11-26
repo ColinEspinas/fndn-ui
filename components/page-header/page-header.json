@@ -1,0 +1,141 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "page-header",
+  "title": "Page Header",
+  "summary": "The strip at the top of a screen's content: a title, a description, a back link and the actions.",
+  "description": "The strip at the top of a screen's content (not the app's top bar): a title that is a real heading, an optional description, an optional back link above it, and the actions at the end of the title's line. Nothing is cut: the title and the description wrap, and when the actions do not fit beside 10rem of text (8rem in a pane) they drop to their own line under it (on a phone). size=\"page\" is a page's one title (20px/600); size=\"pane\" is the one-row header of a pane above a list (13px/600, the description beside the title, a hairline under the row). Static: nothing moves but the back link's colour.",
+  "kind": "component",
+  "category": "navigation",
+  "order": 5,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "page: a column (back link, then the row), gap 4px, no padding or edge of its own: it sits in the page's content column. pane: one wrapping row, at least 44px tall, 16px in at both ends, 8px block padding, a line hairline under it; the back link sits on the title's first line (baseline) and the lines are centred in the row. Extra attributes (id, aria-*) land on it."
+    },
+    {
+      "part": "back",
+      "element": "a | button",
+      "optional": true,
+      "description": "The back link: an <a> when back has an href, a <button type=\"button\"> calling onBack when it has none. The Link recipe (standalone, neutral), laid out in the page's direction (bidi isolate), so the arrow is at the page's start whatever the label's script: 13px on a 20px line, ink-2, ink and underlined on hover, a taller hit area on coarse pointers; a 14px arrow-left before the label, mirrored right-to-left. Never cut: wraps anywhere."
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "description": "The text and the actions: a wrapping row, 16px between them across. page: aligned to the top (the actions on the title's 28px line), 12px between lines when the actions drop. pane: centred."
+    },
+    {
+      "part": "text",
+      "element": "div",
+      "description": "The title and the description; takes the free space and keeps at least 10rem before the actions wrap (8rem in a pane, so a short pane title and its action stay on one row at phone width). page: a column, 4px gap. pane: a wrapping line, the description beside the title on its baseline."
+    },
+    {
+      "part": "title",
+      "element": "h1 | h2 | h3 | h4 | h5 | h6",
+      "description": "The heading (level, h1 by default). page: 20px/600 on a 28px line. pane: 13px/600 on a 20px line. ink. Wraps anywhere, never cut; author text keeps its own direction and its alignment on the page's side."
+    },
+    {
+      "part": "description",
+      "element": "p",
+      "optional": true,
+      "description": "ink-2 (it is read: a count, a state, what the screen holds). page: 13px on a 20px line under the title. pane: 12px on a 20px line beside it. Wraps anywhere."
+    },
+    {
+      "part": "actions",
+      "element": "div",
+      "optional": true,
+      "description": "At the end of the title's line: the host's Buttons (React: a node; Vue: the actions slot; Svelte: a snippet), or Buttons built from data (sm, outline unless given). 8px apart, wrapping among themselves; on their own line under the text when they do not fit beside it."
+    }
+  ],
+  "props": {
+    "title": {
+      "type": "node",
+      "description": "The screen's title, rendered as a real heading. React: a node; Vue: a string or the title slot; Svelte: a string or a snippet."
+    },
+    "description": {
+      "type": "node",
+      "description": "Optional: what the screen holds or its state (\"42 open · updated 2 min ago\"). React: a node; Vue: a string or the description slot; Svelte: a string or a snippet."
+    },
+    "back": {
+      "type": "object",
+      "items": {
+        "label": "string",
+        "href": "string?"
+      },
+      "description": "Optional back link above the title (before it in a pane): the page it returns to, by name (\"Projects\", not \"Back\"). With an href it is a link; without one, a button that calls onBack."
+    },
+    "level": {
+      "type": "number",
+      "default": 1,
+      "description": "The heading's level, 1 to 6. A screen's one title is h1; a header inside a region that already has its h1 (a pane beside the main view, a section of a settings page) takes the next level. The size never follows the level."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "page",
+        "pane"
+      ],
+      "default": "page",
+      "description": "page: a page's one title (Settings, History, Issues), 20px/600, the description under it. pane: the header row of a pane above a list (an inbox beside a preview), 13px/600, the description beside the title, at least 44px tall with a hairline under it."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "label": "string",
+        "value": "string?",
+        "variant": "button variant?"
+      },
+      "ts": "ReactNode | ReadonlyArray<PageHeaderAction>",
+      "description": "The actions at the end of the title's line: your own Buttons (React: a node; Vue: the actions slot; Svelte: a snippet), usually sm, at most one filled; or Buttons from data (sm, outline unless given), which call onAction."
+    }
+  },
+  "slots": {
+    "title": "Vue: a rich title in place of the title prop (Svelte: title as a snippet; React: title as a node).",
+    "description": "Vue: a rich description in place of the description prop (Svelte: a snippet; React: a node).",
+    "actions": "Vue: your own Buttons at the end of the title's line (React: actions as a node; Svelte: actions as a snippet)."
+  },
+  "events": {
+    "back": "(back) when the back button is pressed, or a back link clicked. React onBack, Vue @back, Svelte onback. With an href it replaces the browser's navigation (client routers); a click with a modifier key keeps the browser's.",
+    "action": "(value: string) when a data action is pressed. React onAction, Vue @action, Svelte onaction."
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.line",
+    "text.xl",
+    "text.sm",
+    "text.xs",
+    "duration.fast"
+  ],
+  "dependencies": [
+    "button",
+    "link"
+  ],
+  "a11y": {
+    "role": "none (a heading, a link or button, and the host's buttons)",
+    "keyboard": [
+      "Tab reaches the back link, then each action; the title is not a stop",
+      "Enter follows the back link; Enter or Space presses the back button"
+    ],
+    "notes": [
+      "The title is a real heading (h1 by default), so the screen has its name in the document outline; set level for a header inside a region that already has its h1.",
+      "The back link names where it goes (\"Projects\"); its arrow is aria-hidden.",
+      "No landmark: the root is a div, so a page header inside the main content never becomes a second banner."
+    ]
+  },
+  "motion": [
+    "back link: colour over duration.fast (hover gated to a fine pointer), the press at once",
+    "the actions: the Buttons' own",
+    "nothing else moves; nothing plays on first paint"
+  ],
+  "notes": [
+    "Replaces the hand-built page titles of a screen: an h1 with a Button beside it, a pane's title row with a count and a Mark all as read."
+  ]
+}

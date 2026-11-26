@@ -1,0 +1,13 @@
+{
+  "playground": {
+    "props": {
+      "variant": "boxed"
+    },
+    "text": "28"
+  },
+  "examples": [
+    { "file": "pull-request-filters", "title": "Pull request filters" },
+    { "file": "section-heading", "title": "Beside a section heading" },
+    { "file": "more-reviewers", "title": "More reviewers than fit" }
+  ]
+}

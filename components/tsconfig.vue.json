@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "../packages/vue/src/index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/examples/**"
+  ]
+}

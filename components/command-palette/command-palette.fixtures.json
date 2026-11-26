@@ -1,0 +1,249 @@
+{
+  "examples": [
+    {
+      "name": "Workspace",
+      "props": {
+        "open": true,
+        "items": [
+          {
+            "value": "/projects/web-app",
+            "label": "web-app",
+            "group": "Projects",
+            "meta": "Production",
+            "keywords": [
+              "frontend",
+              "next"
+            ]
+          },
+          {
+            "value": "/projects/billing-api",
+            "label": "billing-api",
+            "group": "Projects",
+            "meta": "Staging",
+            "keywords": [
+              "payments"
+            ]
+          },
+          {
+            "value": "/projects/docs-site",
+            "label": "docs-site",
+            "group": "Projects",
+            "meta": "Preview"
+          },
+          {
+            "value": "deploy",
+            "label": "Deploy to Production",
+            "group": "Actions",
+            "shortcut": [
+              "⌘",
+              "D"
+            ],
+            "keywords": [
+              "ship",
+              "release"
+            ]
+          },
+          {
+            "value": "invite",
+            "label": "Invite teammates",
+            "group": "Actions",
+            "shortcut": [
+              "⌘",
+              "I"
+            ]
+          },
+          {
+            "value": "/settings/billing",
+            "label": "Billing",
+            "group": "Settings",
+            "meta": "Team plan"
+          },
+          {
+            "value": "/settings/api-keys",
+            "label": "API keys",
+            "group": "Settings",
+            "keywords": [
+              "token",
+              "nw_live"
+            ]
+          },
+          {
+            "value": "theme",
+            "label": "Switch to dark theme",
+            "group": "Preferences",
+            "keywords": [
+              "appearance",
+              "night"
+            ]
+          }
+        ],
+        "recent": [
+          "deploy",
+          "/projects/billing-api"
+        ],
+        "placeholder": "Search projects, settings and actions…"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names, many rows, no recent",
+      "props": {
+        "open": true,
+        "items": [
+          {
+            "value": "/projects/p0",
+            "label": "data-pipeline-nightly-backfill-for-every-region-and-every-customer-account",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p1",
+            "label": "service-01",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p2",
+            "label": "service-02",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p3",
+            "label": "service-03",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p4",
+            "label": "service-04",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p5",
+            "label": "service-05",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p6",
+            "label": "service-06",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p7",
+            "label": "service-07",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p8",
+            "label": "service-08",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p9",
+            "label": "service-09",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p10",
+            "label": "service-10",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p11",
+            "label": "service-11",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p12",
+            "label": "service-12",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p13",
+            "label": "service-13",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p14",
+            "label": "service-14",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p15",
+            "label": "service-15",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p16",
+            "label": "service-16",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p17",
+            "label": "service-17",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p18",
+            "label": "service-18",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p19",
+            "label": "service-19",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p20",
+            "label": "service-20",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p21",
+            "label": "service-21",
+            "group": "Projects",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p22",
+            "label": "service-22",
+            "group": "Services with a long group label that wraps onto a second line",
+            "meta": "Production"
+          },
+          {
+            "value": "/projects/p23",
+            "label": "service-23",
+            "group": "Projects",
+            "meta": "Production"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Nothing to search",
+      "props": {
+        "open": true,
+        "items": []
+      }
+    }
+  ]
+}

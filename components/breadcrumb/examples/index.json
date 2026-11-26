@@ -1,0 +1,18 @@
+{
+  "playground": {
+    "props": {
+      "label": "Breadcrumb",
+      "items": [
+        { "label": "Northwind", "href": "/northwind" },
+        { "label": "web-app", "href": "/northwind/web-app" },
+        { "label": "Deploys", "href": "/northwind/web-app/deploys" },
+        { "label": "dpl_7f3a9c" }
+      ]
+    }
+  },
+  "examples": [
+    { "file": "deploy-page", "title": "A deploy inside a project" },
+    { "file": "settings-folded", "title": "A deep settings page, folded" },
+    { "file": "client-router", "title": "With a client router" }
+  ]
+}

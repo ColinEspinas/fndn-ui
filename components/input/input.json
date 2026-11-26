@@ -1,0 +1,109 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "input",
+  "title": "Input",
+  "summary": "A one-line text field.",
+  "description": "A one-line text field: a name, an email, a URL, a search. It is the shared control (`lib/control.ts`), field kind: any focus shows the accent ring. Sizes xs 24 · sm 28 · md 32 · lg 36 (one scale with every control, buttons included) and looks outline · subtle · ghost. Inside a Field (field.json) it is wired to the field's label, helper and error through Ark UI's field context.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 1,
+  "status": "stable",
+  "element": "input",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "input",
+      "description": "input or textarea No wrapper: the control is the root, so class and style land on this outermost element (what a caller sizes and places); every other attribute stays on the control."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "string",
+      "model": true
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The shared control's sizes (`lib/control.ts`), dimensions only: xs 24px, sm 28px, md 32px, lg 36px; text 12 · 12 · 13 · 14px; padding 6 · 8 · 10 · 12px. 40px and 16px text on a coarse pointer."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "mono": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false,
+      "attr": "aria-invalid",
+      "description": "aria-invalid and the red ring. Absent: a surrounding Field decides."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "attr": "disabled"
+    },
+    "multiline": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render a textarea."
+    }
+  },
+  "events": {
+    "input": "(value: string)"
+  },
+  "states": [
+    "hover",
+    "focus",
+    "invalid",
+    "disabled"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover",
+    "color.ink",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "font.mono",
+    "duration.fast",
+    "duration.base"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "keyboard": [
+      "Standard text editing; Tab moves on"
+    ],
+    "notes": [
+      "Every field needs a name: a Field label (wired by Ark's field context) or an aria-label.",
+      "Inside a Field the control is described by the helper or the error (aria-describedby) and marked aria-invalid; the error should say how to fix the problem.",
+      "Text is at least 16px on touch devices so iOS does not zoom the page on focus.",
+      "Set type, inputmode, autocomplete and enterkeyhint for the data the field collects."
+    ]
+  },
+  "motion": [
+    "focus ring and invalid ring: box-shadow over duration.base, ease",
+    "hover (pointer only): background over duration.fast, ease"
+  ]
+}

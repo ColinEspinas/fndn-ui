@@ -1,0 +1,115 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "alert-dialog",
+  "title": "Alert Dialog",
+  "summary": "A window that asks a person to confirm a destructive or important action.",
+  "description": "Interrupts to confirm a consequential action (delete, discard, revoke): no close button, and a click outside does not close it. Focus starts on the safe action and the question is announced at once (role=\"alertdialog\"). It is the Dialog with two fixed actions, Cancel and the action named by its verb (\"Delete project\"); Escape cancels. The window, its motion, its stacking and its phone layout are the Dialog's. Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 5,
+  "status": "beta",
+  "engine": "dialog",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Layout-neutral hook (display: contents) around the Dialog, whose own parts (dialog-trigger, dialog-content, dialog-title, dialog-description, dialog-body, dialog-footer) render the window."
+    },
+    {
+      "part": "cancel",
+      "element": "button",
+      "description": "The first footer Button (ghost, sm), marked data-alert-dialog=\"cancel\". Takes focus when the window opens. Closes without acting."
+    },
+    {
+      "part": "action",
+      "element": "button",
+      "description": "The second footer Button (sm; danger by default, primary when tone is neutral), marked data-alert-dialog=\"action\". Calls onAction, then closes."
+    }
+  ],
+  "props": {
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "Controlled: open with onOpenChange. Uncontrolled: defaultOpen."
+    },
+    "title": {
+      "type": "string",
+      "description": "Required: the question, which names the window (\"Delete billing-api?\")."
+    },
+    "description": {
+      "type": "string",
+      "description": "What happens, and whether it can be undone. Describes the window."
+    },
+    "actionLabel": {
+      "type": "string",
+      "default": "Continue",
+      "description": "Label of the action: say what it does (\"Delete project\"), never \"OK\"."
+    },
+    "cancelLabel": {
+      "type": "string",
+      "default": "Cancel",
+      "description": "Label of the cancel Button."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "danger",
+        "neutral"
+      ],
+      "default": "danger",
+      "description": "danger: the action is a danger Button (a destructive confirm). neutral: a primary Button (an interruption that destroys nothing, such as leaving with unsent changes)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "The Dialog's widths: sm 360px, md 440px."
+    },
+    "triggerLabel": {
+      "type": "string",
+      "description": "Renders the Dialog's default Button trigger with this label. Otherwise pass your own trigger, or control `open`."
+    }
+  },
+  "slots": {
+    "default": "Body content under the description (optional)",
+    "trigger": "Your own trigger element (React: the trigger prop; Vue: trigger slot; Svelte: trigger snippet receiving the props to spread)"
+  },
+  "events": {
+    "openChange": "(open: boolean)",
+    "action": "() the action was pressed (the window then closes)",
+    "cancel": "() Cancel, Escape, or a controlled close"
+  },
+  "states": [
+    "open",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [],
+  "dependencies": [
+    "dialog",
+    "button"
+  ],
+  "a11y": {
+    "role": "alertdialog",
+    "keyboard": [
+      "Enter / Space on the trigger open it; focus moves to Cancel",
+      "Tab and Shift+Tab cycle between Cancel and the action (and any control in the body); focus cannot leave the window",
+      "Escape cancels and returns focus to the trigger",
+      "A click on the dimmed page does nothing and never moves focus out of the window"
+    ],
+    "notes": [
+      "role=\"alertdialog\", aria-modal, labelled by the title and described by the description: screen readers read both when it opens.",
+      "Focus starts on Cancel so that Enter pressed by habit does not destroy anything.",
+      "Opening and closing from the keyboard are instant (the Dialog's kbd-instant)."
+    ]
+  },
+  "motion": [
+    "the Dialog's: the window fades and scales from motion.popup-scale around its centre over duration.slow with easing.out-strong, the backdrop fades with it; it closes at duration.fast; instant from the keyboard"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "progress",
+  "title": "Progress",
+  "summary": "A bar that shows how far a task has gone.",
+  "description": "A bar that shows how far a task has gone: an upload, a build, a quota. A linear progress bar: a rounded track in the line colour and a range in a tone, with an optional label and value above it. The progress ring's line, laid flat: the same track colour, the same tones, the same travel when the value changes. Without a value it is indeterminate: a band sweeps along the track. Behaviour and ARIA from the Zag progress machine through Ark UI.",
+  "kind": "component",
+  "category": "feedback",
+  "order": 5,
+  "status": "beta",
+  "engine": "progress",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's progress root: data-state=loading|complete|indeterminate, --percent (0..100) for the range. A two-column grid: label at the start and value at the end on the first row, the track across both on the second."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "What is progressing (12px/500 ink-2); it names the progress bar (aria-labelledby). Wraps, never cut; author text keeps its own direction."
+    },
+    {
+      "part": "value",
+      "element": "span",
+      "optional": true,
+      "description": "Ark's value text (\"42%\", or the caller's formatted text): 12px ink-2, tabular figures, never wraps; aria-hidden (the progressbar already carries the value)."
+    },
+    {
+      "part": "track",
+      "element": "div",
+      "description": "role=progressbar with aria-valuemin, aria-valuemax and aria-valuenow (none while indeterminate), named by the label or by the label prop. Full width, rounded pill, color.line, clips the range. Indeterminate: its ::before is a band a quarter of the track wide that sweeps along it."
+    },
+    {
+      "part": "range",
+      "element": "div",
+      "description": "The filled part: as wide as the track, rounded pill, in the tone; moved by translateX(percent - 100%) (mirrored right-to-left). Indeterminate: it waits out of sight at translateX(-100%), so a value that arrives only grows from the start."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "number",
+      "description": "Between min and max; out-of-range values are clamped. null (or omitted) is indeterminate."
+    },
+    "min": {
+      "type": "number",
+      "default": 0
+    },
+    "max": {
+      "type": "number",
+      "default": 100
+    },
+    "label": {
+      "type": "string",
+      "description": "Shown above the track at the start, and the progress bar's name."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "default": "Progress",
+      "description": "The progress bar's name when there is no visible label (aria-label)."
+    },
+    "showValue": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the value above the track at the end (\"42%\"; nothing while indeterminate)."
+    },
+    "valueText": {
+      "type": "string",
+      "description": "The text shown as the value instead of the percentage (\"3 of 8 files\"); also aria-valuetext."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "orange",
+        "green",
+        "red",
+        "accent"
+      ],
+      "default": "orange",
+      "description": "The range's colour, as the progress ring."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "The track's height: sm 4px, md 6px."
+    }
+  },
+  "states": [
+    "loading",
+    "complete",
+    "indeterminate"
+  ],
+  "tokens": [
+    "color.line",
+    "color.orange",
+    "color.green",
+    "color.red",
+    "color.accent",
+    "color.ink-2",
+    "radius.pill",
+    "text.xs",
+    "duration.move",
+    "easing.out-strong"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "progressbar",
+    "notes": [
+      "The track is the progressbar: aria-valuenow is the value (none while indeterminate), aria-valuemin / aria-valuemax the range, aria-valuetext the valueText when given.",
+      "Give it a name that says what is progressing: the label (visible) or ariaLabel.",
+      "The visible value is aria-hidden: the progressbar already announces it."
+    ]
+  },
+  "motion": [
+    "range: transform over duration.move easing.out-strong when the value changes (the ring's arc timing); jumps under prefers-reduced-motion",
+    "indeterminate: a band (the track's ::before, never the range, so the range's transform never changes kind) sweeps along the track, 1.4s linear, looping (it is the loading signal, so it keeps moving under reduced motion, like the spinner)",
+    "nothing animates on mount"
+  ]
+}

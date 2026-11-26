@@ -1,0 +1,213 @@
+/* ui base — the global rules of the one stylesheet: page, focus ring, button reset, icon box,
+ * stacking of popups, keyframes. Loaded after Tailwind (its preflight) and tokens.css, in the
+ * components layer, so a recipe's utilities always win. Everything a component looks like is in its
+ * recipe (<name>.recipe.ts); nothing here names a component.
+ * The rules behind this file are written down in docs/design (motion, interaction). */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* every pressable part paints its own :active state, so the browser's tap flash only fights it */
+  -webkit-tap-highlight-color: transparent;
+  /* no font inflation in landscape on phones */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--fndn-page);
+  color: var(--fndn-ink);
+  font-family: var(--fndn-font-sans);
+  font-feature-settings: "cv11", "ss01", "tnum";
+  font-size: var(--fndn-text-md);
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+::selection {
+  background: var(--fndn-accent-tint);
+  color: var(--fndn-ink);
+}
+
+h1, h2, h3, h4 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+a {
+  color: inherit;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: auto;
+}
+
+/* Tailwind's preflight resets the font features of code elements; ours keep the page's */
+code, kbd, pre, samp { font-family: var(--fndn-font-mono); font-feature-settings: inherit; font-variation-settings: inherit; }
+
+/* ── controls ─────────────────────────────────────────────
+ * Every button that is a part of a component (it carries data-slot) or sits inside one starts
+ * from a blank slate; the recipe paints exactly what it wants. :where() keeps specificity at zero. */
+:where(button[data-slot], [data-slot] button) {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+}
+
+/* Controls behave like native ones on touch: no double-tap-zoom delay, and a
+ * long press neither selects the label nor opens the callout. Content stays selectable. */
+:where(button[data-slot], [data-slot] button, [data-slot][role]):where(button, [role="button"], [role="tab"], [role="switch"], [role="radio"], [role="checkbox"], [role="option"], [role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]) {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* anything clickable invites the click */
+:where(button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label:has(input),
+a) {
+  cursor: pointer;
+}
+
+/* icon — every icon (a Phosphor <svg> from @phosphor-icons/react|vue or phosphor-svelte) is
+ * written with data-slot="icon": a 1em square of the text it sits in, that never shrinks. A recipe
+ * sizes and colours it from its parent ([&>[data-slot=icon]]:size-[1em]). */
+[data-slot="icon"] { display: inline-block; flex-shrink: 0; width: 1em; height: 1em; line-height: 1; vertical-align: -0.125em; }
+
+/* Keyboard-initiated changes are instant: a part whose transition must not play then has the
+ * `kbd-instant` utility in its recipe (tailwind.css; popups, sliding thumbs, indicators, carets).
+ * It reads html[data-fndn-input], set by trackModality. The gliding highlight of a list
+ * (lib/glide.ts) is the one exception: it glides under the keyboard too. */
+
+/* ── stacking ─────────────────────────────────────────────
+ * Zag mirrors the content's z-index into an inline `--z-index` on its positioners (or writes
+ * nothing, or a huge inline z-index on the toast region), so a component's own `z-index` never
+ * sticks. These rules carry !important, which an inline declaration without it cannot undo.
+ * Order, upward: popups (select, menu, popover, hover card, …) < dialog and drawer < toasts <
+ * tooltip. A modal dialog or drawer makes the rest of the page inert, so a popup open at the same
+ * time belongs to it: it goes one above. */
+:where([data-scope])[data-part="positioner"] { z-index: var(--fndn-z-popup) !important; }
+:where([data-scope="dialog"], [data-scope="drawer"])[data-part="positioner"],
+:where([data-scope="dialog"], [data-scope="drawer"])[data-part="backdrop"] { z-index: var(--fndn-z-dialog) !important; }
+:where([data-scope="toast"])[data-part="group"] { z-index: var(--fndn-z-toast) !important; }
+:where([data-scope="tooltip"])[data-part="positioner"] { z-index: var(--fndn-z-tooltip) !important; }
+:root:has(:where([data-scope="dialog"], [data-scope="drawer"])[data-part="content"][data-state="open"])
+  :where([data-scope]:not([data-scope="dialog"], [data-scope="drawer"], [data-scope="tooltip"]))[data-part="positioner"] {
+  z-index: calc(var(--fndn-z-dialog) + 1) !important;
+}
+
+/* ── focus ────────────────────────────────────────────────
+ * One ring everywhere, keyboard only. The ring follows the element's own
+ * radius; nothing about the element changes shape when it takes focus. */
+:where(:focus-visible) {
+  outline: 2px solid var(--fndn-accent);
+  outline-offset: 2px;
+}
+/* text fields draw their own ring (lib/control.ts) */
+:where(input, textarea, select, [contenteditable]):focus-visible {
+  outline: none;
+}
+/* a popup trigger the engine refocused after a pointer closed its popup (a click on the trigger
+ * again, outside, or on an item) shows no ring: the browser counts that programmatic focus as
+ * keyboard focus. Only while the last key-or-press input was a press (data-fndn-focus-input, set by
+ * trackModality in lib/modality.ts): any key shows the ring again at once, and a page without the
+ * tracker keeps every ring. */
+:root[data-fndn-focus-input="pointer"] [aria-haspopup]:not([aria-haspopup="false"]):focus-visible {
+  outline: none;
+}
+
+/* theme switches swap every token at once — freeze transitions so the flip
+ * is one clean repaint instead of hundreds of mismatched colour fades */
+:root[data-fndn-theme-switching] *,
+:root[data-fndn-theme-switching] *::before,
+:root[data-fndn-theme-switching] *::after {
+  transition: none !important;
+}
+
+/* ── shared keyframes ─────────────────────────────────────
+ * Keyframes are for one-shot entrances and loops only. Anything a user can
+ * trigger twice in a second (toggles, popups, highlights) uses transitions,
+ * which retarget from where they are instead of restarting.
+ * Travel reads the motion tokens, so under prefers-reduced-motion these
+ * become plain fades without any per-component work. */
+@keyframes fndn-fade-up {
+  from { opacity: 0; transform: translateY(var(--fndn-motion-enter-shift)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fndn-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fndn-pop-in {
+  from { opacity: 0; transform: scale(var(--fndn-motion-popup-scale)); }
+  to   { opacity: 1; transform: scale(1); }
+}
+/* loops */
+@keyframes fndn-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes fndn-shimmer-text {
+  from { background-position: 150% center; }
+  to   { background-position: -50% center; }
+}
+@keyframes fndn-caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+/* pixel-grid loader — brighten plateau, staggered per cell (loading-state) */
+@keyframes fndn-pixel-on {
+  0%, 100% { opacity: 0.15; }
+  18%, 42% { opacity: 1; }
+  62% { opacity: 0.15; }
+}
+
+/* ── keyframes of single components ───────────────────────
+ * A recipe can name an animation (animate-[…]) but cannot define its keyframes, so they live
+ * here, in the one stylesheet. */
+/* agent-screen */
+@keyframes fndn-agent-screen-pulse {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+/* carousel */
+/* the current dot's fill while slides advance by themselves, over the time a page stays */
+@keyframes fndn-carousel-progress {
+  from { transform: scaleX(0); }
+  to { transform: none; }
+}
+/* collapsible */
+@keyframes fndn-collapsible-exit {
+  to { visibility: hidden; }
+}
+/* filter-table */
+@keyframes fndn-filter-table-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
+@keyframes fndn-filter-table-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
+/* prompt-bar */
+@keyframes fndn-prompt-bar-level {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+/* records-table */
+@keyframes fndn-records-table-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
+/* segmented-control */
+@keyframes fndn-segmented-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
+@keyframes fndn-segmented-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
+/* the chips' edge fades (a mask): the widths flip at the midpoints (unregistered properties
+ * animate discretely), so a fade appears as soon as there is more on its side */
+@keyframes fndn-segmented-fade {
+  0%, 1% { --_fade-start: 0px; --_fade-end: 16px; }
+  2%, 98% { --_fade-start: 16px; --_fade-end: 16px; }
+  99%, 100% { --_fade-start: 16px; --_fade-end: 0px; }
+}
+/* selection-actions */
+@keyframes fndn-selection-actions-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
+@keyframes fndn-selection-actions-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }
+/* table */
+@keyframes fndn-table-veil-start { 0%, 1% { opacity: 0; } 2%, 100% { opacity: 1; } }
+@keyframes fndn-table-veil-end { 0%, 98% { opacity: 1; } 99%, 100% { opacity: 0; } }

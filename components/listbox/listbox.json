@@ -1,0 +1,182 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "listbox",
+  "title": "Listbox",
+  "summary": "A list of options in the page to pick one or several, without a popup.",
+  "description": "A list of options laid in the page to pick one or several, without a popup. The select's list laid in the page: option rows under one gliding highlight, in a box with the popup's padding and radius but the field's hairline instead of a lift. Single choice (a click replaces) or multiple (a click adds or removes); a check marks every chosen row. The list holds focus and the arrow keys move the highlight, which glides under the pointer and the keyboard alike. Behaviour, focus and ARIA come from the Zag listbox machine, through Ark UI.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 8,
+  "status": "beta",
+  "engine": "listbox",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Names the list (aria-labelledby)"
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=listbox; the tab stop (rows are reached through aria-activedescendant). card: surface, 4px padding, card radius, hairline, scrolls inside itself past 360px. flush: no surface, no hairline, no padding, no height cap (its pane scrolls), rows edge to edge. Both: the field's accent ring when focused from the keyboard. At least 120px wide, then as wide as its longest option (or the width given). aria-multiselectable in multiple mode. size sm: 26px rows."
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "Shared gliding highlight layer (`glideLayer` of `lib/glide.ts`); glides under the pointer and the arrow keys alike. Shown while the list is hovered or holds focus; fades out when neither. 4px in from the box's edges in card, edge to edge in flush."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "role=option; data-state=checked|unchecked, aria-selected, data-disabled from the engine. data-highlighted is written by the adapter: the engine's highlighted value, while the list is hovered or holds focus (the engine alone marks it only under keyboard focus, so the pointer would never move the highlight). A mouse move over a row makes it the highlighted value unless the last input was a key. The shared option row (`lib/option.ts`)."
+    },
+    {
+      "part": "item-icon",
+      "element": "span",
+      "optional": true,
+      "description": "Leading icon of an option (14px glyph, ink-3; aria-hidden): what the choice is at a glance, e.g. the channel or the provider. React: a node (a Phosphor icon with data-slot=\"icon\" weight=\"bold\"); Vue and Svelte: an icon component, drawn bold"
+    },
+    {
+      "part": "item-text",
+      "element": "span",
+      "description": "Shown whole: wraps, never cut. Followed by a description, it keeps up to 70% of the row"
+    },
+    {
+      "part": "item-description",
+      "element": "span",
+      "optional": true,
+      "description": "One line after the label (12px, ink-2) that says what the choice means: an address, a cost, a consequence. The one part that is cut: it gives way to the label and carries a title with its full text It sits on the label's first line (shared baseline), also when the label wraps."
+    },
+    {
+      "part": "item-meta",
+      "element": "span",
+      "optional": true,
+      "description": "At the row's end, before the check: a note or a count (2xs, ink-2, tabular figures), or a status letter in its tone (metaTone: 12px, medium; M modified orange, A added green, D deleted red). Never wraps."
+    },
+    {
+      "part": "item-indicator",
+      "element": "span",
+      "description": "Check on every chosen row; keeps its space on other rows"
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "description": "string? (one line after the label, cut with a title)",
+        "icon": "icon? (React: a node; Vue / Svelte: a component)",
+        "meta": "string? (at the row's end: a note, a count, a status letter)",
+        "disabled": "boolean?",
+        "metaTone": "neutral|accent|green|orange|red? (a status letter in its tone: M orange, A green, D red)"
+      },
+      "description": "Options in order. Strings are accepted as value = label. An icon and a description help when the options are things the user tells apart by kind or by detail (alert channels, providers, plans); keep plain labels for short lists of names."
+    },
+    "value": {
+      "type": "array",
+      "model": true,
+      "description": "The chosen values (one at most in single mode)."
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": [
+        "single",
+        "multiple"
+      ],
+      "default": "single",
+      "description": "single: a click or Enter replaces the choice. multiple: a click or Enter adds or removes the row."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label; otherwise pass aria-label."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "Row height, the one control scale: xs 24 · sm 28 (dense lists: an editor's change list or explorer; 12px text) · md 32 · lg 36 (13px). Dimensions only."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "card",
+        "flush"
+      ],
+      "default": "card",
+      "description": "card: the popup's box laid in the page (surface, hairline, 4px padding). flush: no box, the list is part of its pane, like an editor's change list or explorer; rows run edge to edge and the pane does the scrolling. The keyboard focus ring shows in both."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[])"
+  },
+  "states": [
+    "focus-visible",
+    "highlighted",
+    "selected",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.hover",
+    "color.hover-2",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "shadow.hairline",
+    "radius.card",
+    "radius.chip",
+    "text.2xs",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.fast",
+    "duration.base",
+    "duration.move",
+    "easing.out-strong",
+    "color.green",
+    "color.orange",
+    "color.red",
+    "color.accent-ink"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "listbox",
+    "keyboard": [
+      "Tab focuses the list (one tab stop); the highlight shows on the chosen row, else the first",
+      "ArrowDown / ArrowUp move the highlight; Home / End jump to the first and last option",
+      "Typing jumps to the matching option (type-ahead)",
+      "Enter or Space chooses the highlighted option (multiple: adds or removes it)",
+      "Tab moves on"
+    ],
+    "notes": [
+      "Give it a visible label or an aria-label.",
+      "Focus stays on the list; the highlighted option is announced through aria-activedescendant, chosen ones through aria-selected.",
+      "Every option is readable in full: past the list's width it wraps. A description is part of the option's text (read with it); cut on screen, it keeps its full text in a title.",
+      "The icon is decoration (aria-hidden): the label alone must name the choice."
+    ]
+  },
+  "motion": [
+    "highlight: one layer glides between options over duration.move, easing.out-strong, under the pointer and the arrow keys alike; it fades in and out over duration.base",
+    "rows: a pressed option darkens to color.hover-2 over duration.fast; choosing is instant",
+    "focus ring: box-shadow over duration.base"
+  ]
+}

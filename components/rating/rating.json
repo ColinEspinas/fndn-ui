@@ -1,0 +1,129 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "rating",
+  "title": "Rating",
+  "summary": "A score out of a few stars, which can be set or only shown.",
+  "description": "A score out of a few stars, optionally in halves. Hovering previews the score, a click sets it; it can also only show a score (readOnly). Stars are filled in ink over line-strong ones (md 24px cells with 20px stars, sm 18px with 14px: the switch's heights). It is a radio group: one tab stop, arrow keys change the score. Behaviour by Ark UI's rating-group (Zag). Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 10,
+  "status": "beta",
+  "engine": "rating-group",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's rating-group root: a column, the label above the stars. Half opacity and inert when disabled."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Visible name (the label prop): text.sm, medium, ink, as the Field's label; it names the group."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "role=radiogroup: the stars side by side, no gap of their own (the cell is larger than its star)."
+    },
+    {
+      "part": "item",
+      "element": "span",
+      "repeat": true,
+      "description": "One star, role=radio named \"3 stars\". Two Phosphor stars (fill) in one cell: the empty one in color.line-strong, the filled one in color.ink over it, shown when the engine highlights the item (data-highlighted: within the score, or within the hover preview) and cut to its inline-start half for a half star (data-half). md 24px / 20px star, sm 18px / 14px; radius.chip for the focus ring. On a coarse pointer the hit area is 40px high."
+    },
+    {
+      "part": "hidden-input",
+      "element": "input",
+      "optional": true,
+      "description": "Ark's hidden input with the score, for a form (name)."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "number",
+      "default": 0,
+      "model": true,
+      "description": "The score: 0 for none, up to count; in halves with allowHalf."
+    },
+    "count": {
+      "type": "number",
+      "default": 5,
+      "description": "Number of stars."
+    },
+    "allowHalf": {
+      "type": "boolean",
+      "default": false,
+      "description": "The first half of a star picks .5 (the inline-start half, mirrored right-to-left)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "md",
+      "description": "md: 24px cells, 20px stars. sm: 18px cells, 14px stars."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label above the stars."
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the score; it cannot change. The checked star stays focusable, so the score is announced."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name."
+    }
+  },
+  "events": {
+    "valueChange": "(value: number) after a click or a key"
+  },
+  "states": [
+    "hover",
+    "press",
+    "highlighted",
+    "half",
+    "focus-visible",
+    "readonly",
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.line-strong",
+    "radius.chip",
+    "text.sm",
+    "duration.fast",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale-sm"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "radiogroup",
+    "keyboard": [
+      "Tab moves to the checked star (one tab stop)",
+      "Arrow Right / Arrow Up: one more (a half with allowHalf); Arrow Left / Arrow Down: one less (mirrored right-to-left)",
+      "Home / End: the lowest / the highest score",
+      "Space: sets the score to the focused star"
+    ],
+    "notes": [
+      "Each star is role=radio with aria-roledescription \"rating\", named \"<n> stars\", aria-checked on the score's star.",
+      "Name the group with label (visible) or aria-label.",
+      "Read-only: the checked star stays in the tab order and the score is read; nothing changes it.",
+      "To set it from outside, control `value`: React value / onValueChange."
+    ]
+  },
+  "motion": [
+    "fill (pointer only): opacity over duration.fast as the hover preview or the score changes; instant from the keyboard (kbd-instant)",
+    "press (pointer only): the star gives to motion.press-scale-sm over duration.press with easing.out-strong; not when read-only"
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "insight-cards",
+  "title": "Insight Cards",
+  "summary": "Insights from an agent, one at a time, each with a small chart.",
+  "description": "Paged insights from an agent: a header with the count and a pager, then one insight at a time. Each insight is a sentence (with entity chips and value pills), a small card with a legend and an inline SVG chart, and a follow-up button. The chart is drawn by a shared builder (insight-chart.ts) in every target, has a text alternative, and never animates. Pages stack in one cell, so the component is as tall as its tallest insight and paging never shifts what sits below it.",
+  "kind": "block",
+  "category": "data",
+  "order": 4,
+  "status": "beta",
+  "element": "section",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "section",
+      "description": "aria-roledescription=carousel, labelled by the title"
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "description": "Title (with a plain Count) and the pager: a Pager with loop, layout start, label 'Choose insight', buttons 'Previous insight' / 'Next insight'; its position is the role=status '2 of 3'. With no insights an empty-state row (centred) replaces the pages."
+    },
+    {
+      "part": "title",
+      "element": "span",
+      "description": "The title and a plain Count of the insights"
+    },
+    {
+      "part": "pages",
+      "element": "div",
+      "description": "One grid cell all pages share"
+    },
+    {
+      "part": "page",
+      "element": "article",
+      "repeat": true,
+      "description": "role=group, aria-roledescription=slide; data-state=active|inactive (inactive pages are visibility: hidden, so they keep their size but leave the tab order and the accessibility tree)"
+    },
+    {
+      "part": "summary",
+      "element": "p",
+      "description": "The insight as a sentence: text, EntityChip and ValuePill"
+    },
+    {
+      "part": "card",
+      "element": "div"
+    },
+    {
+      "part": "card-title",
+      "element": "span"
+    },
+    {
+      "part": "legend",
+      "element": "ul"
+    },
+    {
+      "part": "legend-item",
+      "element": "li",
+      "repeat": true
+    },
+    {
+      "part": "swatch",
+      "element": "span",
+      "description": "Series colour; data-tone"
+    },
+    {
+      "part": "legend-name",
+      "element": "span",
+      "description": "Swatch + label; title carries the full name"
+    },
+    {
+      "part": "legend-label",
+      "element": "span",
+      "description": "Series name; truncates at the end"
+    },
+    {
+      "part": "legend-value",
+      "element": "span",
+      "description": "Latest value (line, bar) or share; tabular, never truncated"
+    },
+    {
+      "part": "chart",
+      "element": "svg",
+      "description": "role=img with a generated aria-label; data-kind=line|bar|share. Shapes come from chartShapes()"
+    },
+    {
+      "part": "line",
+      "element": "path",
+      "optional": true,
+      "repeat": true
+    },
+    {
+      "part": "bar",
+      "element": "rect",
+      "optional": true,
+      "repeat": true
+    },
+    {
+      "part": "segment",
+      "element": "rect",
+      "optional": true,
+      "repeat": true
+    },
+    {
+      "part": "rule",
+      "element": "line",
+      "optional": true,
+      "repeat": true,
+      "description": "data-kind=zero|threshold"
+    },
+    {
+      "part": "action",
+      "element": "button",
+      "optional": true,
+      "description": "Follow-up prompt; an outline sm Button"
+    }
+  ],
+  "props": {
+    "insights": {
+      "type": "array",
+      "items": {
+        "id": "string",
+        "title": "string",
+        "summary": "string | Array<string | { entity: string, color?: string } | { value: string, tone?: 'neutral'|'green'|'orange'|'red'|'accent' }>",
+        "chart": "{ kind: 'line'|'bar'|'share', series: { name, values: number[], tone?: 'accent'|'orange'|'red'|'green'|'neutral' }[], format?: 'number'|'percent'|'money', threshold?: number, label?: string }?",
+        "action": "string?"
+      },
+      "description": "The insights, in order. Owned by the parent: pass a new array to change them."
+    },
+    "page": {
+      "type": "number",
+      "model": true,
+      "default": 0,
+      "description": "Index of the insight shown. Clamped to the list."
+    },
+    "title": {
+      "type": "string",
+      "default": "Insights"
+    },
+    "emptyText": {
+      "type": "string",
+      "default": "No insights yet."
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "accent",
+        "orange",
+        "red",
+        "green",
+        "neutral"
+      ],
+      "default": "accent",
+      "part": "swatch",
+      "description": "Per series (chart.series[].tone): colour of its swatch and of its line, bars or segment."
+    }
+  },
+  "events": {
+    "pageChange": "(page: number)",
+    "action": "(id: string) the follow-up button of an insight was pressed"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.line",
+    "color.line-strong",
+    "color.accent",
+    "color.orange",
+    "color.red",
+    "color.green",
+    "shadow.hairline",
+    "radius.card",
+    "text.xs",
+    "text.sm",
+    "radius.pill"
+  ],
+  "dependencies": [
+    "button",
+    "count",
+    "empty-state",
+    "entity-chip",
+    "pager",
+    "value-pill"
+  ],
+  "a11y": {
+    "role": "region (carousel) with a pager group and a status",
+    "keyboard": [
+      "Tab reaches the previous and next buttons, then the follow-up button of the shown insight",
+      "Enter / Space on previous or next change the page; focus stays on the button",
+      "ArrowLeft / ArrowRight while focus is in the pager change the page (mirrored right-to-left); Home / End jump to the first and last",
+      "Paging wraps around; with one insight or none the buttons are aria-disabled (they keep focus)"
+    ],
+    "notes": [
+      "The position ('2 of 3') sits in a role=status region, so a page change is announced.",
+      "Every chart is role=img with a text alternative generated from its data (or chart.label).",
+      "Inactive pages are visibility: hidden: out of the tab order and the accessibility tree."
+    ]
+  },
+  "motion": [
+    "page change: instant. No crossfade (not even a short blur): the pager is used many times in a row and from the keyboard, and the content is data",
+    "chart: never animates, on mount or on page change",
+    "pager buttons and follow-up button: the shared Button press and gated hover"
+  ],
+  "notes": []
+}

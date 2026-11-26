@@ -1,0 +1,16 @@
+{
+  "examples": [
+    { "name": "With a label and the value", "width": 280, "props": { "label": "Volume", "showValue": true, "value": [40] } },
+    { "name": "Range", "width": 280, "props": { "label": "Price", "showValue": true, "value": [20, 80], "minStepsBetweenThumbs": 5, "thumbLabels": ["Minimum price", "Maximum price"] } },
+    { "name": "Small, no label", "width": 200, "props": { "size": "sm", "value": [70], "aria-label": "Opacity" } },
+    { "name": "Steps of ten", "width": 280, "props": { "label": "Quality", "showValue": true, "value": [60], "step": 10 } },
+    { "name": "Disabled", "width": 280, "props": { "label": "Volume", "showValue": true, "value": [40], "disabled": true } }
+  ],
+  "worstCase": [
+    { "name": "Long label", "width": 220, "props": { "label": "Maximum number of concurrent background synchronisation jobs per workspace", "showValue": true, "value": [12480], "min": 0, "max": 20000 } },
+    { "name": "At both ends", "width": 280, "props": { "label": "Range", "showValue": true, "value": [0, 100] } },
+    { "name": "Narrow", "width": 120, "props": { "label": "Gain", "showValue": true, "value": [100] } },
+    { "name": "Right-to-left label", "width": 280, "props": { "label": "مستوى الصوت", "showValue": true, "value": [30] } },
+    { "name": "Unbreakable label", "width": 160, "props": { "label": "background-synchronisation-concurrency", "showValue": true, "value": [5], "max": 10 } }
+  ]
+}

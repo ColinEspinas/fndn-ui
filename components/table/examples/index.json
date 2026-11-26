@@ -1,0 +1,70 @@
+{
+  "playground": {
+    "props": {
+      "caption": "Invoices for Northwind, Team plan",
+      "columns": [
+        {
+          "key": "invoice",
+          "label": "Invoice"
+        },
+        {
+          "key": "date",
+          "label": "Date"
+        },
+        {
+          "key": "amount",
+          "label": "Amount",
+          "numeric": true
+        }
+      ],
+      "rows": [
+        {
+          "invoice": "INV-2026-0117",
+          "date": "Nov 1, 2026",
+          "amount": "$1,240.00"
+        },
+        {
+          "invoice": "INV-2026-0104",
+          "date": "Oct 1, 2026",
+          "amount": "$1,240.00"
+        },
+        {
+          "invoice": "INV-2026-0091",
+          "date": "Sep 1, 2026",
+          "amount": "$980.50"
+        }
+      ]
+    },
+    "width": 420
+  },
+  "examples": [
+    {
+      "file": "recent-deploys",
+      "title": "Recent deploys"
+    },
+    {
+      "file": "issue-list",
+      "title": "Issue list in a pane (flush)"
+    },
+    {
+      "file": "invoices",
+      "title": "Invoices with a caption"
+    },
+    {
+      "file": "members",
+      "title": "Members, from data"
+    },
+    {
+      "file": "deploy-history",
+      "title": "Deploy history, from data with links, pills and avatars"
+    },
+    {
+      "file": "no-deploys",
+      "title": "No deploys yet"
+    },
+    {
+      "file": "loading-deploys",
+      "title": "Deploys loading"
+    }
+  ]
+}

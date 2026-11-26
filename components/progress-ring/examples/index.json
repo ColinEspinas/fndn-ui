@@ -1,0 +1,16 @@
+{
+  "playground": {
+    "props": {
+      "progress": 0.6,
+      "tone": "orange",
+      "size": "md",
+      "label": "Setup: 3 of 5 steps done"
+    },
+    "text": "3"
+  },
+  "examples": [
+    { "file": "setup-checklist", "title": "Setup checklist" },
+    { "file": "pipeline-steps", "title": "Pipeline steps" },
+    { "file": "import-failed", "title": "Import stopped" }
+  ]
+}

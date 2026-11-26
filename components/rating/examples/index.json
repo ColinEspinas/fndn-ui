@@ -1,0 +1,8 @@
+{
+  "playground": { "props": { "label": "How was your chat with Aiko Tanaka?", "value": 4, "count": 5, "allowHalf": false, "size": "md", "readOnly": false, "disabled": false } },
+  "examples": [
+    { "file": "support-feedback", "title": "Rate a support chat" },
+    { "file": "rate-template", "title": "Rate a template (half stars)" },
+    { "file": "template-average", "title": "Average rating in a list (read-only)" }
+  ]
+}

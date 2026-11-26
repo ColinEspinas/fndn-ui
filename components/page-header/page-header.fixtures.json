@@ -1,0 +1,104 @@
+{
+  "examples": [
+    {
+      "name": "Issues, with a back link and actions",
+      "width": 560,
+      "props": {
+        "title": "Issues",
+        "description": "42 open · updated 2 min ago",
+        "back": { "label": "Projects", "href": "#projects" },
+        "actions": [{ "label": "Filter", "value": "filter" }, { "label": "New issue", "value": "new", "variant": "primary" }]
+      }
+    },
+    {
+      "name": "Title only",
+      "width": 560,
+      "props": { "title": "Settings" }
+    },
+    {
+      "name": "Back without an href",
+      "width": 560,
+      "props": {
+        "title": "Deploy dpl_7f3a9c",
+        "description": "Production · main · a1b2c3d",
+        "back": { "label": "Deploys" }
+      }
+    },
+    {
+      "name": "Pane header",
+      "width": 400,
+      "props": {
+        "size": "pane",
+        "title": "Inbox",
+        "description": "3 unread",
+        "actions": [{ "label": "Mark all as read", "value": "read", "variant": "ghost" }]
+      }
+    },
+    {
+      "name": "Level 2",
+      "width": 560,
+      "props": { "title": "Members", "description": "1,284 people in Northwind", "level": 2 }
+    },
+    {
+      "name": "Pane header at phone width",
+      "width": 326,
+      "props": {
+        "size": "pane",
+        "title": "Inbox",
+        "description": "3 unread",
+        "actions": [{ "label": "Mark all as read", "value": "read", "variant": "ghost" }]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long everything, phone width",
+      "width": 358,
+      "props": {
+        "title": "Reconciliation of supplier invoices for the third quarter of the previous financial year",
+        "description": "Imported from bartholomew.fitzgerald@northwind-industries-holdings.example.com · 1,284 records · updated 14 min ago",
+        "back": { "label": "Aleksandra Wiśniewska-Kowalczyk's workspace", "href": "#workspace" },
+        "actions": [{ "label": "Export", "value": "export" }, { "label": "Archive", "value": "archive" }, { "label": "Reconcile all", "value": "reconcile", "variant": "primary" }]
+      }
+    },
+    {
+      "name": "Unbroken title, many actions",
+      "width": 560,
+      "props": {
+        "title": "feat/usage-alerts-for-every-workspace-on-the-business-plan",
+        "actions": [{ "label": "Compare" }, { "label": "Open pull request" }, { "label": "Rename" }, { "label": "Protect" }, { "label": "Delete branch", "variant": "danger-outline" }]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 420,
+      "props": {
+        "title": "المشكلات",
+        "description": "٤٢ مفتوحة · تم التحديث قبل دقيقتين",
+        "back": { "label": "المشاريع", "href": "#projects" },
+        "actions": [{ "label": "تصفية" }, { "label": "مشكلة جديدة", "variant": "primary" }]
+      }
+    },
+    {
+      "name": "One letter",
+      "width": 358,
+      "props": { "title": "Q", "back": { "label": "A", "href": "#a" }, "actions": [{ "label": "Go" }] }
+    },
+    {
+      "name": "Pane, long and narrow",
+      "width": 300,
+      "props": {
+        "size": "pane",
+        "title": "Notifications for Aleksandra Wiśniewska-Kowalczyk",
+        "description": "1,284 unread",
+        "back": { "label": "Issues" },
+        "actions": [{ "label": "Mark all as read", "variant": "ghost" }]
+      }
+    },
+    {
+      "name": "Empty description and no actions",
+      "width": 358,
+      "props": { "title": "Billing", "description": "", "actions": [] }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "context-menu",
+  "title": "Context Menu",
+  "summary": "The menu a right-click opens on a row, a file or a canvas.",
+  "description": "The menu a right-click opens on a row, a file or a canvas. The Menu, opened on an area instead of a button: a right-click (or a long press on a touch screen, or the context-menu key) opens it at the pointer, with the same rows, options, groups and sub-menus. The area is yours (a row, a card, a canvas); the popup, the gliding highlight and the keyboard are the Menu's. Behaviour from the Zag menu machine through Ark UI.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 7,
+  "status": "beta",
+  "engine": "menu",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The area (Ark's context trigger, as a div around your content). A right-click inside it opens the Menu at the pointer instead of the browser's menu; a long press does on touch. It takes no look of its own. On a coarse pointer it is not text-selectable and shows no callout, so the long press reaches the menu. The popup is the Menu's (menu-positioner, menu-content, menu-highlight, menu-item …)."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "the Menu's entries: actions, 'checkbox', 'group', 'radio-group', 'separator', 'submenu'"
+      },
+      "description": "Entries in order, exactly as the Menu takes them."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "The area keeps the browser's own context menu."
+    },
+    "label": {
+      "type": "string",
+      "description": "The area's accessible name (aria-label). The area is focusable: Shift+F10 or the Menu key opens the menu from it."
+    },
+    "open": {
+      "type": "boolean",
+      "model": true,
+      "description": "Controlled: open with onOpenChange. It opens at the last pointer position, so it needs one: before any right-click (or long press, or Shift+F10) on the area, open=true is refused. The menu stays closed, moves no focus, and onOpenChange(false) puts the host's state right. Once a right-click has given a position, open=true opens the menu there."
+    }
+  },
+  "slots": {
+    "default": "The area's content"
+  },
+  "events": {
+    "select": "(value: string) an action was chosen",
+    "checkedChange": "(value: string, checked: boolean)",
+    "radioChange": "(name: string, value: string)",
+    "openChange": "(open: boolean)"
+  },
+  "states": [
+    "open",
+    "highlighted",
+    "checked",
+    "disabled"
+  ],
+  "tokens": [],
+  "dependencies": [
+    "menu"
+  ],
+  "a11y": {
+    "role": "menu",
+    "keyboard": [
+      "Tab reaches the area itself (tabIndex 0, role group, aria-keyshortcuts Shift+F10, the global focus ring); Shift+F10 or the context-menu key with focus on or inside it opens the menu (the browser's contextmenu event)",
+      "Inside, the Menu's keys: ArrowDown / ArrowUp, Home / End, type-ahead, Enter / Space, sub-menus with ArrowRight / ArrowLeft",
+      "Escape closes; focus returns to the area, or to the element inside it that had focus"
+    ],
+    "notes": [
+      "A context menu is a shortcut: everything in it must also be reachable another way (a visible Menu button, a toolbar), since a right-click is not discoverable.",
+      "It never opens without a pointer position: mounted with open=true, or told to open before any right-click on the area, it stays closed, moves no focus and reports closed through openChange. To open a menu from a button or at mount, use the Menu.",
+      "The area is focusable by itself; give it a name with `label` (its aria-label) when its text does not say what it is."
+    ]
+  },
+  "motion": [
+    "the Menu's popup: opacity + scale from motion.popup-scale out of the pointer position, duration.popup, easing.out-strong; closes at duration.fast; instant from the keyboard",
+    "the area: none"
+  ]
+}

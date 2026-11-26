@@ -1,0 +1,207 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "summary": "A window over the page for a form, details or settings.",
+  "description": "A window that holds any content (a form, details, settings) and closes on Escape, a click outside or its close button. It sits over a dimmed page. Focus is trapped inside and returns to the trigger; the page behind is inert and does not scroll. To confirm a consequential action (delete, discard, revoke), use Alert dialog, which is this window with role=\"alertdialog\". Behaviour comes from the Zag dialog machine, through Ark UI in React, Vue and Svelte.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 4,
+  "engine": "dialog",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Layout-neutral hook around the trigger (display: contents)"
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "aria-haspopup=dialog, aria-expanded, data-state=open|closed. The default trigger is a Button. Marked data-dialog=\"trigger\"."
+    },
+    {
+      "part": "backdrop",
+      "element": "div",
+      "description": "Dims the page with color.scrim; rendered in a portal; data-state=open|closed. Stacks at --fndn-z-dialog (base.css)."
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Centres the window, or pins it near the top (placement=top); rendered in a portal"
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=dialog|alertdialog, aria-modal; data-state=open|closed; carries kbd-instant; data-size=sm|lg (md: none)"
+    },
+    {
+      "part": "header",
+      "element": "div"
+    },
+    {
+      "part": "title",
+      "element": "h2"
+    },
+    {
+      "part": "close",
+      "element": "button",
+      "optional": true,
+      "description": "A Button: ghost, size sm, square, shape rounded, muted, aria-label=Close, with a tooltip of the same text. Only its placement (negative margins into the header corner) is the dialog's. Marked data-dialog=\"close\"."
+    },
+    {
+      "part": "description",
+      "element": "div",
+      "optional": true
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "optional": true
+    },
+    {
+      "part": "footer",
+      "element": "div",
+      "optional": true,
+      "description": "Actions, as Buttons"
+    }
+  ],
+  "props": {
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "data-state=open|closed on trigger, backdrop and content."
+    },
+    "title": {
+      "type": "string",
+      "description": "Required: it names the dialog."
+    },
+    "description": {
+      "type": "string"
+    },
+    "role": {
+      "type": "enum",
+      "values": [
+        "dialog",
+        "alertdialog"
+      ],
+      "default": "dialog",
+      "attr": "role",
+      "part": "content",
+      "description": "alertdialog for destructive confirms: a click outside does not close it and focus starts on the first action."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "label": "string",
+        "value": "string?",
+        "variant": "button variant?",
+        "close": "boolean?",
+        "form": "string?"
+      },
+      "description": "Footer buttons in order, least destructive first. Each closes the dialog unless close is false. For a dialog that holds a form: an action with form=\"<id>\" (the id of a form in the body) is rendered type=\"submit\" form=\"<id>\", so the browser checks the form (required, pattern) and Enter in one of its fields submits it. Its click does nothing else: the form's submit event, which the browser fires only for a valid form, calls onAction and closes the dialog unless close is false. A refused form leaves the dialog open with the browser's message. The form's own submit handler prevents the default, as any form's in an app does. An action without form is a plain button."
+    },
+    "closable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show the close button in the header."
+    },
+    "bare": {
+      "type": "boolean",
+      "default": false,
+      "description": "Bare: the dialog is only the frame (position, focus trap, motion). No fill, no shadow, no padding, no header; the title still names it for assistive technology. Its one child is the surface, as in a command palette."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "Width of the window: sm 360px, md 440px, lg 880px (a large preview, such as agent-screen's viewer). Set on the content as data-size; md has no attribute."
+    },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "center",
+        "top"
+      ],
+      "default": "center",
+      "description": "Where the window sits: center (on a phone with a coarse pointer, at the bottom near the thumb), or top: pinned below the top of the viewport (min(15vh, 120px)) and growing downward, for a window whose height changes while it is used, such as a command palette whose results follow what is typed. A top window scales from its top edge."
+    },
+    "instant": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opens and closes at once from the pointer too (from the keyboard it always does): no fade or scale of the window and the backdrop. For a window summoned many times a session, such as a command palette."
+    },
+    "initialFocus": {
+      "type": "string",
+      "ts": "HTMLElement | string | (() => HTMLElement | null)",
+      "description": "What takes focus when the dialog opens, in one of three forms: an element (a ref's current element); a CSS selector string, looked up inside the window first, then in the document (\"#invite-email\"); or a function returning the element, called when the dialog opens (the element may not exist before). Default: the first control; for alertdialog the first action. Ark's initialFocusEl."
+    },
+    "triggerLabel": {
+      "type": "string",
+      "description": "Renders a default Button trigger with this label. Otherwise pass your own trigger, or control `open` yourself."
+    }
+  },
+  "slots": {
+    "default": "Body content",
+    "trigger": "Your own trigger element (React `trigger` prop, Vue `trigger` slot, Svelte `trigger` snippet that spreads the props it receives)",
+    "footer": "Custom footer instead of `actions`"
+  },
+  "events": {
+    "openChange": "(open: boolean)",
+    "action": "(value: string) when a footer action is pressed; for an action with form, when its form is submitted"
+  },
+  "states": [
+    "open",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.scrim",
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "shadow.overlay",
+    "radius.window",
+    "text.sm",
+    "text.md",
+    "duration.fast",
+    "duration.slow",
+    "easing.out-strong",
+    "motion.popup-scale",
+    "z.dialog"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "dialog | alertdialog",
+    "keyboard": [
+      "Enter / Space on the trigger open",
+      "Focus moves into the window: the first focusable control, or the first action of an alertdialog",
+      "Tab and Shift+Tab cycle inside the window; focus cannot leave it",
+      "Escape closes and returns focus to the trigger",
+      "Enter in a field of a form an action names submits it, as that action's button would",
+      "A click on the dimmed page closes a dialog, not an alertdialog; either way it never moves focus out of the window"
+    ],
+    "notes": [
+      "Labelled by its title and described by its description.",
+      "While open, the rest of the page is inert and does not scroll.",
+      "Opening and closing from the keyboard are instant."
+    ]
+  },
+  "motion": [
+    "window: opacity + scale from motion.popup-scale around its centre (its top edge when placement is top), duration.slow, easing.out-strong; closes at duration.fast",
+    "backdrop: opacity with the window",
+    "close button: the button's own hover and press (ghost Button)",
+    "instant: no motion at all; the window and the backdrop appear and leave in one frame",
+    "mounted open (defaultOpen, or open at mount): window and backdrop are drawn at once, with no entrance (data-mounted-open until it first closes); its close, and every later open, animate as above"
+  ]
+}

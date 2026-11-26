@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.vite/
+.reference/
+.cache/
+packages/cli/data/
+.astro/
+.env
+.env.*
+*.tsbuildinfo
+.claude/settings.local.json

@@ -1,0 +1,9 @@
+{
+  "playground": { "props": { "triggerLabel": "Delete project", "tone": "danger", "size": "md", "title": "Delete billing-api?", "description": "This deletes the project, its 214 deploys and its environment variables for everyone at Northwind. You cannot undo it.", "actionLabel": "Delete project", "cancelLabel": "Cancel" } },
+  "examples": [
+    { "file": "delete-project", "title": "Delete a project" },
+    { "file": "deploy-to-production", "title": "Promote to Production" },
+    { "file": "revoke-api-key", "title": "Revoke an API key" },
+    { "file": "remove-member", "title": "Remove a member" }
+  ]
+}

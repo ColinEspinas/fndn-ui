@@ -1,0 +1,217 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "search",
+  "title": "Search",
+  "summary": "A search field and its results in one panel, to find and run a command.",
+  "description": "Inline command search: a field and its results in one raised card. Typing filters (on the label and the item's keywords), the arrow keys move a highlight that glides between options, under the pointer and the keyboard alike, Enter selects, Escape clears. Behaviour, focus and ARIA come from the Zag combobox machine kept open, through Ark UI in React, Vue and Svelte. Rows can come in groups under a label, lead with an icon and end with a note and the command's own shortcut (the real Kbd); the command palette block is this panel in a bare dialog.",
+  "kind": "component",
+  "category": "navigation",
+  "order": 1,
+  "engine": "combobox",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "panel",
+      "element": "div",
+      "description": "Raised card holding the field and the results"
+    },
+    {
+      "part": "bar",
+      "element": "div",
+      "description": "Field row (the combobox control). Focus changes nothing on it: no ring, the rule stays line; the caret is the focus indicator. The clear button and the results keep the standard :focus-visible ring."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "description": "Magnifier; decorative, never intercepts the pointer"
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "role=combobox; fills the row; aria-activedescendant follows the highlight"
+    },
+    {
+      "part": "clear",
+      "element": "button",
+      "description": "The real Button, marked data-search=\"clear\" (ghost, xs, square, muted) with an x icon, the aria-label and our tooltip carrying the same text. Shown while the query is non-empty (hidden attribute otherwise); not a tab stop, Escape does the same"
+    },
+    {
+      "part": "list",
+      "element": "div",
+      "description": "role=listbox; scrolls past 8 rows; hidden while the empty state shows"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "description": "Shared gliding highlight layer (`glideLayer` of `lib/glide.ts`); it glides for arrow-key moves too"
+    },
+    {
+      "part": "group",
+      "element": "div",
+      "optional": true,
+      "repeat": true,
+      "description": "role=group around the rows of one group (items with the same `group`), in the order the groups first appear; rows without a group are listed with no group around them. Labelled by its group label (aria-labelledby). The highlight glides between neighbouring rows and moves at once across a group label."
+    },
+    {
+      "part": "group-label",
+      "element": "div",
+      "optional": true,
+      "repeat": true,
+      "description": "The group's name: the shared option row's group label (2xs/500 ink-2); never highlighted, never chosen"
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "repeat": true,
+      "description": "role=option; data-highlighted, data-disabled. Only matching rows are in the DOM; composes the shared option row (`lib/option.ts`: 30px, text.dense (12.5px), gap 8)"
+    },
+    {
+      "part": "item-icon",
+      "element": "span",
+      "optional": true,
+      "description": "Leading icon (14px, ink-3), decorative (aria-hidden)"
+    },
+    {
+      "part": "item-text",
+      "element": "span",
+      "description": "Truncates at the end; the shared option row's text (`lib/option.ts`)"
+    },
+    {
+      "part": "item-meta",
+      "element": "span",
+      "optional": true,
+      "description": "Trailing muted note (a path, a category); the shared option row's meta (`lib/option.ts`)"
+    },
+    {
+      "part": "item-shortcut",
+      "element": "kbd",
+      "optional": true,
+      "description": "The command's own shortcut at the end of the row: the real Kbd (boxed), marked data-search=\"item-shortcut\". It shows the shortcut that runs the command outside the search; inside it Enter runs it."
+    },
+    {
+      "part": "empty",
+      "element": "div",
+      "description": "The system's empty-state (size block, centred) marked data-search=\"empty\": icon, title, hint. Shown when a non-empty query matches nothing (hidden attribute otherwise)"
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "group": "string? (rows with the same group are listed together under it)",
+        "icon": "icon? (React an element, Vue / Svelte a component)",
+        "meta": "string?",
+        "shortcut": "string[]? (keys, as Kbd takes them)",
+        "keywords": "string[]? (more words the query matches)",
+        "disabled": "boolean?"
+      },
+      "description": "Commands in order. Strings are accepted as value = label. A query matches the label or any keyword, anywhere in the word, ignoring case; matches are listed best first (the label starts with the query, then a word of it does, then the label holds it, then a keyword), ties in their own order, each group under its label in the order its best match comes."
+    },
+    "query": {
+      "type": "string",
+      "default": "",
+      "model": true,
+      "description": "The text in the field."
+    },
+    "limit": {
+      "type": "number",
+      "default": 5,
+      "description": "Rows shown while the query is empty. A non-empty query shows every match."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Search…"
+    },
+    "label": {
+      "type": "string",
+      "default": "Search",
+      "attr": "aria-label",
+      "part": "input",
+      "description": "Accessible name of the field."
+    },
+    "clearLabel": {
+      "type": "string",
+      "default": "Clear search",
+      "attr": "aria-label",
+      "part": "clear"
+    },
+    "emptyTitle": {
+      "type": "string",
+      "default": "No results found"
+    },
+    "emptyHint": {
+      "type": "string",
+      "default": "Adjust your search to try again"
+    },
+    "highlightFirst": {
+      "type": "boolean",
+      "default": false,
+      "description": "The first row starts highlighted, so Enter runs it at once (a command palette). Without it nothing is highlighted until a key or the pointer moves the highlight, or a query highlights its first match."
+    }
+  },
+  "events": {
+    "queryChange": "(query: string)",
+    "select": "(value: string, item) when an option is chosen with Enter or a click; the field takes the option's label"
+  },
+  "states": [
+    "bar-hover",
+    "focus-within",
+    "highlighted",
+    "item-press",
+    "item-disabled",
+    "clear-hover",
+    "clear-press",
+    "empty",
+    "grouped"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.line",
+    "color.hover",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "shadow.raised",
+    "radius.card",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "text.2xs"
+  ],
+  "dependencies": [
+    "button",
+    "empty-state",
+    "kbd",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "combobox + listbox",
+    "keyboard": [
+      "Typing filters the list; the first match is highlighted",
+      "ArrowDown / ArrowUp move the highlight in the order the rows are drawn (groups included; wraps); Home / End jump to the first and last option",
+      "Enter selects the highlighted option; the field takes its label",
+      "Escape clears the query and the selection",
+      "Focus never leaves the field: options are reached through aria-activedescendant, and the clear button is not a tab stop"
+    ],
+    "notes": [
+      "The field carries the accessible name (label); the list is announced as a listbox whose result count is reported by the engine's live region.",
+      "The highlight glides for arrow-key moves as well as under the pointer; focus never leaves the field.",
+      "On coarse pointers the field is 16px so iOS does not zoom the page, and rows are 40px tall.",
+      "A group is role=group named by its label; the label is never an option. An item's shortcut is read with the option (it names the key that runs the command elsewhere)."
+    ]
+  },
+  "motion": [
+    "highlight: glides between neighbouring options over duration.move, under the pointer and the keyboard; across a group label it moves at once (it never sweeps over the label)",
+    "rows: no entrance animation, the list changes on every keystroke",
+    "empty state: the empty-state's own opacity fade over duration.base when it appears",
+    "clear button: fades in when it appears after mount (the button's opacity transition, armed by ready); a search mounted with a query shows it at once; press is the button's (scale to motion.press-scale over duration.press)",
+    "bar: background over duration.fast"
+  ]
+}

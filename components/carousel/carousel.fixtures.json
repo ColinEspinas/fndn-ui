@@ -1,0 +1,450 @@
+{
+  "examples": [
+    {
+      "name": "Text slides",
+      "width": 360,
+      "props": {
+        "items": [
+          "Plan the week",
+          "Draft the release notes",
+          "Review the open pull requests",
+          "Ship it",
+          "Write the retro"
+        ]
+      }
+    },
+    {
+      "name": "With dots",
+      "width": 360,
+      "props": {
+        "indicators": true,
+        "items": [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+        ]
+      }
+    },
+    {
+      "name": "Two per page",
+      "width": 480,
+      "props": {
+        "slidesPerPage": 2,
+        "indicators": true,
+        "items": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat"
+        ]
+      }
+    },
+    {
+      "name": "Looping, starting on the third",
+      "width": 360,
+      "props": {
+        "loop": "rewind",
+        "page": 2,
+        "items": [
+          "Alpha",
+          "Beta",
+          "Gamma",
+          "Delta"
+        ]
+      }
+    },
+    {
+      "name": "One slide",
+      "width": 360,
+      "props": {
+        "items": [
+          "Nothing to page through"
+        ]
+      }
+    },
+    {
+      "name": "Depth",
+      "width": 360,
+      "props": {
+        "effect": "depth",
+        "indicators": true,
+        "items": [
+          "Connect a repository",
+          "Pick the production branch",
+          "Add environment variables",
+          "Deploy"
+        ]
+      }
+    },
+    {
+      "name": "Depth, wide slides",
+      "width": 900,
+      "props": {
+        "effect": "depth",
+        "items": [
+          "Connect a repository",
+          "Pick the production branch",
+          "Add environment variables"
+        ]
+      }
+    },
+    {
+      "name": "Fade",
+      "width": 360,
+      "props": {
+        "effect": "fade",
+        "indicators": true,
+        "items": [
+          "“Our deploys went from twenty minutes to two.”",
+          "“Preview links changed how we review design.”",
+          "“We stopped writing release scripts.”"
+        ]
+      }
+    },
+    {
+      "name": "Parallax",
+      "width": 360,
+      "props": {
+        "effect": "parallax",
+        "items": [
+          "Lisbon",
+          "Tokyo",
+          "São Paulo",
+          "Frankfurt"
+        ]
+      }
+    },
+    {
+      "name": "Autoplay",
+      "width": 360,
+      "props": {
+        "autoplay": 1500,
+        "indicators": true,
+        "items": [
+          "Maintenance on Sunday",
+          "Usage-based billing is live",
+          "Invite your team"
+        ]
+      }
+    },
+    {
+      "name": "Autoplay without controls",
+      "width": 360,
+      "props": {
+        "autoplay": 1500,
+        "controls": false,
+        "items": [
+          "Maintenance on Sunday",
+          "Usage-based billing is live",
+          "Invite your team"
+        ]
+      }
+    },
+    {
+      "name": "Free drag",
+      "props": {
+        "items": [
+          "Plan the week",
+          "Draft the release notes",
+          "Review the open pull requests",
+          "Ship it",
+          "Write the retro"
+        ],
+        "dragReach": "free"
+      },
+      "width": 360
+    },
+    {
+      "name": "No animation",
+      "props": {
+        "items": [
+          "Plan the week",
+          "Draft the release notes",
+          "Review the open pull requests",
+          "Ship it",
+          "Write the retro"
+        ],
+        "effect": "none"
+      },
+      "width": 360
+    },
+    {
+      "name": "Endless",
+      "width": 360,
+      "props": {
+        "loop": "endless",
+        "indicators": true,
+        "items": [
+          "Alpha",
+          "Beta",
+          "Gamma",
+          "Delta"
+        ]
+      }
+    },
+    {
+      "name": "Endless, two per page",
+      "width": 480,
+      "props": {
+        "loop": "endless",
+        "slidesPerPage": 2,
+        "items": [
+          "One",
+          "Two",
+          "Three",
+          "Four",
+          "Five"
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long text",
+      "width": 280,
+      "props": {
+        "indicators": true,
+        "items": [
+          "A slide whose text is far longer than the slide is wide, so it wraps onto several lines and the slide grows to hold it rather than cutting it off",
+          "averyveryveryverylongunbrokenwordwithoutanyspacesatallinsideaslide",
+          "Short"
+        ]
+      }
+    },
+    {
+      "name": "Many slides",
+      "width": 320,
+      "props": {
+        "indicators": true,
+        "items": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45",
+          "46",
+          "47",
+          "48",
+          "49",
+          "50",
+          "51",
+          "52",
+          "53",
+          "54",
+          "55",
+          "56",
+          "57",
+          "58",
+          "59",
+          "60",
+          "61",
+          "62",
+          "63",
+          "64",
+          "65",
+          "66",
+          "67",
+          "68",
+          "69",
+          "70",
+          "71",
+          "72",
+          "73",
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82",
+          "83",
+          "84",
+          "85",
+          "86",
+          "87",
+          "88",
+          "89",
+          "90",
+          "91",
+          "92",
+          "93",
+          "94",
+          "95",
+          "96",
+          "97",
+          "98",
+          "99",
+          "100",
+          "101",
+          "102",
+          "103",
+          "104",
+          "105",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111",
+          "112"
+        ]
+      }
+    },
+    {
+      "name": "Narrow",
+      "width": 160,
+      "props": {
+        "indicators": true,
+        "items": [
+          "One",
+          "Two",
+          "Three"
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left text",
+      "width": 320,
+      "props": {
+        "indicators": true,
+        "items": [
+          "الشريحة الأولى",
+          "الشريحة الثانية",
+          "الثالثة"
+        ]
+      }
+    },
+    {
+      "name": "No slides",
+      "width": 320,
+      "props": {
+        "items": []
+      }
+    },
+    {
+      "name": "Fade, three per page",
+      "width": 480,
+      "props": {
+        "effect": "fade",
+        "slidesPerPage": 3,
+        "indicators": true,
+        "items": [
+          "A quote far longer than the slide is wide, so it wraps onto several lines",
+          "Two",
+          "Three",
+          "Four",
+          "Five",
+          "Six"
+        ]
+      }
+    },
+    {
+      "name": "Autoplay, forty slides",
+      "width": 320,
+      "props": {
+        "autoplay": 4000,
+        "indicators": true,
+        "effect": "depth",
+        "items": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "40"
+        ]
+      }
+    },
+    {
+      "name": "Endless, two long slides",
+      "width": 200,
+      "props": {
+        "loop": "endless",
+        "indicators": true,
+        "items": [
+          "A webhook that keeps failing is retried with exponential backoff for up to three days before the endpoint is disabled",
+          "Signatures are verified against the raw request body, so parse the JSON only after the check has passed"
+        ]
+      }
+    }
+  ]
+}

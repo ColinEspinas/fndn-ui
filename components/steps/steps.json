@@ -1,0 +1,184 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "steps",
+  "title": "Steps",
+  "summary": "A multi-step flow shown as numbered markers: done, current and to do.",
+  "description": "A multi-step flow shown as numbered markers joined by a rail: done, current, to do. The model is the task rows: the 24px badge column, the completed mark (green, white check), the 1px rail in the line colour, 10.5px/600 step figures. Horizontal (markers in a row of equal columns, each step's text under its marker, a rail between them) or vertical (the rail runs down the marker column, as the task rows' details). Each step may have a panel; Back and Next are real Buttons. Behaviour and ARIA from the Zag steps machine through Ark UI.",
+  "kind": "component",
+  "category": "navigation",
+  "order": 7,
+  "status": "beta",
+  "engine": "steps",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's steps root (data-orientation, --percent): a column, the list then the panels then the controls, 16px apart."
+    },
+    {
+      "part": "list",
+      "element": "div",
+      "description": "role=tablist (aria-orientation). Horizontal: a row of equal columns. Vertical: a column."
+    },
+    {
+      "part": "item",
+      "element": "div",
+      "description": "One step (data-complete, data-current, data-incomplete). Horizontal: an equal share of the row; the trigger (marker, then the text under it) and the rail. Vertical: the trigger, the rail under the marker, 20px to the next step."
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "role=tab, aria-selected and aria-current=step on the current one: the marker and the step's text. Bleeds 6px so the marker lines up with the edge; control radius; hover fills hover (fine pointer), press hover-2 (a row's press), focus ring. linear: not pressable (no hover, no press) and only the current step is in the tab order."
+    },
+    {
+      "part": "indicator",
+      "element": "div",
+      "description": "The 24px round marker (aria-hidden). To do: 1px line-strong ring, ink-2 figure. Current: ink fill, on-ink figure. Done: the task rows' mark, green fill and a 13px white check."
+    },
+    {
+      "part": "number",
+      "element": "span",
+      "description": "The step's figure, 10.5px/600 tabular, as the task rows' step; gives way to the check when done."
+    },
+    {
+      "part": "check",
+      "element": "span",
+      "description": "The done check (ph check, bold); arrives scaled from 0.5 with its opacity when the step is done, as the task rows' mark."
+    },
+    {
+      "part": "text",
+      "element": "span",
+      "description": "The title and the description, stacked; horizontal: under the marker, 6px apart; vertical: beside it, its first line sharing the marker's 24px line."
+    },
+    {
+      "part": "title",
+      "element": "span",
+      "description": "13px/500 on the body leading; vertical: its first line 24px tall (the marker's line): ink-2 to do, ink when current or done. Wraps, never cut. Author text keeps its own direction."
+    },
+    {
+      "part": "description",
+      "element": "span",
+      "optional": true,
+      "description": "12px ink-2 under the title; wraps."
+    },
+    {
+      "part": "separator",
+      "element": "div",
+      "description": "The rail (between this step and the next; none after the last): 1px in the line colour, green once this step is done. Horizontal: from 6px after this marker to 6px before the next one, at the markers' middle. Vertical: down the marker column from 4px under the marker to 4px above the next one."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "optional": true,
+      "description": "role=tabpanel labelled by its trigger: the current step's panel (the others hidden), 13px ink-2; focusable (tabindex 0)."
+    },
+    {
+      "part": "completed",
+      "element": "div",
+      "optional": true,
+      "description": "What shows in place of the panels once every step is done (Next pressed on the last step)."
+    },
+    {
+      "part": "footer",
+      "element": "div",
+      "optional": true,
+      "description": "Back and Next: real Buttons (Back outline, Next primary, size sm), at the end, 8px apart, marked data-steps=\"prev\" / \"next\"; disabled where there is no step to go to."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "description": "The steps in order: { title, description?, content? } (React: nodes; content is the step's panel)."
+    },
+    "step": {
+      "type": "number",
+      "model": true,
+      "default": 0,
+      "description": "The current step, from 0; the number of steps means every step is done. React: step / defaultStep / onStepChange."
+    },
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal"
+    },
+    "linear": {
+      "type": "boolean",
+      "default": false,
+      "description": "The steps are taken in order: only Back and Next move; the markers are not pressable."
+    },
+    "controls": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show the Back and Next buttons under the panels."
+    },
+    "prevLabel": {
+      "type": "string",
+      "default": "Back"
+    },
+    "nextLabel": {
+      "type": "string",
+      "default": "Next"
+    },
+    "completed": {
+      "type": "string",
+      "description": "What shows once every step is done (React: a node)."
+    }
+  },
+  "events": {
+    "stepChange": "(step: number) after a marker, Back or Next is pressed"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "current",
+    "complete",
+    "incomplete"
+  ],
+  "tokens": [
+    "color.line",
+    "color.line-strong",
+    "color.ink",
+    "color.ink-2",
+    "color.on-ink",
+    "color.on-accent",
+    "color.green",
+    "color.hover",
+    "color.hover-2",
+    "color.accent",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "button"
+  ],
+  "a11y": {
+    "role": "tablist (tab, tabpanel)",
+    "keyboard": [
+      "Tab reaches each marker in turn (linear: only the current one), then the current panel, then Back and Next",
+      "Enter / Space on a marker makes it the current step (not linear); the change is instant",
+      "Back / Next are buttons; a disabled one is skipped"
+    ],
+    "notes": [
+      "The current marker carries aria-selected=true and aria-current=step; its panel is labelled by it.",
+      "A marker's name is its title and description; the figure and the check are hidden from assistive technology."
+    ]
+  },
+  "motion": [
+    "marker and rail colours over duration.base when a step changes (instant from the keyboard: kbd-instant)",
+    "check: scale 0.5 -> 1 with opacity over duration.press easing.out-strong and duration.base when a step is done (as the task rows' mark); the figure fades out under it. Undone (Back, an earlier marker): shorter and simpler, the check fades over duration.fast and its scale resets after the fade",
+    "reduced motion: the check does not scale, it fades both ways",
+    "trigger hover and press fills over duration.fast (hover gated to a fine pointer)",
+    "panels swap at once (no transition between steps' content)",
+    "first paint: nothing plays"
+  ]
+}

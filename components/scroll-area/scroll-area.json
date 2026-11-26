@@ -1,0 +1,91 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "summary": "A scrolling region with a thin scrollbar that shows only while it is used.",
+  "description": "A region that scrolls with a thin scrollbar that shows only while it is used. A region that scrolls with a thin overlay scrollbar of the system's own instead of the platform's: it takes no room, shows while the pointer is over the region or while it scrolls, and fades out a second after. Native scrolling underneath (wheel, touch, keyboard). Give the root a height (or a max-height) and, for sideways scrolling, content wider than it. Behaviour from the Zag scroll-area machine through Ark UI.",
+  "kind": "component",
+  "category": "display",
+  "order": 16,
+  "status": "beta",
+  "engine": "scroll-area",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's root: data-overflow-x / data-overflow-y while there is more to scroll; a flex column so the viewport takes its height or max-height."
+    },
+    {
+      "part": "viewport",
+      "element": "div",
+      "description": "The native scroller with its own scrollbar hidden; at its end the page scrolls on (sideways overscroll is kept in). Focusable (tabindex 0) while it overflows, with the focus ring drawn inside it; data-at-top / -bottom / -left / -right from the engine."
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "The caller's content. vertical (the default): exactly as wide as the viewport (the engine's min-width: fit-content is taken back), so a row inside can truncate; a word longer than the region breaks (overflow-wrap: break-word). horizontal and both: at least as wide as it needs (min-width: fit-content), so it scrolls sideways."
+    },
+    {
+      "part": "scrollbar",
+      "element": "div",
+      "repeat": true,
+      "description": "One per scrolling direction (data-orientation vertical | horizontal), positioned by the engine at the end edge or the bottom: 10px thick with 2px padding, transparent. Hidden while its direction does not overflow; opacity 0, then 1 while the pointer is over the region (data-hover), while it scrolls (data-scrolling) or while its thumb is dragged."
+    },
+    {
+      "part": "thumb",
+      "element": "div",
+      "repeat": true,
+      "description": "The draggable thumb: 6px, rounded pill, ink-3 at 45% (65% while hovered, 80% while dragged); its length and offset come from the engine."
+    },
+    {
+      "part": "corner",
+      "element": "div",
+      "optional": true,
+      "description": "Where the two scrollbars meet (orientation both); empty."
+    }
+  ],
+  "props": {
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "vertical",
+        "horizontal",
+        "both"
+      ],
+      "default": "vertical",
+      "description": "Which scrollbars it draws (the viewport scrolls whichever way its content overflows). vertical also keeps the content to the viewport's width, so text inside truncates or wraps instead of widening it."
+    }
+  },
+  "slots": {
+    "default": "The scrolled content."
+  },
+  "states": [
+    "hover",
+    "scrolling",
+    "dragging",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.ink-3",
+    "radius.pill",
+    "duration.base"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "none (a presentation wrapper around a native scroller)",
+    "keyboard": [
+      "Tab reaches the viewport while it overflows (and before its focusable content); the arrow keys, Page Up / Page Down, Home / End and Space scroll it natively",
+      "Focusable content inside it scrolls into view when it takes focus"
+    ],
+    "notes": [
+      "The scrollbars are pointer affordances only: they are not focusable and carry no role; scrolling stays native.",
+      "Name the region from outside when it matters (aria-label on the root lands on the root element)."
+    ]
+  },
+  "motion": [
+    "scrollbar: fades in and out (opacity over duration.base, ease) on hover and scroll; hidden one second after the last scroll (the engine's timeout)",
+    "thumb: colour over duration.base; its position follows the scroll exactly (no transition)",
+    "first paint: nothing plays (the scrollbars start hidden)"
+  ]
+}

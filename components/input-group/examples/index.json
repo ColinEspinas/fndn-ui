@@ -1,0 +1,10 @@
+{
+  "playground": { "props": { "start": "https://", "end": ".example.dev", "placeholder": "feat-usage-alerts", "aria-label": "Preview URL", "size": "md", "variant": "outline", "mono": false, "invalid": false, "disabled": false }, "width": 320 },
+  "examples": [
+    { "file": "search-projects", "title": "Search projects" },
+    { "file": "spending-limit", "title": "Spending limit in dollars" },
+    { "file": "api-key", "title": "API key with a copy button" },
+    { "file": "command-search", "title": "Top bar search with a shortcut" },
+    { "file": "preview-url", "title": "Preview URL in a side panel" }
+  ]
+}

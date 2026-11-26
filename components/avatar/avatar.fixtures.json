@@ -1,0 +1,95 @@
+{
+  "examples": [
+    {
+      "name": "Initials",
+      "props": {
+        "name": "Kumo Capital",
+        "size": "16",
+        "shape": "round",
+        "color": "var(--fndn-tag-orange)"
+      }
+    },
+    {
+      "name": "Image",
+      "props": {
+        "name": "Aurora Health",
+        "size": "20",
+        "shape": "round",
+        "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Crect width='20' height='20' fill='%23f2b56b'/%3E%3Ccircle cx='10' cy='8' r='4' fill='%23fff7ec'/%3E%3Cpath d='M3 20a7 6 0 0 1 14 0z' fill='%23fff7ec'/%3E%3C/svg%3E"
+      }
+    },
+    {
+      "name": "Square",
+      "props": {
+        "name": "Northwind",
+        "size": "14",
+        "shape": "square"
+      }
+    },
+    {
+      "name": "Broken image",
+      "props": {
+        "name": "Maple Orbit",
+        "size": "20",
+        "shape": "square",
+        "src": "/does-not-exist.png",
+        "color": "var(--fndn-tag-purple)"
+      }
+    },
+    {
+      "name": "Sizes",
+      "frameworks": false
+    },
+    {
+      "name": "List row",
+      "props": {
+        "name": "Maya Chen",
+        "size": "28",
+        "shape": "round",
+        "color": "var(--fndn-tag-blue)"
+      }
+    },
+    {
+      "name": "Profile header",
+      "props": {
+        "name": "Daniel Okafor",
+        "size": "40",
+        "shape": "round",
+        "color": "var(--fndn-tag-green)"
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "One letter",
+      "props": {
+        "name": "K",
+        "size": "12",
+        "shape": "round"
+      }
+    },
+    {
+      "name": "Long name",
+      "props": {
+        "name": "Lieferantenbestätigungsanforderung Holdings International",
+        "size": "16",
+        "shape": "round"
+      }
+    },
+    {
+      "name": "Emoji and Arabic",
+      "props": {
+        "name": "🍦 مثلجات القمر",
+        "size": "20",
+        "shape": "square"
+      }
+    },
+    {
+      "name": "No name",
+      "props": {
+        "size": "16",
+        "shape": "round"
+      }
+    }
+  ]
+}

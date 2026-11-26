@@ -1,0 +1,11 @@
+<script setup lang="ts">
+import { Link } from "@fndn/vue";
+</script>
+
+<template>
+  <p class="max-w-80 text-sm text-ink-2">
+    The build of <span class="font-mono text-xs">dpl_7f3a9c</span> failed at "Install dependencies".
+    <Link href="/web-app/deploys/dpl_7f3a9c/logs">Read the deploy log</Link> or
+    <Link href="/web-app/deploys/dpl_6e21b4">roll back to the last good deploy</Link>.
+  </p>
+</template>

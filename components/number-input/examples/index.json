@@ -1,0 +1,9 @@
+{
+  "playground": { "props": { "label": "Seats", "value": "12", "min": 1, "max": 500, "size": "md", "variant": "outline", "invalid": false, "disabled": false }, "width": 160 },
+  "examples": [
+    { "file": "seats", "title": "Seats" },
+    { "file": "spend-limit", "title": "Monthly spend limit" },
+    { "file": "webhook-retries", "title": "Retries in a settings row" },
+    { "file": "seats-total", "title": "Seats with a live total" }
+  ]
+}

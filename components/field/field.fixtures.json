@@ -1,0 +1,17 @@
+{
+  "examples": [
+    { "name": "Default", "props": { "label": "Project name", "helper": "Shown on the menu board." }, "width": 280 },
+    { "name": "Required", "props": { "label": "Supplier email", "required": true, "helper": "Invoices go here." }, "width": 280 },
+    { "name": "Invalid", "props": { "label": "Supplier email", "invalid": true, "helper": "Invoices go here.", "error": "Enter a valid email address." }, "width": 280 },
+    { "name": "Disabled", "props": { "label": "Batch size", "disabled": true, "helper": "Locked while the deploy runs." }, "width": 280 },
+    { "name": "Label only", "props": { "label": "Notes" }, "width": 280 },
+    { "name": "Turns invalid", "props": { "label": "Supplier email", "helper": "Invoices go here.", "error": "Enter a valid email address." }, "width": 280, "steps": [{ "after": 600, "props": { "invalid": true } }] }
+  ],
+  "worstCase": [
+    { "name": "Long label and helper", "props": { "label": "The email address we should send the weekly supplier report and every invoice to", "required": true, "helper": "We send one email every Monday morning with the week's deliveries, the invoices that are due and anything the supplier flagged." }, "width": 280 },
+    { "name": "Long error", "props": { "label": "Email", "invalid": true, "error": "This address bounced three times last month; check the spelling or ask the supplier for another one before saving." }, "width": 280 },
+    { "name": "Unbreakable text", "props": { "label": "supplier-notification-email-address", "helper": "bartholomew.fitzgerald@northwind-industries-holdings.example.com" }, "width": 200 },
+    { "name": "Right-to-left", "props": { "label": "البريد الإلكتروني", "required": true, "helper": "يظهر على لوحة القائمة." }, "width": 280 },
+    { "name": "Narrow", "props": { "label": "Email", "helper": "Required for invoices." }, "width": 120 }
+  ]
+}

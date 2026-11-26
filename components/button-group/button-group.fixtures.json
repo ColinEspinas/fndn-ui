@@ -1,0 +1,16 @@
+{
+  "examples": [
+    { "name": "Outline", "props": { "label": "History", "items": [ { "value": "undo", "label": "Undo" }, { "value": "redo", "label": "Redo" }, { "value": "history", "label": "History" } ] } },
+    { "name": "Rounded, small", "props": { "label": "Period", "size": "sm", "shape": "rounded", "items": [ { "value": "day", "label": "Day" }, { "value": "week", "label": "Week" }, { "value": "month", "label": "Month" } ] } },
+    { "name": "Vertical", "props": { "label": "Export", "orientation": "vertical", "size": "sm", "items": [ { "value": "csv", "label": "Export as CSV" }, { "value": "pdf", "label": "PDF" }, { "value": "json", "label": "JSON" } ] } },
+    { "name": "Primary, a disabled item", "props": { "label": "Review", "variant": "primary", "size": "sm", "items": [ { "value": "approve", "label": "Approve" }, { "value": "skip", "label": "Skip", "disabled": true } ] } },
+    { "name": "Ghost", "props": { "label": "Formatting", "variant": "ghost", "size": "sm", "items": [ { "value": "b", "label": "Bold" }, { "value": "i", "label": "Italic" }, { "value": "u", "label": "Underline" } ] } }
+  ],
+  "worstCase": [
+    { "name": "Long labels in a narrow row", "width": 220, "props": { "label": "Actions", "items": [ { "value": "a", "label": "Reconcile every supplier invoice" }, { "value": "b", "label": "Flag mismatches" } ] } },
+    { "name": "One item", "props": { "label": "Alone", "items": [ { "value": "a", "label": "A" } ] } },
+    { "name": "Many items", "width": 320, "props": { "label": "Pages", "size": "sm", "items": [ { "value": "1", "label": "1" }, { "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" }, { "value": "6", "label": "6" }, { "value": "7", "label": "7" }, { "value": "8", "label": "8" }, { "value": "9", "label": "9" }, { "value": "10", "label": "10" }, { "value": "11", "label": "11" }, { "value": "12", "label": "12" } ] } },
+    { "name": "Right-to-left", "props": { "label": "السجل", "items": [ { "value": "undo", "label": "تراجع" }, { "value": "redo", "label": "إعادة" }, { "value": "history", "label": "السجل" } ] } },
+    { "name": "No items", "props": { "label": "Empty", "items": [] } }
+  ]
+}

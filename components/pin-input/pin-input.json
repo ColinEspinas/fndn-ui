@@ -1,0 +1,164 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "pin-input",
+  "title": "Pin Input",
+  "summary": "A one-time code or PIN typed one character per box.",
+  "description": "A one-time code or PIN typed one character per cell. Each cell is the Input made square (xs 24 · sm 28 · md 32 · lg 36px; 40px on touch), its character centred. Typing moves to the next cell, Backspace to the previous one, a pasted or suggested code fills every cell at once. Behaviour by Ark UI's pin-input (Zag). Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 9,
+  "status": "beta",
+  "engine": "pin-input",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's pin-input root: a column, the label above the cells."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "Visible name (the label prop): text.sm, medium, ink, as the Field's label; it also names the group and every cell."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "role=group, named by the label or aria-label. The cells in a row, 6px apart (4px up to 28px); they wrap rather than overflow a narrow container."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "repeat": true,
+      "description": "One cell: the Input (data-pin-input=\"input\"), square (the size's height: 24, 28, 32 or 36px; 40×40 on a coarse pointer), centred tabular character, named \"<label>, 2 of 6\". Only one cell is in the tab order. data-filled, data-complete from the engine."
+    },
+    {
+      "part": "hidden-input",
+      "element": "input",
+      "optional": true,
+      "description": "Ark's hidden input with the whole code, for a form (name)."
+    }
+  ],
+  "props": {
+    "length": {
+      "type": "number",
+      "default": 6,
+      "description": "Number of cells."
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "model": true,
+      "description": "One character per cell, \"\" for an empty one."
+    },
+    "type": {
+      "type": "enum",
+      "values": [
+        "numeric",
+        "alphanumeric",
+        "alphabetic"
+      ],
+      "default": "numeric",
+      "description": "What a cell accepts; numeric also brings up the number keyboard."
+    },
+    "otp": {
+      "type": "boolean",
+      "default": false,
+      "description": "A one-time code: autocomplete=\"one-time-code\"."
+    },
+    "mask": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dots instead of the characters (a PIN)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The Input's sizes (`lib/control.ts`): square cells of 24, 28, 32 or 36px. On a coarse pointer every cell is 40px."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "subtle",
+        "ghost"
+      ],
+      "default": "outline",
+      "description": "The shared control's looks (`lib/control.ts`), at every size. outline: the form field (field colour, hairline). subtle: the inspector (inset grey, no edge). ghost: nothing until touched. Focused, open and invalid look the same in every variant."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label above the cells."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "",
+      "description": "Shown in an empty cell without focus."
+    },
+    "blurOnComplete": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false,
+      "description": "The Input's red ring on every cell (aria-invalid)."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name (the hidden input holds the whole code)."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string[]) on every character",
+    "valueComplete": "(code: string) when every cell is filled"
+  },
+  "states": [
+    "hover",
+    "focus",
+    "filled",
+    "complete",
+    "invalid",
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "text.sm"
+  ],
+  "dependencies": [
+    "input"
+  ],
+  "a11y": {
+    "role": "group",
+    "keyboard": [
+      "Tab enters the first empty cell (one tab stop for the whole code)",
+      "Typing fills the cell and moves to the next; a character the type does not accept is ignored",
+      "Backspace clears the cell, or the previous one when it is empty; Delete clears the cell",
+      "Arrow Left / Arrow Right move between cells (mirrored right-to-left)",
+      "Paste fills every cell from the focused one"
+    ],
+    "notes": [
+      "The cells are named \"<label>, 2 of 6\"; the group is named by the label or aria-label.",
+      "otp sets autocomplete=\"one-time-code\" and numeric sets inputmode=numeric, so phones offer the code they received.",
+      "The text is 16px on touch devices (the Input's rule), so iOS does not zoom.",
+      "To set it from outside, control `value`: React value / onValueChange."
+    ]
+  },
+  "motion": [
+    "the Input's: rings over duration.base, fill over duration.fast (pointer hover only)",
+    "focus moves from cell to cell instantly"
+  ]
+}

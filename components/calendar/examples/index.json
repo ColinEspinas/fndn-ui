@@ -1,0 +1,12 @@
+{
+  "playground": {
+    "props": { "aria-label": "Delivery date", "selectionMode": "single", "value": ["2026-12-12"], "fixedWeeks": true, "disabled": false }
+  },
+  "examples": [
+    { "file": "single", "title": "A date" },
+    { "file": "range", "title": "A range" },
+    { "file": "limits", "title": "Min, max and unavailable days" },
+    { "file": "locale", "title": "Week start and locale" },
+    { "file": "delivery-date", "title": "Pick a delivery date" }
+  ]
+}

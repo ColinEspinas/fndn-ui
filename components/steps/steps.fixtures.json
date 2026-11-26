@@ -1,0 +1,109 @@
+{
+  "examples": [
+    {
+      "name": "Horizontal, second step",
+      "width": 560,
+      "props": {
+        "step": 1,
+        "controls": true,
+        "completed": "Your workspace is ready.",
+        "items": [
+          { "title": "Account", "description": "Name and email", "content": "Tell us who you are." },
+          { "title": "Workspace", "description": "Name and members", "content": "Name your workspace and invite the team." },
+          { "title": "Billing", "description": "Plan and card", "content": "Pick a plan." }
+        ]
+      }
+    },
+    {
+      "name": "Vertical",
+      "width": 320,
+      "props": {
+        "orientation": "vertical",
+        "step": 2,
+        "items": [
+          { "title": "Order placed", "description": "Monday, 9:14" },
+          { "title": "Roasted", "description": "Tuesday, 7:02" },
+          { "title": "Shipped", "description": "Courier picks it up today" },
+          { "title": "Delivered" }
+        ]
+      }
+    },
+    {
+      "name": "Linear, titles only",
+      "width": 420,
+      "props": {
+        "linear": true,
+        "controls": true,
+        "items": [
+          { "title": "Upload", "content": "Choose a file." },
+          { "title": "Map columns", "content": "Match each column to a field." },
+          { "title": "Import", "content": "Check the summary and import." }
+        ]
+      }
+    },
+    {
+      "name": "All done",
+      "width": 420,
+      "props": {
+        "step": 3,
+        "completed": "All three steps are done.",
+        "items": [{ "title": "Draft" }, { "title": "Review" }, { "title": "Publish" }]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long titles wrap",
+      "width": 360,
+      "props": {
+        "step": 1,
+        "items": [
+          { "title": "Reconcile the supplier invoices for the third quarter", "description": "averyveryveryverylongunbrokendescriptionwithoutanyspaces" },
+          { "title": "B" },
+          { "title": "Publish the reconciled ledger to the finance workspace" }
+        ]
+      }
+    },
+    {
+      "name": "Many steps, narrow",
+      "width": 288,
+      "props": {
+        "step": 4,
+        "items": [{ "title": "1" }, { "title": "2" }, { "title": "3" }, { "title": "4" }, { "title": "5" }, { "title": "6" }, { "title": "7" }, { "title": "8" }]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "width": 360,
+      "props": {
+        "step": 1,
+        "controls": true,
+        "prevLabel": "السابق",
+        "nextLabel": "التالي",
+        "items": [
+          { "title": "الحساب", "description": "الاسم والبريد", "content": "أخبرنا من أنت." },
+          { "title": "مساحة العمل", "content": "سمِّ مساحة العمل." },
+          { "title": "الدفع" }
+        ]
+      }
+    },
+    {
+      "name": "Vertical, long text",
+      "width": 240,
+      "props": {
+        "orientation": "vertical",
+        "step": 1,
+        "items": [
+          { "title": "Quarterly supplier reconciliation for the northern region", "description": "12,480 rows checked against the purchase orders" },
+          { "title": "Review" },
+          { "title": "Publish" }
+        ]
+      }
+    },
+    {
+      "name": "One step",
+      "width": 240,
+      "props": { "items": [{ "title": "Only step" }] }
+    }
+  ]
+}

@@ -1,0 +1,364 @@
+{
+  "examples": [
+    {
+      "name": "Question",
+      "props": {
+        "questions": [
+          {
+            "q": "How many plans should we launch?",
+            "type": "radio",
+            "options": [
+              "Three (core tiers)",
+              "Five (full range)",
+              "Just one hero"
+            ]
+          },
+          {
+            "q": "Which add-ons should we offer?",
+            "type": "check",
+            "options": [
+              "Priority support",
+              "Audit logs",
+              "Single sign-on"
+            ]
+          },
+          {
+            "q": "Which market do we enter first?",
+            "type": "radio",
+            "options": [
+              "Agencies",
+              "Retail chains",
+              "Startups"
+            ]
+          }
+        ],
+        "index": 0,
+        "defaultAnswers": {
+          "0": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "name": "Multi-select",
+      "props": {
+        "questions": [
+          {
+            "q": "How many plans should we launch?",
+            "type": "radio",
+            "options": [
+              "Three (core tiers)",
+              "Five (full range)",
+              "Just one hero"
+            ]
+          },
+          {
+            "q": "Which add-ons should we offer?",
+            "type": "check",
+            "options": [
+              "Priority support",
+              "Audit logs",
+              "Single sign-on"
+            ]
+          },
+          {
+            "q": "Which market do we enter first?",
+            "type": "radio",
+            "options": [
+              "Agencies",
+              "Retail chains",
+              "Startups"
+            ]
+          }
+        ],
+        "index": 1,
+        "defaultAnswers": {
+          "0": [
+            0
+          ],
+          "1": [
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Sent",
+      "props": {
+        "questions": [
+          {
+            "q": "How many plans should we launch?",
+            "type": "radio",
+            "options": [
+              "Three (core tiers)",
+              "Five (full range)",
+              "Just one hero"
+            ]
+          },
+          {
+            "q": "Which add-ons should we offer?",
+            "type": "check",
+            "options": [
+              "Priority support",
+              "Audit logs",
+              "Single sign-on"
+            ]
+          },
+          {
+            "q": "Which market do we enter first?",
+            "type": "radio",
+            "options": [
+              "Agencies",
+              "Retail chains",
+              "Startups"
+            ]
+          }
+        ],
+        "index": 0,
+        "state": "sent",
+        "defaultAnswers": {
+          "0": [
+            0
+          ],
+          "1": [
+            0,
+            1
+          ],
+          "2": [
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "Approve a command",
+      "props": {
+        "action": {
+          "title": "Run the database migration on Production?",
+          "description": "Adds the usage_alerts table and backfills it from the last 30 days of events.",
+          "command": "pnpm --filter billing-api db:migrate --env production",
+          "details": [
+            {
+              "label": "Branch",
+              "value": "feat/usage-alerts",
+              "mono": true
+            },
+            {
+              "label": "Rows affected",
+              "value": "1,284"
+            }
+          ]
+        },
+        "alwaysAllow": true
+      }
+    },
+    {
+      "name": "Approve, title only",
+      "props": {
+        "action": {
+          "title": "Open a pull request on northwind/web-app?"
+        }
+      }
+    },
+    {
+      "name": "One question",
+      "props": {
+        "questions": [
+          {
+            "q": "How many plans should we launch?",
+            "type": "radio",
+            "options": [
+              "Three (core tiers)",
+              "Five (full range)",
+              "Just one hero"
+            ]
+          }
+        ],
+        "index": 0,
+        "defaultAnswers": {
+          "0": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arrives live (appear)",
+      "props": {
+        "action": {
+          "title": "Run the database migration on Production?",
+          "description": "Adds the usage_alerts table and backfills it from the last 30 days of events.",
+          "command": "pnpm --filter billing-api db:migrate --env production",
+          "details": [
+            {
+              "label": "Branch",
+              "value": "feat/usage-alerts",
+              "mono": true
+            },
+            {
+              "label": "Rows affected",
+              "value": "1,284"
+            }
+          ]
+        },
+        "alwaysAllow": true,
+        "appear": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long question, nine options",
+      "props": {
+        "questions": [
+          {
+            "q": "Before we sign the first annual contract, which of the regional resellers should we trust with the enterprise accounts during the renewal peak?",
+            "type": "radio",
+            "options": [
+              "Northwind Cloud Partners (Rotterdam)",
+              "Arctic",
+              "Coldline",
+              "Pacific Systems Integration Cooperative",
+              "Brr",
+              "Ironside & Sons",
+              "Glacier",
+              "Tundra Freight",
+              "SnowRoute"
+            ]
+          },
+          {
+            "q": "Anything else?",
+            "type": "check",
+            "options": [
+              "Yes",
+              "No"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "One-word options",
+      "props": {
+        "questions": [
+          {
+            "q": "Size?",
+            "type": "check",
+            "options": [
+              "S",
+              "M",
+              "L"
+            ]
+          },
+          {
+            "q": "Seats?",
+            "type": "radio",
+            "options": [
+              "Yes",
+              "No"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Single question",
+      "props": {
+        "questions": [
+          {
+            "q": "Ship it?",
+            "type": "radio",
+            "options": [
+              "Ship",
+              "Wait"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "questions": [
+          {
+            "q": "כמה תוכניות להשיק?",
+            "type": "radio",
+            "options": [
+              "שלושה",
+              "חמישה",
+              "אחד"
+            ]
+          },
+          {
+            "q": "ما الإضافات التي نقدمها؟",
+            "type": "check",
+            "options": [
+              "الدعم المميز",
+              "سجلات التدقيق"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Approve: long command, long title, many details",
+      "props": {
+        "action": {
+          "title": "Delete the 14 preview deployments of feat/usage-alerts-and-billing-thresholds-for-enterprise-workspaces that are older than seven days?",
+          "description": "They hold no traffic. Their URLs stop answering at once and cannot be restored; the branch and its commits are kept.",
+          "command": "northwind deploys rm --project web-app --branch feat/usage-alerts-and-billing-thresholds-for-enterprise-workspaces --older-than 7d --yes",
+          "details": [
+            {
+              "label": "Project",
+              "value": "web-app",
+              "mono": true
+            },
+            {
+              "label": "Environment",
+              "value": "Preview"
+            },
+            {
+              "label": "Deployments",
+              "value": "14"
+            },
+            {
+              "label": "Requested by",
+              "value": "Assistant, for Maya Chen"
+            },
+            {
+              "label": "Oldest",
+              "value": "dpl_00000000000000000000000000000000000001a7f",
+              "mono": true
+            }
+          ]
+        },
+        "alwaysAllow": true
+      }
+    },
+    {
+      "name": "Approve: right-to-left",
+      "props": {
+        "action": {
+          "title": "هل تريد تشغيل الاختبارات في billing-api؟",
+          "description": "سيستغرق ذلك دقيقتين تقريبًا.",
+          "command": "pnpm test",
+          "details": [
+            {
+              "label": "الفرع",
+              "value": "main",
+              "mono": true
+            }
+          ]
+        },
+        "alwaysAllow": true,
+        "labels": {
+          "approve": "موافقة",
+          "deny": "رفض",
+          "alwaysAllow": "السماح دائمًا"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "playground": {
+    "props": {
+      "aria-label": "Show pull requests",
+      "items": [{ "value": "open", "label": "Open" }, { "value": "merged", "label": "Merged" }, { "value": "closed", "label": "Closed" }],
+      "value": ["open"],
+      "multiple": false,
+      "variant": "outline",
+      "size": "md",
+      "shape": "pill",
+      "muted": false,
+      "disabled": false
+    }
+  },
+  "examples": [
+    { "file": "text-formatting", "title": "Text formatting toolbar" },
+    { "file": "alignment", "title": "Text alignment, icon-only" },
+    { "file": "pull-request-filter", "title": "Filter pull requests" },
+    { "file": "notify-channels", "title": "Notification channels, one not on your plan" }
+  ]
+}

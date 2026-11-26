@@ -1,0 +1,191 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "editable",
+  "title": "Editable",
+  "summary": "Text that turns into a field when you edit it.",
+  "description": "Text that turns into a field when you edit it: a title, a name, a value in a row. The field is the real Input; the preview takes the Input's box without its fill (same height, padding and type), so the text does not move when the field takes its place. inline takes the type of the text around it, for a value in a TextRow. Enter or a click away saves, Escape cancels; optional edit, save and cancel buttons. Behaviour, focus and ARIA come from the Zag editable machine, through Ark UI.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 10,
+  "status": "beta",
+  "engine": "editable",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Label above; the area and the controls share a row"
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true
+    },
+    {
+      "part": "area",
+      "element": "div",
+      "description": "Holds the preview and the input; one shows at a time (hidden attributes from the engine)"
+    },
+    {
+      "part": "preview",
+      "element": "div",
+      "description": "The text at rest; a tab stop (tabindex=0). field: the Input's box without the fill (the size's height, padding and type), its line box placed where the input centres its text. inline: the surrounding text, 6px padding taken back by a negative margin. Hover fill (pointer); ink-3 placeholder while empty; one line, cut at the end with a title. multiline: at least the size's height, the textarea's padding and 1.5 leading, wrapped and shown whole."
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "The real Input (asChild), marked data-editable=\"input\": its box, ring and sizes. inline: the surrounding text's size and line height, chip radius. multiline: the Input's textarea (multiline, rows 1, autoresize), at least the size's height."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "optional": true,
+      "description": "With controls: the edit button at rest, the save and cancel buttons while editing (the engine hides the others)."
+    },
+    {
+      "part": "edit-trigger",
+      "element": "button",
+      "optional": true,
+      "description": "The real Button (ghost, xs, square, muted) in the real Tooltip, marked data-editable=\"edit-trigger\"; pencil icon"
+    },
+    {
+      "part": "submit-trigger",
+      "element": "button",
+      "optional": true,
+      "description": "The real Button in the real Tooltip, marked data-editable=\"submit-trigger\"; check icon"
+    },
+    {
+      "part": "cancel-trigger",
+      "element": "button",
+      "optional": true,
+      "description": "The real Button in the real Tooltip, marked data-editable=\"cancel-trigger\"; x icon"
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "The text."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Empty",
+      "description": "Shown while the text is empty, in the preview and in the field."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible label; otherwise pass aria-label (it names the preview and the field)."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "field",
+        "inline"
+      ],
+      "default": "field",
+      "description": "field: the Input's box and sizes. inline: the type of the text around it (a value in a TextRow)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "field only: the Input's sizes (`lib/control.ts`): xs 24px, sm 28px, md 32px, lg 36px."
+    },
+    "activationMode": {
+      "type": "enum",
+      "values": [
+        "focus",
+        "click",
+        "dblclick"
+      ],
+      "default": "focus",
+      "description": "What starts an edit: focus (Tab or a click), a click, or a double click."
+    },
+    "controls": {
+      "type": "boolean",
+      "default": false,
+      "description": "Edit, save and cancel buttons beside the text."
+    },
+    "multiline": {
+      "type": "boolean",
+      "default": false,
+      "description": "Several lines (a description): the field is the Input's textarea, one line high and growing with its text (autoresize, no handle); the preview takes the same box and shows the text whole, wrapped (pre-wrap), so nothing moves when the field takes its place. Enter is a new line; Cmd/Ctrl+Enter or a click away saves; Escape cancels. field variant only."
+    },
+    "maxLength": {
+      "type": "number"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name; the input carries it."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string) on every change while editing",
+    "valueCommit": "(value: string) when the text is saved",
+    "valueRevert": "(value: string) when an edit is cancelled"
+  },
+  "states": [
+    "hover",
+    "focus-visible",
+    "editing",
+    "empty",
+    "disabled",
+    "invalid"
+  ],
+  "tokens": [
+    "color.field",
+    "color.surface",
+    "color.hover",
+    "color.ink",
+    "color.ink-3",
+    "color.accent",
+    "color.accent-tint",
+    "color.red",
+    "color.red-tint",
+    "shadow.hairline",
+    "radius.control",
+    "radius.chip",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base"
+  ],
+  "dependencies": [
+    "input",
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "keyboard": [
+      "Tab reaches the preview; with activationMode focus it starts the edit at once, otherwise Enter does",
+      "Enter saves; Escape cancels and puts the text back",
+      "Tab, or a click away, saves",
+      "Focus returns to the preview after saving or cancelling",
+      "multiline: Enter adds a line; Cmd+Enter (Ctrl+Enter off Apple) saves; Escape cancels"
+    ],
+    "notes": [
+      "Give it a visible label or an aria-label: it names both the preview and the field.",
+      "The preview is one line and cut at the end; its title holds the whole text.",
+      "The edit, save and cancel buttons are icon-only: each is named by its Tooltip and its aria-label."
+    ]
+  },
+  "motion": [
+    "preview: hover fill over duration.fast (pointer only)",
+    "the swap between preview and field is instant: nothing moves, the text stays where it is",
+    "field: the Input's ring over duration.base",
+    "buttons: the Button's press (motion.press-scale over duration.press)"
+  ]
+}

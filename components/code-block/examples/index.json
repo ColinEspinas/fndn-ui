@@ -1,0 +1,40 @@
+{
+  "playground": {
+    "props": {
+      "variant": "code",
+      "filename": "scripts/deploy.ts",
+      "lines": [
+        "await northwind.deploys.create({",
+        "  project: \"web-app\",",
+        "  target: \"production\",",
+        "});"
+      ]
+    }
+  },
+  "examples": [
+    {
+      "file": "create-deploy",
+      "title": "Create a deploy from the SDK"
+    },
+    {
+      "file": "pull-request-diff",
+      "title": "Review a change"
+    },
+    {
+      "file": "install-command",
+      "title": "Install command"
+    },
+    {
+      "file": "sdk-setup",
+      "title": "Setup across two files"
+    },
+    {
+      "file": "project-config",
+      "title": "A long config file"
+    },
+    {
+      "file": "editor-pane",
+      "title": "The body of an editor pane"
+    }
+  ]
+}

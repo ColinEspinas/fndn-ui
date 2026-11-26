@@ -1,0 +1,136 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "command-palette",
+  "title": "Command Palette",
+  "summary": "Every page and action of an app in one searchable list, opened with ⌘K.",
+  "description": "The app's ⌘K: every page and action in one searchable list over the page. The Search panel in a bare Dialog pinned near the top: ⌘K (Ctrl K) anywhere opens and closes it, typing filters on names and keywords, the arrow keys move the gliding highlight through groups, Enter runs the command and closes the palette. While the query is empty the recently used commands come first. Rows lead with an icon and end with a note and the command's own shortcut (Kbd). It opens and closes at once, from the pointer too: a palette is used many times a day. Behaviour, focus and ARIA come from the Zag dialog and combobox machines, through Ark UI in React, Vue and Svelte.",
+  "kind": "block",
+  "category": "navigation",
+  "order": 2,
+  "engine": "dialog",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-slot=\"command-palette\"; holds no box of its own (display: contents): where the palette is written in the page changes nothing."
+    },
+    {
+      "part": "search",
+      "element": "div",
+      "description": "The real Search (data-command-palette=\"search\") as the one surface of a bare, instant Dialog placed at the top (data-slot dialog-content): its panel takes the window radius and the overlay shadow. Mounted while open, so every opening starts with the field focused, the given query and the first row highlighted."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "group": "string? (\"Pages\", \"Actions\")",
+        "icon": "icon? (React an element, Vue / Svelte a component)",
+        "meta": "string?",
+        "shortcut": "string[]?",
+        "keywords": "string[]?",
+        "disabled": "boolean?"
+      },
+      "description": "Every command and page, in order; the Search's items. Rows with the same group are listed together under its label."
+    },
+    "recent": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Values of recently used commands, most recent first. While the query is empty they come first under the recent label (and leave their own group, so each command is listed once). The caller keeps the list (prepend the chosen value in select)."
+    },
+    "recentLabel": {
+      "type": "string",
+      "default": "Recent"
+    },
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "Whether the palette is open. React open / onOpenChange (or defaultOpen), Vue v-model:open, Svelte bind:open."
+    },
+    "defaultQuery": {
+      "type": "string",
+      "default": "",
+      "description": "The query each opening starts with (a search field that opens the palette on a printable key passes that key)."
+    },
+    "hotkey": {
+      "type": "string",
+      "default": "k",
+      "description": "⌘ + this key on macOS, Ctrl + it elsewhere (both are accepted everywhere), anywhere on the page, opens and closes the palette. Pass false to bind your own (an app that takes the key on its own root first: a key already handled, defaultPrevented, is left alone)."
+    },
+    "limit": {
+      "type": "number",
+      "default": 8,
+      "description": "Rows shown while the query is empty, after the recent ones. A query shows every match."
+    },
+    "title": {
+      "type": "string",
+      "default": "Command palette",
+      "description": "Names the dialog for assistive technology (not shown)."
+    },
+    "label": {
+      "type": "string",
+      "default": "Search commands",
+      "description": "Accessible name of the field."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Type a command or search…"
+    },
+    "emptyTitle": {
+      "type": "string",
+      "default": "No results found"
+    },
+    "emptyHint": {
+      "type": "string",
+      "default": "Try another word, or a page name."
+    }
+  },
+  "events": {
+    "openChange": "(open: boolean)",
+    "select": "(value: string, item) when a command is chosen with Enter or a click; the palette has already closed"
+  },
+  "states": [
+    "closed",
+    "open",
+    "empty-query",
+    "recent",
+    "no-results"
+  ],
+  "tokens": [
+    "radius.window",
+    "shadow.overlay",
+    "color.scrim"
+  ],
+  "dependencies": [
+    "dialog",
+    "search"
+  ],
+  "a11y": {
+    "role": "dialog containing a combobox + listbox",
+    "keyboard": [
+      "⌘K / Ctrl K anywhere opens the palette with the field focused; pressed again, it closes it",
+      "Typing filters on names and keywords; the first match is highlighted",
+      "ArrowDown / ArrowUp move the highlight through the rows as drawn, groups included; Home / End jump to the first and last",
+      "Enter runs the highlighted command and closes the palette; focus returns to what had it before",
+      "Escape clears a query, then closes the palette",
+      "Tab stays inside the palette (focus trap)"
+    ],
+    "notes": [
+      "The dialog is named by its title (visually hidden in a bare dialog); the field by its label.",
+      "A trigger that opens it (a search field, a button) should say so: aria-haspopup=\"dialog\" and aria-keyshortcuts=\"Meta+K\" (\"Control+K\" off macOS), with the shortcut shown in a Kbd.",
+      "The shortcut is a hint, never the only way in: give the palette a visible trigger."
+    ]
+  },
+  "motion": [
+    "open and close: instant, from the pointer too (Dialog instant): no fade, no scale, no backdrop fade",
+    "rows: the Search's: no entrance, the highlight glides between neighbouring rows and moves at once across a group label"
+  ]
+}

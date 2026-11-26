@@ -1,0 +1,171 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "collapsible",
+  "title": "Collapsible",
+  "summary": "A button that shows or hides a region under it.",
+  "description": "A button that shows or hides a region under it: details, advanced settings, a log. A disclosure: a trigger (a real button with any content) and a region that reveals under it, pushing the rows below. One caret convention: a right caret that turns down, mirrored right-to-left. Three trigger shapes cover the system's disclosures: a whole row (task rows), an inline header on the text line (\"Thought for 12s\") and a section header (sidebar \"Chats\"). Behaviour and ARIA come from the Zag collapsible machine, through Ark UI in React, Vue and Svelte. This is the only place the reveal recipe lives.",
+  "kind": "component",
+  "category": "display",
+  "order": 9,
+  "engine": "collapsible",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "data-state=open|closed from the engine. Hosts add their own class and restyle the parts by data-slot. The trigger and region are its direct children, or descendants in no nested collapsible (a trigger in a footer under the region); a host whose trigger is another component's button uses the engine's Trigger anywhere inside the Root (recommendation-card)."
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "Direct child of the root. aria-expanded, aria-controls, data-state=open|closed, data-disabled from the engine."
+    },
+    {
+      "part": "caret",
+      "element": "span",
+      "optional": true,
+      "description": "Right caret (ph caret-right) that turns down 90deg while open; first or last child of the trigger; carries kbd-instant"
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "description": "The trigger's content. Any markup may go inside. In a row it wraps (the caret, the meta and its first line share a 24px first line); in inline and section it truncates, with a title while cut."
+    },
+    {
+      "part": "meta",
+      "element": "span",
+      "optional": true,
+      "description": "Trailing muted note (step count, duration)"
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "The region. Direct child of the root; carries kbd-instant. Closed: data-state=closed and hidden (out of the layout and the tab order). Settled open: no data-state."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "description": "The one child of the region; it clips while the region moves. Put the host's content here."
+    },
+    {
+      "part": "text",
+      "element": "p",
+      "optional": true,
+      "description": "Plain detail text, inset to line up with the trigger's label"
+    }
+  ],
+  "props": {
+    "open": {
+      "type": "boolean",
+      "model": true,
+      "default": false,
+      "description": "Open or closed. React: open / defaultOpen / onOpenChange; Vue: v-model:open; Svelte: bind:open."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "part": "trigger",
+      "description": "The trigger does nothing and dims."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "row",
+        "inline",
+        "section"
+      ],
+      "default": "row",
+      "description": "row: the whole row is the trigger (44px, caret in a 28px box). inline: a text-sized header on the text line that bleeds 6px. section: a 28px quiet header (12px/500, ink-2, ink on hover)."
+    },
+    "caret": {
+      "type": "enum",
+      "values": [
+        "start",
+        "end",
+        "none"
+      ],
+      "default": "end",
+      "description": "Where the caret sits in the trigger. Sections put it first."
+    },
+    "label": {
+      "type": "node",
+      "description": "The trigger's content: text, or markup (React node, Vue slot `label`, Svelte snippet)."
+    },
+    "meta": {
+      "type": "string",
+      "description": "Trailing muted note in the trigger."
+    },
+    "detail": {
+      "type": "string",
+      "description": "Plain detail text shown in the region, inset like the trigger."
+    },
+    "keepLayout": {
+      "type": "boolean",
+      "default": false,
+      "attr": "data-keep-layout",
+      "description": "A closed region stays laid out at zero height (invisible, out of the tab order) instead of display: none, so entrances inside it do not replay when it reopens (thinking-state, tool-chips)."
+    },
+    "triggerClass": {
+      "type": "string",
+      "description": "A class added to the trigger (a host's hook)."
+    },
+    "labelClass": {
+      "type": "string",
+      "description": "A class added to the label part (a host's hook)."
+    }
+  },
+  "slots": {
+    "default": "The region's content, after the detail text.",
+    "label": "Vue: the trigger's content when it is more than text (React: label as a node; Svelte: label as a snippet)."
+  },
+  "events": {
+    "openChange": "(open: boolean)"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "open",
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.hover",
+    "color.hover-2",
+    "radius.control",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.move",
+    "duration.reveal",
+    "easing.out-strong"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "button (aria-expanded, aria-controls) + region",
+    "keyboard": [
+      "Tab reaches the trigger; nothing inside a closed region is reachable",
+      "Enter / Space on the trigger toggle the region; the change is instant (no reveal, no caret turn)",
+      "A disabled trigger stays in the tab order and ignores Enter, Space and clicks"
+    ],
+    "notes": [
+      "The trigger is a real button; its whole content is the accessible name, so keep the label short or give it aria-label.",
+      "The region leaves the layout (hidden) once the exit has played, which also takes it out of the accessibility tree."
+    ]
+  },
+  "motion": [
+    "reveal: grid-template-rows 0fr -> 1fr over duration.reveal easing.out-strong, opacity over duration.base ease; rows below move with it",
+    "exit: the same transition back; the engine waits for the fndn-collapsible-exit hold (duration.reveal) before it hides the region",
+    "caret: rotate 0 -> 90deg (right-to-left 180 -> 90deg) over duration.move easing.out-strong",
+    "keyboard: region and caret are instant (kbd-instant)",
+    "first paint: nothing plays"
+  ],
+  "notes": [
+    "Composition: the trigger and the region are direct children of the root, so collapsibles nest. A host puts its own class on the root (className / class) and styles its parts through `.<host> > [data-slot=collapsible-trigger]`.",
+    "Set it from outside by controlling `open` (React open / onOpenChange, Vue v-model:open, Svelte bind:open)."
+  ]
+}

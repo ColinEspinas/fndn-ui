@@ -1,0 +1,22 @@
+{
+  "playground": {
+    "props": {
+      "label": "Project name",
+      "value": "billing-api",
+      "variant": "field",
+      "size": "md",
+      "activationMode": "focus",
+      "controls": false,
+      "disabled": false,
+      "invalid": false
+    },
+    "width": 260
+  },
+  "examples": [
+    { "file": "project-name", "title": "Rename a project" },
+    { "file": "release-title", "title": "Release title, with buttons" },
+    { "file": "project-details", "title": "Project details, edited in place" },
+    { "file": "issue-description", "title": "Issue description, several lines" },
+    { "file": "saved-view", "title": "Saved view in a sidebar" }
+  ]
+}

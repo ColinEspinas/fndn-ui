@@ -1,0 +1,181 @@
+{
+  "examples": [
+    {
+      "name": "Field",
+      "width": 320,
+      "props": {
+        "label": "Topics",
+        "value": [
+          "Billing",
+          "Onboarding"
+        ],
+        "placeholder": "Add a topic"
+      }
+    },
+    {
+      "name": "Empty",
+      "width": 280,
+      "props": {
+        "aria-label": "Labels",
+        "placeholder": "Add a label"
+      }
+    },
+    {
+      "name": "Small",
+      "width": 240,
+      "props": {
+        "size": "sm",
+        "aria-label": "Keywords",
+        "value": [
+          "invoice",
+          "q3"
+        ],
+        "placeholder": "Keyword"
+      }
+    },
+    {
+      "name": "At most three",
+      "width": 320,
+      "props": {
+        "label": "Top picks",
+        "max": 3,
+        "value": [
+          "Reports",
+          "Exports",
+          "Alerts"
+        ]
+      }
+    },
+    {
+      "name": "Invalid",
+      "width": 280,
+      "props": {
+        "label": "Recipients",
+        "invalid": true,
+        "value": [
+          "joy@acme"
+        ]
+      }
+    },
+    {
+      "name": "Disabled",
+      "width": 280,
+      "props": {
+        "label": "Topics",
+        "disabled": true,
+        "value": [
+          "Billing"
+        ]
+      }
+    },
+    {
+      "name": "Labels with tones",
+      "width": 320,
+      "props": {
+        "label": "Labels",
+        "value": [
+          "bug",
+          "billing",
+          "webhooks",
+          "Docs"
+        ],
+        "tone": "auto",
+        "tones": {
+          "bug": "red",
+          "billing": "purple",
+          "docs": "green"
+        }
+      }
+    },
+    {
+      "name": "Outline labels",
+      "width": 320,
+      "props": {
+        "label": "Labels",
+        "tagVariant": "outline",
+        "tones": {
+          "bug": "red",
+          "billing": "purple",
+          "webhooks": "cyan"
+        },
+        "tone": "auto",
+        "value": [
+          "bug",
+          "billing",
+          "webhooks",
+          "p1"
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Many tags",
+      "width": 280,
+      "props": {
+        "label": "Topics",
+        "value": [
+          "Billing",
+          "Security",
+          "Onboarding",
+          "Search",
+          "Webhooks",
+          "Audit log",
+          "Usage alerts",
+          "Integrations",
+          "Single sign-on",
+          "Mobile",
+          "API",
+          "Exports"
+        ]
+      }
+    },
+    {
+      "name": "Unbreakable tag",
+      "width": 220,
+      "props": {
+        "aria-label": "Files",
+        "value": [
+          "supplier-contracts-renewal-schedule-and-pricing-history-export.csv",
+          "a"
+        ]
+      }
+    },
+    {
+      "name": "One letter",
+      "width": 200,
+      "props": {
+        "aria-label": "Initials",
+        "value": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left tags",
+      "width": 280,
+      "props": {
+        "label": "المواضيع",
+        "value": [
+          "الفوترة",
+          "الأمان",
+          "Onboarding"
+        ],
+        "placeholder": "أضف موضوعًا"
+      }
+    },
+    {
+      "name": "Emoji tags",
+      "width": 280,
+      "props": {
+        "aria-label": "Moods",
+        "value": [
+          "🧊 cold",
+          "🔥 hot"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Code editor",
+  "description": "An editor window: files, tabs over the code, a terminal and problems panel, source control with a diff, a command palette and an assistant that proposes a fix.",
+  "order": 1,
+  "shape": "rounded"
+}

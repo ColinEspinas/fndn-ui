@@ -1,0 +1,300 @@
+{
+  "examples": [
+    {
+      "name": "Default",
+      "props": {
+        "title": "All chunks",
+        "count": "32",
+        "chunks": [
+          {
+            "title": "Vendor onboarding rule",
+            "chars": "290 characters",
+            "body": "SOC 2 attestation must be verified before a new vendor can be added to the procurement workflow.",
+            "source": "Vendor Onboarding SOP.pdf",
+            "badge": "PDF",
+            "tone": "red"
+          },
+          {
+            "title": "Plan demand row",
+            "chars": "1,250 characters",
+            "body": "Q4 velocity table: annual +18%, monthly +6%, legacy pro -11%; retire plans below 40 signups weekly.",
+            "source": "Sales Velocity Export.csv",
+            "badge": "CSV",
+            "tone": "green"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "after": 1000,
+          "props": {
+            "chunks": [
+              {
+                "title": "Vendor onboarding rule",
+                "chars": "290 characters",
+                "body": "SOC 2 attestation must be verified before a new vendor can be added to the procurement workflow.",
+                "source": "Vendor Onboarding SOP.pdf",
+                "badge": "PDF",
+                "tone": "red"
+              },
+              {
+                "title": "Plan demand row",
+                "chars": "1,250 characters",
+                "body": "Q4 velocity table: annual +18%, monthly +6%, legacy pro -11%; retire plans below 40 signups weekly.",
+                "source": "Sales Velocity Export.csv",
+                "badge": "CSV",
+                "tone": "green"
+              },
+              {
+                "title": "Database maintenance note",
+                "chars": "640 characters",
+                "body": "Vacuum the primary database every second Monday; log the table sizes before and after.",
+                "source": "Maintenance Log.xlsx",
+                "badge": "XLSX",
+                "tone": "green"
+              }
+            ]
+          }
+        },
+        {
+          "after": 1000,
+          "props": {
+            "chunks": [
+              {
+                "title": "Vendor onboarding rule",
+                "chars": "290 characters",
+                "body": "SOC 2 attestation must be verified before a new vendor can be added to the procurement workflow.",
+                "source": "Vendor Onboarding SOP.pdf",
+                "badge": "PDF",
+                "tone": "red"
+              },
+              {
+                "title": "Plan demand row",
+                "chars": "1,250 characters",
+                "body": "Q4 velocity table: annual +18%, monthly +6%, legacy pro -11%; retire plans below 40 signups weekly.",
+                "source": "Sales Velocity Export.csv",
+                "badge": "CSV",
+                "tone": "green"
+              },
+              {
+                "title": "Database maintenance note",
+                "chars": "640 characters",
+                "body": "Vacuum the primary database every second Monday; log the table sizes before and after.",
+                "source": "Maintenance Log.xlsx",
+                "badge": "XLSX",
+                "tone": "green"
+              },
+              {
+                "title": "Supplier contact",
+                "chars": "180 characters",
+                "body": "The Northwind account manager handles enterprise orders above 40 seats.",
+                "source": "Supplier Directory.docx",
+                "badge": "DOC",
+                "tone": "accent"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Arrives live (appear)",
+      "props": {
+        "title": "All chunks",
+        "count": "32",
+        "chunks": [
+          {
+            "title": "Vendor onboarding rule",
+            "chars": "290 characters",
+            "body": "SOC 2 attestation must be verified before a new vendor can be added to the procurement workflow.",
+            "source": "Vendor Onboarding SOP.pdf",
+            "badge": "PDF",
+            "tone": "red"
+          },
+          {
+            "title": "Plan demand row",
+            "chars": "1,250 characters",
+            "body": "Q4 velocity table: annual +18%, monthly +6%, legacy pro -11%; retire plans below 40 signups weekly.",
+            "source": "Sales Velocity Export.csv",
+            "badge": "CSV",
+            "tone": "green"
+          }
+        ],
+        "appear": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names",
+      "props": {
+        "title": "All chunks retrieved for the quarterly supplier compliance review",
+        "count": "12,480",
+        "chunks": [
+          {
+            "title": "Vendor onboarding rule for SOC 2 attestation of regional payment processors",
+            "chars": "1,048,576 characters",
+            "body": "SOC 2 attestation must be verified before a new vendor can be added: https://compliance.example.com/vendors/onboarding/soc-2/attestation-requirements-2025.pdf",
+            "source": "Vendor Onboarding Standard Operating Procedure — Revision 14 (final, signed).pdf",
+            "badge": "DOCX",
+            "tone": "accent"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Zero chunks",
+      "props": {
+        "title": "All chunks",
+        "count": "0",
+        "chunks": []
+      }
+    },
+    {
+      "name": "Fourteen chunks",
+      "props": {
+        "title": "All chunks",
+        "count": "14",
+        "chunks": [
+          {
+            "title": "Chunk 1: database latency log",
+            "chars": "137 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 1.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 2: database latency log",
+            "chars": "274 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 2.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 3: database latency log",
+            "chars": "411 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 3.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 4: database latency log",
+            "chars": "548 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 4.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 5: database latency log",
+            "chars": "685 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 5.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 6: database latency log",
+            "chars": "822 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 6.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 7: database latency log",
+            "chars": "959 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 7.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 8: database latency log",
+            "chars": "1,096 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 8.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 9: database latency log",
+            "chars": "1,233 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 9.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 10: database latency log",
+            "chars": "1,370 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 10.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 11: database latency log",
+            "chars": "1,507 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 11.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 12: database latency log",
+            "chars": "1,644 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 12.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 13: database latency log",
+            "chars": "1,781 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 13.csv",
+            "badge": "CSV",
+            "tone": "green"
+          },
+          {
+            "title": "Chunk 14: database latency log",
+            "chars": "1,918 characters",
+            "body": "Replica 3 held p95 under 18 ms overnight.",
+            "source": "Latency Log 14.csv",
+            "badge": "CSV",
+            "tone": "green"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "title": "כל המקטעים",
+        "count": "2",
+        "chunks": [
+          {
+            "title": "כלל קליטת ספקים",
+            "chars": "290 תווים",
+            "body": "יש לאמת אישור SOC 2 לפני הוספת ספק חדש.",
+            "source": "נוהל קליטה.pdf",
+            "badge": "PDF",
+            "tone": "red"
+          },
+          {
+            "title": "صف الطلب على الخطط",
+            "chars": "1,250 حرفًا",
+            "body": "جدول السرعة للربع الرابع: الخطة السنوية +18٪.",
+            "source": "تصدير المبيعات.csv",
+            "badge": "CSV",
+            "tone": "green"
+          }
+        ]
+      }
+    }
+  ]
+}

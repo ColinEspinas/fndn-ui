@@ -1,0 +1,8 @@
+{
+  "playground": { "props": { "orientation": "horizontal", "decorative": false }, "text": "or" },
+  "examples": [
+    { "file": "settings-sections", "title": "Between settings sections" },
+    { "file": "deploy-details", "title": "In a deploy's details line" },
+    { "file": "sign-in-options", "title": "Between sign-in options" }
+  ]
+}

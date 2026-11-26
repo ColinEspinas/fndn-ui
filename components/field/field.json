@@ -1,0 +1,119 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "field",
+  "title": "Field",
+  "summary": "A label, a control and its help or error text, wired together.",
+  "description": "A label, one control and its help or error, wired together. The label names the control, the helper and the error describe it, invalid turns the control's ring red and shows the error in place of the helper, required adds an asterisk to the label and marks the control required, disabled reaches the control. Ark UI's field: Input, Textarea, InputGroup and PasswordInput read it through its context. It replaces Input's Field part (same column, gap, type and colours).",
+  "kind": "component",
+  "category": "inputs",
+  "order": 9,
+  "status": "beta",
+  "engine": "field",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Ark's field root (role=\"group\", data-invalid / data-disabled / data-readonly): a column with a 6px gap; class and style land here."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": true,
+      "description": "The Label component (data-field=\"label\"), wired to the control (for / id). Only as wide as its text."
+    },
+    {
+      "part": "required-indicator",
+      "element": "span",
+      "optional": true,
+      "description": "An asterisk after the label text when required, in red, aria-hidden (the control itself carries required)."
+    },
+    {
+      "part": "control",
+      "element": "slot",
+      "optional": true,
+      "marked": false,
+      "description": "The control (children): Input, Textarea, InputGroup, PasswordInput or any control built on Ark's field context. An Input when omitted."
+    },
+    {
+      "part": "helper",
+      "element": "span",
+      "optional": true,
+      "description": "Help under the control: text.xs, ink-2 (read for meaning, so at least 4.5:1); wraps, keeps its own direction. Linked by aria-describedby. Hidden while the error shows."
+    },
+    {
+      "part": "error",
+      "element": "span",
+      "optional": true,
+      "description": "Shown only while invalid and an error is given: text.xs, red, aria-live polite, linked by aria-describedby. It takes the helper's place."
+    }
+  ],
+  "props": {
+    "label": {
+      "type": "node",
+      "description": "The control's name, above it."
+    },
+    "helper": {
+      "type": "node",
+      "description": "Help under the control."
+    },
+    "error": {
+      "type": "node",
+      "description": "What to fix; shown while invalid, in place of the helper."
+    },
+    "invalid": {
+      "type": "boolean",
+      "default": false,
+      "description": "aria-invalid on the control (its red ring) and the error shown."
+    },
+    "required": {
+      "type": "boolean",
+      "default": false,
+      "description": "required on the control; an asterisk after the label."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the control; the label fades with it."
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "id": {
+      "type": "string",
+      "description": "id of the control; generated when omitted."
+    }
+  },
+  "slots": {
+    "default": "The control. An Input when omitted."
+  },
+  "states": [
+    "invalid",
+    "required",
+    "disabled",
+    "read-only"
+  ],
+  "tokens": [
+    "color.ink-2",
+    "color.red",
+    "text.xs"
+  ],
+  "dependencies": [
+    "label",
+    "input"
+  ],
+  "a11y": {
+    "role": "group",
+    "notes": [
+      "The label names the control (for / id), so a click on it focuses the control.",
+      "The control's aria-describedby lists the helper, or the error while invalid; the error is aria-live polite.",
+      "invalid sets aria-invalid on the control; required sets required (the asterisk is aria-hidden); disabled and readOnly reach the control.",
+      "Text sizes and the 16px text on touch come from the control."
+    ]
+  },
+  "motion": [
+    "none of its own at rest: the control's ring changes as the control's do",
+    "error: one that appears after the field's first paint takes its line at once and fades its ink in (opacity over duration.base); on first paint and from the keyboard it is instant"
+  ]
+}

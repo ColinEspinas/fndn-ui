@@ -1,0 +1,42 @@
+{
+  "examples": [
+    {
+      "name": "Inline",
+      "props": { "href": "#dpl_7f3a9c" },
+      "text": "deploy dpl_7f3a9c"
+    },
+    {
+      "name": "Standalone",
+      "props": { "href": "#deploys", "variant": "standalone" },
+      "text": "View all deploys"
+    },
+    {
+      "name": "External",
+      "props": { "href": "https://status.northwind.example", "external": true },
+      "text": "status page"
+    },
+    {
+      "name": "Neutral",
+      "props": { "href": "#terms", "tone": "neutral" },
+      "text": "Terms of service"
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "A pasted URL in a narrow column",
+      "width": 180,
+      "props": { "href": "https://northwind.example/deploys/dpl_7f3a9c/logs?step=build&line=1284", "external": true },
+      "text": "https://northwind.example/deploys/dpl_7f3a9c/logs?step=build&line=1284"
+    },
+    {
+      "name": "Right-to-left text",
+      "props": { "href": "#ar", "variant": "standalone" },
+      "text": "عرض كل عمليات النشر"
+    },
+    {
+      "name": "One letter",
+      "props": { "href": "#a" },
+      "text": "a"
+    }
+  ]
+}

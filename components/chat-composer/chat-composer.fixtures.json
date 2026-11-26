@@ -1,0 +1,208 @@
+{
+  "examples": [
+    {
+      "name": "Conversation",
+      "width": 380,
+      "props": {
+        "tabs": [
+          {
+            "value": "plans",
+            "label": "Plans",
+            "messages": [
+              {
+                "role": "user",
+                "text": "Compare annual plans to last quarter"
+              },
+              {
+                "role": "agent",
+                "label": "Sales history",
+                "source": "plan_data",
+                "time": "4s",
+                "text": "Pulled 3 quarters of annual plan sales for comparison."
+              },
+              {
+                "role": "agent",
+                "label": "Comparison",
+                "source": "trends",
+                "time": "2s",
+                "text": "Annual plans are up 12% with stronger month-end peaks."
+              }
+            ]
+          },
+          {
+            "value": "suppliers",
+            "label": "Suppliers",
+            "messages": [
+              {
+                "role": "user",
+                "text": "Who resolves billing tickets fastest?"
+              },
+              {
+                "role": "agent",
+                "label": "Orders",
+                "source": "supplier_orders",
+                "time": "3s",
+                "text": "Verde Farms averaged two days over the last ten orders."
+              }
+            ]
+          }
+        ],
+        "tab": "plans",
+        "suggestions": [
+          "Top sellers this week",
+          "Low stock",
+          "Forecast July"
+        ],
+        "placeholder": "Prompt or tag a plan with @"
+      }
+    },
+    {
+      "name": "Busy",
+      "width": 380,
+      "props": {
+        "tabs": [
+          {
+            "value": "plans",
+            "label": "Plans",
+            "messages": [
+              {
+                "role": "user",
+                "text": "Which add-ons sell with the Team plan?"
+              }
+            ]
+          },
+          {
+            "value": "suppliers",
+            "label": "Suppliers"
+          }
+        ],
+        "tab": "plans",
+        "busy": true,
+        "status": "Reading sales",
+        "suggestions": [
+          "Top sellers this week",
+          "Low stock"
+        ]
+      }
+    },
+    {
+      "name": "Draft",
+      "width": 380,
+      "props": {
+        "tabs": [
+          {
+            "value": "new",
+            "label": "New chat"
+          }
+        ],
+        "value": "Draft a note to Verde Farms about the late order",
+        "suggestions": [
+          "Summarize today",
+          "Plan the weekend batch"
+        ]
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long everything",
+      "width": 320,
+      "props": {
+        "tabs": [
+          {
+            "value": "a",
+            "label": "Supplier records and every proposed change this quarter",
+            "messages": [
+              {
+                "role": "user",
+                "text": "maximilian.wisniewska-kowalczyk@example.com asked for https://example.com/reports/2026/q4/plans/annual-and-team-month-end-peaks"
+              },
+              {
+                "role": "agent",
+                "label": "A very long step label that keeps on going past the edge",
+                "source": "supplier_orders_with_a_long_table_name",
+                "time": "1m 12s",
+                "text": "Twelve thousand four hundred and eighty rows matched across 26 makers; the answer runs long so the thread has to scroll inside the card instead of growing it."
+              },
+              {
+                "role": "agent",
+                "text": "A step with no label, source or time."
+              }
+            ]
+          },
+          {
+            "value": "b",
+            "label": "B"
+          },
+          {
+            "value": "c",
+            "label": "maximilian.wisniewska-kowalczyk@example.com"
+          }
+        ],
+        "tab": "a",
+        "value": "A draft that runs over several lines so the textarea grows to its limit and then scrolls instead of pushing the thread out of the card entirely, which it must never do.",
+        "suggestions": [
+          "A suggestion that is far too long to fit",
+          "B",
+          "Forecast July",
+          "Low stock",
+          "Top sellers"
+        ]
+      }
+    },
+    {
+      "name": "Empty",
+      "width": 380,
+      "props": {
+        "tabs": [
+          {
+            "value": "new",
+            "label": "New chat"
+          }
+        ],
+        "suggestions": []
+      }
+    },
+    {
+      "name": "Right to left",
+      "width": 380,
+      "props": {
+        "tabs": [
+          {
+            "value": "a",
+            "label": "النكهات",
+            "messages": [
+              {
+                "role": "user",
+                "text": "قارن النعناع بالصيف الماضي"
+              },
+              {
+                "role": "agent",
+                "label": "المبيعات",
+                "source": "plan_data",
+                "time": "4s",
+                "text": "ارتفعت مبيعات النعناع بنسبة 12٪."
+              }
+            ]
+          },
+          {
+            "value": "b",
+            "label": "الموردون"
+          }
+        ],
+        "tab": "a",
+        "suggestions": [
+          "الأكثر مبيعًا"
+        ],
+        "placeholder": "اكتب رسالة…",
+        "aria-label": "المحادثات",
+        "labels": {
+          "message": "الرسالة",
+          "send": "إرسال",
+          "stop": "إيقاف",
+          "time": "خلال {time}"
+        }
+      }
+    }
+  ]
+}

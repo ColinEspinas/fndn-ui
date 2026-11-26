@@ -1,0 +1,184 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "filter-table",
+  "title": "Filter Table",
+  "summary": "A table with filter chips above it that narrow its rows in place.",
+  "description": "A table with chips above it that filter its rows in place: support tickets by status, issues by priority, deploys by environment. Its columns, rows and chips come from props (without them it is a task table: task, date, status, owner). A status column shows each row's StatusPill, a tag column (labels people assign, such as environments) each row's Tag. The chips are a segmented-control with the chips variant (one Zag radio-group, through Ark UI in React, Vue and Svelte), so they are a single tab stop and the arrow keys move and select. Rows that leave collapse with the reveal recipe while they fade, so the rows below close the gap in the same motion.",
+  "kind": "block",
+  "category": "data",
+  "order": 2,
+  "engine": "radio-group",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "max-width 420"
+    },
+    {
+      "part": "filters",
+      "element": "div",
+      "description": "The real SegmentedControl, variant chips, marked data-filter-table=\"filters\": one radio group, a sliding thumb, each option label holds its filter's dot (its tone) and a count"
+    },
+    {
+      "part": "card",
+      "element": "div",
+      "description": "role=region, focusable; scrolls sideways when the table is wider than the card; edge veils (::before / ::after, sticky, shown by a scroll-driven timeline) fade the side the table continues past; armed only while the table overflows (data-overflow, set by filter-table.logic.ts)"
+    },
+    {
+      "part": "table",
+      "element": "div",
+      "description": "role=table; at least --fndn-filter-min wide (105px a column, 420px at least); the head and every row lay their cells on --fndn-filter-cols (each column's share of the width)"
+    },
+    {
+      "part": "head",
+      "element": "div",
+      "description": "role=row"
+    },
+    {
+      "part": "th",
+      "element": "span",
+      "repeat": true,
+      "description": "role=columnheader; a number column's header at the end"
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "repeat": true,
+      "description": "Reveal wrapper; shown (the row matches the filter) is a recipe variant; kbd-instant (the shared keyboard-instant flag)"
+    },
+    {
+      "part": "cells",
+      "element": "div",
+      "description": "role=row"
+    },
+    {
+      "part": "cell",
+      "element": "span",
+      "repeat": true,
+      "description": "role=cell; its column's type (title|text|date|number|status|tag) is a recipe variant. title: 500 ink; title and text are cut at the end with the full value in title; date and number stay whole (tabular; number at the end); a status cell is at least 40px tall, the height a tag row has, so rows do not change height with the column type"
+    },
+    {
+      "part": "status",
+      "element": "span",
+      "optional": true,
+      "description": "A status column's cell content (to do, failed, live): the real StatusPill size sm, marked data-filter-table=\"status\", with the label of the filter its value matches; that filter's tone is the pill's tone when it is green, orange, red or blue, and a neutral pill's dotTone for purple, cyan, yellow and pink (a neutral pill and the raw value when no filter matches)"
+    },
+    {
+      "part": "tag",
+      "element": "span",
+      "optional": true,
+      "description": "A tag column's cell content, for labels people assign (an environment, a category): the real Tag, marked data-filter-table=\"tag\", in the label and tone of the filter its value matches (neutral and the raw value when none does)"
+    },
+    {
+      "part": "empty",
+      "element": "div",
+      "description": "The real EmptyState, marked data-filter-table=\"empty\": a centred row shown only while no row matches, or a block when there are no rows"
+    }
+  ],
+  "props": {
+    "columns": {
+      "type": "array",
+      "items": {
+        "key": "string",
+        "label": "string",
+        "type": "title|text|date|number|status|tag (default text; status: a StatusPill, for a state; tag: a Tag, for a label people assign)",
+        "width": "number? (a share of the width, fr; default by type: title 1.3, status and tag 0.95, text 0.9, number 0.8, date 0.6)"
+      },
+      "description": "The columns in order. Without them: task (title), date, status, owner (text), named by labels.columns. The shares reach the table as --fndn-filter-cols (set through filter-table.logic.ts)."
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "[column key]": "string | number"
+      },
+      "description": "One object per row, values by column key."
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "key": "string (\"all\" matches every row)",
+        "label": "string",
+        "tone": "blue|green|orange|red|purple|cyan|yellow|pink?",
+        "count": "number? (derived from the rows otherwise)"
+      },
+      "description": "The chips. A row matches a chip when its filterKey field equals the chip's key. Without them: All, To do (orange), In Progress (blue), Completed (green), named by labels.statuses, for the values todo, progress, done."
+    },
+    "filterKey": {
+      "type": "string",
+      "default": "status",
+      "description": "The row field the chips match."
+    },
+    "filter": {
+      "type": "string",
+      "default": "all",
+      "model": true,
+      "description": "The selected chip"
+    },
+    "labels": {
+      "type": "object",
+      "description": "{ filters, region, empty, none, columns: { task, date, status, owner } (built-in columns), statuses: { todo, progress, done } (built-in chips) }"
+    }
+  },
+  "events": {
+    "change": "(filter)"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "checked",
+    "disabled",
+    "row-hover",
+    "row-hidden",
+    "empty"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-2",
+    "color.line",
+    "color.hover",
+    "color.accent",
+    "shadow.card",
+    "radius.card",
+    "text.sm",
+    "easing.out-strong",
+    "duration.fast",
+    "duration.base",
+    "duration.reveal"
+  ],
+  "dependencies": [
+    "segmented-control",
+    "status-pill",
+    "tag",
+    "empty-state"
+  ],
+  "a11y": {
+    "role": "radiogroup + table",
+    "keyboard": [
+      "Tab reaches the chip group once (the selected chip), then the table region",
+      "ArrowRight / ArrowDown and ArrowLeft / ArrowUp move to the next / previous chip and select it",
+      "Home / End select the first / last chip",
+      "Space selects the focused chip",
+      "The table region is focusable; ArrowLeft / ArrowRight scroll it when it overflows"
+    ],
+    "notes": [
+      "The chips are the segmented control's radio group, labelled by labels.filters; each radio is named by its chip text and count.",
+      "The table is role=table with row / columnheader / cell; rows that do not match are visibility: hidden, so they leave the accessibility tree.",
+      "Filtering from the keyboard is instant (the rows carry kbd-instant)."
+    ]
+  },
+  "motion": [
+    "chips: the segmented control's (variant chips): one thumb slides between chips at duration.move easing.move, colour on hover, press scale; instant from the keyboard",
+    "row leave / return: grid-template-rows over duration.reveal easing.out-strong with opacity over duration.base; a leaving row gives its space back while it fades, so the rows below close the gap in one motion; no stagger",
+    "keyboard selection: instant (kbd-instant)",
+    "row hover: instant both ways (the tables' one hover)",
+    "edge veils: when the table is cut by the card, the side it continues past fades into the surface; scroll-driven (animation-timeline: scroll(nearest inline)), never timed; nothing when the table fits, also after a scrolled card grows to fit (the veils hang on data-overflow)"
+  ],
+  "notes": [
+    "A status is a StatusPill and a label people assign is a Tag: a column of states (to do, failed, live) is type status, a column of labels (environments, categories) is type tag.",
+    "The chips' hues are the tag hues. In a status column green, orange, red and blue are the pill's own tones and the other hues a neutral pill with a dot of that hue, so give statuses those four; in a tag column every hue is the Tag's tone. A filter without a tone has no dot and its rows' pills or tags are neutral."
+  ]
+}

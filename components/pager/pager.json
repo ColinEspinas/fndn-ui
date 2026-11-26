@@ -1,0 +1,186 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "pager",
+  "title": "Pager",
+  "summary": "Previous, a position such as “2 of 5”, and next, for stepping through a short set.",
+  "description": "Previous, a position (\"2 of 3\", optionally with rolling digits) and next, for stepping through a short set: insights, questions, results. The buttons are ghost square buttons that stop at the ends unless the pager loops; arrow keys, Home and End page while focus is inside; the position is announced through a status region. Mirrored right-to-left.",
+  "kind": "component",
+  "category": "navigation",
+  "order": 4,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=group with an aria-label; data-slot=\"pager\""
+    },
+    {
+      "part": "prev",
+      "element": "button",
+      "description": "The real Button (ghost, sm, square, muted), marked data-pager=\"prev\"; aria-label; aria-disabled=\"true\" at the first page unless it loops (stays focusable) With our tooltip, its aria-label (the adapters wrap it in Tooltip)."
+    },
+    {
+      "part": "position",
+      "element": "span",
+      "description": "role=status. Plain: the text \"2 of 3\" (plus a visually hidden unit). Rolling: visually hidden text, digits and total (aria-hidden)."
+    },
+    {
+      "part": "text",
+      "element": "span",
+      "optional": true,
+      "description": "Without reel, when spokenSeparator differs from separator: the visible position (\"2 / 3\"), aria-hidden; a visually hidden span beside it says \"2 of 3\"."
+    },
+    {
+      "part": "digits",
+      "element": "span",
+      "optional": true,
+      "description": "Rolling digits, aria-hidden"
+    },
+    {
+      "part": "digit",
+      "element": "span",
+      "optional": true,
+      "repeat": true,
+      "description": "One 1em window per digit of the page number"
+    },
+    {
+      "part": "reel",
+      "element": "span",
+      "optional": true,
+      "repeat": true,
+      "description": "The column 0–9 inside a digit; the recipe's digit variant is its value; carries kbd-instant"
+    },
+    {
+      "part": "total",
+      "element": "span",
+      "optional": true,
+      "description": "\" of 3\" after the digits, aria-hidden"
+    },
+    {
+      "part": "next",
+      "element": "button",
+      "description": "The real Button (ghost, sm, square, muted), marked data-pager=\"next\"; aria-disabled=\"true\" at the last page unless it loops With our tooltip, its aria-label (the adapters wrap it in Tooltip)."
+    }
+  ],
+  "props": {
+    "page": {
+      "type": "number",
+      "model": true,
+      "default": 0,
+      "description": "Current page, 0-based. React: page / defaultPage / onPageChange; Vue: v-model:page; Svelte: bind:page."
+    },
+    "count": {
+      "type": "number",
+      "description": "Number of pages. With 0 or 1 both buttons are disabled."
+    },
+    "loop": {
+      "type": "boolean",
+      "default": false,
+      "description": "Wrap around at the ends; the buttons never disable."
+    },
+    "reel": {
+      "type": "boolean",
+      "default": false,
+      "description": "Roll each digit of the position like a counter (approval-card)."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "between",
+        "start"
+      ],
+      "default": "between",
+      "description": "between: prev · position · next. start: position · prev · next (the DOM order stays prev · position · next)."
+    },
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal",
+      "description": "horizontal: left and right carets, mirrored right-to-left. vertical: up and down carets for content that slides vertically; Up and Down page too."
+    },
+    "separator": {
+      "type": "string",
+      "default": "of",
+      "description": "Between page and count: \"of\" (2 of 3) or \"/\" (2 / 3)."
+    },
+    "spokenSeparator": {
+      "type": "string",
+      "default": "of",
+      "description": "What screen readers hear between page and count, whatever the visible separator (\"2 / 3\" is read \"2 of 3\")."
+    },
+    "unit": {
+      "type": "string",
+      "description": "Read before the position by screen readers only: \"Question\" → \"Question 2 of 3\"."
+    },
+    "label": {
+      "type": "string",
+      "default": "Pages",
+      "description": "The group's accessible name (aria-label)."
+    },
+    "prevLabel": {
+      "type": "string",
+      "default": "Previous",
+      "description": "aria-label of the previous button."
+    },
+    "nextLabel": {
+      "type": "string",
+      "default": "Next",
+      "description": "aria-label of the next button."
+    },
+    "prevProps": {
+      "type": "object",
+      "description": "Attributes for the previous button, so a host can tie it to what it pages (carousel: aria-controls=\"<its slide group>\"). The pager's own aria-label and aria-disabled win."
+    },
+    "nextProps": {
+      "type": "object",
+      "description": "Attributes for the next button, as prevProps."
+    }
+  },
+  "events": {
+    "pageChange": "(page: number)"
+  },
+  "states": [
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "text.2xs",
+    "duration.move",
+    "easing.out-strong"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "group of two buttons + status",
+    "keyboard": [
+      "Tab reaches the previous and the next button (a disabled end stays focusable through aria-disabled)",
+      "Enter / Space on a button page once; nothing happens on a disabled end",
+      "ArrowLeft / ArrowRight page back and forward while focus is inside (swapped right-to-left)",
+      "ArrowUp / ArrowDown page back and forward too when the pager is vertical",
+      "Home / End jump to the first and the last page",
+      "Focus stays on the button that was used, also when it becomes disabled"
+    ],
+    "notes": [
+      "Give the group a label that names what is paged (\"Choose insight\").",
+      "The position is a status region: every change is announced (\"Question 2 of 3\" with a unit)."
+    ]
+  },
+  "motion": [
+    "reel: a digit rolls to its value over duration.move easing.out-strong: the outgoing figure leaves and the incoming one arrives (transform and opacity); the current figure rests untransformed, so it lines up with the text beside it at every display scale; instant from the keyboard (kbd-instant)",
+    "buttons: the button's own press scale and hover",
+    "first paint: nothing plays"
+  ],
+  "notes": [
+    "Composition: the host owns what is paged (the pages, the sliding track) and listens for the page change."
+  ]
+}

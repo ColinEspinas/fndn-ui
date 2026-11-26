@@ -1,0 +1,42 @@
+{
+  "examples": [
+    {
+      "name": "Composed",
+      "frameworks": false
+    },
+    {
+      "name": "Hairline",
+      "frameworks": false
+    },
+    {
+      "name": "Overlay",
+      "frameworks": false
+    },
+    {
+      "name": "Inset",
+      "frameworks": false
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long title and actions",
+      "width": 240,
+      "frameworks": false
+    },
+    {
+      "name": "Unbreakable body",
+      "width": 240,
+      "text": "bartholomew.fitzgerald@northwind-industries-holdings.example.com"
+    },
+    {
+      "name": "Empty",
+      "width": 240,
+      "text": ""
+    },
+    {
+      "name": "Right to left",
+      "width": 240,
+      "text": "يغطي المخزون أربعة أيام بالمعدل الحالي."
+    }
+  ]
+}

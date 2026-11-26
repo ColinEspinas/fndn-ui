@@ -1,0 +1,156 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "toggle",
+  "title": "Toggle",
+  "summary": "A button that stays pressed, such as Bold in a text toolbar.",
+  "description": "A button that stays pressed: bold in a text toolbar, pin, follow. It is the Button (same sizes, shapes, square and muted, ghost and outline looks) whose pressed state keeps the darker fill, the way an open ghost button does. Icon-only toggles are named by a Tooltip. Controlled or uncontrolled.",
+  "kind": "component",
+  "category": "actions",
+  "order": 2,
+  "status": "beta",
+  "engine": "toggle",
+  "element": "button",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "button",
+      "description": "Ark UI's toggle root: a <button> with aria-pressed (true / false) and data-state (on / off). Its classes are the button recipe's, extended with the pressed fill."
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "optional": true,
+      "description": "Wraps and centres the icon; aria-hidden. Sized as the Button's icon part (1em of the label, a size larger when square)."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "Text of the toggle; cut at the end with a title when the toggle has less room than its label, as the Button's label."
+    }
+  ],
+  "props": {
+    "pressed": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "Controlled: pressed with onPressedChange. Uncontrolled: defaultPressed."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "outline",
+        "ghost",
+        "ink"
+      ],
+      "default": "outline",
+      "description": "The Button's looks. outline: surface with shadow.btn; pressed fills hover-2, hovered or not. ghost: transparent; hover fills hover, pressed fills hover-2, hovered or not. ink: pressed without a fill, for activity bars, layout toggles (a panel, an assistant) and a browser's bookmark star: ink-3 at rest, ink when pressed (pass the filled glyph for the pressed state if you want one; the star may take the accent), never a grey box; hover as the ghost button (hover fill, ink)."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "description": "The Button's sizes. The one control height scale: xs 24px, sm 28px, md 32px, lg 36px (an sm Toggle lines up with an sm Button or Select). Dimensions only, as the Button."
+    },
+    "shape": {
+      "type": "enum",
+      "values": [
+        "pill",
+        "rounded"
+      ],
+      "description": "Radius only, as the Button. Left out, the app's shape: a pill, or rounded in a rounded app (\"shape\": \"rounded\" in the project's fndn.json). Named: pill, or rounded (radius.chip at xs and sm, radius.control at md and lg)."
+    },
+    "square": {
+      "type": "boolean",
+      "default": false,
+      "description": "Icon-only: as wide as it is tall. Needs an accessible name: tooltip (which also names it) or aria-label."
+    },
+    "muted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Quiet at rest, ink when hovered, held down or pressed (with variant ghost). An icon-only toggle (square) rests in ink-3: toolbars of small icon toggles. A toggle with a label rests in ink-2."
+    },
+    "indicator": {
+      "type": "enum",
+      "values": [
+        "none",
+        "start",
+        "bottom"
+      ],
+      "default": "none",
+      "description": "The ink look's pressed mark: a 2px ink bar with round ends, at the inline start (an activity bar, as VS Code) or at the bottom (a toolbar). Drawn only while pressed; follows the writing direction."
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Wraps the toggle in a Tooltip with this text. A square (or label-less) toggle without an aria-label is named by it."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Inert: no hover, no press, not clickable (the native disabled attribute, which Ark sets)."
+    }
+  },
+  "slots": {
+    "default": "Label",
+    "icon": "Icon (wrapped in the icon part). React: the icon prop (a node)."
+  },
+  "events": {
+    "pressedChange": "(pressed: boolean) after a click, Space or Enter"
+  },
+  "states": [
+    "pressed",
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled"
+  ],
+  "tokens": [
+    "color.surface",
+    "color.ink",
+    "color.ink-3",
+    "color.hover",
+    "color.hover-2",
+    "color.inset",
+    "shadow.btn",
+    "radius.pill",
+    "radius.shape",
+    "radius.shape-sm",
+    "radius.control",
+    "radius.chip",
+    "text.xs",
+    "text.sm",
+    "text.md",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "button",
+    "keyboard": [
+      "Space / Enter toggle"
+    ],
+    "notes": [
+      "State is aria-pressed (true / false), announced as \"toggle button, pressed\"; the label must not change with the state (that is a two-states Button, not a toggle).",
+      "An icon-only toggle needs an accessible name: the tooltip prop names it (aria-label from the tooltip text) unless an aria-label is given.",
+      "Disabled toggles are inert: no hover, no press, not clickable.",
+      "To set it from outside, control `pressed`: React pressed / onPressedChange."
+    ]
+  },
+  "motion": [
+    "the Button's: press scales to motion.press-scale over duration.press with easing.out-strong; hover fill and colour over duration.fast (pointer only)",
+    "pressed fill: over duration.fast from a pointer; instant from the keyboard (kbd-instant)",
+    "no entrance and no other motion",
+    "ink: no fill at any time but hover's; pressed changes the ink (colour over duration.fast from a pointer, instant from the keyboard) and the indicator bar appears and goes at once (a discrete state, no slide)"
+  ]
+}

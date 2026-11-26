@@ -1,0 +1,62 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "separator",
+  "title": "Separator",
+  "summary": "A thin line that divides content, with an optional label.",
+  "description": "A 1px rule in the line colour that divides content, horizontal or vertical. An optional label sits in the middle with a rule on each side, like the \"or\" between two ways of signing in. It takes no room of its own: the caller spaces it. The model is the shared option separator and the rules between menu groups.",
+  "kind": "component",
+  "category": "display",
+  "order": 14,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=\"separator\" with aria-orientation, or role=\"none\" when decorative. Without a label the element is the rule (1px, color.line): full width when horizontal, stretched to its row when vertical. With a label it is a flex row (a column when vertical) whose ::before and ::after are the two rules."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "The text in the middle (the children): text.xs, ink-2, centred. It wraps, never truncates, and takes at most 70% of the line (of the height when vertical), so the two rules share the rest. Author text keeps its own direction."
+    }
+  ],
+  "props": {
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal",
+      "description": "horizontal: 1px high, as wide as its container. vertical: 1px wide, as tall as the row it sits in (align-self: stretch); outside a flex row give it a height."
+    },
+    "decorative": {
+      "type": "boolean",
+      "default": false,
+      "description": "Purely visual: role=\"none\", so assistive technology skips it (a label is then read as plain text). Otherwise role=\"separator\" with aria-orientation, named by its label when it has one."
+    }
+  },
+  "slots": {
+    "default": "Label in the middle (optional)."
+  },
+  "states": [],
+  "tokens": [
+    "color.line",
+    "color.ink-2",
+    "text.xs"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "separator",
+    "notes": [
+      "role=\"separator\" with aria-orientation (horizontal or vertical); role=\"none\" when decorative.",
+      "A separator's children are presentational, so a labelled one is named by its label (aria-labelledby) and the label is announced once, as the separator's name.",
+      "Not focusable: this is the static separator, not a splitter."
+    ]
+  },
+  "motion": [
+    "none"
+  ]
+}

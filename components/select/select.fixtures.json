@@ -1,0 +1,302 @@
+{
+  "examples": [
+    {
+      "name": "Field",
+      "width": 200,
+      "props": {
+        "items": [
+          {
+            "value": "feature",
+            "label": "Feature card"
+          },
+          {
+            "value": "supplier",
+            "label": "Supplier card"
+          },
+          {
+            "value": "order",
+            "label": "Order summary"
+          },
+          {
+            "value": "archive",
+            "label": "Archived layout",
+            "disabled": true
+          }
+        ],
+        "placeholder": "Select type",
+        "label": "Card type"
+      }
+    },
+    {
+      "name": "Small",
+      "width": 120,
+      "props": {
+        "items": [
+          {
+            "value": "heading",
+            "label": "Heading"
+          },
+          {
+            "value": "body",
+            "label": "Body"
+          },
+          {
+            "value": "caption",
+            "label": "Caption"
+          }
+        ],
+        "value": "heading",
+        "placeholder": "Select type",
+        "size": "sm",
+        "variant": "subtle",
+        "placement": "top-end",
+        "aria-label": "Type"
+      }
+    },
+    {
+      "name": "Ghost",
+      "props": {
+        "items": [
+          {
+            "value": "lark-1",
+            "label": "Lark 1",
+            "meta": "Fast"
+          },
+          {
+            "value": "heron-2",
+            "label": "Heron 2",
+            "meta": "Balanced"
+          },
+          {
+            "value": "condor-3",
+            "label": "Condor 3",
+            "meta": "Deep"
+          }
+        ],
+        "value": "lark-1",
+        "size": "sm",
+        "variant": "ghost",
+        "placement": "top-start",
+        "aria-label": "Choose model"
+      }
+    },
+    {
+      "name": "Long options",
+      "width": 140,
+      "props": {
+        "items": [
+          {
+            "value": "monthly",
+            "label": "Monthly"
+          },
+          {
+            "value": "quarterly",
+            "label": "Quarterly supplier review"
+          },
+          {
+            "value": "annual",
+            "label": "Annual performance summary, northern hemisphere suppliers only"
+          },
+          {
+            "value": "custom",
+            "label": "Custom"
+          }
+        ],
+        "value": "monthly",
+        "size": "sm",
+        "variant": "subtle",
+        "aria-label": "Report"
+      }
+    },
+    {
+      "name": "Ghost, in a property row",
+      "props": {
+        "items": [
+          {
+            "value": "lark-1",
+            "label": "Lark 1",
+            "meta": "Fast"
+          },
+          {
+            "value": "heron-2",
+            "label": "Heron 2",
+            "meta": "Balanced"
+          },
+          {
+            "value": "condor-3",
+            "label": "Condor 3",
+            "meta": "Deep"
+          }
+        ],
+        "value": "lark-1",
+        "size": "sm",
+        "variant": "ghost",
+        "placement": "top-start",
+        "aria-label": "Choose model",
+        "style": {
+          "width": 220
+        }
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long options in a narrow field",
+      "width": 160,
+      "props": {
+        "label": "Assignee",
+        "value": "bartholomew",
+        "items": [
+          {
+            "value": "aleksandra",
+            "label": "Aleksandra Wiśniewska-Kowalczyk"
+          },
+          {
+            "value": "bartholomew",
+            "label": "bartholomew.fitzgerald@northwind-industries-holdings.example.com",
+            "meta": "Owner"
+          },
+          {
+            "value": "jo",
+            "label": "Jo"
+          },
+          {
+            "value": "review",
+            "label": "Quarterly supplier performance review, northern hemisphere, second revision",
+            "disabled": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "One letter",
+      "width": 64,
+      "props": {
+        "aria-label": "Grade",
+        "size": "sm",
+        "variant": "subtle",
+        "value": "A",
+        "items": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "name": "48 options",
+      "width": 220,
+      "props": {
+        "label": "Time zone",
+        "value": "Europe/Warsaw",
+        "items": [
+          "Pacific/Honolulu",
+          "America/Anchorage",
+          "America/Los_Angeles",
+          "America/Denver",
+          "America/Phoenix",
+          "America/Chicago",
+          "America/Mexico_City",
+          "America/New_York",
+          "America/Toronto",
+          "America/Bogota",
+          "America/Caracas",
+          "America/Halifax",
+          "America/St_Johns",
+          "America/Sao_Paulo",
+          "America/Argentina/Buenos_Aires",
+          "Atlantic/Azores",
+          "Europe/Lisbon",
+          "Europe/London",
+          "Europe/Dublin",
+          "Europe/Paris",
+          "Europe/Berlin",
+          "Europe/Madrid",
+          "Europe/Rome",
+          "Europe/Warsaw",
+          "Europe/Athens",
+          "Europe/Helsinki",
+          "Europe/Istanbul",
+          "Europe/Moscow",
+          "Africa/Lagos",
+          "Africa/Cairo",
+          "Africa/Johannesburg",
+          "Africa/Nairobi",
+          "Asia/Dubai",
+          "Asia/Tehran",
+          "Asia/Karachi",
+          "Asia/Kolkata",
+          "Asia/Kathmandu",
+          "Asia/Dhaka",
+          "Asia/Bangkok",
+          "Asia/Ho_Chi_Minh",
+          "Asia/Shanghai",
+          "Asia/Singapore",
+          "Asia/Tokyo",
+          "Asia/Seoul",
+          "Australia/Perth",
+          "Australia/Adelaide",
+          "Australia/Sydney",
+          "Pacific/Auckland"
+        ]
+      }
+    },
+    {
+      "name": "Non-Latin and right-to-left",
+      "width": 200,
+      "props": {
+        "label": "الحالة",
+        "value": "review",
+        "items": [
+          {
+            "value": "review",
+            "label": "قيد المراجعة من قبل فريق المشتريات"
+          },
+          {
+            "value": "pending",
+            "label": "承認待ち"
+          },
+          {
+            "value": "supplier",
+            "label": "Ожидает подтверждения поставщика"
+          },
+          {
+            "value": "confirm",
+            "label": "Chờ xác nhận"
+          }
+        ]
+      }
+    },
+    {
+      "name": "No options",
+      "width": 200,
+      "props": {
+        "label": "Card type",
+        "placeholder": "Nothing to choose from",
+        "items": []
+      }
+    },
+    {
+      "name": "Ghost, long value",
+      "props": {
+        "size": "sm",
+        "variant": "ghost",
+        "aria-label": "Choose model",
+        "value": "rocky",
+        "placement": "top-start",
+        "items": [
+          {
+            "value": "rocky",
+            "label": "Condor 3 Extended Reasoning Preview",
+            "meta": "Deep"
+          },
+          {
+            "value": "v",
+            "label": "V1",
+            "meta": "Fast"
+          }
+        ]
+      }
+    }
+  ]
+}

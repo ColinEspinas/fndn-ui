@@ -1,0 +1,15 @@
+{
+  "examples": [
+    { "name": "Three levels", "props": { "items": [ { "label": "Home", "href": "#home" }, { "label": "Projects", "href": "#projects" }, { "label": "Launch plan" } ] } },
+    { "name": "Folded", "props": { "maxItems": 3, "items": [ { "label": "Home", "href": "#home" }, { "label": "Workspace", "href": "#workspace" }, { "label": "Projects", "href": "#projects" }, { "label": "Q3", "href": "#q3" }, { "label": "Launch", "href": "#launch" }, { "label": "Email draft" } ] } },
+    { "name": "A step without a link", "props": { "items": [ { "label": "Settings", "href": "#settings" }, { "label": "Members" }, { "label": "Invitations" } ] } },
+    { "name": "One item", "props": { "items": [ { "label": "Home" } ] } }
+  ],
+  "worstCase": [
+    { "name": "Long names, narrow", "width": 220, "props": { "items": [ { "label": "Home", "href": "#home" }, { "label": "Reconciliation of supplier invoices for the third quarter", "href": "#r" }, { "label": "averyveryveryverylongunbrokenpagenamewithoutanyspaces" } ] } },
+    { "name": "Many items", "width": 320, "props": { "items": [ { "label": "One", "href": "#1" }, { "label": "Two", "href": "#2" }, { "label": "Three", "href": "#3" }, { "label": "Four", "href": "#4" }, { "label": "Five", "href": "#5" }, { "label": "Six", "href": "#6" }, { "label": "Seven", "href": "#7" }, { "label": "Eight", "href": "#8" }, { "label": "Nine", "href": "#9" }, { "label": "Ten" } ] } },
+    { "name": "Right-to-left", "props": { "items": [ { "label": "الرئيسية", "href": "#home" }, { "label": "المشاريع", "href": "#projects" }, { "label": "خطة الإطلاق" } ] } },
+    { "name": "No items", "props": { "items": [] } },
+    { "name": "One letter", "props": { "items": [ { "label": "A", "href": "#a" }, { "label": "B" } ] } }
+  ]
+}

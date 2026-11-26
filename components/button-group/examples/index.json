@@ -1,0 +1,19 @@
+{
+  "playground": {
+    "props": {
+      "label": "Export usage as",
+      "orientation": "horizontal",
+      "variant": "outline",
+      "size": "md",
+      "shape": "pill",
+      "items": [ { "value": "csv", "label": "CSV" }, { "value": "json", "label": "JSON" }, { "value": "pdf", "label": "PDF" } ]
+    }
+  },
+  "examples": [
+    { "file": "merge-pull-request", "title": "Merge, with more ways in a menu" },
+    { "file": "members-pager", "title": "Previous and next page" },
+    { "file": "undo-redo", "title": "Undo and redo, icon-only" },
+    { "file": "export-usage", "title": "Export formats, from items" },
+    { "file": "deploy-actions", "title": "Deploy actions in a side panel (vertical)" }
+  ]
+}

@@ -1,0 +1,35 @@
+---
+/* One page per showcase app (showcases/<app>/): the title and line from its index.json,
+ * the app live and full width in a frame (components/ShowcaseFrame.tsx), then its source files.
+ * The frame is a card at the window radius; the app lays itself out inside it, phone included. */
+import Layout from "../../layouts/Layout.astro";
+import ShowcaseFrame from "../../components/ShowcaseFrame";
+import { Card } from "@fndn/components/card/card.tsx";
+import { CodeBlock } from "@fndn/components/code-block/code-block.tsx";
+import { showcaseFiles, showcaseOf, showcases } from "../../lib/showcase";
+
+export function getStaticPaths() {
+  return showcases().map((s) => ({ params: { app: s.name } }));
+}
+const s = showcaseOf(Astro.params.app!)!;
+const files = showcaseFiles(s.name).map((f) => ({ path: `showcases/${s.name}/${f.file}`, label: f.file, lines: f.code.split("\n"), code: f.code }));
+---
+<Layout title={s.title} current={`/showcase/${s.name}`} description={s.description} shape={s.shape}>
+  <div class="px-4 pt-10 pb-20 md:px-8" data-docs-showcase={s.name}>
+    <header class="max-w-[46rem]">
+      <p class="text-sm text-ink-2">Showcase</p>
+      <h1 class="mt-1 text-2xl font-semibold tracking-tight text-ink">{s.title}</h1>
+      <p class="mt-2 text-md leading-relaxed text-ink-2 [unicode-bidi:plaintext]">{s.description}</p>
+    </header>
+    <Card elevation="overlay" className="mt-6 h-[max(34rem,calc(100dvh-13rem))] overflow-hidden" data-docs-showcase-frame>
+      <ShowcaseFrame client:load name={s.name} shape={s.shape} />
+    </Card>
+    {files.length > 0 && (
+      <section aria-labelledby="showcase-source" class="mt-12 flex max-w-[70rem] flex-col gap-3">
+        <h2 id="showcase-source" class="text-md font-semibold text-ink">Source</h2>
+        <p class="text-sm text-ink-2 [unicode-bidi:plaintext]">Only the system's components and token utilities; the layout is Tailwind.</p>
+        <CodeBlock client:visible files={files} maxHeight={640} className="max-w-none" data-docs-showcase-source />
+      </section>
+    )}
+  </div>
+</Layout>

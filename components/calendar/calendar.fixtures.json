@@ -1,0 +1,50 @@
+{
+  "examples": [
+    {
+      "name": "Single date",
+      "props": { "aria-label": "Delivery date", "value": ["2025-03-12"] }
+    },
+    {
+      "name": "Range",
+      "props": { "aria-label": "Stay", "selectionMode": "range", "value": ["2025-03-10", "2025-03-14"] }
+    },
+    {
+      "name": "Min, max and unavailable days",
+      "props": { "aria-label": "Appointment", "defaultFocusedValue": "2025-03-03", "min": "2025-03-03", "max": "2025-03-28", "unavailable": ["2025-03-14", "2025-03-21"] }
+    },
+    {
+      "name": "Week starts Monday, German",
+      "props": { "aria-label": "Liefertermin", "locale": "de-DE", "startOfWeek": 1, "value": ["2025-03-12"] }
+    },
+    {
+      "name": "Several dates",
+      "props": { "aria-label": "Shifts", "selectionMode": "multiple", "value": ["2025-03-04", "2025-03-05", "2025-03-18"] }
+    },
+    {
+      "name": "Disabled",
+      "props": { "aria-label": "Delivery date", "disabled": true, "value": ["2025-03-12"] }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "Long names (Tamil)",
+      "props": { "aria-label": "தேதி", "locale": "ta-IN", "value": ["2025-09-17"] }
+    },
+    {
+      "name": "Four-week month, weeks not fixed",
+      "props": { "aria-label": "February", "fixedWeeks": false, "startOfWeek": 0, "defaultFocusedValue": "2026-02-01" }
+    },
+    {
+      "name": "One day selectable",
+      "props": { "aria-label": "Only date", "min": "2025-03-12", "max": "2025-03-12", "defaultFocusedValue": "2025-03-12" }
+    },
+    {
+      "name": "Range across months",
+      "props": { "aria-label": "Trip", "selectionMode": "range", "value": ["2025-02-24", "2025-04-06"] }
+    },
+    {
+      "name": "Right-to-left",
+      "props": { "aria-label": "التاريخ", "locale": "ar-EG", "value": ["2025-03-12"] }
+    }
+  ]
+}

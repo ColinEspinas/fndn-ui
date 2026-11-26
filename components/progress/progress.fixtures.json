@@ -1,0 +1,28 @@
+{
+  "examples": [
+    { "name": "Value", "width": 280, "props": { "value": 42, "ariaLabel": "Upload" } },
+    { "name": "Label and value", "width": 280, "props": { "value": 68, "label": "Storage", "showValue": true, "tone": "accent" } },
+    { "name": "Complete, small", "width": 280, "props": { "value": 100, "label": "Import", "showValue": true, "tone": "green", "size": "sm" } },
+    { "name": "Indeterminate", "width": 280, "props": { "label": "Preparing the export", "ariaLabel": "Export" } },
+    { "name": "Own value text, range 0–8", "width": 280, "props": { "value": 3, "max": 8, "label": "Files", "showValue": true, "valueText": "3 of 8 files", "tone": "red" } },
+    {
+      "name": "Uploading",
+      "width": 280,
+      "props": { "value": 0, "label": "Uploading", "showValue": true },
+      "steps": [
+        { "after": 400, "props": { "value": 18 } },
+        { "after": 400, "props": { "value": 47 } },
+        { "after": 400, "props": { "value": 81 } },
+        { "after": 400, "props": { "value": 100, "tone": "green", "label": "Uploaded" } }
+      ]
+    }
+  ],
+  "worstCase": [
+    { "name": "Long label, long value text", "width": 220, "props": { "value": 12480, "max": 20000, "label": "Reconciling the supplier invoices for the third quarter against the purchase orders", "showValue": true, "valueText": "12,480 of 20,000 rows" } },
+    { "name": "Out of range", "width": 220, "props": { "value": 140, "label": "Over", "showValue": true } },
+    { "name": "Below range", "width": 220, "props": { "value": -20, "label": "Under", "showValue": true } },
+    { "name": "Right-to-left", "width": 220, "props": { "value": 30, "label": "جارٍ التحميل", "showValue": true } },
+    { "name": "Narrow", "width": 48, "props": { "value": 50, "label": "Sync", "showValue": true } },
+    { "name": "Unbreakable label", "width": 200, "props": { "value": 5, "label": "averyveryveryverylongunbrokenlabelwithoutanyspacesatall", "showValue": true } }
+  ]
+}

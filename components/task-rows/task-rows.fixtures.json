@@ -1,0 +1,1122 @@
+{
+  "examples": [
+    {
+      "name": "Capsules",
+      "props": {
+        "variant": "capsules",
+        "open": [
+          "index"
+        ],
+        "rows": [
+          {
+            "key": "verify",
+            "label": "Verified vendor records",
+            "amount": "12 suppliers",
+            "status": "done",
+            "details": [
+              {
+                "label": "Matched tax and contact IDs",
+                "meta": "12/12"
+              },
+              {
+                "label": "Flagged stale records",
+                "meta": "0"
+              }
+            ]
+          },
+          {
+            "key": "index",
+            "label": "Build reorder task list",
+            "amount": "7 SKUs",
+            "status": "running",
+            "step": 2,
+            "details": [
+              {
+                "label": "Reading POS export",
+                "meta": "3 files"
+              },
+              {
+                "label": "Scoring stockout risk",
+                "meta": "68%"
+              }
+            ]
+          },
+          {
+            "key": "draft",
+            "label": "Draft supplier emails",
+            "amount": "2 messages",
+            "status": "failed",
+            "details": [
+              {
+                "label": "Vendor contract follow-up",
+                "meta": "draft"
+              },
+              {
+                "label": "Annual plan renewal note",
+                "meta": "draft"
+              }
+            ]
+          }
+        ]
+      },
+      "steps": [
+        {
+          "after": 1000,
+          "props": {
+            "rows": [
+              {
+                "key": "verify",
+                "label": "Verified vendor records",
+                "amount": "12 suppliers",
+                "status": "done",
+                "details": [
+                  {
+                    "label": "Matched tax and contact IDs",
+                    "meta": "12/12"
+                  },
+                  {
+                    "label": "Flagged stale records",
+                    "meta": "0"
+                  }
+                ]
+              },
+              {
+                "key": "index",
+                "label": "Build reorder task list",
+                "amount": "7 SKUs",
+                "status": "running",
+                "step": 3,
+                "details": [
+                  {
+                    "label": "Reading POS export",
+                    "meta": "3 files"
+                  },
+                  {
+                    "label": "Scoring stockout risk",
+                    "meta": "68%"
+                  }
+                ]
+              },
+              {
+                "key": "draft",
+                "label": "Draft supplier emails",
+                "amount": "2 messages",
+                "status": "failed",
+                "details": [
+                  {
+                    "label": "Vendor contract follow-up",
+                    "meta": "draft"
+                  },
+                  {
+                    "label": "Annual plan renewal note",
+                    "meta": "draft"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "after": 1100,
+          "props": {
+            "rows": [
+              {
+                "key": "verify",
+                "label": "Verified vendor records",
+                "amount": "12 suppliers",
+                "status": "done",
+                "details": [
+                  {
+                    "label": "Matched tax and contact IDs",
+                    "meta": "12/12"
+                  },
+                  {
+                    "label": "Flagged stale records",
+                    "meta": "0"
+                  }
+                ]
+              },
+              {
+                "key": "index",
+                "label": "Build reorder task list",
+                "amount": "7 SKUs",
+                "status": "done",
+                "step": 3,
+                "details": [
+                  {
+                    "label": "Reading POS export",
+                    "meta": "3 files"
+                  },
+                  {
+                    "label": "Scoring stockout risk",
+                    "meta": "68%"
+                  }
+                ]
+              },
+              {
+                "key": "draft",
+                "label": "Draft supplier emails",
+                "amount": "2 messages",
+                "status": "failed",
+                "details": [
+                  {
+                    "label": "Vendor contract follow-up",
+                    "meta": "draft"
+                  },
+                  {
+                    "label": "Annual plan renewal note",
+                    "meta": "draft"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "after": 600,
+          "props": {
+            "rows": [
+              {
+                "key": "verify",
+                "label": "Verified vendor records",
+                "amount": "12 suppliers",
+                "status": "done",
+                "details": [
+                  {
+                    "label": "Matched tax and contact IDs",
+                    "meta": "12/12"
+                  },
+                  {
+                    "label": "Flagged stale records",
+                    "meta": "0"
+                  }
+                ]
+              },
+              {
+                "key": "index",
+                "label": "Build reorder task list",
+                "amount": "7 SKUs",
+                "status": "done",
+                "step": 3,
+                "details": [
+                  {
+                    "label": "Reading POS export",
+                    "meta": "3 files"
+                  },
+                  {
+                    "label": "Scoring stockout risk",
+                    "meta": "68%"
+                  }
+                ]
+              },
+              {
+                "key": "draft",
+                "label": "Draft supplier emails",
+                "amount": "2 messages",
+                "status": "failed",
+                "details": [
+                  {
+                    "label": "Vendor contract follow-up",
+                    "meta": "draft"
+                  },
+                  {
+                    "label": "Annual plan renewal note",
+                    "meta": "draft"
+                  }
+                ]
+              },
+              {
+                "key": "notify",
+                "label": "Notify store managers",
+                "amount": "4 stores",
+                "status": "running",
+                "step": 1,
+                "details": [
+                  {
+                    "label": "Writing the summary",
+                    "meta": "1 page"
+                  },
+                  {
+                    "label": "Sending to managers",
+                    "meta": "4"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "after": 1000,
+          "props": {
+            "rows": [
+              {
+                "key": "verify",
+                "label": "Verified vendor records",
+                "amount": "12 suppliers",
+                "status": "done",
+                "details": [
+                  {
+                    "label": "Matched tax and contact IDs",
+                    "meta": "12/12"
+                  },
+                  {
+                    "label": "Flagged stale records",
+                    "meta": "0"
+                  }
+                ]
+              },
+              {
+                "key": "index",
+                "label": "Build reorder task list",
+                "amount": "7 SKUs",
+                "status": "done",
+                "step": 3,
+                "details": [
+                  {
+                    "label": "Reading POS export",
+                    "meta": "3 files"
+                  },
+                  {
+                    "label": "Scoring stockout risk",
+                    "meta": "68%"
+                  }
+                ]
+              },
+              {
+                "key": "draft",
+                "label": "Draft supplier emails",
+                "amount": "2 messages",
+                "status": "failed",
+                "details": [
+                  {
+                    "label": "Vendor contract follow-up",
+                    "meta": "draft"
+                  },
+                  {
+                    "label": "Annual plan renewal note",
+                    "meta": "draft"
+                  }
+                ]
+              },
+              {
+                "key": "notify",
+                "label": "Notify store managers",
+                "amount": "4 stores",
+                "status": "running",
+                "step": 2,
+                "details": [
+                  {
+                    "label": "Writing the summary",
+                    "meta": "1 page"
+                  },
+                  {
+                    "label": "Sending to managers",
+                    "meta": "4"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "after": 1100,
+          "props": {
+            "rows": [
+              {
+                "key": "verify",
+                "label": "Verified vendor records",
+                "amount": "12 suppliers",
+                "status": "done",
+                "details": [
+                  {
+                    "label": "Matched tax and contact IDs",
+                    "meta": "12/12"
+                  },
+                  {
+                    "label": "Flagged stale records",
+                    "meta": "0"
+                  }
+                ]
+              },
+              {
+                "key": "index",
+                "label": "Build reorder task list",
+                "amount": "7 SKUs",
+                "status": "done",
+                "step": 3,
+                "details": [
+                  {
+                    "label": "Reading POS export",
+                    "meta": "3 files"
+                  },
+                  {
+                    "label": "Scoring stockout risk",
+                    "meta": "68%"
+                  }
+                ]
+              },
+              {
+                "key": "draft",
+                "label": "Draft supplier emails",
+                "amount": "2 messages",
+                "status": "failed",
+                "details": [
+                  {
+                    "label": "Vendor contract follow-up",
+                    "meta": "draft"
+                  },
+                  {
+                    "label": "Annual plan renewal note",
+                    "meta": "draft"
+                  }
+                ]
+              },
+              {
+                "key": "notify",
+                "label": "Notify store managers",
+                "amount": "4 stores",
+                "status": "done",
+                "step": 2,
+                "details": [
+                  {
+                    "label": "Writing the summary",
+                    "meta": "1 page"
+                  },
+                  {
+                    "label": "Sending to managers",
+                    "meta": "4"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List",
+      "props": {
+        "variant": "list",
+        "open": [
+          "index"
+        ],
+        "rows": [
+          {
+            "key": "verify",
+            "label": "Verified vendor records",
+            "amount": "12 suppliers",
+            "status": "done",
+            "details": [
+              {
+                "label": "Matched tax and contact IDs",
+                "meta": "12/12"
+              },
+              {
+                "label": "Flagged stale records",
+                "meta": "0"
+              }
+            ]
+          },
+          {
+            "key": "index",
+            "label": "Build reorder task list",
+            "amount": "7 SKUs",
+            "status": "running",
+            "step": 2,
+            "details": [
+              {
+                "label": "Reading POS export",
+                "meta": "3 files"
+              },
+              {
+                "label": "Scoring stockout risk",
+                "meta": "68%"
+              }
+            ]
+          },
+          {
+            "key": "draft",
+            "label": "Draft supplier emails",
+            "amount": "2 messages",
+            "status": "failed",
+            "details": [
+              {
+                "label": "Vendor contract follow-up",
+                "meta": "draft"
+              },
+              {
+                "label": "Annual plan renewal note",
+                "meta": "draft"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Arrives live (appear)",
+      "props": {
+        "variant": "capsules",
+        "open": [
+          "index"
+        ],
+        "rows": [
+          {
+            "key": "verify",
+            "label": "Verified vendor records",
+            "amount": "12 suppliers",
+            "status": "done",
+            "details": [
+              {
+                "label": "Matched tax and contact IDs",
+                "meta": "12/12"
+              },
+              {
+                "label": "Flagged stale records",
+                "meta": "0"
+              }
+            ]
+          },
+          {
+            "key": "index",
+            "label": "Build reorder task list",
+            "amount": "7 SKUs",
+            "status": "running",
+            "step": 2,
+            "details": [
+              {
+                "label": "Reading POS export",
+                "meta": "3 files"
+              },
+              {
+                "label": "Scoring stockout risk",
+                "meta": "68%"
+              }
+            ]
+          },
+          {
+            "key": "draft",
+            "label": "Draft supplier emails",
+            "amount": "2 messages",
+            "status": "failed",
+            "details": [
+              {
+                "label": "Vendor contract follow-up",
+                "meta": "draft"
+              },
+              {
+                "label": "Annual plan renewal note",
+                "meta": "draft"
+              }
+            ]
+          }
+        ],
+        "appear": true
+      }
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "40 long rows",
+      "props": {
+        "variant": "capsules",
+        "open": [
+          "r1"
+        ],
+        "rows": [
+          {
+            "key": "r0",
+            "label": "Reconcile invoice batch 01 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "12,480 line items",
+            "status": "done",
+            "step": 1,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "12,480/12,480"
+              }
+            ]
+          },
+          {
+            "key": "r1",
+            "label": "Reconcile invoice batch 02 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "24,960 line items",
+            "status": "running",
+            "step": 2,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "24,960/24,960"
+              }
+            ]
+          },
+          {
+            "key": "r2",
+            "label": "Reconcile invoice batch 03 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "37,440 line items",
+            "status": "failed",
+            "step": 3,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "37,440/37,440"
+              }
+            ]
+          },
+          {
+            "key": "r3",
+            "label": "Reconcile invoice batch 04 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "49,920 line items",
+            "status": "done",
+            "step": 4,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "49,920/49,920"
+              }
+            ]
+          },
+          {
+            "key": "r4",
+            "label": "Reconcile invoice batch 05 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "62,400 line items",
+            "status": "running",
+            "step": 5,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "62,400/62,400"
+              }
+            ]
+          },
+          {
+            "key": "r5",
+            "label": "Reconcile invoice batch 06 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "74,880 line items",
+            "status": "failed",
+            "step": 6,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "74,880/74,880"
+              }
+            ]
+          },
+          {
+            "key": "r6",
+            "label": "Reconcile invoice batch 07 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "87,360 line items",
+            "status": "done",
+            "step": 7,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "87,360/87,360"
+              }
+            ]
+          },
+          {
+            "key": "r7",
+            "label": "Reconcile invoice batch 08 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "99,840 line items",
+            "status": "running",
+            "step": 8,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "99,840/99,840"
+              }
+            ]
+          },
+          {
+            "key": "r8",
+            "label": "Reconcile invoice batch 09 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "112,320 line items",
+            "status": "failed",
+            "step": 9,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "112,320/112,320"
+              }
+            ]
+          },
+          {
+            "key": "r9",
+            "label": "Reconcile invoice batch 10 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "124,800 line items",
+            "status": "done",
+            "step": 10,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "124,800/124,800"
+              }
+            ]
+          },
+          {
+            "key": "r10",
+            "label": "Reconcile invoice batch 11 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "137,280 line items",
+            "status": "running",
+            "step": 11,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "137,280/137,280"
+              }
+            ]
+          },
+          {
+            "key": "r11",
+            "label": "Reconcile invoice batch 12 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "149,760 line items",
+            "status": "failed",
+            "step": 12,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "149,760/149,760"
+              }
+            ]
+          },
+          {
+            "key": "r12",
+            "label": "Reconcile invoice batch 13 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "162,240 line items",
+            "status": "done",
+            "step": 13,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "162,240/162,240"
+              }
+            ]
+          },
+          {
+            "key": "r13",
+            "label": "Reconcile invoice batch 14 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "174,720 line items",
+            "status": "running",
+            "step": 14,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "174,720/174,720"
+              }
+            ]
+          },
+          {
+            "key": "r14",
+            "label": "Reconcile invoice batch 15 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "187,200 line items",
+            "status": "failed",
+            "step": 15,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "187,200/187,200"
+              }
+            ]
+          },
+          {
+            "key": "r15",
+            "label": "Reconcile invoice batch 16 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "199,680 line items",
+            "status": "done",
+            "step": 16,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "199,680/199,680"
+              }
+            ]
+          },
+          {
+            "key": "r16",
+            "label": "Reconcile invoice batch 17 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "212,160 line items",
+            "status": "running",
+            "step": 17,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "212,160/212,160"
+              }
+            ]
+          },
+          {
+            "key": "r17",
+            "label": "Reconcile invoice batch 18 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "224,640 line items",
+            "status": "failed",
+            "step": 18,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "224,640/224,640"
+              }
+            ]
+          },
+          {
+            "key": "r18",
+            "label": "Reconcile invoice batch 19 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "237,120 line items",
+            "status": "done",
+            "step": 19,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "237,120/237,120"
+              }
+            ]
+          },
+          {
+            "key": "r19",
+            "label": "Reconcile invoice batch 20 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "249,600 line items",
+            "status": "running",
+            "step": 20,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "249,600/249,600"
+              }
+            ]
+          },
+          {
+            "key": "r20",
+            "label": "Reconcile invoice batch 21 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "262,080 line items",
+            "status": "failed",
+            "step": 21,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "262,080/262,080"
+              }
+            ]
+          },
+          {
+            "key": "r21",
+            "label": "Reconcile invoice batch 22 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "274,560 line items",
+            "status": "done",
+            "step": 22,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "274,560/274,560"
+              }
+            ]
+          },
+          {
+            "key": "r22",
+            "label": "Reconcile invoice batch 23 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "287,040 line items",
+            "status": "running",
+            "step": 23,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "287,040/287,040"
+              }
+            ]
+          },
+          {
+            "key": "r23",
+            "label": "Reconcile invoice batch 24 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "299,520 line items",
+            "status": "failed",
+            "step": 24,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "299,520/299,520"
+              }
+            ]
+          },
+          {
+            "key": "r24",
+            "label": "Reconcile invoice batch 25 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "312,000 line items",
+            "status": "done",
+            "step": 25,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "312,000/312,000"
+              }
+            ]
+          },
+          {
+            "key": "r25",
+            "label": "Reconcile invoice batch 26 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "324,480 line items",
+            "status": "running",
+            "step": 26,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "324,480/324,480"
+              }
+            ]
+          },
+          {
+            "key": "r26",
+            "label": "Reconcile invoice batch 27 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "336,960 line items",
+            "status": "failed",
+            "step": 27,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "336,960/336,960"
+              }
+            ]
+          },
+          {
+            "key": "r27",
+            "label": "Reconcile invoice batch 28 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "349,440 line items",
+            "status": "done",
+            "step": 28,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "349,440/349,440"
+              }
+            ]
+          },
+          {
+            "key": "r28",
+            "label": "Reconcile invoice batch 29 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "361,920 line items",
+            "status": "running",
+            "step": 29,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "361,920/361,920"
+              }
+            ]
+          },
+          {
+            "key": "r29",
+            "label": "Reconcile invoice batch 30 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "374,400 line items",
+            "status": "failed",
+            "step": 30,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "374,400/374,400"
+              }
+            ]
+          },
+          {
+            "key": "r30",
+            "label": "Reconcile invoice batch 31 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "386,880 line items",
+            "status": "done",
+            "step": 31,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "386,880/386,880"
+              }
+            ]
+          },
+          {
+            "key": "r31",
+            "label": "Reconcile invoice batch 32 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "399,360 line items",
+            "status": "running",
+            "step": 32,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "399,360/399,360"
+              }
+            ]
+          },
+          {
+            "key": "r32",
+            "label": "Reconcile invoice batch 33 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "411,840 line items",
+            "status": "failed",
+            "step": 33,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "411,840/411,840"
+              }
+            ]
+          },
+          {
+            "key": "r33",
+            "label": "Reconcile invoice batch 34 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "424,320 line items",
+            "status": "done",
+            "step": 34,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "424,320/424,320"
+              }
+            ]
+          },
+          {
+            "key": "r34",
+            "label": "Reconcile invoice batch 35 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "436,800 line items",
+            "status": "running",
+            "step": 35,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "436,800/436,800"
+              }
+            ]
+          },
+          {
+            "key": "r35",
+            "label": "Reconcile invoice batch 36 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "449,280 line items",
+            "status": "failed",
+            "step": 36,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "449,280/449,280"
+              }
+            ]
+          },
+          {
+            "key": "r36",
+            "label": "Reconcile invoice batch 37 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "461,760 line items",
+            "status": "done",
+            "step": 37,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "461,760/461,760"
+              }
+            ]
+          },
+          {
+            "key": "r37",
+            "label": "Reconcile invoice batch 38 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "474,240 line items",
+            "status": "running",
+            "step": 38,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "474,240/474,240"
+              }
+            ]
+          },
+          {
+            "key": "r38",
+            "label": "Reconcile invoice batch 39 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "486,720 line items",
+            "status": "failed",
+            "step": 39,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "486,720/486,720"
+              }
+            ]
+          },
+          {
+            "key": "r39",
+            "label": "Reconcile invoice batch 40 of 40 against the Northwind Industries Holdings (EMEA) purchase-order ledger",
+            "amount": "499,200 line items",
+            "status": "done",
+            "step": 40,
+            "details": [
+              {
+                "label": "Matched supplier tax identifiers against the master vendor registry for every subsidiary",
+                "meta": "499,200/499,200"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "No rows",
+      "props": {
+        "variant": "list",
+        "rows": []
+      }
+    },
+    {
+      "name": "One long word",
+      "props": {
+        "variant": "list",
+        "open": [
+          "w"
+        ],
+        "rows": [
+          {
+            "key": "w",
+            "label": "Supercalifragilisticexpialidociousreconciliationjobidentifier",
+            "amount": "1",
+            "status": "failed",
+            "details": [
+              {
+                "label": "Supercalifragilisticexpialidociousreconciliationstep",
+                "meta": "99,999,999"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Right-to-left",
+      "props": {
+        "variant": "capsules",
+        "open": [
+          "a"
+        ],
+        "labels": {
+          "completed": "مكتمل",
+          "failed": "فشل",
+          "running": "قيد التشغيل"
+        },
+        "rows": [
+          {
+            "key": "a",
+            "label": "التحقق من سجلات الموردين",
+            "amount": "12 موردًا",
+            "status": "done",
+            "details": [
+              {
+                "label": "مطابقة المعرّفات الضريبية",
+                "meta": "12/12"
+              }
+            ]
+          },
+          {
+            "key": "b",
+            "label": "صياغة رسائل الموردين",
+            "amount": "رسالتان",
+            "status": "running",
+            "step": 3,
+            "details": [
+              {
+                "label": "متابعة مورد الأقماع",
+                "meta": "مسودة"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

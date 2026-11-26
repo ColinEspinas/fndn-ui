@@ -1,0 +1,195 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "radio-group",
+  "title": "Radio Group",
+  "summary": "Pick exactly one of a short list of options, all visible at once.",
+  "description": "Pick exactly one of a short list of options, all visible at once. Each option is a 16px round control on a hairline ring whose inset ring grows into a 5px ink ring when selected, so the 6px on-ink centre forms as the ring closes in. Stacked or in a row. It is one tab stop: arrow keys move and select. Behaviour comes from the Zag radio-group machine, through Ark UI in React, Vue and Svelte. Visually hidden native radios carry focus, arrow keys and the form value.",
+  "kind": "component",
+  "category": "inputs",
+  "order": 6,
+  "engine": "radio-group",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "role=radiogroup; data-orientation=vertical|horizontal; data-disabled Wrapper rule: class and style land on this outermost element (what a caller sizes and places); every other attribute stays on the control."
+    },
+    {
+      "part": "label",
+      "element": "span",
+      "optional": true,
+      "description": "Visible group label; names the group"
+    },
+    {
+      "part": "highlight",
+      "element": "span",
+      "optional": true,
+      "description": "Row layout only: the list's one gliding highlight (`glideLayer` of `lib/glide.ts`, aria-hidden); it follows the pointer and keyboard focus."
+    },
+    {
+      "part": "item",
+      "element": "label",
+      "repeat": true,
+      "description": "One option and its hit area; data-state=checked|unchecked, data-focus-visible, data-disabled. In row layout it composes the shared option row (`lib/option.ts`)."
+    },
+    {
+      "part": "control",
+      "element": "div",
+      "description": "The 16px round control (aria-hidden); one inset ring draws both states (no dot element); carries kbd-instant"
+    },
+    {
+      "part": "item-text",
+      "element": "span",
+      "description": "The option's text and accessible name"
+    },
+    {
+      "part": "input",
+      "element": "input",
+      "description": "Native radio, visually hidden: focus, arrow keys and form value"
+    },
+    {
+      "part": "custom",
+      "element": "label",
+      "optional": true,
+      "description": "Row layout only: the free-text row (\"Something else\") after the options, in the same list; it composes the shared option row (`lib/option.ts`)."
+    },
+    {
+      "part": "custom-input",
+      "element": "input",
+      "optional": true,
+      "description": "The free-text field: type=text, named by aria-label. Typing clears the selection; picking an option clears it."
+    }
+  ],
+  "props": {
+    "items": {
+      "type": "array",
+      "items": {
+        "value": "string",
+        "label": "string",
+        "disabled": "boolean?"
+      },
+      "description": "Options in order. Strings are accepted as value = label."
+    },
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "Selected value, or null for none."
+    },
+    "label": {
+      "type": "string",
+      "description": "Visible group label; otherwise pass aria-label."
+    },
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "vertical",
+        "horizontal"
+      ],
+      "default": "vertical",
+      "description": "vertical: stacked options. horizontal: options in a row that wraps."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "inline",
+        "row"
+      ],
+      "default": "inline",
+      "description": "inline: each control with its label, sized to the text. row: a list; each option fills a 30px option row (`lib/option.ts`) under one gliding highlight, stacked whatever the orientation; the control is drawn the same."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name of the radios."
+    },
+    "customPlaceholder": {
+      "type": "string",
+      "description": "Row layout: adds the free-text row after the options with this placeholder (e.g. \"Something else…\")."
+    },
+    "customLabel": {
+      "type": "string",
+      "description": "Accessible name of the free-text field; defaults to the placeholder."
+    },
+    "customEnterKeyHint": {
+      "type": "enum",
+      "values": [
+        "enter",
+        "done",
+        "go",
+        "next",
+        "previous",
+        "search",
+        "send"
+      ],
+      "attr": "enterkeyhint",
+      "part": "custom-input",
+      "description": "enterkeyhint of the free-text field: the label of the Enter key on a phone keyboard (\"next\" when another step follows)."
+    },
+    "custom": {
+      "type": "string",
+      "model": true,
+      "description": "Text of the free-text row. Typing makes the value null; picking an option makes it empty."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string | null)",
+    "customChange": "(text: string)"
+  },
+  "states": [
+    "checked",
+    "hover",
+    "press",
+    "focus-visible",
+    "disabled",
+    "kbd-instant",
+    "reduced-motion",
+    "row",
+    "custom"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.on-ink",
+    "color.line-strong",
+    "color.accent",
+    "text.xs",
+    "text.sm",
+    "duration.fast",
+    "duration.base",
+    "duration.press",
+    "easing.out-strong",
+    "motion.press-scale-sm",
+    "text.md"
+  ],
+  "dependencies": [],
+  "a11y": {
+    "role": "radiogroup",
+    "keyboard": [
+      "Tab reaches the selected option (or the first, when none is selected); the group is one tab stop",
+      "ArrowDown / ArrowRight select the next enabled option, ArrowUp / ArrowLeft the previous; they wrap",
+      "Home / End select the first / last enabled option",
+      "Space selects the focused option",
+      "Row layout: Tab from the group reaches the free-text field, which keeps Home / End for its text"
+    ],
+    "notes": [
+      "Give the group a visible label or an aria-label.",
+      "Disabled options are skipped by the arrow keys.",
+      "To select from outside, control `value` (null clears): React value / onValueChange, Vue v-model:value, Svelte bind:value."
+    ]
+  },
+  "motion": [
+    "select: one property, the inset ring, grows from 1.5px line-strong to 5px ink over duration.base with easing.out-strong, so the on-ink centre forms as the ring closes in",
+    "deselect: the ring runs back over duration.fast; when the selection moves, the old option empties while the new one fills, both from the same moment",
+    "press (pointer only): the control scales to motion.press-scale-sm over duration.press with easing.out-strong",
+    "keyboard (arrows, Space, Home, End): instant; every control carries kbd-instant and the label colour is instant too",
+    "mount: nothing animates on the first paint, in every target",
+    "reduced motion: the ring keeps its width and only changes colour over duration.fast; the press stays",
+    "row layout: one glide highlight (`glideLayer` of `lib/glide.ts`) travels to the hovered or focused row (duration.move, easing.out-strong; first appearance fades in); press darkens the row (hover-2) and scales the control as above"
+  ]
+}

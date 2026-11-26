@@ -1,0 +1,27 @@
+{
+  "playground": {
+    "props": {
+      "variant": "drive",
+      "label": "Reading 214 files in harbor/api",
+      "elapsed": "12.4s"
+    }
+  },
+  "examples": [
+    {
+      "file": "drive",
+      "title": "Reading the codebase"
+    },
+    {
+      "file": "dots",
+      "title": "Running the test suite"
+    },
+    {
+      "file": "orbit",
+      "title": "Deploying to production"
+    },
+    {
+      "file": "live-timer",
+      "title": "Timer counted by the block"
+    }
+  ]
+}

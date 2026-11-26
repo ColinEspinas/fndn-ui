@@ -1,0 +1,27 @@
+<script setup lang="ts">
+import { CodeBlock } from "@fndn/vue";
+
+const lines = [
+  "import { defineConfig } from \"@northwind/sdk\";",
+  "",
+  "export default defineConfig({",
+  "  project: \"web-app\",",
+  "  framework: \"vite\",",
+  "  buildCommand: \"pnpm build\",",
+  "  outputDirectory: \"dist\",",
+  "  regions: [\"fra1\", \"iad1\"],",
+  "  environments: {",
+  "    production: { branch: \"main\", domain: \"app.northwind.example\" },",
+  "    staging: { branch: \"develop\" },",
+  "    preview: { branches: [\"feat/*\", \"fix/*\"] },",
+  "  },",
+  "  headers: [",
+  "    { source: \"/assets/(.*)\", cacheControl: \"public, max-age=31536000, immutable\" },",
+  "  ],",
+  "});",
+];
+</script>
+
+<template>
+  <CodeBlock variant="code" filename="northwind.config.ts" :lines="lines" :max-height="200" />
+</template>

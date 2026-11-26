@@ -1,0 +1,143 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "popover",
+  "title": "Popover",
+  "summary": "A small panel anchored to its trigger, with a title, content and a close button.",
+  "description": "A small raised surface anchored to its trigger: title, description, body and a close button. Click opens it, Escape or a click outside closes it, and focus moves in and returns to the trigger. Behaviour comes from the Zag popover machine, through Ark UI in React, Vue and Svelte.",
+  "kind": "component",
+  "category": "overlays",
+  "order": 2,
+  "engine": "popover",
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "Layout-neutral hook around the trigger (display: contents)"
+    },
+    {
+      "part": "trigger",
+      "element": "button",
+      "description": "aria-haspopup=dialog, aria-expanded, data-state=open|closed. The default trigger is a Button. Marked data-popover=\"trigger\"."
+    },
+    {
+      "part": "positioner",
+      "element": "div",
+      "description": "Placed by the engine; rendered in a portal. Exposes --transform-origin and --available-height"
+    },
+    {
+      "part": "content",
+      "element": "div",
+      "description": "role=dialog surface composing the shared popup surface (`lib/popup.ts`: surface, motion, keyboard-instant; stacking from base.css); data-state=open|closed. Keeps its own width, 12px padding and a 480px limit (--popup-max-height)."
+    },
+    {
+      "part": "header",
+      "element": "div",
+      "optional": true
+    },
+    {
+      "part": "title",
+      "element": "h2",
+      "optional": true
+    },
+    {
+      "part": "close",
+      "element": "button",
+      "optional": true,
+      "description": "A Button: ghost, size xs, square, shape rounded, muted, aria-label=Close, with a tooltip of the same text. Only its placement is the popover's. Marked data-popover=\"close\"."
+    },
+    {
+      "part": "description",
+      "element": "div",
+      "optional": true
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "optional": true
+    }
+  ],
+  "props": {
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "model": true,
+      "description": "data-state=open|closed on trigger and content."
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "closable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show the close button."
+    },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "top",
+        "top-start",
+        "top-end",
+        "bottom",
+        "bottom-start",
+        "bottom-end",
+        "left",
+        "right"
+      ],
+      "default": "bottom-start",
+      "description": "Preferred side; flips when there is no room."
+    },
+    "triggerLabel": {
+      "type": "string",
+      "description": "Renders a default Button trigger with this label. Otherwise pass your own trigger."
+    }
+  },
+  "slots": {
+    "default": "Body content",
+    "trigger": "Your own trigger element (React `trigger` prop, Vue `trigger` slot, Svelte `trigger` snippet that spreads the props it receives)",
+    "title": "Vue: rich title",
+    "description": "Vue: rich description"
+  },
+  "events": {
+    "openChange": "(open: boolean)"
+  },
+  "states": [
+    "open",
+    "hover",
+    "press",
+    "focus-visible"
+  ],
+  "tokens": [
+    "color.ink",
+    "color.ink-2",
+    "text.xs",
+    "text.sm"
+  ],
+  "dependencies": [
+    "button",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "dialog (non-modal)",
+    "keyboard": [
+      "Enter / Space on the trigger open and close",
+      "Focus moves into the surface (first focusable, else the surface itself)",
+      "Tab moves through the surface and on into the page",
+      "Escape closes and returns focus to the trigger",
+      "A click or focus outside closes"
+    ],
+    "notes": [
+      "Labelled by its title and described by its description when present.",
+      "Opening and closing from the keyboard are instant."
+    ]
+  },
+  "motion": [
+    "surface: the shared popup recipe (`popup`): opacity + scale from motion.popup-scale out of the trigger, duration.popup, easing.out-strong; closes at duration.fast; instant from the keyboard",
+    "close button: the button's own hover and press (ghost Button)",
+    "mounted open (defaultOpen, or open at mount): the surface is drawn at once, with no entrance (data-mounted-open until it first closes); its close, and every later open, animate as above"
+  ]
+}
