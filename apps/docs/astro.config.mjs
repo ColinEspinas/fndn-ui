@@ -17,11 +17,13 @@ import fs from "node:fs";
  * it is saved, but Node keeps every module it has already imported: imported the plain way, a
  * change to one of these files would wait until the server is started again. */
 const fresh = (file) => import(`${file}?t=${Date.now()}`);
-const [{ toAdapterFiles }, { docsModules }, { docsLiveReload }, { harnessPage }] = await Promise.all([
+const [{ toAdapterFiles }, { docsModules }, { docsLiveReload }, { harnessPage }, { docsPreload }, { docsChunks }] = await Promise.all([
   fresh("./src/lib/ui-imports.mjs"),
   fresh("./src/lib/vite-modules.mjs"),
   fresh("./src/lib/vite-live-reload.mjs"),
   fresh("./src/harness/serve.mjs"),
+  fresh("./src/lib/build-preload.mjs"),
+  fresh("./src/lib/build-chunks.mjs"),
 ]);
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -64,13 +66,16 @@ function examplesImports() {
 }
 
 export default defineConfig({
-  integrations: [react(), vue(), svelte()],
+  /* docsPreload: the built pages list the scripts they will load (src/lib/build-preload.mjs) */
+  integrations: [react(), vue(), svelte(), docsPreload(path.resolve(here, "../.."))],
   server: { port: 4321 },
-  /* the client router serves a click from memory: every link is fetched on hover or focus */
+  /* the client router serves a click from memory: every link is fetched on hover or focus (on the
+   * built site lib/warm.ts does this instead, see src/lib/build-preload.mjs) */
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   devToolbar: { enabled: false },
   vite: {
-    plugins: [tailwindcss(), arkFromComponents(), examplesImports(), docsModules(path.resolve(here, "../..")), docsLiveReload(path.resolve(here, "../..")), harnessPage()],
+    /* docsChunks: how the built site's scripts are grouped into files (src/lib/build-chunks.mjs) */
+    plugins: [tailwindcss(), arkFromComponents(), examplesImports(), docsModules(path.resolve(here, "../..")), docsLiveReload(path.resolve(here, "../..")), harnessPage(), docsChunks(path.resolve(here, "../..").split(path.sep).join("/"))],
     resolve: {
       alias: [{ find: /^@fndn\/components\//, replacement: componentsDir + "/" }],
       dedupe: ["react", "react-dom", "@ark-ui/react", "vue", "svelte"],
