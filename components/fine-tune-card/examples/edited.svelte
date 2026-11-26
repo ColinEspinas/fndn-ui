@@ -1,5 +1,8 @@
 <script lang="ts">
+  import type { ComponentProps } from "svelte";
   import { FineTuneCard } from "@fndn/svelte";
+
+  type Props = ComponentProps<typeof FineTuneCard>;
 
   const fields = [
     { key: "width", label: "W", value: 320, min: 200, max: 640 },
@@ -12,7 +15,7 @@
 
   const labels = { title: "Pricing card", type: "Plan", placeholder: "Select plan" };
 
-  let layout = $state("grid");
+  let layout = $state<Props["layout"]>("grid");
 
   let values = $state({ width: 360, radius: 12 });
 

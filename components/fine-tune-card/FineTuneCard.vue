@@ -10,11 +10,13 @@ import Select, { type SelectItem } from "../select/Select.vue";
 import Shimmer from "../shimmer/Shimmer.vue";
 import {
   FINE_TUNE_FIELDS, FINE_TUNE_LAYOUTS, FINE_TUNE_TYPES, fieldValue, fineTuneLabels, focusAfterReset, isEdited, pageStep,
-  type FineTuneField, type FineTuneLabels, type FineTuneLayout,
+  type FineTuneField as Field, type FineTuneLabels as Labels, type FineTuneLayout as Layout,
 } from "./fine-tune-card.logic";
 import { trackModality } from "../lib/modality";
 
-export type { FineTuneField, FineTuneLabels, FineTuneLayout };
+export type FineTuneField = Field;
+export type FineTuneLabels = Labels;
+export type FineTuneLayout = Layout;
 
 defineOptions({ inheritAttrs: false });
 const attrs = useAttrs();

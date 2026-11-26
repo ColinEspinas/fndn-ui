@@ -9,10 +9,13 @@
   import Tooltip from "../tooltip/Tooltip.svelte";
   import {
     agentScreenLabels, agentScreenStatus, cursorValue,
-    type AgentScreenCursor, type AgentScreenLabels, type AgentScreenState,
+    type AgentScreenCursor as CursorOf, type AgentScreenLabels as Labels, type AgentScreenState as State,
   } from "./agent-screen.logic";
 
-  export type { AgentScreenCursor, AgentScreenLabels, AgentScreenState };
+  /* declared here, not passed on: Svelte exports a type a component declares, and no other */
+  export type AgentScreenCursor = CursorOf;
+  export type AgentScreenLabels = Labels;
+  export type AgentScreenState = State;
 
   type Props = {
     /** loading: connecting. live: the agent works, its cursor shows. idle: the cursor hides. */

@@ -1,21 +1,23 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, type ComponentProps } from "svelte";
   import { AgentScreen } from "@fndn/svelte";
 
-  const initial = {
+  type Props = ComponentProps<typeof AgentScreen>;
+
+  const initial: Props = {
     label: "Issuing the Kestrel Logistics refund",
     cursor: { x: 42, y: 53 },
   };
 
   /* each step waits `after` ms, then merges its props over the current ones */
-  const timeline: { after: number; props: Record<string, unknown> }[] = [
+  const timeline: { after: number; props: Partial<Props> }[] = [
     { after: 900, props: { cursor: { x: 72, y: 30 } } },
     { after: 1100, props: { cursor: { x: 26, y: 68 } } },
     { after: 1100, props: { cursor: { x: 58, y: 44 } } },
     { after: 800, props: { recording: true } },
   ];
 
-  let props: Record<string, unknown> = $state.raw({ ...initial });
+  let props: Props = $state.raw({ ...initial });
   onMount(() => {
     let i = 0, timer = 0;
     const next = () => {

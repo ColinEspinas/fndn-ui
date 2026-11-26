@@ -6,11 +6,12 @@
   import { diffTable } from "./diff-table.recipe";
   import EmptyState from "../empty-state/EmptyState.svelte";
   import StatusPill from "../status-pill/StatusPill.svelte";
-  import { DIFF_TABLE_BOX, DIFF_TABLE_LABELS, diffTableKey, diffTableText, focusRowMark, isBoxClick, type DiffTableLabels } from "./diff-table.logic";
+  import { DIFF_TABLE_BOX, DIFF_TABLE_LABELS, diffTableKey, diffTableText, focusRowMark, isBoxClick, type DiffTableLabels as Labels } from "./diff-table.logic";
   import { trackModality } from "../lib/modality";
   import { afterPaint } from "../lib/paint";
 
-  export type { DiffTableLabels } from "./diff-table.logic";
+  /* declared here, not passed on: Svelte exports a type a component declares, and no other */
+  export type DiffTableLabels = Labels;
   export type DiffTableTone = "accent" | "neutral" | "orange" | "green";
   export type DiffTableChange = "removed" | "added" | "unchanged";
   export type DiffTableRow = { key: string; name: string; category: string; tone?: DiffTableTone; value: string; change: DiffTableChange };

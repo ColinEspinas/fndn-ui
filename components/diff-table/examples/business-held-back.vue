@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { DiffTable } from "@fndn/vue";
+import { DiffTable, type DiffTableRow } from "@fndn/vue";
 
-const columns = ["Plan", "Billing", "Price"];
+const columns: [string, string, string] = ["Plan", "Billing", "Price"];
 
-const rows = [
+const rows: DiffTableRow[] = [
   {
     key: "team-49",
     name: "Team",

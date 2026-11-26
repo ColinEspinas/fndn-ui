@@ -2,6 +2,7 @@
 export { default as Accordion } from "../../../components/accordion/Accordion.svelte";
 export type { AccordionItem } from "../../../components/accordion/Accordion.svelte";
 export { default as AgentScreen } from "../../../components/agent-screen/AgentScreen.svelte";
+export type { AgentScreenCursor, AgentScreenLabels, AgentScreenState } from "../../../components/agent-screen/AgentScreen.svelte";
 export { default as Alert } from "../../../components/alert/Alert.svelte";
 export type { AlertTone, AlertActionVariant, AlertAction } from "../../../components/alert/Alert.svelte";
 export { default as AlertDialog } from "../../../components/alert-dialog/AlertDialog.svelte";
@@ -53,7 +54,7 @@ export type { DatePickerPlacement } from "../../../components/date-picker/DatePi
 export { default as Dialog } from "../../../components/dialog/Dialog.svelte";
 export type { DialogActionVariant, DialogAction } from "../../../components/dialog/Dialog.svelte";
 export { default as DiffTable } from "../../../components/diff-table/DiffTable.svelte";
-export type { DiffTableTone, DiffTableChange, DiffTableRow } from "../../../components/diff-table/DiffTable.svelte";
+export type { DiffTableLabels, DiffTableTone, DiffTableChange, DiffTableRow } from "../../../components/diff-table/DiffTable.svelte";
 export { default as Drawer } from "../../../components/drawer/Drawer.svelte";
 export type { DrawerSide, DrawerActionVariant, DrawerAction } from "../../../components/drawer/Drawer.svelte";
 export { default as Editable } from "../../../components/editable/Editable.svelte";
@@ -67,6 +68,7 @@ export type { FileUploadFile } from "../../../components/file-upload/FileUpload.
 export { default as FilterTable } from "../../../components/filter-table/FilterTable.svelte";
 export type { FilterTableColumn, FilterTableColumnType, FilterTableFilter, FilterTableLabels, FilterTableLabelsInput, FilterTableRow, FilterTableTone, FilterTableStatus, FilterTableFilterKey } from "../../../components/filter-table/FilterTable.svelte";
 export { default as FineTuneCard } from "../../../components/fine-tune-card/FineTuneCard.svelte";
+export type { FineTuneField, FineTuneLabels, FineTuneLayout } from "../../../components/fine-tune-card/FineTuneCard.svelte";
 export { default as Flowchart } from "../../../components/flowchart/Flowchart.svelte";
 export { default as HoverCard } from "../../../components/hover-card/HoverCard.svelte";
 export type { HoverCardPlacement, HoverCardLine } from "../../../components/hover-card/HoverCard.svelte";
@@ -115,6 +117,7 @@ export type { RatingSize } from "../../../components/rating/Rating.svelte";
 export { default as RecommendationCard } from "../../../components/recommendation-card/RecommendationCard.svelte";
 export type { RecommendationTone, RecommendationSegment, RecommendationOption, RecommendationLabels } from "../../../components/recommendation-card/RecommendationCard.svelte";
 export { default as RecordsTable } from "../../../components/records-table/RecordsTable.svelte";
+export type { RecordsTableAction, RecordsTableColumn, RecordsTableLabels, RecordsTableRow, RecordsTableSort, RecordsTableSortDirection, RecordsTableStatusOption, RecordsTableTone, RecordsTableValue } from "../../../components/records-table/RecordsTable.svelte";
 export { default as ScrollArea } from "../../../components/scroll-area/ScrollArea.svelte";
 export type { ScrollAreaOrientation } from "../../../components/scroll-area/ScrollArea.svelte";
 export { default as Search } from "../../../components/search/Search.svelte";
@@ -124,6 +127,7 @@ export type { SegmentedOption, SegmentedDotTone } from "../../../components/segm
 export { default as Select } from "../../../components/select/Select.svelte";
 export type { SelectItem, SelectPlacement } from "../../../components/select/Select.svelte";
 export { default as SelectionActions } from "../../../components/selection-actions/SelectionActions.svelte";
+export type { SelectionAction, SelectionActionIcon, TextRange } from "../../../components/selection-actions/SelectionActions.svelte";
 export { default as Separator } from "../../../components/separator/Separator.svelte";
 export type { SeparatorOrientation } from "../../../components/separator/Separator.svelte";
 export { default as Shimmer } from "../../../components/shimmer/Shimmer.svelte";

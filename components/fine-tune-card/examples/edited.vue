@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { FineTuneCard } from "@fndn/vue";
+import { FineTuneCard, type FineTuneLayout } from "@fndn/vue";
 
 const fields = [
   { key: "width", label: "W", value: 320, min: 200, max: 640 },
@@ -13,7 +13,7 @@ const plans = ["Starter", "Team", "Business"];
 
 const labels = { title: "Pricing card", type: "Plan", placeholder: "Select plan" };
 
-const layout = ref("grid");
+const layout = ref<FineTuneLayout>("grid");
 
 const values = ref({ width: 360, radius: 12 });
 

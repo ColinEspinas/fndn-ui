@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { DiffTable } from "@fndn/svelte";
+  import { DiffTable, type DiffTableRow } from "@fndn/svelte";
 
-  const columns = ["Plan", "Billing", "Price"];
+  const columns: [string, string, string] = ["Plan", "Billing", "Price"];
 
-  const rows = [
+  const rows: DiffTableRow[] = [
     {
       key: "team-49",
       name: "Team",

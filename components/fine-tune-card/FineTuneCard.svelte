@@ -15,11 +15,14 @@
   import Shimmer from "../shimmer/Shimmer.svelte";
   import {
     FINE_TUNE_FIELDS, FINE_TUNE_LAYOUTS, FINE_TUNE_TYPES, fieldValue, fineTuneLabels, focusAfterReset, isEdited, pageStep,
-    type FineTuneField, type FineTuneLabels, type FineTuneLayout,
+    type FineTuneField as Field, type FineTuneLabels as Labels, type FineTuneLayout as Layout,
   } from "./fine-tune-card.logic";
   import { trackModality } from "../lib/modality";
 
-  export type { FineTuneField, FineTuneLabels, FineTuneLayout };
+  /* declared here, not passed on: Svelte exports a type a component declares, and no other */
+  export type FineTuneField = Field;
+  export type FineTuneLabels = Labels;
+  export type FineTuneLayout = Layout;
 
   type Props = {
     /** The number properties, laid out in pairs. `value` is each field's default (what Reset returns to). */

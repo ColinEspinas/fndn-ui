@@ -2,6 +2,7 @@
 export { default as Accordion } from "../../../components/accordion/Accordion.vue";
 export type { AccordionItem } from "../../../components/accordion/Accordion.vue";
 export { default as AgentScreen } from "../../../components/agent-screen/AgentScreen.vue";
+export type { AgentScreenCursor, AgentScreenLabels, AgentScreenState } from "../../../components/agent-screen/AgentScreen.vue";
 export { default as Alert } from "../../../components/alert/Alert.vue";
 export type { AlertTone, AlertActionVariant, AlertAction } from "../../../components/alert/Alert.vue";
 export { default as AlertDialog } from "../../../components/alert-dialog/AlertDialog.vue";
@@ -53,7 +54,7 @@ export type { DatePickerPlacement } from "../../../components/date-picker/DatePi
 export { default as Dialog } from "../../../components/dialog/Dialog.vue";
 export type { DialogActionVariant, DialogAction } from "../../../components/dialog/Dialog.vue";
 export { default as DiffTable } from "../../../components/diff-table/DiffTable.vue";
-export type { DiffTableTone, DiffTableChange, DiffTableRow } from "../../../components/diff-table/DiffTable.vue";
+export type { DiffTableTone, DiffTableChange, DiffTableRow, DiffTableLabels } from "../../../components/diff-table/DiffTable.vue";
 export { default as Drawer } from "../../../components/drawer/Drawer.vue";
 export type { DrawerSide, DrawerActionVariant, DrawerAction } from "../../../components/drawer/Drawer.vue";
 export { default as Editable } from "../../../components/editable/Editable.vue";
@@ -67,6 +68,7 @@ export type { FileUploadFile } from "../../../components/file-upload/FileUpload.
 export { default as FilterTable } from "../../../components/filter-table/FilterTable.vue";
 export type { FilterTableColumn, FilterTableColumnType, FilterTableFilter, FilterTableLabels, FilterTableLabelsInput, FilterTableRow, FilterTableTone, FilterTableStatus, FilterTableFilterKey } from "../../../components/filter-table/FilterTable.vue";
 export { default as FineTuneCard } from "../../../components/fine-tune-card/FineTuneCard.vue";
+export type { FineTuneField, FineTuneLabels, FineTuneLayout } from "../../../components/fine-tune-card/FineTuneCard.vue";
 export { default as Flowchart } from "../../../components/flowchart/Flowchart.vue";
 export { default as HoverCard } from "../../../components/hover-card/HoverCard.vue";
 export type { HoverCardPlacement, HoverCardLine } from "../../../components/hover-card/HoverCard.vue";
@@ -115,6 +117,7 @@ export type { RatingSize } from "../../../components/rating/Rating.vue";
 export { default as RecommendationCard } from "../../../components/recommendation-card/RecommendationCard.vue";
 export type { RecommendationTone, RecommendationSegment, RecommendationOption, RecommendationLabels } from "../../../components/recommendation-card/RecommendationCard.vue";
 export { default as RecordsTable } from "../../../components/records-table/RecordsTable.vue";
+export type { RecordsTableAction, RecordsTableColumn, RecordsTableLabels, RecordsTableRow, RecordsTableSort, RecordsTableSortDirection, RecordsTableStatusOption, RecordsTableTone, RecordsTableValue } from "../../../components/records-table/RecordsTable.vue";
 export { default as ScrollArea } from "../../../components/scroll-area/ScrollArea.vue";
 export type { ScrollAreaOrientation } from "../../../components/scroll-area/ScrollArea.vue";
 export { default as Search } from "../../../components/search/Search.vue";
@@ -124,6 +127,7 @@ export type { SegmentedOption, SegmentedDotTone } from "../../../components/segm
 export { default as Select } from "../../../components/select/Select.vue";
 export type { SelectItem, SelectPlacement } from "../../../components/select/Select.vue";
 export { default as SelectionActions } from "../../../components/selection-actions/SelectionActions.vue";
+export type { SelectionAction, SelectionActionIcon, TextRange } from "../../../components/selection-actions/SelectionActions.vue";
 export { default as Separator } from "../../../components/separator/Separator.vue";
 export type { SeparatorOrientation } from "../../../components/separator/Separator.vue";
 export { default as Shimmer } from "../../../components/shimmer/Shimmer.vue";

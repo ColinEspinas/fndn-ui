@@ -12,7 +12,13 @@ function valueExports(framework, source) {
   const blocks = [...source.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].filter((m) => (framework === "vue" ? !/\bsetup\b/.test(m[1]) : /\bmodule\b/.test(m[1])));
   return [...new Set(blocks.flatMap((m) => [...m[2].matchAll(/^\s*export\s+(?:const|function|let|class)\s+([A-Za-z_]\w*)/gm)].map((x) => x[1])))];
 }
-const typeExports = (source) => [...new Set([...source.matchAll(/^\s*export\s+(?:type|interface)\s+([A-Za-z_]\w*)/gm)].map((m) => m[1]))];
+/* The types a Vue or Svelte file exports: declared (`export type Name = …`, `export interface
+ * Name`) or passed on (`export type { A, B as C }`, with or without `from "…"`: the name a caller
+ * imports is the one after `as`). */
+const typeExports = (source) => [...new Set([
+  ...[...source.matchAll(/^\s*export\s+(?:type|interface)\s+([A-Za-z_]\w*)/gm)].map((m) => m[1]),
+  ...[...source.matchAll(/^\s*export\s+type\s*\{([^}]*)\}/gm)].flatMap((m) => m[1].split(",").map((n) => n.trim().split(/\s+as\s+/).pop()).filter(Boolean)),
+])];
 
 /** Every name one adapter file exports. A Vue or Svelte component is its file's default export,
  * named after the file. */

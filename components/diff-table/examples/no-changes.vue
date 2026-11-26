@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DiffTable } from "@fndn/vue";
 
-const columns = ["Plan", "Billing", "Price"];
+const columns: [string, string, string] = ["Plan", "Billing", "Price"];
 
 const labels = { empty: "Prices already match the plan sheet" };
 </script>
