@@ -44,7 +44,7 @@ export const toolChips = tv({
      * The adapter sets --fndn-row-room: 0fr on an arriving step only; a step present at first render
      * starts at 1fr, so nothing moves on first paint. The second track holds the step's own region.
      * Clipped vertically only: the trigger bleeds 3px sideways.
-     * lint-motion-ok: grid-template-rows is the sanctioned way to open room; one track, the step's own */
+     * fndn-check-ok: grid-template-rows is the sanctioned way to open room; one track, the step's own */
     step: [
       "grid grid-rows-[minmax(0,1fr)_auto] [overflow-y:clip] motion-size-reveal starting:grid-rows-[minmax(0,var(--fndn-row-room,1fr))_auto]",
       "animate-[fndn-fade-up_var(--fndn-duration-enter)_var(--fndn-easing-out-strong)_calc(min(var(--fndn-row-index,0),var(--fndn-motion-stagger-max))*var(--fndn-duration-stagger))_both]",

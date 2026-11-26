@@ -58,7 +58,7 @@ export const tabs = tv({
       "kbd-instant",
       "absolute top-0 [left:0]! z-0 w-(--width) h-(--height) rounded-chip bg-field pointer-events-none",
       "[transform:translate(var(--left,0px),var(--top,0px))]",
-      /* lint-motion-ok: width — the indicator is absolutely positioned and childless, and scaleX would distort its radius */
+      /* fndn-check-ok: width — the indicator is absolutely positioned and childless, and scaleX would distort its radius */
       "[--transition-property:transform,width]! [--transition-duration:var(--fndn-duration-move)] [--transition-timing-function:var(--fndn-easing-move)]",
     ],
     trigger: [
@@ -222,7 +222,7 @@ export const tabs = tv({
     { variant: "attached", tabSizing: "fit", closable: true, class: { trigger: "pe-8" } },
     { variant: "attached", tabSizing: "fit", size: ["xs", "sm"], closable: true, class: { trigger: "pe-7" } },
     /* arrivals make room: an inserted tab (the closable wrapper, or the trigger alone) opens from 0.
-     * lint-motion-ok: width, min-width and inline padding are a tab's room in the strip; no transform
+     * fndn-check-ok: width, min-width and inline padding are a tab's room in the strip; no transform
      * can open it, and they move over duration.reveal (0 under reduced motion: only the fade stays) */
     {
       variant: "attached",

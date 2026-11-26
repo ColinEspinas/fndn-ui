@@ -32,7 +32,7 @@ export const fileUpload = tv({
     hiddenInput: "",
     itemGroup: "flex flex-col gap-1.5 min-w-0 m-0 p-0 list-none",
     /* the tag (as wide as its name, shrinking first) and the size at the end of the line.
-     * lint-motion-ok: grid-template-rows is the sanctioned way to open room; one track, the line's own */
+     * fndn-check-ok: grid-template-rows is the sanctioned way to open room; one track, the line's own */
     item: [
       "grid grid-cols-[minmax(0,max-content)_1fr] grid-rows-[minmax(0,1fr)] items-center gap-x-2 min-w-0",
       "overflow-clip [overflow-clip-margin:4px] motion-size-reveal [[data-slot=file-upload][data-enter]_&]:starting:grid-rows-[minmax(0,0fr)]",

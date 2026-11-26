@@ -49,7 +49,7 @@ export const agentScreen = tv({
     cursor: [
       "absolute inset-0 z-1 [direction:ltr] pointer-events-none",
       "[transform:translate(var(--fndn-agent-screen-cursor,42%,53%))]",
-      /* lint-composition-ok: the cursor is a pointer travelling between targets, the move easing's own case */
+      /* fndn-check-ok: the cursor is a pointer travelling between targets, the move easing's own case */
       "motion-opacity-base motion-also-[transform_var(--fndn-duration-slow)_var(--fndn-easing-in-out-strong)] motion-reduce:[--fndn-m-also:initial]",
       "[&>[data-slot=icon]]:block [&>[data-slot=icon]]:-mt-0.5 [&>[data-slot=icon]]:-ms-[3px] [&>[data-slot=icon]]:text-[20px] [&>[data-slot=icon]]:text-ink",
       "[&>[data-slot=icon]]:[filter:drop-shadow(0_0_1px_var(--fndn-surface))_drop-shadow(0_1px_1.5px_var(--fndn-ink-3))]",

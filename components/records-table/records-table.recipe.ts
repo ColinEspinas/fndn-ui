@@ -146,7 +146,7 @@ export const recordsTable = tv({
       "[&>[data-slot=empty-state]]:sticky [&>[data-slot=empty-state]]:start-0 [&>[data-slot=empty-state]]:w-[100cqi]",
     ],
     /* selection bar — reveals under the table, so nothing above it moves.
-     * lint-composition-ok: a status bar that appears with a selection, not a disclosure (no trigger) */
+     * fndn-check-ok: a status bar that appears with a selection, not a disclosure (no trigger) */
     selection: [
       "kbd-instant grid grid-rows-[0fr] opacity-0 motion-size-reveal motion-opacity-base",
       "[&>*]:min-h-0 [&>*]:overflow-hidden",

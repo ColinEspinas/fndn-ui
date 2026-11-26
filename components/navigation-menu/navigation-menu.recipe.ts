@@ -60,7 +60,7 @@ export const navigationMenu = tv({
       popup(),
       "absolute top-1 [left:var(--viewport-x)] w-(--viewport-width) h-(--viewport-height) p-0 overflow-hidden max-h-none",
       "[--transform-origin:calc(var(--trigger-x,0px)_+_var(--trigger-width,0px)/2_-_var(--viewport-x,0px))_top]",
-      /* lint-motion-ok: the one box follows the pointer between panels (its start edge and size ease
+      /* fndn-check-ok: the one box follows the pointer between panels (its start edge and size ease
        * to the new panel's); it is absolutely placed in a portal and its contents are absolute, so
        * nothing else is laid out again. Only while switching (a content carries data-motion). */
       "has-[[data-motion]]:motion-size-move has-[[data-motion]]:motion-also-[display_var(--fndn-duration-popup)_allow-discrete,left_var(--fndn-duration-move)_var(--fndn-easing-out-strong)]",

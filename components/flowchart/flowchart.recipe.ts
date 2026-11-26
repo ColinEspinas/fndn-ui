@@ -41,7 +41,7 @@ export const flowchart = tv({
     /* a row the pointer added makes its room as it fades up, so the card grows with it instead of
      * snapping: flowchart.logic.ts sets data-entering and, for one frame, data-collapsed (0fr: the minimum is 0, so the 28px handle cannot hold it open), then the
      * one row track opens to 1fr over duration.reveal (the collapsible's reveal), clipped meanwhile.
-     * lint-motion-ok: grid-template-rows is the sanctioned way to open room; the track is the row's own */
+     * fndn-check-ok: grid-template-rows is the sanctioned way to open room; the track is the row's own */
     row: [
       "grid grid-cols-[auto_28px_minmax(0,1fr)] grid-rows-[minmax(0,1fr)] [align-items:start] gap-x-1 min-w-0",
       "data-entering:animate-fade-up data-entering:overflow-hidden data-entering:motion-size-reveal",

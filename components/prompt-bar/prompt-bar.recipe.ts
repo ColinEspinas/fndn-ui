@@ -32,7 +32,7 @@ export const promptBar = tv({
       "focus-within:motion-radius-base-out",
       /* while the row switches layout its height follows the controls (flipRow in prompt-bar.logic.ts
        * holds the old height, then sets the new one).
-       * lint-motion-ok: the composer has to change height when the controls drop to a second row;
+       * fndn-check-ok: the composer has to change height when the controls drop to a second row;
        * it moves with them, over duration.move */
       "data-[flip=to]:motion-size-move",
     ],

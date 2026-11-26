@@ -42,7 +42,7 @@ export const contextCards = tv({
     ],
     sourceName: "min-w-0 overflow-hidden text-ellipsis whitespace-nowrap [unicode-bidi:plaintext]",
     /* 14px file-type square, tinted by its tone; a four-letter type (DOCX, XLSX) widens it a
-     * little rather than being cut. lint-composition-ok: a three-letter file type (PDF, CSV) does
+     * little rather than being cut. fndn-check-ok: a three-letter file type (PDF, CSV) does
      * not fit our avatar, which holds two letters */
     badge: [
       "inline-flex shrink-0 min-w-3.5 h-3.5 items-center justify-center overflow-hidden rounded-[4px]",

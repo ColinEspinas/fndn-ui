@@ -37,7 +37,7 @@ export const approvalCard = tv({
     /* on the Button (ghost sm square rounded muted): pinned top right */
     dismiss: "absolute top-2.5 end-2.5 z-2",
     body: "p-3",
-    /* lint-motion-ok: the card has to change size between questions; there is no transform
+    /* fndn-check-ok: the card has to change size between questions; there is no transform
      * equivalent, and it is kept to duration.move */
     viewport: "kbd-instant overflow-hidden motion-size-move",
     track: "kbd-instant relative flex flex-col gap-[26px] motion-transform-move",

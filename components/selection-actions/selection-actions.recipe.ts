@@ -62,7 +62,7 @@ export const selectionActions = tv({
       /* the bar's width eases between modes with the controls' fade (duration.base, out-strong): the
        * rovingToolbar helper holds the old width for a frame, then sets the new one; kbd-instant (from
        * popup) makes it a snap from the keyboard.
-       * lint-motion-ok: the pill has to change width between modes; it is childless of layout
+       * fndn-check-ok: the pill has to change width between modes; it is childless of layout
        * consequence (absolutely positioned popup) and kept to duration.base */
       "motion-size-base-out mx-auto pointer-events-auto",
     ],

@@ -23,7 +23,7 @@
 //                        shared keyframe (`animate-[fndn-spin…]`) uses the atom, it does not copy it;
 //                        a keyframe redefined in base.css is the motion lint's (validate.mjs)
 //
-// Escape hatch: `lint-composition-ok` in a comment on the class's line or the line above, in the
+// Escape hatch: `fndn-check-ok` in a comment on the class's line or the line above, in the
 // recipe's source.
 // CLI: node scripts/lint-composition.mjs [recipe names…]   (prints each finding; exit code 1 if any)
 import fs from "node:fs";
@@ -109,13 +109,13 @@ export function lintRecipe(name, recipe) {
   return found;
 }
 
-/** Drops findings whose class sits on (or under) a line marked lint-composition-ok. */
+/** Drops findings whose class sits on (or under) a line marked fndn-check-ok. */
 function honourEscapes(name, found) {
   if (!found.length) return found;
   const lines = fs.readFileSync(path.join(ROOT, recipePath(name)), "utf8").split("\n");
   return found.filter((f) => {
     const at = lines.findIndex((l) => l.includes(f.cls));
-    return at < 0 || !(/lint-composition-ok/.test(lines[at]) || /lint-composition-ok/.test(lines[at - 1] ?? ""));
+    return at < 0 || !(/fndn-check-ok/.test(lines[at]) || /fndn-check-ok/.test(lines[at - 1] ?? ""));
   });
 }
 

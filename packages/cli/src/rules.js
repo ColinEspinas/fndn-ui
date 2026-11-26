@@ -235,15 +235,15 @@ export function keyframeNames(css) {
  *   easing-token      `ease` (colour, opacity), `linear` (loops) or var(--fndn-easing-*)
  *   duration-token    durations and delays are var(--fndn-duration-*); a loop (`infinite`) may be literal
  *   gpu-only          no transition on a layout property (grid-template-rows is the sanctioned reveal)
- *   known-keyframes   an animation is a shared ui-* keyframe or one defined in the same file
+ *   known-keyframes   an animation is a shared fndn-* keyframe or one defined in the same file
  *
- * A `lint-motion-ok: reason` or `fndn-check-ok: reason` comment on the line, or the line above, allows it.
+ * A `fndn-check-ok: reason` comment on the line, or the line above, allows it.
  * @returns {{rule: string, line: number, message: string}[]}
  */
 export function lintMotion(css, { sharedKeyframes = new Set() } = {}) {
   const findings = [];
   const ok = new Set();
-  css.split("\n").forEach((l, i) => { if (/lint-motion-ok|fndn-check-ok/.test(l)) { ok.add(i + 1); ok.add(i + 2); } });
+  css.split("\n").forEach((l, i) => { if (/fndn-check-ok/.test(l)) { ok.add(i + 1); ok.add(i + 2); } });
   const src = css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
   const known = new Set([...sharedKeyframes, ...keyframeNames(src)]);
   const add = (rule, line, message) => { if (!ok.has(line)) findings.push({ rule, line, message }); };
@@ -274,7 +274,7 @@ export function lintMotion(css, { sharedKeyframes = new Set() } = {}) {
     }
     if (prop === "animation" || prop === "animation-name") {
       const used = value.split(",").map((part) => part.trim().split(/\s+/).find((t) => /^[a-zA-Z_][\w-]*$/.test(t) && !ANIMATION_KEYWORDS.test(t)));
-      for (const n of used) if (n && !known.has(n)) add("known-keyframes", at, `animation "${n}" is not a shared ui-* keyframe nor defined in this file`);
+      for (const n of used) if (n && !known.has(n)) add("known-keyframes", at, `animation "${n}" is not a shared fndn-* keyframe nor defined in this file`);
     }
   };
 
