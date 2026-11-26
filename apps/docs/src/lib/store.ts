@@ -65,11 +65,6 @@ export function go(href: string): void {
   void import("astro:transitions/client").then((m) => m.navigate(href)).catch(() => { location.href = href; });
 }
 
-/** Fetch a page ahead (pointer or focus on something that will navigate there). */
-export function warm(href: string): void {
-  void import("astro:prefetch").then((m) => m.prefetch(href)).catch(() => {});
-}
-
 /* the current path, for the persisted tree (its `current` prop is from the first page it was on) */
 const pathListeners = new Set<() => void>();
 export function usePath(initial: string): string {
