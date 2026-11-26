@@ -32,7 +32,8 @@ const FILL = "shadow-[inset_0_1px_0_oklch(1_0_0/0.14)]";
 export const button = tv({
   slots: {
     base: [
-      /* base.css blanks only buttons that carry a ui-* class; these two are what it would add */
+      /* the stylesheet resets only buttons marked data-slot or inside a component; these two are
+       * what that reset adds, for when the recipe is put on another element */
       "appearance-none [text-align:inherit]",
       "inline-flex shrink-0 items-center justify-center max-w-full",
       "rounded-shape font-medium leading-none whitespace-nowrap no-underline",

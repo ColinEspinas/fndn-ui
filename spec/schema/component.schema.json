@@ -26,7 +26,7 @@
     "name": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$",
-      "description": "kebab-case id; also the CSS block (ui-<name>) and registry item name"
+      "description": "kebab-case id: the name of the component's folder and files, of its data-slot, and of the component in the tool"
     },
     "title": {
       "type": "string",

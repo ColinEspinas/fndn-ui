@@ -164,7 +164,7 @@ try {
   const part = await page.rect('[data-docs-part="trigger"]');
   if (part) await page.hover(part.cx, part.cy);
   await sleep(200);
-  const outline = await page.eval(`(() => { const b = document.querySelector("[data-docs-outline] > div"); const t = document.querySelector('[data-docs-mount] [data-slot="select-trigger"], [data-docs-mount] .ui-select__trigger'); if (!b || !t) return null; const r = b.getBoundingClientRect(), s = t.getBoundingClientRect(); return Math.abs(r.x - s.x) < 1 && Math.abs(r.width - s.width) < 1; })()`);
+  const outline = await page.eval(`(() => { const b = document.querySelector("[data-docs-outline] > div"); const t = document.querySelector('[data-docs-mount] [data-slot="select-trigger"]'); if (!b || !t) return null; const r = b.getBoundingClientRect(), s = t.getBoundingClientRect(); return Math.abs(r.x - s.x) < 1 && Math.abs(r.width - s.width) < 1; })()`);
   ok(outline === true, "select: pointing at the trigger part outlines it on the stage", String(outline));
 
   // 2d'. the example code imports from the component folders, one line per component, in every framework

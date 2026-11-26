@@ -1,6 +1,6 @@
 {
   "$schema": "./schema/icons.schema.json",
-  "$description": "The icon vocabulary of the system. Every icon is a Phosphor icon (MIT, https://phosphoricons.com) at the given weight; `bold` reads closest to the 2px-at-24 strokes of the design. Components reference icons by the key only; the build emits CSS mask images (ui-icon[data-icon]) and a TS table.",
+  "$description": "The icon vocabulary of the system. Every icon is a Phosphor icon (MIT, https://phosphoricons.com) at the given weight; `bold` reads closest to the 2px-at-24 strokes of the design. The build writes the icon table (packages/core/src/icons.ts: the names and the SVG markup of each); adapters import the icons themselves from the Phosphor packages.",
   "source": "@phosphor-icons/core",
   "defaultWeight": "bold",
   "icons": {

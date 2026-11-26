@@ -1,4 +1,4 @@
-/* ui base — the global rules of the one stylesheet: page, focus ring, button reset, icon box,
+/* fndn/ui base — the global rules of the one stylesheet: page, focus ring, button reset, icon box,
  * stacking of popups, keyframes. Loaded after Tailwind (its preflight) and tokens.css, in the
  * components layer, so a recipe's utilities always win. Everything a component looks like is in its
  * recipe (<name>.recipe.ts); nothing here names a component.

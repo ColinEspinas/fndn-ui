@@ -1,4 +1,4 @@
-// spec/icons.json → packages/core/css/icons.css (mask-image icons) and packages/core/src/icons.ts
+// spec/icons.json → packages/core/src/icons.ts (the icon table: the name and the SVG markup of each icon)
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT, readJson } from "./lib.mjs";
@@ -29,7 +29,7 @@ const ts = [
   `export const iconPaths: Record<IconName, string> = {`,
   ...entries.map((e) => `  ${JSON.stringify(e.name)}: ${JSON.stringify(e.inner)},`),
   `};`,
-  `/** Inline <svg> markup for an icon, for places that cannot use the CSS mask (email, canvas, SSR without the stylesheet). */`,
+  `/** Inline <svg> markup for an icon, for places that cannot render a component (an email, a canvas). */`,
   `export function iconSvg(name: IconName, attrs = 'width="1em" height="1em"'): string {`,
   `  return \`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" \${attrs}>\${iconPaths[name]}</svg>\`;`,
   `}`,

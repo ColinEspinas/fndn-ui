@@ -7,18 +7,18 @@
 //   - every component has a recipe: `base` only, or slots named `base` + the spec's parts in
 //     camelCase (root = base)
 //   - every class of a recipe passes the class rules (motion, colours, radii and shadows from the
-//     tokens, logical sides) and names no ui-* class: a part is found by [data-slot=…]
+//     tokens, logical sides) and names no fndn-* class: a part is found by [data-slot=…]
 //   - each adapter marks the root data-slot="<name>" and every non-optional part
 //     data-slot="<name>-<part>" or data-<name>="<part>" (also as a key of an attribute object in the
 //     same file: { "data-<name>": "<part>" }; a part built through a helper says "marked": false in
-//     the spec, with the reason in its description), and uses no ui-<name> class
+//     the spec, with the reason in its description), and uses no fndn-<name> class
 //   - every value of an enum prop that is a recipe variant has that variant
 //   - a prop keeps `attr` only while an adapter sets that attribute
 //   - every Phosphor icon an adapter imports is in the vocabulary (spec/icons.json)
 //   - a fixture that plays steps sets only props the component has (none of them two-way), with
 //     delays of 0 or more that add up to under 20 seconds, and is rendered by the frameworks
 //   - `dependencies` lists exactly the other components a component's files import from
-//   - the shared recipes (components/lib) pass the class rules and carry no ui-* class
+//   - the shared recipes (components/lib) pass the class rules and carry no fndn-* class
 //   - every recipe, adapter and example passes the rules the tool's `check` applies to a user's
 //     project (packages/cli/src/rules.js): the library is held to what it asks of its users
 //   - every recipe passes the composition lint (scripts/lint-composition.mjs, rules in docs/design/interaction.md)
@@ -171,7 +171,7 @@ for (const { file, spec, raw } of specs) {
 }
 
 /* shared recipes (components/lib): no spec and no adapter; components compose them. Their motion
- * comes from the tokens and they carry no ui-* class. */
+ * comes from the tokens and they carry no fndn-* class. */
 if (!only.size) {
   for (const name of SHARED_RECIPES) {
     const tag = `[${name} (shared recipe)]`;
@@ -181,7 +181,7 @@ if (!only.size) {
     if (!recipe) { err(`${tag} ${recipePath(name)} is missing`); continue; }
     for (const cls of recipeClasses([recipe.base, recipe.slots, recipe.variants, recipe.compoundVariants, recipe.compoundSlots])) {
       const why = classProblem(cls); if (why) err(`${tag} ${recipePath(name)} "${cls}": ${why}`);
-      if (/(^|[^\w-])ui-[a-z]/.test(cls)) err(`${tag} ${recipePath(name)} "${cls}": no ui-* class (name a part by [data-slot=…])`);
+      if (/(^|[^\w-])fndn-[a-z]/.test(cls)) err(`${tag} ${recipePath(name)} "${cls}": no fndn-* class (name a part by [data-slot=…])`);
     }
   }
 }
