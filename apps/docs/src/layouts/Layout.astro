@@ -71,7 +71,8 @@ const boot = `${themeBootScript};(function(){var h=document.documentElement;h.se
   </head>
   <body class="min-h-dvh">
     <header class="sticky top-0 z-30 h-12 border-b border-line bg-page">
-      <div class="flex h-full items-center gap-2 px-4 md:gap-3 md:ps-5">
+      {/* under 360px (a 320px phone) the bar's controls fit only with less room around them */}
+      <div class="flex h-full items-center gap-2 px-4 max-[360px]:gap-1 max-[360px]:px-2 md:gap-3 md:ps-5">
         <span class="flex md:hidden"><MenuButton client:load transition:persist="docs-menu" /></span>
         <a href="/" class="flex shrink-0 items-baseline gap-1.5 rounded-control text-ink no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-label="ui, overview">
           <span class="text-lg font-semibold tracking-tight">fndn/ui</span>

@@ -64,7 +64,7 @@ function TopBar({ placeholder = false }: { placeholder?: boolean }) {
 
   return (
     <LocaleProvider locale={arkLocale(o.dir)}>
-      <div className="flex items-center gap-2 md:gap-3">
+      <div className="flex items-center gap-2 max-[360px]:gap-1 md:gap-3">
         <span className="relative hidden w-52 items-center md:flex lg:w-64" data-docs-search>
           <MagnifyingGlass className="pointer-events-none absolute start-2.5 size-3.5 text-ink-3" weight="bold" aria-hidden />
           <Input
@@ -138,6 +138,17 @@ function TopBar({ placeholder = false }: { placeholder?: boolean }) {
             <Row label="Reduced motion">
               <Switch size="sm" label="Reduced motion" data-docs-control="reduced" checked={o.reduced} onCheckedChange={(v) => setOptions({ reduced: v })} />
             </Row>
+            {/* under 420px the bar has no room for the theme switch: it is here instead */}
+            <div className="min-[420px]:hidden">
+              <Row label="Theme">
+                <SegmentedControl size="xs"
+                  aria-label="Theme" shape="rounded" data-docs-control="theme-narrow"
+                  options={[{ value: "light", label: "Light" }, { value: "dark", label: "Dark" }]}
+                  value={o.theme}
+                  onValueChange={(v) => setOptions({ theme: v === "dark" ? "dark" : "light" })}
+                />
+              </Row>
+            </div>
           </div>
         </Popover>
         <SegmentedControl size="xs"
