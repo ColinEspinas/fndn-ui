@@ -102,7 +102,7 @@ export function AddressBar({ url, secure, bookmarked, onBookmark, suggestions, g
           ? <span className="grid size-6 place-items-center"><MagnifyingGlass data-slot="icon" weight="bold" aria-hidden /></span>
           : <SiteInfo url={url} secure={secure} />}
         end={!internal && (
-          <Toggle variant="ink" size="xs" shape="rounded" square className="aria-pressed:text-accent" tooltip={bookmarked ? "Remove bookmark" : "Bookmark this tab"}
+          <Toggle variant="ghost" size="xs" shape="rounded" square muted tooltip={bookmarked ? "Remove bookmark" : "Bookmark this tab"}
             pressed={bookmarked} onPressedChange={onBookmark} icon={<Star data-slot="icon" weight={bookmarked ? "fill" : "bold"} />} />
         )}
       />
@@ -209,17 +209,18 @@ export function BrowserMenu({ closed, bookmarks, bookmarksBar, zoom, onSelect, o
 }
 
 /** The bookmarks under the address bar, and the Reading list folder. The row keeps 4px above and
- * below the buttons: it scrolls sideways (and sits in a clipped reveal), so the focus ring
- * (2px at a 2px offset) must fit inside it. */
+ * 6px below the buttons: it scrolls sideways (and sits in a clipped reveal), so the focus ring
+ * (2px at a 2px offset) must fit inside it. The folder's glyph takes a favicon's 16px box, so every
+ * bookmark's label starts the same way. */
 export function BookmarksBar({ bookmarks, go }: { bookmarks: Bookmark[]; go: (url: string) => void }) {
   return (
-    <nav aria-label="Bookmarks" className="flex min-w-0 items-center gap-0.5 overflow-x-auto overscroll-x-contain px-2 py-1 [scrollbar-width:none]">
+    <nav aria-label="Bookmarks" className="flex min-w-0 items-center gap-0.5 overflow-x-auto overscroll-x-contain px-2 pt-1 pb-1.5 [scrollbar-width:none]">
       {bookmarks.map((b) => (
         <Button key={b.url} variant="ghost" size="xs" icon={<Favicon url={b.url} />} onClick={() => go(b.url)} className="shrink-0">{b.label}</Button>
       ))}
-      <Separator orientation="vertical" decorative className="mx-1 h-4" />
+      <Separator orientation="vertical" decorative className="mx-1 h-4 self-center" />
       <Menu items={READING.map((b) => ({ value: b.url, label: b.label }))} onSelect={go}>
-        <Button variant="ghost" size="xs" className="shrink-0" icon={<FolderOpen data-slot="icon" weight="bold" />}>Reading list</Button>
+        <Button variant="ghost" size="xs" className="shrink-0" icon={<span className="grid size-4 place-items-center"><FolderOpen className="size-4" weight="bold" aria-hidden /></span>}>Reading list</Button>
       </Menu>
     </nav>
   );

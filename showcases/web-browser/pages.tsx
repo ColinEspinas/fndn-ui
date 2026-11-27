@@ -83,7 +83,7 @@ function DocsPage({ go, download }: { go: Go; download: () => void }) {
       <Tag tone="blue" className="self-start">Docs</Tag>
       <H1>Getting started</H1>
       <p>Harbor deploys every push to a fresh URL. Install the CLI, link a project, and your next commit ships to a preview.</p>
-      <CodeBlock variant="command" lines={["npm install --global @harbor/cli"]} />
+      <CodeBlock variant="command" value="npm install --global @harbor/cli" />
       <p>
         No npm? <UiLink href="https://harbor.dev/download/harbor-cli-2.4.0-linux-x64.tar.gz" onClick={(e: MouseEvent) => { e.preventDefault(); download(); }}>
           <DownloadSimple data-slot="icon" weight="bold" aria-hidden className="me-1 inline align-[-2px]" />Download the CLI for Linux</UiLink> (20.3&nbsp;MB).

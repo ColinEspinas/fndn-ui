@@ -7,8 +7,9 @@
  * (switch), Alt+Y (history); Ctrl+T, W and Tab still work where the host lets them through.
  * In the tab strip, arrows move between tabs and Delete closes the focused one (the Tabs' own).
  *
- * Chrome's layout: attached tabs on a strip one step darker than the toolbar, the selected tab the
- * toolbar's surface; on a phone no strip, a tab-count button opens the open tabs as a sheet. */
+ * The layout: closable pill tabs in a header row over the toolbar, the bookmarks bar and the page.
+ * The first icon of every row (a tab's favicon, Back, the first bookmark) stands on one line, 14px
+ * from the window's edge. On a phone no strip: a tab-count button opens the open tabs as a sheet. */
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { Progress, ScrollArea, Spinner, Tabs, Tooltip, Button } from "@fndn/react";
 import { Plus } from "@phosphor-icons/react";
@@ -176,10 +177,10 @@ export default function App() {
   const zoom = parseInt(settings.zoom, 10) / 100;
 
   const tabInfo = tabs.map((t) => ({ id: t.id, url: urlOf(t), loading: t.loading }));
-  /* the toolbar, the bookmarks bar and the page: the selected tab's surface, joined to it */
+  /* the toolbar, the bookmarks bar and the page: the selected tab's panel, under the strip's line */
   const body = (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex items-center gap-0.5 px-2 py-1">
+      <div className="flex items-center gap-0.5 px-2 py-1.5">
         <NavButtons canBack={tab.at > 0} canForward={tab.at < tab.stack.length - 1} loading={tab.loading} back={() => step(-1)} forward={() => step(1)} reload={reload} stop={stop} />
         <AddressBar
           url={url} secure={site.secure} bookmarked={bookmarked} go={navigate} suggestions={suggestionsFor(url, visits)} engine={settings.engine}
@@ -208,28 +209,30 @@ export default function App() {
   );
 
   return (
-    <div ref={root} data-showcase="web-browser" tabIndex={-1} onKeyDown={shortcuts} onAuxClick={auxClose} className="flex h-full flex-col overflow-hidden bg-canvas outline-none">
+    <div ref={root} data-showcase="web-browser" tabIndex={-1} onKeyDown={shortcuts} onAuxClick={auxClose} className="flex h-full flex-col overflow-hidden bg-surface outline-none">
       <Tabs
-        variant="attached"
-        size="sm"
+        variant="pill"
         closable
         fill
+        inHeader
         aria-label="Tabs"
         value={tab.id}
         onValueChange={setActive}
         onClose={close}
         closeLabel="Close tab"
-        /* a phone shows no strip: the tab-count button in the toolbar opens the tabs as a sheet */
-        headerClass="items-end pe-2 max-sm:hidden"
+        /* a phone shows no strip: the tab-count button in the toolbar opens the tabs as a sheet. The
+         * header's 6px start inset puts the first favicon 14px from the edge, as Back and the first
+         * bookmark */
+        headerClass="h-9 gap-0.5 border-b border-line ps-1.5 pe-2 max-sm:hidden"
         end={
           <Tooltip content="New tab" shortcut="Alt+T">
-            <Button variant="ghost" size="sm" square muted aria-label="New tab" icon={<Plus data-slot="icon" weight="bold" />} onClick={() => open()} className="ms-1 shrink-0" />
+            <Button variant="ghost" size="sm" square muted aria-label="New tab" icon={<Plus data-slot="icon" weight="bold" />} onClick={() => open()} className="shrink-0" />
           </Tooltip>
         }
         items={tabs.map((t) => ({
           value: t.id,
           label: siteOf(urlOf(t)).title,
-          icon: t.loading ? <Spinner decorative /> : <Favicon url={urlOf(t)} size={14} />,
+          icon: t.loading ? <Spinner decorative /> : <Favicon url={urlOf(t)} />,
           content: t.id === tab.id ? body : null,
         }))}
       />

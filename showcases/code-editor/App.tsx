@@ -12,7 +12,7 @@
 import { useCallback, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { CheckCircle, Eye, File, FileText, Folder, GitBranch, MagnifyingGlass, Play, Sparkle, Terminal, Warning, XCircle } from "@phosphor-icons/react";
 import {
-  Button, CodeBlock, CommandPalette, Count, EmptyState, Kbd, ScrollArea, SegmentedControl, Splitter, Tabs, Toggle, TreeView,
+  Button, CodeView, CommandPalette, Count, EmptyState, Kbd, ScrollArea, SegmentedControl, Splitter, Tabs, Toggle, TreeView,
   type CommandPaletteItem, type TreeViewNode,
 } from "@fndn/react";
 import { Assistant } from "./Assistant";
@@ -237,22 +237,22 @@ export default function App() {
     <SourceControl changes={changes} selected={diffOf} branch={BRANCH} onSelect={openDiff} onCommit={commit} />
   );
 
-  /* the editor: attached file tabs over the code block's editor body (no frame, no copy, no path;
-   * lines never wrap and the gutter stays while the code scrolls sideways). The tabs are as wide
-   * as their names, never cut (VS Code's): the strip scrolls when they do not fit */
+  /* the editor: closable pill tabs in the pane's 32px header over a code view (no frame, no copy,
+   * no path; lines never wrap and the gutter stays while the code scrolls sideways). A strip with
+   * more files than room scrolls, fades its cut edge and lists every file in its menu */
   const editorOf = (tab: string) => {
     const path = pathOf(tab);
     if (tab.startsWith(DIFF)) {
       const change = changes.find((c) => c.path === path);
-      return <CodeBlock editor variant="diff" filename={`${path} (working tree)`} diff={lineDiff(change?.before ?? files[path]!, files[path]!)} />;
+      return <CodeView fill wrap={false} label={`${path} (working tree)`} diff={lineDiff(change?.before ?? files[path]!, files[path]!)} />;
     }
-    return <CodeBlock editor filename={path} lines={files[path]} currentLine={caret[path]} />;
+    return <CodeView fill wrap={false} label={path} value={files[path]!.join("\n")} currentLine={caret[path]} />;
   };
   const code = (
-    <div className="h-full bg-canvas" data-editor="code">
+    <div className="h-full bg-surface" data-editor="code">
       {open.length ? (
         <Tabs
-          variant="attached" size="sm" tabSizing="fit" closable fill aria-label="Open files"
+          variant="pill" closable fill inHeader headerClass="h-8 border-b border-line px-1" aria-label="Open files"
           value={open.includes(active) ? active : open[0]} onValueChange={setActive} onClose={closeTab}
           items={open.map((tab) => ({
             value: tab,
@@ -361,18 +361,18 @@ export default function App() {
           <span className="pointer-events-none absolute inset-y-0 end-1.5 flex items-center" aria-hidden><Kbd keys={[mod, "K"]} /></span>
         </span>
         <span className="flex justify-end gap-0.5">
-          <Toggle variant="ink" size="sm" square tooltip={`Panel (${mod}+J)`} pressed={panelOpen} onPressedChange={(on) => showPanel(on)} icon={<Terminal data-slot="icon" weight="bold" />} />
-          <Toggle variant="ink" size="sm" square tooltip="Assistant" pressed={assistantOpen} onPressedChange={(on) => setSizes(sideSizes(sideOpen, on))} icon={<Sparkle data-slot="icon" weight="bold" />} />
+          <Toggle variant="ghost" size="sm" square muted tooltip={`Panel (${mod}+J)`} pressed={panelOpen} onPressedChange={(on) => showPanel(on)} icon={<Terminal data-slot="icon" weight="bold" />} />
+          <Toggle variant="ghost" size="sm" square muted tooltip="Assistant" pressed={assistantOpen} onPressedChange={(on) => setSizes(sideSizes(sideOpen, on))} icon={<Sparkle data-slot="icon" weight="bold" />} />
         </span>
       </header>
 
       <div className="flex min-h-0 flex-1">
-        {/* the activity bar: ink toggles with a bar at the inline start, never a grey box */}
+        {/* the activity bar: muted ghost toggles; the open view keeps the pressed fill */}
         <nav aria-label="Side views" className="flex w-11 shrink-0 flex-col items-center gap-1 border-e border-line bg-canvas py-1.5">
           <div role="toolbar" aria-orientation="vertical" aria-label="Side view" className="flex flex-col items-center gap-1">
             {sideViews.map(({ value, label, Icon }) => (
               <Toggle
-                key={value} data-value={value} variant="ink" indicator="start" size="md" square tooltip={label}
+                key={value} data-value={value} variant="ghost" size="md" square muted tooltip={label}
                 pressed={sideOpen && side === value}
                 onPressedChange={(on) => showSide(on ? value : null)}
                 icon={<Icon data-slot="icon" weight="bold" />}

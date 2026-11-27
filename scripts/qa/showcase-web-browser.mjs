@@ -1,5 +1,5 @@
 // The web browser showcase (showcases/web-browser): loads the page, no console error, no
-// sideways scroll at 390px, and drives the main interactions: attached tabs and a first frame where nothing moves, switching, opening and closing tabs
+// sideways scroll at 390px, and drives the main interactions: pill tabs whose rows line up and a first frame where nothing moves, switching, opening and closing tabs
 // (pointer and keyboard), typing an address, back, the site information and downloads popovers, the
 // main menu with its sub-menu, the History page (filter, table) and Settings (switch → bookmarks bar).
 //   node scripts/qa/showcase-web-browser.mjs            (the docs on http://localhost:4321)
@@ -39,13 +39,24 @@ try {
   check("three tabs, the first selected", [await tabTitles(), await selected()], [["Getting started · Harbor Docs", "Harbor Status", "Q4 planning — Fieldnotes"], "Getting started · Harbor Docs"]);
   check("the address bar shows the page", await address(), "harbor.dev/docs/getting-started");
 
-  // the first frame: attached tabs (the selected one is the toolbar's surface), nothing running
-  check("attached tabs: the selected tab takes the toolbar's colour, the strip is darker", await q(`(() => {
-    const bg = (e) => getComputedStyle(e).backgroundColor;
-    const sel = document.querySelector("${R} [data-slot=tabs-trigger][aria-selected=true]"), other = document.querySelector("${R} [data-slot=tabs-trigger][aria-selected=false]");
-    const panel = document.querySelector("${R} [data-slot=tabs-content]:not([hidden])");
-    return [bg(sel) === bg(panel), bg(other) !== bg(sel), bg(document.querySelector("${R}")) !== bg(panel)];
-  })()`), [true, true, true]);
+  // the first frame: closable pill tabs in a header row; the first icon of every row on one line
+  check("pill tabs: the selected tab sits on the indicator, the others on nothing", await q(`(() => {
+    const ind = document.querySelector("${R} [data-slot=tabs-indicator]");
+    const other = document.querySelector("${R} [data-slot=tabs-trigger][aria-selected=false]");
+    return [!!ind && !ind.hidden && getComputedStyle(ind).backgroundColor !== "rgba(0, 0, 0, 0)", getComputedStyle(other).backgroundColor];
+  })()`), [true, "rgba(0, 0, 0, 0)"]);
+  check("rows line up: the first favicon, Back and the first bookmark start on one line", await q(`(() => {
+    /* a 16px favicon and Back's 15px glyph cannot share both edges: their starts stay within 1px */
+    const x = (sel) => { const e = document.querySelector(sel); return e ? e.getBoundingClientRect().left - document.querySelector("${R}").getBoundingClientRect().left : NaN; };
+    const xs = [x("${R} [data-slot=tabs-trigger] [data-slot=tabs-icon]"), x("${R} [data-slot=tabs-content]:not([hidden]) [aria-label=Back] svg"), x("${R} nav[aria-label=Bookmarks] [data-slot=button-icon]")];
+    return Math.max(...xs) - Math.min(...xs) <= 1 && Math.round(xs[0]) === 14;
+  })()`), true);
+  check("the bookmarks bar: one icon size, the divider centred on the row", await q(`(() => {
+    const nav = document.querySelector("${R} nav[aria-label=Bookmarks]");
+    const icons = [...nav.querySelectorAll("[data-slot=button-icon] > *")].map((e) => Math.round(e.getBoundingClientRect().height));
+    const mid = (e) => { const b = e.getBoundingClientRect(); return Math.round((b.top + b.bottom) * 5) / 10; };
+    return [new Set(icons).size, mid(nav.querySelector("[data-slot=separator]")) === mid(nav.querySelector("[data-slot=button]"))];
+  })()`), [1, true]);
   check("nothing moves on first paint (no download ring, no spinner)", await q(`document.querySelectorAll("${R} [data-slot=progress-ring], ${R} [data-slot=spinner]").length`), 0);
   check("the address bar: site information inside the field, no caret, the star at its end", await q(`(() => {
     const c = document.querySelector("${R} [data-slot=tabs-content]:not([hidden]) [data-slot=combobox-control]");

@@ -52,7 +52,7 @@ async function focusApp() {
 try {
   await page.send("Page.addScriptToEvaluateOnNewDocument", { source: `window.__shift = 0; new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__shift += e.value; }).observe({ type: "layout-shift", buffered: true })` });
   await page.goto(URL, 1500);
-  ok(await waitFor(`!!${app("[data-editor=code] [data-slot=code-block-row]")}`), "the app renders with code in the editor");
+  ok(await waitFor(`!!${app("[data-editor=code] [data-slot=code-view-row]")}`), "the app renders with code in the editor");
   ok((await page.eval(`${app()}.dataset.layout`)) === "desktop", "1536: the desktop layout");
   await page.eval(`document.querySelector('[data-docs-showcase-frame]').scrollIntoView({ block: "start" })`);
   await sleep(2000);
@@ -63,15 +63,16 @@ try {
   const shift = await page.eval(`window.__shift`);
   ok(shift < 0.001, "first frame: no layout shift", shift.toFixed(4));
   /* density, the editor's way */
-  const rowH = await page.eval(`[...document.querySelectorAll('[data-editor=code] [data-slot=tabs-content]:not([hidden]) [data-slot=code-block-row]')].map((r) => Math.round(r.getBoundingClientRect().height))`);
+  const rowH = await page.eval(`[...document.querySelectorAll('[data-editor=code] [data-slot=tabs-content]:not([hidden]) [data-slot=code-view-row]')].map((r) => Math.round(r.getBoundingClientRect().height))`);
   ok(rowH.length > 10 && new Set(rowH).size === 1, "code lines never wrap (one row height)", rowH.join(","));
   const treeH = await page.eval(`Math.max(...[...document.querySelectorAll('[data-editor=explorer] [data-slot=tree-view-item]')].map((e) => Math.round(e.getBoundingClientRect().height)))`);
   ok(treeH === 24, "explorer rows are 24px", treeH);
   const tabH = await page.eval(`Math.round(${app("[data-editor=code] [data-slot=tabs-trigger]")}.getBoundingClientRect().height)`);
-  ok(tabH === 28, "editor tabs are 28px", tabH);
-  const fills = await page.eval(`[...document.querySelectorAll('[data-editor=root] [data-slot=toggle][aria-pressed=true]')].map((b) => getComputedStyle(b).backgroundColor).filter((c) => c !== "rgba(0, 0, 0, 0)")`);
-  ok(fills.length === 0, "pressed layout and activity toggles have no fill", fills.join(" "));
-  /* tabs as wide as their names (VS Code), never cut; the status bar holds no pill; the assistant
+  ok(tabH === 26, "editor tabs are the pill tabs' 26px", tabH);
+  /* the activity bar and the layout switches are ghost toggles: pressed keeps the hover-2 fill */
+  const fills = await page.eval(`(() => { const probe = document.createElement("div"); probe.style.background = "var(--fndn-hover-2)"; document.querySelector("[data-editor=root]").append(probe); const want = getComputedStyle(probe).backgroundColor; probe.remove(); return [...document.querySelectorAll("[data-editor=root] [data-slot=toggle][aria-pressed=true]")].map((b) => getComputedStyle(b).backgroundColor === want); })()`);
+  ok(fills.length > 0 && fills.every(Boolean), "pressed layout and activity toggles keep the pressed fill (hover-2)", fills.join(" "));
+  /* file names are short enough to show whole (a closable tab cuts only past 240px); the status bar holds no pill; the assistant
    * is not named again on its answers */
   const cut = await page.eval(`[...document.querySelectorAll('[data-editor=code] [data-slot=tabs-label]')].filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent.trim())`);
   ok(cut.length === 0, "editor tabs fit their names (none cut)", cut.join(", "));
@@ -163,7 +164,7 @@ try {
   /* 1280, and dark */
   await page.viewport(1280, 900, 1.25);
   await page.goto(URL, 1500);
-  await waitFor(`!!${app("[data-slot=code-block-row]")}`);
+  await waitFor(`!!${app("[data-slot=code-view-row]")}`);
   await focusApp();
   ok((await page.eval(`${app()}.dataset.layout`)) === "desktop", "1280: the desktop layout");
   ok(await page.eval(`document.scrollingElement.scrollWidth <= innerWidth`), "1280: no horizontal scroll");
