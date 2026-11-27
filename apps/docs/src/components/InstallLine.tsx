@@ -11,5 +11,5 @@ function InstallLine(props: { name: string }) {
   const { name } = useSwapProps("docs-install", props);
   const cmd = installCommand(name);
   /* a command never wraps: a token broken in two reads as two; it scrolls sideways */
-  return <CodeBlock variant="command" wrap={false} lines={[cmd]} code={cmd} aria-label="Install command" />;
+  return <CodeBlock variant="command" wrap={false} value={cmd} aria-label="Install command" />;
 }

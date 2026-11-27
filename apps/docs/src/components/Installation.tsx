@@ -24,8 +24,8 @@ export type InstallationProps = {
   mcp: string;
 };
 
-const lines = (s: string) => s.replace(/\n$/, "").split("\n");
-const block = (path: string, code: string): CodeBlockFile => ({ path, label: path.split("/").pop(), lines: lines(code), code });
+const trim = (s: string) => s.replace(/\n$/, "");
+const block = (path: string, code: string): CodeBlockFile => ({ path, label: path.split("/").pop(), value: trim(code) });
 
 const TAILWIND: Record<Fw, { install: string; file: string; config: string }> = {
   react: {
@@ -66,8 +66,8 @@ function Step({ n, id, title, children }: { n: number; id: string; title: string
 }
 const P = ({ children }: { children: ReactNode }) => <p className="max-w-[46rem] text-md leading-relaxed text-ink-2 [unicode-bidi:plaintext]">{children}</p>;
 const C = ({ children }: { children: ReactNode }) => <code className="rounded-chip bg-inset px-1 py-0.5 font-mono text-xs text-ink">{children}</code>;
-const File = ({ path, code, ...rest }: { path: string; code: string } & Record<string, unknown>) => <CodeBlock filename={path} lines={lines(code)} code={code} className="max-w-none" aria-label={path} {...rest} />;
-const Command = ({ cmd, label }: { cmd: string; label: string }) => <CodeBlock variant="command" lines={[cmd]} code={cmd} aria-label={label} className="max-w-none" />;
+const File = ({ path, code, ...rest }: { path: string; code: string } & Record<string, unknown>) => <CodeBlock filename={path} value={trim(code)} className="max-w-none" aria-label={path} {...rest} />;
+const Command = ({ cmd, label }: { cmd: string; label: string }) => <CodeBlock variant="command" value={cmd} aria-label={label} className="max-w-none" />;
 
 const A = ({ href, children }: { href: string; children: ReactNode }) => <a href={href} className="font-medium text-ink underline decoration-line-strong underline-offset-4">{children}</a>;
 /** A list of terms and what they are: the folders `add` writes, the files of lib/. */

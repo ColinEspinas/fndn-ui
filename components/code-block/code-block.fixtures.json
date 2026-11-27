@@ -5,15 +5,7 @@
       "props": {
         "variant": "code",
         "filename": "invoice.ts",
-        "lines": [
-          "export async function sendInvoice() {",
-          "  const account = await getAccount(\"northwind\");",
-          "  const base = await billing.fetch({ account });",
-          "  await ledger.store(base, { terms: \"net-30\" });",
-          "  if (!base.approved) return null;",
-          "  return base.total;",
-          "}"
-        ]
+        "value": "export async function sendInvoice() {\n  const account = await getAccount(\"northwind\");\n  const base = await billing.fetch({ account });\n  await ledger.store(base, { terms: \"net-30\" });\n  if (!base.approved) return null;\n  return base.total;\n}"
       }
     },
     {
@@ -124,22 +116,8 @@
       "props": {
         "variant": "code",
         "filename": "invoice.ts",
-        "lines": [
-          "// Weekly billing run, one batch per line",
-          "charge(\"batch-1\", { amount: 4 });",
-          "charge(\"batch-2\", { amount: 8 });",
-          "charge(\"batch-3\", { amount: 12 });",
-          "charge(\"batch-4\", { amount: 16 });",
-          "charge(\"batch-5\", { amount: 20 });",
-          "charge(\"batch-6\", { amount: 24 });",
-          "charge(\"batch-7\", { amount: 28 });",
-          "charge(\"batch-8\", { amount: 32 });",
-          "charge(\"batch-9\", { amount: 36 });",
-          "charge(\"batch-10\", { amount: 40 });",
-          "charge(\"batch-11\", { amount: 44 });",
-          "charge(\"batch-12\", { amount: 48 });"
-        ],
-        "maxHeight": 160
+        "maxHeight": 160,
+        "value": "// Weekly billing run, one batch per line\ncharge(\"batch-1\", { amount: 4 });\ncharge(\"batch-2\", { amount: 8 });\ncharge(\"batch-3\", { amount: 12 });\ncharge(\"batch-4\", { amount: 16 });\ncharge(\"batch-5\", { amount: 20 });\ncharge(\"batch-6\", { amount: 24 });\ncharge(\"batch-7\", { amount: 28 });\ncharge(\"batch-8\", { amount: 32 });\ncharge(\"batch-9\", { amount: 36 });\ncharge(\"batch-10\", { amount: 40 });\ncharge(\"batch-11\", { amount: 44 });\ncharge(\"batch-12\", { amount: 48 });"
       }
     },
     {
@@ -149,9 +127,7 @@
           {
             "path": "src/invoice.ts",
             "label": "invoice.ts",
-            "lines": [
-              "export const invoice = (amount: number) => amount * 2;"
-            ]
+            "value": "export const invoice = (amount: number) => amount * 2;"
           },
           {
             "path": "src/ledger.ts",
@@ -159,7 +135,7 @@
             "highlighted": [
               "<span style=\"color: var(--fndn-accent-ink)\">export</span> const terms = <span style=\"color: var(--fndn-orange)\">30</span>;"
             ],
-            "code": "export const terms = 30;"
+            "value": "export const terms = 30;"
           }
         ],
         "height": 120
@@ -169,7 +145,7 @@
       "name": "Command",
       "props": {
         "variant": "command",
-        "code": "npx shadcn add https://your-domain.com/r/react/code-block.json"
+        "value": "npx shadcn add https://your-domain.com/r/react/code-block.json"
       }
     },
     {
@@ -177,23 +153,9 @@
       "props": {
         "variant": "code",
         "filename": "src/middleware/rate-limit.ts",
-        "lines": [
-          "const WINDOW_MS = 60_000;",
-          "const LIMIT = 120;",
-          "",
-          "export function rateLimit(key: string, now = Date.now()) {",
-          "  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };",
-          "  if (now - bucket.windowStart >= WINDOW_MS) {",
-          "    bucket.count = 0;",
-          "    bucket.windowStart = now;",
-          "  }",
-          "  bucket.count += 1;",
-          "  buckets.set(key, bucket);",
-          "  return bucket.count <= LIMIT;",
-          "}"
-        ],
         "currentLine": 11,
-        "maxHeight": 140
+        "maxHeight": 140,
+        "value": "const WINDOW_MS = 60_000;\nconst LIMIT = 120;\n\nexport function rateLimit(key: string, now = Date.now()) {\n  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };\n  if (now - bucket.windowStart >= WINDOW_MS) {\n    bucket.count = 0;\n    bucket.windowStart = now;\n  }\n  bucket.count += 1;\n  buckets.set(key, bucket);\n  return bucket.count <= LIMIT;\n}"
       }
     },
     {
@@ -208,63 +170,27 @@
           {
             "path": "src/middleware/rate-limit.ts",
             "label": "rate-limit.ts",
-            "lines": [
-              "const WINDOW_MS = 60_000;",
-              "const LIMIT = 120;",
-              "",
-              "export function rateLimit(key: string, now = Date.now()) {",
-              "  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };",
-              "  if (now - bucket.windowStart >= WINDOW_MS) {",
-              "    bucket.count = 0;",
-              "    bucket.windowStart = now;",
-              "  }",
-              "  bucket.count += 1;",
-              "  buckets.set(key, bucket);",
-              "  return bucket.count <= LIMIT;",
-              "}"
-            ]
+            "value": "const WINDOW_MS = 60_000;\nconst LIMIT = 120;\n\nexport function rateLimit(key: string, now = Date.now()) {\n  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };\n  if (now - bucket.windowStart >= WINDOW_MS) {\n    bucket.count = 0;\n    bucket.windowStart = now;\n  }\n  bucket.count += 1;\n  buckets.set(key, bucket);\n  return bucket.count <= LIMIT;\n}"
           },
           {
             "path": "package.json",
             "label": "package.json",
-            "lines": [
-              "{",
-              "  \"name\": \"billing-api\",",
-              "  \"private\": true",
-              "}"
-            ]
+            "value": "{\n  \"name\": \"billing-api\",\n  \"private\": true\n}"
           }
         ]
       }
     },
     {
-      "name": "Editor body",
+      "name": "Editable",
       "props": {
-        "editor": true,
         "filename": "rate-limit.ts",
-        "lines": [
-          "import { buckets } from \"./store\";",
-          "",
-          "const WINDOW_MS = 60_000;",
-          "const LIMIT = 120;",
-          "",
-          "export function rateLimit(key: string, now = Date.now(), options: { limit?: number; windowMs?: number } = {}) {",
-          "  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };",
-          "  if (now - bucket.windowStart >= (options.windowMs ?? WINDOW_MS)) {",
-          "    bucket.count = 0;",
-          "    bucket.windowStart = now;",
-          "  }",
-          "  bucket.count += 1;",
-          "  buckets.set(key, bucket);",
-          "  return bucket.count <= (options.limit ?? LIMIT);",
-          "}"
-        ],
         "currentLine": 7,
-        "style": {
-          "height": 220,
-          "width": 360
-        }
-      }
+        "value": "import { buckets } from \"./store\";\n\nconst WINDOW_MS = 60_000;\nconst LIMIT = 120;\n\nexport function rateLimit(key: string, now = Date.now(), options: { limit?: number; windowMs?: number } = {}) {\n  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };\n  if (now - bucket.windowStart >= (options.windowMs ?? WINDOW_MS)) {\n    bucket.count = 0;\n    bucket.windowStart = now;\n  }\n  bucket.count += 1;\n  buckets.set(key, bucket);\n  return bucket.count <= (options.limit ?? LIMIT);\n}",
+        "editable": true,
+        "wrap": false,
+        "height": 176
+      },
+      "width": 360
     },
     {
       "name": "Diff, no wrap",
@@ -378,12 +304,7 @@
       "props": {
         "variant": "code",
         "filename": "northwind-industries-holdings-wholesale-cloud-services-division-billing-schedule.ts",
-        "lines": [
-          "  const note = \"invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-ok\";",
-          "  const name = \"請求書と領収書のまとめ\";",
-          "  const label = \"فواتير الشهر\";",
-          "  return { name, label };"
-        ]
+        "value": "  const note = \"invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-ok\";\n  const name = \"請求書と領収書のまとめ\";\n  const label = \"فواتير الشهر\";\n  return { name, label };"
       }
     },
     {
@@ -391,69 +312,8 @@
       "props": {
         "variant": "code",
         "filename": "batches.ts",
-        "lines": [
-          "charge(\"batch-1\");",
-          "charge(\"batch-2\");",
-          "charge(\"batch-3\");",
-          "charge(\"batch-4\");",
-          "charge(\"batch-5\");",
-          "charge(\"batch-6\");",
-          "charge(\"batch-7\");",
-          "charge(\"batch-8\");",
-          "charge(\"batch-9\");",
-          "charge(\"batch-10\");",
-          "charge(\"batch-11\");",
-          "charge(\"batch-12\");",
-          "charge(\"batch-13\");",
-          "charge(\"batch-14\");",
-          "charge(\"batch-15\");",
-          "charge(\"batch-16\");",
-          "charge(\"batch-17\");",
-          "charge(\"batch-18\");",
-          "charge(\"batch-19\");",
-          "charge(\"batch-20\");",
-          "charge(\"batch-21\");",
-          "charge(\"batch-22\");",
-          "charge(\"batch-23\");",
-          "charge(\"batch-24\");",
-          "charge(\"batch-25\");",
-          "charge(\"batch-26\");",
-          "charge(\"batch-27\");",
-          "charge(\"batch-28\");",
-          "charge(\"batch-29\");",
-          "charge(\"batch-30\");",
-          "charge(\"batch-31\");",
-          "charge(\"batch-32\");",
-          "charge(\"batch-33\");",
-          "charge(\"batch-34\");",
-          "charge(\"batch-35\");",
-          "charge(\"batch-36\");",
-          "charge(\"batch-37\");",
-          "charge(\"batch-38\");",
-          "charge(\"batch-39\");",
-          "charge(\"batch-40\");",
-          "charge(\"batch-41\");",
-          "charge(\"batch-42\");",
-          "charge(\"batch-43\");",
-          "charge(\"batch-44\");",
-          "charge(\"batch-45\");",
-          "charge(\"batch-46\");",
-          "charge(\"batch-47\");",
-          "charge(\"batch-48\");",
-          "charge(\"batch-49\");",
-          "charge(\"batch-50\");",
-          "charge(\"batch-51\");",
-          "charge(\"batch-52\");",
-          "charge(\"batch-53\");",
-          "charge(\"batch-54\");",
-          "charge(\"batch-55\");",
-          "charge(\"batch-56\");",
-          "charge(\"batch-57\");",
-          "charge(\"batch-58\");",
-          "charge(\"batch-59\");",
-          "charge(\"batch-60\");"
-        ],
-        "maxHeight": 320
+        "maxHeight": 320,
+        "value": "charge(\"batch-1\");\ncharge(\"batch-2\");\ncharge(\"batch-3\");\ncharge(\"batch-4\");\ncharge(\"batch-5\");\ncharge(\"batch-6\");\ncharge(\"batch-7\");\ncharge(\"batch-8\");\ncharge(\"batch-9\");\ncharge(\"batch-10\");\ncharge(\"batch-11\");\ncharge(\"batch-12\");\ncharge(\"batch-13\");\ncharge(\"batch-14\");\ncharge(\"batch-15\");\ncharge(\"batch-16\");\ncharge(\"batch-17\");\ncharge(\"batch-18\");\ncharge(\"batch-19\");\ncharge(\"batch-20\");\ncharge(\"batch-21\");\ncharge(\"batch-22\");\ncharge(\"batch-23\");\ncharge(\"batch-24\");\ncharge(\"batch-25\");\ncharge(\"batch-26\");\ncharge(\"batch-27\");\ncharge(\"batch-28\");\ncharge(\"batch-29\");\ncharge(\"batch-30\");\ncharge(\"batch-31\");\ncharge(\"batch-32\");\ncharge(\"batch-33\");\ncharge(\"batch-34\");\ncharge(\"batch-35\");\ncharge(\"batch-36\");\ncharge(\"batch-37\");\ncharge(\"batch-38\");\ncharge(\"batch-39\");\ncharge(\"batch-40\");\ncharge(\"batch-41\");\ncharge(\"batch-42\");\ncharge(\"batch-43\");\ncharge(\"batch-44\");\ncharge(\"batch-45\");\ncharge(\"batch-46\");\ncharge(\"batch-47\");\ncharge(\"batch-48\");\ncharge(\"batch-49\");\ncharge(\"batch-50\");\ncharge(\"batch-51\");\ncharge(\"batch-52\");\ncharge(\"batch-53\");\ncharge(\"batch-54\");\ncharge(\"batch-55\");\ncharge(\"batch-56\");\ncharge(\"batch-57\");\ncharge(\"batch-58\");\ncharge(\"batch-59\");\ncharge(\"batch-60\");"
       }
     },
     {
@@ -461,9 +321,7 @@
       "props": {
         "variant": "code",
         "filename": "a.ts",
-        "lines": [
-          "export {};"
-        ]
+        "value": "export {};"
       }
     },
     {
@@ -471,7 +329,7 @@
       "props": {
         "variant": "code",
         "filename": "empty.ts",
-        "lines": []
+        "value": ""
       }
     },
     {
@@ -481,37 +339,27 @@
           {
             "path": "packages/core/src/behaviors/some/really/deeply/nested/directory/structure/invoice-batch-scheduler.ts",
             "label": "invoice-batch-scheduler.ts",
-            "lines": [
-              "export const invoice = (amount: number) => amount * 2;"
-            ]
+            "value": "export const invoice = (amount: number) => amount * 2;"
           },
           {
             "path": "src/ledger.ts",
             "label": "ledger.ts",
-            "lines": [
-              "export const terms = 30;"
-            ]
+            "value": "export const terms = 30;"
           },
           {
             "path": "src/billing.ts",
             "label": "billing.ts",
-            "lines": [
-              "export const billing = {};"
-            ]
+            "value": "export const billing = {};"
           },
           {
             "path": "src/accounts.ts",
             "label": "accounts.ts",
-            "lines": [
-              "export const accounts = [];"
-            ]
+            "value": "export const accounts = [];"
           },
           {
             "path": "src/index.ts",
             "label": "index.ts",
-            "lines": [
-              "export * from \"./invoice\";"
-            ]
+            "value": "export * from \"./invoice\";"
           }
         ],
         "height": 120

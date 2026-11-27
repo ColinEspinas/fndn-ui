@@ -146,10 +146,10 @@ function Workbench({ spec, files, deps }: WorkbenchProps) {
     return () => { alive = false; };
   }, [active]);
   const codeFiles: CodeBlockFile[] = [
-    { path: usagePath(fw), label: "Usage", lines: usage.split("\n"), code: usage },
+    { path: usagePath(fw), label: "Usage", value: usage },
     ...files[fw].map((f) => {
       const code = SOURCES.get(f.src);
-      return { path: f.path, label: f.label, lines: code === undefined ? ["…"] : code.replace(/\n$/, "").split("\n"), code: code ?? "" };
+      return { path: f.path, label: f.label, value: code === undefined ? "" : code.replace(/\n$/, "") };
     }),
   ];
 

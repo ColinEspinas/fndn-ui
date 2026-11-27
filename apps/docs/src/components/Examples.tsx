@@ -93,7 +93,7 @@ function Item({ spec, file, title, steps, fw, dir, available, code }: { spec: Sp
           closed, it stays in the page (the region is only hidden) for find-in-page and agents */}
       {available && !missing && (
         <Collapsible variant="inline" caret="start" label="Code" meta={`${file}.${EXT[fw]}`} className="-mt-1" data-docs-example-toggle>
-          <CodeBlock filename={`${file}.${EXT[fw]}`} lines={code === undefined ? ["…"] : code.split("\n")} code={code ?? ""} maxHeight={480} wrap={false} className="mt-2 max-w-none" aria-label={`${title}, ${FW_LABEL[fw]} source`} aria-busy={code === undefined || undefined} data-docs-example-code />
+          <CodeBlock filename={`${file}.${EXT[fw]}`} value={code ?? ""} maxHeight={480} wrap={false} className="mt-2 max-w-none" aria-label={`${title}, ${FW_LABEL[fw]} source`} aria-busy={code === undefined || undefined} data-docs-example-code />
         </Collapsible>
       )}
     </article>

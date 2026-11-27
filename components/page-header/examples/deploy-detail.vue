@@ -12,7 +12,7 @@ const log = [
   "Uploading the build output to fra1 and iad1",
   "Assigned app.northwind.example",
   "Deploy ready in 43s",
-];
+].join("\n");
 
 const goBack = () => history.back();
 </script>
@@ -40,6 +40,6 @@ const goBack = () => history.back();
         </Button>
       </template>
     </PageHeader>
-    <CodeBlock class="max-w-none" variant="code" filename="Build log" :lines="log" :max-height="240" />
+    <CodeBlock class="max-w-none" variant="code" filename="Build log" :value="log" :max-height="240" />
   </div>
 </template>

@@ -204,7 +204,7 @@ try {
 
   // 2f'. nothing scrolls sideways on a component page (a list that keeps ring room with a negative
   //      margin once made the inspector scroll), in light and dark; code listings are meant to
-  const sideways = () => page.eval(`[...document.querySelectorAll("*")].filter((e) => { const o = getComputedStyle(e).overflowX; return (o === "auto" || o === "scroll") && e.scrollWidth > e.clientWidth + 1 && !e.closest("[data-slot=code-block]") && e.checkVisibility(); }).map((e) => e.tagName.toLowerCase() + (e.dataset.slot ? "[" + e.dataset.slot + "]" : "") + (e.hasAttribute("data-docs-inspector") ? "[inspector]" : "") + " " + e.scrollWidth + ">" + e.clientWidth)`);
+  const sideways = () => page.eval(`[...document.querySelectorAll("*")].filter((e) => { const o = getComputedStyle(e).overflowX; return (o === "auto" || o === "scroll") && e.scrollWidth > e.clientWidth + 1 && !e.closest("[data-slot=code-block], [data-slot=code-view]") && e.checkVisibility(); }).map((e) => e.tagName.toLowerCase() + (e.dataset.slot ? "[" + e.dataset.slot + "]" : "") + (e.hasAttribute("data-docs-inspector") ? "[inspector]" : "") + " " + e.scrollWidth + ">" + e.clientWidth)`);
   for (const theme of ["light", "dark"]) {
     await page.eval(`localStorage.setItem("fndn-theme", "${theme}"); true`);
     await page.goto(BASE + "/components/select", 2500);

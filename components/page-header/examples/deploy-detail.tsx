@@ -11,7 +11,7 @@ const log = [
   "Uploading the build output to fra1 and iad1",
   "Assigned app.northwind.example",
   "Deploy ready in 43s",
-];
+].join("\n");
 
 /* no href: the back link is a button and the app's router goes back; the description carries the
  * deploy's state, so the screen says what it is before the log does */
@@ -35,7 +35,7 @@ export default function DeployDetail() {
           </>
         }
       />
-      <CodeBlock className="max-w-none" variant="code" filename="Build log" lines={log} maxHeight={240} />
+      <CodeBlock className="max-w-none" variant="code" filename="Build log" value={log} maxHeight={240} />
     </div>
   );
 }

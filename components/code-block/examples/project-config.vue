@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CodeBlock } from "@fndn/vue";
 
-const lines = [
+const code = [
   "import { defineConfig } from \"@northwind/sdk\";",
   "",
   "export default defineConfig({",
@@ -19,9 +19,9 @@ const lines = [
   "    { source: \"/assets/(.*)\", cacheControl: \"public, max-age=31536000, immutable\" },",
   "  ],",
   "});",
-];
+].join("\n");
 </script>
 
 <template>
-  <CodeBlock variant="code" filename="northwind.config.ts" :lines="lines" :max-height="200" />
+  <CodeBlock variant="code" filename="northwind.config.ts" :value="code" :max-height="200" />
 </template>

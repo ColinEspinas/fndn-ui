@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CodeBlock } from "@fndn/svelte";
 
-  const lines = [
+  const code = [
     "import { defineConfig } from \"@northwind/sdk\";",
     "",
     "export default defineConfig({",
@@ -19,7 +19,7 @@
     "    { source: \"/assets/(.*)\", cacheControl: \"public, max-age=31536000, immutable\" },",
     "  ],",
     "});",
-  ];
+  ].join("\n");
 </script>
 
-<CodeBlock variant="code" filename="northwind.config.ts" {lines} maxHeight={200} />
+<CodeBlock variant="code" filename="northwind.config.ts" value={code} maxHeight={200} />

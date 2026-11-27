@@ -1,25 +1,5 @@
-/* code-block — framework-neutral pieces shared by the React, Vue and Svelte adapters. */
-
-export type CodeToken = { text: string; tok?: "kw" | "str" | "fn" };
-
-/* light syntax colouring — keywords / imports / conditionals, strings and numbers, function calls */
-const KEYWORDS = new Set(["import", "from", "export", "default", "async", "function", "const", "let", "var", "await", "return", "if", "else", "for", "while", "new", "throw", "try", "catch", "null", "true", "false", "undefined"]);
-const TOKEN = /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`[^`]*`|\b\d+(?:\.\d+)?\b|\b(?:import|from|export|default|async|function|const|let|var|await|return|if|else|for|while|new|throw|try|catch|null|true|false|undefined)\b|[A-Za-z_$][\w$]*(?=\s*\())/g;
-
-/** Split one line into plain runs and coloured tokens. Every target renders the same runs. */
-export function tokenize(text: string): CodeToken[] {
-  const out: CodeToken[] = [];
-  let last = 0;
-  for (const m of text.matchAll(TOKEN)) {
-    const idx = m.index ?? 0;
-    const t = m[0];
-    if (idx > last) out.push({ text: text.slice(last, idx) });
-    out.push({ text: t, tok: /^["'`]/.test(t) || /^\d/.test(t) ? "str" : KEYWORDS.has(t) ? "kw" : "fn" });
-    last = idx + t.length;
-  }
-  if (last < text.length) out.push({ text: text.slice(last) });
-  return out;
-}
+/* code-block — framework-neutral pieces shared by the React, Vue and Svelte adapters. The code
+ * itself (gutter, colouring, scrolling, the current line) is the Code View's: code-view.logic.ts. */
 
 /** How long the Copy button says "Copied". */
 export const CODE_BLOCK_COPIED_MS = 1500;
@@ -108,41 +88,4 @@ export function watchFileTabs(root: HTMLElement, onFit: (fits: boolean) => void)
   const ro = new ResizeObserver(() => check());
   ro.observe(root);
   return () => { live = false; ro.disconnect(); };
-}
-
-/** While the code overflows its box (a max height is set), the body becomes a focusable, named
- * scroll region so keyboard users can scroll it; otherwise it is a plain container. */
-export function watchOverflow(body: HTMLElement, label: string): () => void {
-  const update = () => {
-    const overflows = body.scrollHeight > body.clientHeight + 1 || body.scrollWidth > body.clientWidth + 1;
-    if (overflows) {
-      if (body.getAttribute("tabindex") !== "0") body.setAttribute("tabindex", "0");
-      if (body.getAttribute("role") !== "region") body.setAttribute("role", "region");
-      if (body.getAttribute("aria-label") !== label) body.setAttribute("aria-label", label);
-    } else {
-      body.removeAttribute("tabindex");
-      body.removeAttribute("role");
-      body.removeAttribute("aria-label");
-    }
-  };
-  update();
-  if (typeof ResizeObserver === "undefined") return () => {};
-  const ro = new ResizeObserver(update);
-  ro.observe(body);
-  if (body.firstElementChild) ro.observe(body.firstElementChild);
-  return () => ro.disconnect();
-}
-
-/** Keep the current line in view: when it changes, the open body scrolls (at once, it follows the
- * caret) just enough to show that row, a line's height clear of the edge; the page never scrolls. */
-export function revealCurrentLine(root: HTMLElement | null): void {
-  if (!root) return;
-  const row = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=code-block-row][aria-current=true]")).find((r) => r.offsetParent);
-  const body = row?.closest<HTMLElement>("[data-slot=code-block-body]");
-  if (!row || !body || body.scrollHeight <= body.clientHeight) return;
-  const b = body.getBoundingClientRect();
-  const r = row.getBoundingClientRect();
-  const margin = r.height;
-  if (r.top < b.top + margin) body.scrollTop -= b.top + margin - r.top;
-  else if (r.bottom > b.bottom - margin) body.scrollTop += r.bottom - (b.bottom - margin);
 }

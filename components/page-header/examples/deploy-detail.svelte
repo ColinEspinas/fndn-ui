@@ -13,7 +13,7 @@
     "Uploading the build output to fra1 and iad1",
     "Assigned app.northwind.example",
     "Deploy ready in 43s",
-  ];
+  ].join("\n");
 </script>
 
 <!-- no href: the back link is a button and the app's router goes back; the description carries the
@@ -38,5 +38,5 @@
       </Button>
     {/snippet}
   </PageHeader>
-  <CodeBlock class="max-w-none" variant="code" filename="Build log" lines={log} maxHeight={240} />
+  <CodeBlock class="max-w-none" variant="code" filename="Build log" value={log} maxHeight={240} />
 </div>

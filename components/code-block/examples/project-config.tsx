@@ -1,9 +1,6 @@
-import type { ComponentProps } from "react";
 import { CodeBlock } from "@fndn/react";
 
-type Props = ComponentProps<typeof CodeBlock>;
-
-const lines: Props["lines"] = [
+const code = [
   "import { defineConfig } from \"@northwind/sdk\";",
   "",
   "export default defineConfig({",
@@ -21,8 +18,8 @@ const lines: Props["lines"] = [
   "    { source: \"/assets/(.*)\", cacheControl: \"public, max-age=31536000, immutable\" },",
   "  ],",
   "});",
-];
+].join("\n");
 
 export default function ProjectConfig() {
-  return <CodeBlock variant="code" filename="northwind.config.ts" lines={lines} maxHeight={200} />;
+  return <CodeBlock variant="code" filename="northwind.config.ts" value={code} maxHeight={200} />;
 }

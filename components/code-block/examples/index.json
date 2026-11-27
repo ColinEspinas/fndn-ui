@@ -3,12 +3,7 @@
     "props": {
       "variant": "code",
       "filename": "scripts/deploy.ts",
-      "lines": [
-        "await northwind.deploys.create({",
-        "  project: \"web-app\",",
-        "  target: \"production\",",
-        "});"
-      ]
+      "value": "await northwind.deploys.create({\n  project: \"web-app\",\n  target: \"production\",\n});"
     }
   },
   "examples": [
@@ -31,10 +26,6 @@
     {
       "file": "project-config",
       "title": "A long config file"
-    },
-    {
-      "file": "editor-pane",
-      "title": "The body of an editor pane"
     }
   ]
 }

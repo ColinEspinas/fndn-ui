@@ -5,11 +5,11 @@
     {
       path: "src/client.ts",
       label: "client.ts",
-      lines: [
+      value: [
         "import { Northwind } from \"@northwind/sdk\";",
         "",
         "export const northwind = new Northwind({ apiKey: process.env.NORTHWIND_API_KEY });",
-      ],
+      ].join("\n"),
     },
     {
       path: "src/webhooks/verify.ts",
@@ -17,7 +17,7 @@
       highlighted: [
         "<span style=\"color: var(--fndn-accent-ink)\">export const</span> secret = process.env.<span style=\"color: var(--fndn-orange)\">WEBHOOK_SECRET</span>;",
       ],
-      code: "export const secret = process.env.WEBHOOK_SECRET;",
+      value: "export const secret = process.env.WEBHOOK_SECRET;",
     },
   ];
 </script>

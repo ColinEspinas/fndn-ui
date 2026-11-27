@@ -3,5 +3,5 @@ import { CodeBlock } from "@fndn/vue";
 </script>
 
 <template>
-  <CodeBlock variant="command" code="npm install @northwind/sdk" />
+  <CodeBlock variant="command" value="npm install @northwind/sdk" />
 </template>

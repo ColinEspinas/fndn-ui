@@ -30,17 +30,17 @@ for (const fw of targets) {
   try {
   /* Code */
   await open(fw, 0);
-  const rectsJs = `[...document.querySelectorAll("#stage [data-slot=code-block], #stage [data-code-block=copy], #stage [data-slot=code-block-row]")].map((e)=>{const b=e.getBoundingClientRect();return [b.x,b.y,b.width,b.height].map((n)=>Math.round(n*2)/2).join(",")}).join(" ")`;
+  const rectsJs = `[...document.querySelectorAll("#stage [data-slot=code-block], #stage [data-code-block=copy], #stage [data-slot=code-view-row]")].map((e)=>{const b=e.getBoundingClientRect();return [b.x,b.y,b.width,b.height].map((n)=>Math.round(n*2)/2).join(",")}).join(" ")`;
   const r0 = await q(rectsJs);
   await sleep(600);
   check("no layout shift after mount", r0 === await q(rectsJs), true);
-  check("every target renders the same code, whitespace included", await q(`[...document.querySelectorAll("#stage [data-slot=code-block-code]")].map((c)=>c.textContent).join("\\n")`), LINES);
+  check("every target renders the same code, whitespace included", await q(`[...document.querySelectorAll("#stage [data-slot=code-view-code]")].map((c)=>c.textContent).join("\\n")`), LINES);
   check("Copy is a named button with a polite status beside it", await q(`(()=>{const b=document.querySelector("#stage [data-code-block=copy]"),s=document.querySelector("#stage [data-slot=code-block-status]");return [b.tagName, b.getAttribute("aria-label"), s.getAttribute("role"), s.textContent]})()`), ["BUTTON", "Copy code", "status", ""]);
-  check("a body that fits is not a tab stop", await q(`document.querySelector("#stage [data-slot=code-block-body]").hasAttribute("tabindex")`), false);
+  check("a body that fits is not a tab stop", await q(`document.querySelector("#stage [data-slot=code-view-body]").hasAttribute("tabindex")`), false);
 
   const align = await q(`(()=>{
     const r=(e)=>e.getBoundingClientRect(), mid=(b)=>[(b.left+b.right)/2,(b.top+b.bottom)/2];
-    const nums=[...document.querySelectorAll("#stage [data-slot=code-block-num]")];
+    const nums=[...document.querySelectorAll("#stage [data-slot=code-view-num]")];
     const textRight=nums.map((n)=>{const g=document.createRange();g.selectNodeContents(n);return r(g).right});
     const padRight=nums.map((n)=>r(n).right-parseFloat(getComputedStyle(n).paddingRight)-parseFloat(getComputedStyle(n).borderRightWidth));
     const icon=r(document.querySelector("#stage [data-slot=button-icon] > :first-child")), box=r(document.querySelector("#stage [data-slot=button-icon]"));
@@ -49,8 +49,8 @@ for (const fw of targets) {
     return {numbers:textRight.every((x,i)=>Math.abs(x-padRight[i])<0.6), icon:Math.abs(im[0]-bm[0])<=0.25&&Math.abs(im[1]-bm[1])<=0.25, button:Math.abs(mid(btn)[1]-headMid)<=0.25};
   })()`);
   check("line numbers end on the gutter edge; copy icon and button centred", align, { numbers: true, icon: true, button: true });
-  check("line numbers are not selectable", await q(`getComputedStyle(document.querySelector("#stage [data-slot=code-block-num]")).userSelect`), "none");
-  check("a hand selection skips the line numbers", await q(`(()=>{const g=document.createRange();g.selectNodeContents(document.querySelector("#stage [data-slot=code-block-rows]"));const s=getSelection();s.removeAllRanges();s.addRange(g);const t=s.toString();s.removeAllRanges();return /^\\d/m.test(t.split("\\n").filter(Boolean)[0]??"")})()`), false);
+  check("line numbers are not selectable", await q(`getComputedStyle(document.querySelector("#stage [data-slot=code-view-num]")).userSelect`), "none");
+  check("a hand selection skips the line numbers", await q(`(()=>{const g=document.createRange();g.selectNodeContents(document.querySelector("#stage [data-slot=code-view-rows]"));const s=getSelection();s.removeAllRanges();s.addRange(g);const t=s.toString();s.removeAllRanges();return /^\\d/m.test(t.split("\\n").filter(Boolean)[0]??"")})()`), false);
 
   /* pointer copy */
   const w0 = await q(`document.querySelector("#stage [data-code-block=copy]").getBoundingClientRect().width`);
@@ -81,20 +81,20 @@ for (const fw of targets) {
 
   /* wrapping */
   await q(`document.querySelector("#stage [data-slot=code-block]").style.width="240px"`); await sleep(100);
-  check("long lines wrap inside the card", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-block-body]");return [b.scrollWidth<=b.clientWidth, [...document.querySelectorAll("#stage [data-slot=code-block-row]")].some((r)=>r.getBoundingClientRect().height>20)]})()`), [true, true]);
+  check("long lines wrap inside the card", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-view-body]");return [b.scrollWidth<=b.clientWidth, [...document.querySelectorAll("#stage [data-slot=code-view-row]")].some((r)=>r.getBoundingClientRect().height>20)]})()`), [true, true]);
 
   /* Diff */
   await open(fw, 1);
-  check("Diff: stat instead of Copy, no transitions on the rows", await q(`[!!document.querySelector("#stage [data-code-block=copy]"), document.querySelector("#stage [data-slot=code-block-stat]").textContent, [...document.querySelectorAll("#stage [data-slot=code-block-row], #stage [data-slot=code-block-code], #stage [data-slot=code-block-num]")].every((e)=>getComputedStyle(e).transitionDuration.split(",").every((d)=>parseFloat(d)===0))]`), [false, "+2-1", true]);
+  check("Diff: stat instead of Copy, no transitions on the rows", await q(`[!!document.querySelector("#stage [data-code-block=copy]"), document.querySelector("#stage [data-slot=code-block-stat]").textContent, [...document.querySelectorAll("#stage [data-slot=code-view-row], #stage [data-slot=code-view-code], #stage [data-slot=code-view-num]")].every((e)=>getComputedStyle(e).transitionDuration.split(",").every((d)=>parseFloat(d)===0))]`), [false, "+2-1", true]);
 
   /* Scrolling */
   await open(fw, 2);
   await sleep(150);
-  check("an overflowing body is a named, focusable region", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-block-body]");return [b.getAttribute("tabindex"), b.getAttribute("role"), b.getAttribute("aria-label"), getComputedStyle(b).overscrollBehaviorY]})()`), ["0", "region", "invoice.ts", "auto"]);
-  check("two-digit numbers share the right edge", await q(`(()=>{const xs=[...document.querySelectorAll("#stage [data-slot=code-block-num]")].map((n)=>{const g=document.createRange();g.selectNodeContents(n);return Math.round(g.getBoundingClientRect().right*2)/2});return new Set(xs).size})()`), 1);
+  check("an overflowing body is a named, focusable region", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-view-body]");return [b.getAttribute("tabindex"), b.getAttribute("role"), b.getAttribute("aria-label"), getComputedStyle(b).overscrollBehaviorY]})()`), ["0", "region", "invoice.ts", "auto"]);
+  check("two-digit numbers share the right edge", await q(`(()=>{const xs=[...document.querySelectorAll("#stage [data-slot=code-view-num]")].map((n)=>{const g=document.createRange();g.selectNodeContents(n);return Math.round(g.getBoundingClientRect().right*2)/2});return new Set(xs).size})()`), 1);
   await p.click(5, 5);
   await p.key("Tab"); await p.key("Tab");
-  check("Tab reaches the code region after Copy", await q(`document.activeElement?.dataset.slot`), "code-block-body");
+  check("Tab reaches the code region after Copy", await q(`document.activeElement?.dataset.slot`), "code-view-body");
   check("the region shows an inset focus ring", await q(`[getComputedStyle(document.activeElement).outlineStyle, getComputedStyle(document.activeElement).outlineOffset]`), ["solid", "-2px"]);
   await p.key("ArrowDown"); await p.key("ArrowDown"); await sleep(300);
   check("arrow keys scroll it", await q(`document.activeElement.scrollTop > 0`), true);
@@ -106,7 +106,7 @@ for (const fw of targets) {
   await q(spy);
   const panel = `[...document.querySelectorAll("#stage [data-slot=tabs-content]")].find((c)=>!c.hidden)`;
   const path = `document.querySelector("#stage [data-slot=code-block-path]")`;
-  check("Files: tabs list the files; one header row holds tabs, path and one Copy; panels hold only the body; fixed height", await q(`(()=>{const tabs=[...document.querySelectorAll("#stage [data-slot=tabs-trigger]")].map((t)=>t.textContent.trim());const h=document.querySelector("#stage :is([data-slot=code-block-header], [data-slot=tabs-header])");return [tabs, ${path}.textContent, ${path}.title, h.getBoundingClientRect().height, h.matches("[data-slot=tabs-header]"), !!h.querySelector("[data-slot=tabs-list]"), document.querySelectorAll("#stage [data-code-block=copy]").length, !!h.querySelector("[data-code-block=copy]"), [...document.querySelectorAll("#stage [data-slot=tabs-content]")].every((c)=>c.children.length===1&&c.firstElementChild.matches("[data-slot=code-block-body]")), ${panel}.querySelector("[data-slot=code-block-body]").getBoundingClientRect().height, !!document.querySelector("#stage [data-slot=code-block-file-bar]")]})()`), [["invoice.ts", "ledger.ts"], "src/invoice.ts", "", 44, true, true, 1, true, true, 120, false]);
+  check("Files: tabs list the files; one header row holds tabs, path and one Copy; panels hold only the Code View; fixed height", await q(`(()=>{const tabs=[...document.querySelectorAll("#stage [data-slot=tabs-trigger]")].map((t)=>t.textContent.trim());const h=document.querySelector("#stage :is([data-slot=code-block-header], [data-slot=tabs-header])");return [tabs, ${path}.textContent, ${path}.title, h.getBoundingClientRect().height, h.matches("[data-slot=tabs-header]"), !!h.querySelector("[data-slot=tabs-list]"), document.querySelectorAll("#stage [data-code-block=copy]").length, !!h.querySelector("[data-code-block=copy]"), [...document.querySelectorAll("#stage [data-slot=tabs-content]")].every((c)=>c.children.length===1&&c.firstElementChild.matches("[data-slot=code-view][data-code-block=view]")), ${panel}.querySelector("[data-slot=code-view-body]").getBoundingClientRect().height, !!document.querySelector("#stage [data-slot=code-block-file-bar]")]})()`), [["invoice.ts", "ledger.ts"], "src/invoice.ts", "", 44, true, true, 1, true, true, 120, false]);
   check("Files: the underline rests on the header's hairline; path, Copy and labels centred; Copy label ends 18px from the edge", await q(`(()=>{const r=(s)=>document.querySelector("#stage "+s).getBoundingClientRect();const h=r(":is([data-slot=code-block-header], [data-slot=tabs-header])"),i=r("[data-slot=tabs-indicator]"),c=r("[data-code-block=copy]"),p=r("[data-slot=code-block-path]"),root=r("[data-slot=code-block]"),lab=r("[data-code-block=copy] [data-slot=button-label] [data-slot=button-label]"),t=r("[data-slot=tabs-trigger][aria-selected=true]");const mid=(b)=>(b.top+b.bottom)/2,hm=(h.top+h.bottom-1)/2;return [Math.abs(i.bottom-(h.bottom-1))<0.6, Math.abs(mid(c)-hm)<=0.6, Math.abs(mid(p)-hm)<=0.6, Math.abs(mid(t)-hm)<=0.6, Math.round(root.right-lab.right), getComputedStyle(document.querySelector("#stage [data-slot=tabs-list]")).boxShadow]})()`), [true, true, true, true, 18, "none"]);
   await p.clickSel("#stage [data-code-block=copy]"); await sleep(150);
   check("Files: Copy takes the open file", await q(`window.__copied`), "export const invoice = (amount: number) => amount * 2;");
@@ -116,7 +116,7 @@ for (const fw of targets) {
   await p.key("ArrowRight"); await sleep(250);
   check("Files: ArrowRight opens the next file; the path follows; the block keeps its height", await q(`[${path}.textContent, ${path}.title, document.activeElement?.textContent.trim(), document.querySelector("#stage [data-slot=code-block]").getBoundingClientRect().height===${h0}]`), ["src/ledger.ts", "", "ledger.ts", true]);
   await p.clickSel("#stage [data-code-block=copy]"); await sleep(150);
-  check("Files: the same Copy now takes that file (highlighted lines from outside, copied as plain text)", [await q(`window.__copied`), await q(`${panel}.querySelector("[data-slot=code-block-code]").innerHTML.includes("<span")`)], ["export const terms = 30;", true]);
+  check("Files: the same Copy now takes that file (highlighted lines from outside, copied as plain text)", [await q(`window.__copied`), await q(`${panel}.querySelector("[data-slot=code-view-code]").innerHTML.includes("<span")`)], ["export const terms = 30;", true]);
   await q(`document.querySelector("#stage [data-slot=tabs-trigger][aria-selected=true]").focus()`);
   await p.key("ArrowLeft"); await sleep(250);
   check("Files: ArrowLeft goes back", await q(`${path}.textContent`), "src/invoice.ts");
@@ -127,7 +127,7 @@ for (const fw of targets) {
   await open(fw, 4);
   await sleep(150);
   await q(spy);
-  check("Command: no header and no line numbers; copy at the end of the row", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const row=r.querySelector("[data-slot=code-block-command]").getBoundingClientRect();const b=r.querySelector("[data-code-block=copy]").getBoundingClientRect();return [!!r.querySelector(":is([data-slot=code-block-header], [data-slot=tabs-header])"), !!r.querySelector("[data-slot=code-block-num]"), Math.round(row.right-b.right)]})()`), [false, false, 6]);
+  check("Command: no header and no line numbers; copy at the end of the row", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const row=r.querySelector("[data-slot=code-block-command]").getBoundingClientRect();const b=r.querySelector("[data-code-block=copy]").getBoundingClientRect();return [!!r.querySelector(":is([data-slot=code-block-header], [data-slot=tabs-header])"), !!r.querySelector("[data-slot=code-view-num]"), Math.round(row.right-b.right)]})()`), [false, false, 6]);
   await p.clickSel("#stage [data-code-block=copy]"); await sleep(150);
   check("Command: copy takes the command", await q(`window.__copied`), "npx shadcn add https://your-domain.com/r/react/code-block.json");
   /* five files at 320px: names of choices are shown whole, so the tabs give way to a pager and a
@@ -160,26 +160,32 @@ for (const fw of targets) {
   await p.viewport(1280, 900, 2);
   await open(fw, 5);
   const tok = (name, prop) => q(`(()=>{const d=document.createElement("div");d.style.${prop}="var(${name})";document.body.append(d);const v=getComputedStyle(d).${prop};d.remove();return v})()`);
-  check("currentLine 11: that row alone is current, tinted hover, its number ink", await q(`(()=>{const rows=[...document.querySelectorAll("#stage [data-slot=code-block-row]")];const cur=rows.filter((r)=>r.getAttribute("aria-current")==="true");const r=cur[0];return [cur.length, rows.indexOf(r)+1, getComputedStyle(r).backgroundColor, getComputedStyle(r.querySelector("[data-slot=code-block-num]")).color, getComputedStyle(rows[0]).backgroundColor]})()`), [1, 11, await tok("--fndn-hover", "backgroundColor"), await tok("--fndn-ink", "color"), "rgba(0, 0, 0, 0)"]);
-  check("currentLine below the fold: the body scrolls it into view at mount; the page does not scroll", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-block-body]");const r=b.querySelector("[aria-current=true]").getBoundingClientRect(),bb=b.getBoundingClientRect();return [b.scrollTop>0, r.top>=bb.top&&r.bottom<=bb.bottom, scrollY]})()`), [true, true, 0]);
+  check("currentLine 11: that row alone is current, tinted hover, its number ink", await q(`(()=>{const rows=[...document.querySelectorAll("#stage [data-slot=code-view-row]")];const cur=rows.filter((r)=>r.getAttribute("aria-current")==="true");const r=cur[0];return [cur.length, rows.indexOf(r)+1, getComputedStyle(r).backgroundColor, getComputedStyle(r.querySelector("[data-slot=code-view-num]")).color, getComputedStyle(rows[0]).backgroundColor]})()`), [1, 11, await tok("--fndn-hover", "backgroundColor"), await tok("--fndn-ink", "color"), "rgba(0, 0, 0, 0)"]);
+  check("currentLine below the fold: the body scrolls it into view at mount; the page does not scroll", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-view-body]");const r=b.querySelector("[aria-current=true]").getBoundingClientRect(),bb=b.getBoundingClientRect();return [b.scrollTop>0, r.top>=bb.top&&r.bottom<=bb.bottom, scrollY]})()`), [true, true, 0]);
   /* fill: the block takes its container's height (220px here) and the body the rest; nothing measured */
   await open(fw, 6);
   await sleep(200);
-  check("fill: 220px tall, the body runs to the bottom edge and scrolls; no --fndn-code-block-height", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const b=[...r.querySelectorAll("[data-slot=code-block-body]")].find((e)=>e.offsetParent);const rb=r.getBoundingClientRect(),bb=b.getBoundingClientRect();return [Math.round(rb.height), Math.round(rb.bottom-bb.bottom), Math.round(bb.height), b.scrollHeight>b.clientHeight, r.style.getPropertyValue("--fndn-code-block-height")]})()`), [220, 0, 176, true, ""]);
+  check("fill: 220px tall, the body runs to the bottom edge and scrolls; no fixed height", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const b=[...r.querySelectorAll("[data-slot=code-view-body]")].find((e)=>e.offsetParent);const rb=r.getBoundingClientRect(),bb=b.getBoundingClientRect();return [Math.round(rb.height), Math.round(rb.bottom-bb.bottom), Math.round(bb.height), b.scrollHeight>b.clientHeight, r.querySelector("[data-slot=code-view]").style.getPropertyValue("--fndn-code-view-height")]})()`), [220, 0, 176, true, ""]);
   check("fill: the current line is the active file's only", await q(`[...document.querySelectorAll("#stage [data-slot=tabs-content]")].map((c)=>c.querySelectorAll("[aria-current=true]").length)`), [1, 0]);
   await q(`document.querySelector("#stage [data-slot=code-block]").style.height="300px"`); await sleep(100);
-  check("fill: follows its container (300px) without measuring", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const b=[...r.querySelectorAll("[data-slot=code-block-body]")].find((e)=>e.offsetParent);return Math.round(r.getBoundingClientRect().bottom-b.getBoundingClientRect().bottom)})()`), 0);
-  /* editor (example 7): the bare body of an editor pane; lines never wrap, the gutter stays */
+  check("fill: follows its container (300px) without measuring", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const b=[...r.querySelectorAll("[data-slot=code-view-body]")].find((e)=>e.offsetParent);return Math.round(r.getBoundingClientRect().bottom-b.getBoundingClientRect().bottom)})()`), 0);
+  /* editable (example 7): the code is an editor; Copy takes what was typed */
   await open(fw, 7);
-  await sleep(150);
-  check("editor: no frame, no header, no copy, no path; fills its 220px box; the body is the pane", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");const cs=getComputedStyle(r);const b=r.querySelector("[data-slot=code-block-body]");return [cs.boxShadow.split(", rgba").every((s)=>s.startsWith("rgba(0, 0, 0, 0)")||s.startsWith("(0, 0, 0, 0)")), cs.borderTopLeftRadius, !!r.querySelector("[data-slot=code-block-header], [data-code-block=copy], [data-slot=code-block-path]"), Math.round(r.getBoundingClientRect().height), Math.round(r.getBoundingClientRect().bottom-b.getBoundingClientRect().bottom), getComputedStyle(b).fontSize]})()`), [true, "0px", false, 220, 0, "13px"]);
-  check("editor: a long line does not wrap (one row 20px tall); the body scrolls sideways and is a named region", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-block-body]");const rows=[...b.querySelectorAll("[data-slot=code-block-row]")];return [getComputedStyle(rows[5].querySelector("[data-slot=code-block-code]")).whiteSpace, Math.round(rows[5].getBoundingClientRect().height), b.scrollWidth>b.clientWidth, b.getAttribute("aria-label")]})()`), ["pre", 20, true, "rate-limit.ts"]);
-  await q(`document.querySelector("#stage [data-slot=code-block-body]").scrollLeft=120`); await sleep(80);
-  check("editor: scrolled sideways, the gutter stays at the start over an opaque surface; the current line's number keeps its tint", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-block-body]");const nums=[...b.querySelectorAll("[data-slot=code-block-num]")];const bl=b.getBoundingClientRect().left;return [Math.round(nums[0].getBoundingClientRect().left-bl), getComputedStyle(nums[0]).backgroundColor===getComputedStyle(document.querySelector("#stage [data-slot=code-block]")).backgroundColor, getComputedStyle(nums[6]).backgroundColor===getComputedStyle(nums[6].parentElement).backgroundColor]})()`), [0, true, true]);
+  let ready = false;
+  for (let t = 0; t < 120 && !ready; t++) { ready = await q(`!!document.querySelector("#stage .cm-editor") && !document.querySelector("#stage [data-slot=code-view-body]")`); if (!ready) await sleep(25); }
+  check("editable: the Code View's editor replaces the listing under the card's header", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-block]");return [!!r.querySelector("[data-slot=code-block-header] [data-code-block=copy]"), !!r.querySelector("[data-code-block=view] .cm-editor"), r.querySelector(".cm-content").getAttribute("aria-label")]})()`), [true, true, "rate-limit.ts"]);
+  await q(spy);
+  await p.clickSel("#stage .cm-line:nth-child(1)");
+  await p.key("Home");
+  await p.type("// ");
+  await sleep(50);
+  await p.clickSel("#stage [data-code-block=copy]"); await sleep(150);
+  check("editable: Copy takes the edited text", await q(`(window.__copied ?? "").split("\\n")[0]`), "// import { buckets } from \"./store\";");
+  check("editable: lines do not wrap (wrap false); the gutter stays at the start", await q(`(()=>{const s=document.querySelector("#stage .cm-scroller");s.scrollLeft=120;const g=document.querySelector("#stage .cm-gutters").getBoundingClientRect();return [s.scrollWidth>s.clientWidth, Math.round(g.left-s.getBoundingClientRect().left)]})()`), [true, 0]);
   /* diff without wrapping (example 8): the accent bar sticks with the gutter */
   await open(fw, 8);
-  await q(`document.querySelector("#stage [data-slot=code-block-body]").scrollLeft=200`); await sleep(80);
-  check("wrap off (diff): rows stay one line, the bar and numbers stay at the start while the code scrolls", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-block-body]");const bl=b.getBoundingClientRect().left;const bar=b.querySelector("[data-slot=code-block-bar]").getBoundingClientRect();const row=b.querySelectorAll("[data-slot=code-block-row]")[5].getBoundingClientRect();return [Math.round(bar.left-bl), Math.round(bar.height), Math.round(row.height), b.scrollLeft>0]})()`), [0, 20, 20, true]);
+  await q(`document.querySelector("#stage [data-slot=code-view-body]").scrollLeft=200`); await sleep(80);
+  check("wrap off (diff): rows stay one line, the bar and numbers stay at the start while the code scrolls", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-view-body]");const bl=b.getBoundingClientRect().left;const bar=b.querySelector("[data-slot=code-view-bar]").getBoundingClientRect();const row=b.querySelectorAll("[data-slot=code-view-row]")[5].getBoundingClientRect();return [Math.round(bar.left-bl), Math.round(bar.height), Math.round(row.height), b.scrollLeft>0]})()`), [0, 20, 20, true]);
   await open(fw, 3);
   check("nothing animates on first paint (no fade on the tab list)", await q(`document.getAnimations().filter((a)=>document.querySelector("#stage")?.contains(a.effect?.target)).map((a)=>a.animationName||a.transitionProperty)`), []);
   } catch (error) { check("script ran to the end", String(error.message).split("\n")[0].slice(0, 160), "ok"); }

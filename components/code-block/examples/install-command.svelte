@@ -2,4 +2,4 @@
   import { CodeBlock } from "@fndn/svelte";
 </script>
 
-<CodeBlock variant="command" code="npm install @northwind/sdk" />
+<CodeBlock variant="command" value="npm install @northwind/sdk" />

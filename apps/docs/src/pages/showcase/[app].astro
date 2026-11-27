@@ -12,7 +12,7 @@ export function getStaticPaths() {
   return showcases().map((s) => ({ params: { app: s.name } }));
 }
 const s = showcaseOf(Astro.params.app!)!;
-const files = showcaseFiles(s.name).map((f) => ({ path: `showcases/${s.name}/${f.file}`, label: f.file, lines: f.code.split("\n"), code: f.code }));
+const files = showcaseFiles(s.name).map((f) => ({ path: `showcases/${s.name}/${f.file}`, label: f.file, value: f.code }));
 ---
 <Layout title={s.title} current={`/showcase/${s.name}`} description={s.description} shape={s.shape}>
   <div class="px-4 pt-10 pb-20 md:px-8" data-docs-showcase={s.name}>
