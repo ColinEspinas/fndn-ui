@@ -35,8 +35,12 @@ function lit(v: unknown, q = '"'): string {
 const hasLongArray = (v: unknown): boolean =>
   !!v && typeof v === "object" && (Array.isArray(v) ? v.length > MAX_ENTRIES || v.some(hasLongArray) : Object.values(v).some(hasLongArray));
 
+/** A string of several lines (code) as a template literal, its lines as they are. */
+const tpl = (s: string) => "`" + s.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$\{/g, "\\${") + "`";
+
 /** Multi-line literal starting at column `indent`; arrays of more than 8 show 3 and a count. */
 function pretty(v: unknown, indent: number, q = '"'): string {
+  if (typeof v === "string" && v.includes("\n")) return tpl(v);
   const one = lit(v, q);
   if (!v || typeof v !== "object" || (indent + one.length <= MAX_LINE && !hasLongArray(v))) return one;
   const pad = " ".repeat(indent + 2);
@@ -71,7 +75,11 @@ function frameworkUsage(spec: UsageInput["spec"], fw: Framework, ex: Example, pr
     }
     const name = model ? `default${cap(k)}` : k;
     if (typeof v === "string" && !/["\n]/.test(v) && !(fw === "svelte" && /[{}]/.test(v))) attrs.push(`${name}="${v.replace(/&/g, "&amp;")}"`);
-    else if (v === true) attrs.push(name);
+    /* a string of several lines (a code block's value) is declared above, as a template literal */
+    else if (typeof v === "string" && v.includes("\n")) {
+      decls.push({ name: k, value: v, model: false });
+      attrs.push(expr(name, k));
+    } else if (v === true) attrs.push(name);
     else if (v && typeof v === "object" && (`${name}={${lit(v, q)}}`.length > MAX_LINE || hasLongArray(v))) {
       decls.push({ name: k, value: v, model: false });
       attrs.push(expr(name, k));
