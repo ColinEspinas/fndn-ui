@@ -82,6 +82,9 @@ export const tabs = tv({
       "[transform:translate(var(--left,0px),var(--top,0px))]",
       /* fndn-check-ok: width — the indicator is absolutely positioned and childless, and scaleX would distort its radius */
       "[--transition-property:transform,width]! [--transition-duration:var(--fndn-duration-move)] [--transition-timing-function:var(--fndn-easing-move)]",
+      /* on a tab that arrived selected, while it opens its room: no slide, it opens with the tab
+       * (tabs.logic.ts followIndicator sets data-follow) */
+      "data-follow:[transition-property:none]!",
     ],
     trigger: [
       "relative z-1 inline-flex items-center justify-center gap-1.5 shrink-0 min-w-0 max-w-full h-[26px] px-2",

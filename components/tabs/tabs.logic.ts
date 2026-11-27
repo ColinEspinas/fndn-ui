@@ -52,6 +52,9 @@ function reveal(list: HTMLElement, trigger: HTMLElement | null, instant: boolean
   if (list.scrollWidth <= list.clientWidth) return;
   const tab = trigger?.closest<HTMLElement>("[data-slot=tabs-tab]") ?? trigger;
   if (!tab) return;
+  /* a tab still opening its room is followed frame by frame instead (watchStrip, keepInView):
+   * revealed now, at its first width, the strip would jump ahead and then scroll again */
+  if (trigger && opening(trigger)) return;
   const box = list.getBoundingClientRect();
   const r = tab.getBoundingClientRect();
   const spare = Math.min(24, Math.max(0, (box.width - r.width) / 2));
@@ -119,17 +122,47 @@ export function afterFirstPaint(fn: () => void): () => void {
  * measure, and the all-tabs button must not appear beside a list its host has hidden. */
 function overflows(list: HTMLElement): boolean {
   if (!list.getClientRects().length) return false;
-  return list.scrollWidth > list.clientWidth + 1;
+  /* the tabs' own boxes, not the list's scrollWidth: a tab opening its room starts at width 0 with
+   * its label spilling out of it, which is not overflow (the button would flash in and out) */
+  let start = Infinity;
+  let end = -Infinity;
+  for (const child of Array.from(list.children) as HTMLElement[]) {
+    if (child.getAttribute("data-slot") === "tabs-indicator") continue;
+    start = Math.min(start, child.offsetLeft);
+    end = Math.max(end, child.offsetLeft + child.offsetWidth);
+  }
+  if (end < start) return false;
+  const cs = getComputedStyle(list);
+  return end - start + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) > list.clientWidth + 1;
+}
+
+/** Whether a tab is opening its room: an arrival whose width or inline padding is still moving. */
+function opening(trigger: HTMLElement): boolean {
+  const part = trigger.closest<HTMLElement>("[data-slot=tabs-tab]");
+  return [trigger, part].some((el) => !!el?.getAnimations?.().some((a) => /width|padding/.test((a as CSSTransition).transitionProperty ?? "")));
 }
 
 /** Keep the indicator on the selected tab while tabs open or close their room beside it. The
  * engine re-measures when the selection changes or a tab it knew of resizes, not when the selected
  * tab only moves (a tab arriving or closing before it): the offsets are written here then, as
- * placeIndicator writes them, with no transition (the engine enables one only for a selection). */
-function followIndicator(list: HTMLElement): void {
+ * placeIndicator writes them, with no transition (the engine enables one only for a selection).
+ *
+ * A tab that arrives selected (a new tab, a file opened from a list) was not picked on the strip,
+ * so the indicator does not slide to it: it is on it and opens with it. data-follow turns the
+ * indicator's transition off meanwhile (tabs.recipe.ts); a slide would chase a target that moves
+ * every frame and land late. Returns whether the selected tab is still opening. */
+function followIndicator(list: HTMLElement): boolean {
   const indicator = list.querySelector<HTMLElement>(":scope > [data-slot=tabs-indicator]");
   const tab = list.querySelector<HTMLElement>(':scope > [data-slot=tabs-trigger][aria-selected="true"], :scope > [data-slot=tabs-tab] > [data-slot=tabs-trigger][aria-selected="true"]');
-  if (!indicator || !tab || indicator.hidden || tab.offsetWidth === 0) return;
+  if (!indicator || !tab || indicator.hidden) return false;
+  const arriving = opening(tab);
+  if (arriving !== indicator.hasAttribute("data-follow")) {
+    indicator.toggleAttribute("data-follow", arriving);
+    /* the engine keeps the slide switched on until the indicator's transitionend, which a followed
+     * arrival never fires: tell it the move is over, or the next one (a resize, a close) would slide */
+    if (!arriving) indicator.dispatchEvent(new TransitionEvent("transitionend", { bubbles: true, propertyName: "transform" }));
+  }
+  if (tab.offsetWidth === 0 && !arriving) return false;
   const set = (name: string, px: number) => {
     if (parseFloat(indicator.style.getPropertyValue(name)) !== px) indicator.style.setProperty(name, `${px}px`);
   };
@@ -137,6 +170,22 @@ function followIndicator(list: HTMLElement): void {
   set("--top", tab.offsetTop);
   set("--width", tab.offsetWidth);
   set("--height", tab.offsetHeight);
+  return arriving;
+}
+
+/** While the selected tab opens its room, keep its growing edge in view with nothing to spare: the
+ * strip slides with the tab. Each frame closes half the distance, so a step in the layout (the
+ * all-tabs button appearing as the strip starts to overflow narrows the list at once) is glided
+ * over rather than jumped. Once the tab is open, revealTab takes what is left, and the 24px. */
+function keepInView(list: HTMLElement): void {
+  if (list.scrollWidth <= list.clientWidth) return;
+  const trigger = list.querySelector<HTMLElement>('[data-slot=tabs-trigger][aria-selected="true"]');
+  const tab = trigger?.closest<HTMLElement>("[data-slot=tabs-tab]") ?? trigger;
+  if (!tab) return;
+  const box = list.getBoundingClientRect();
+  const r = tab.getBoundingClientRect();
+  const delta = r.right > box.right ? r.right - box.right : r.left < box.left ? r.left - box.left : 0;
+  if (Math.abs(delta) >= 1) list.scrollBy({ left: Math.abs(delta) < 2 ? delta : delta / 2, behavior: "instant" });
 }
 
 /** Keep the strip's overflow state in step with its size and its tabs: data-overflow on the list
@@ -150,10 +199,21 @@ export function watchStrip(root: HTMLElement | null, onOverflow: (overflow: bool
   let list: HTMLElement | null = null;
   let last: boolean | undefined;
   let frame = 0;
+  let follow = 0;
   let stopVeils = () => {};
+  /* every frame while the selected tab opens its room (a resize may skip a frame) */
+  const track = () => {
+    follow = 0;
+    if (!list || !followIndicator(list)) return;
+    keepInView(list);
+    follow = requestAnimationFrame(track);
+  };
   const measure = () => {
     if (!list) return;
-    followIndicator(list);
+    if (followIndicator(list)) {
+      keepInView(list);
+      follow ||= requestAnimationFrame(track);
+    }
     const over = overflows(list);
     if (over !== list.hasAttribute("data-overflow")) list.toggleAttribute("data-overflow", over);
     if (over === last) return;
@@ -187,7 +247,7 @@ export function watchStrip(root: HTMLElement | null, onOverflow: (overflow: bool
   }
   attach();
   measure();
-  return () => { cancelAnimationFrame(frame); resize?.disconnect(); tree?.disconnect(); stopVeils(); };
+  return () => { cancelAnimationFrame(frame); cancelAnimationFrame(follow); resize?.disconnect(); tree?.disconnect(); stopVeils(); };
 }
 
 /** The strings of the Tabs, for translation. */

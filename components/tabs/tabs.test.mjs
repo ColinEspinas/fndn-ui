@@ -189,6 +189,23 @@ for (const fw of targets) {
   await p.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "no-preference" }] });
   check("no console errors (arrivals)", p.errors.slice(0, 2), []);
 
+  /* a tab that arrives selected (a file opened from a list) into a strip that overflows (added and
+   * selected in one task, before a frame is painted, as an app does; the harness keeps React's value
+   * uncontrolled, so it is selected by a click): sampled after each frame's layout, the indicator is on it from its first frame and opens with it, the strip
+   * only moves forward (no jump ahead and back), the all-tabs button never flashes in and out, and
+   * once open the indicator's slide is off again (the engine's transitionend) */
+  await open(fw, 3); await sleep(200);
+  await p.click(4, 4); await sleep(60);
+  { const items3 = FIXTURE.examples[3].props.items;
+    const next = [...items3, { value: "arrived.ts", label: "arrived.ts", content: "arrived.ts" }];
+    const frames = await p.eval(`(async()=>{const m=window.__harnessMounted;const f=()=>new Promise((r)=>requestAnimationFrame(()=>setTimeout(r,0)));const list=document.querySelector("#stage [data-slot=tabs-list]");await m.update({items:${JSON.stringify(next)}});list.querySelector('[data-slot=tabs-trigger][data-value="arrived.ts"]').click();const out=[];const t0=performance.now();while(performance.now()-t0<500){await f();const ind=list.querySelector("[data-slot=tabs-indicator]");const tab=list.querySelector('[data-slot=tabs-trigger][data-value="arrived.ts"]');if(!tab||ind.hidden){out.push(null);continue;}const a=ind.getBoundingClientRect(),b=tab.getBoundingClientRect();out.push([Math.abs(a.left-b.left),Math.abs(a.width-b.width),Math.abs(list.scrollLeft),!!document.querySelector("#stage [data-tabs=more-trigger]")]);}await new Promise((r)=>setTimeout(r,250));return {out,end:getComputedStyle(list.querySelector("[data-slot=tabs-indicator]")).transitionProperty,selected:list.querySelector('[data-slot=tabs-trigger][aria-selected="true"]')?.dataset.value};})()`);
+    const seen = frames.out.filter(Boolean);
+    const scrolls = seen.map((x) => x[2]);
+    const buttonChanges = seen.reduce((n, x, i) => n + (i && x[3] !== seen[i - 1][3] ? 1 : 0), 0);
+    check("arriving selected: the indicator is on the new tab every frame (left and width within 1px)", [frames.selected, seen.length > 5, seen.every((x) => x[0] <= 1 && x[1] <= 1)], ["arrived.ts", true, true]);
+    check("…the strip only moves forward, and the all-tabs button never flashes", [scrolls.every((v, i) => !i || v >= scrolls[i - 1] - 0.5), buttonChanges <= 1], [true, true]);
+    check("…and once it is open the indicator slides again only for a selection", frames.end, "none"); }
+
   /* overflow (example 3: five closable files in 320px): the edges fade with the scroll and a button
    * after the list opens a menu of every tab; a strip that fits, or a list with no box, has neither */
   const strip = () => p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const m=document.querySelector("#stage [data-tabs=more]");return [l.hasAttribute("data-overflow"), l.hasAttribute("data-overflow-start"), l.hasAttribute("data-overflow-end"), !!m]})()`);
