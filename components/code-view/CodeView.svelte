@@ -61,10 +61,17 @@
   const plain = codeView();
   const isEditable = $derived(editable && !diff);
   /* an editor always has a caret, so it always has a current line (the first, unless told) */
+  /* the host's current line: one it gave, not one the editor reported. It is the line tinted at
+   * rest; an editor with the focus tints the caret's line instead */
+  let hostGiven = $state(untrack(() => currentLine) !== undefined);
+  let reported: number | undefined;
+  $effect.pre(() => { const n = currentLine; if (n !== undefined && n !== reported) untrack(() => (hostGiven = true)); });
+  const tinted = $derived(diff || !hostGiven ? undefined : currentLine);
+  /* the line the caret starts on, and is moved to when the host asks for a new one */
   const line = $derived(diff ? undefined : (currentLine ?? (isEditable ? 1 : undefined)));
   const words = $derived<CodeViewLabels>({ ...CODE_VIEW_LABELS, ...labels });
   let ready = $state(false);
-  const r = $derived(codeView({ diff: !!diff, wrap, fold: isEditable, ready, fill }));
+  const r = $derived(codeView({ diff: !!diff, wrap, ready, fill }));
   const rows = $derived(!diff && (isEditable || !highlighted) ? linesOf(value) : undefined);
   const showListing = $derived(!(isEditable && ready));
   const rootStyle = $derived([style, maxHeight == null ? "" : `--fndn-code-view-max-height: ${maxHeight}px`, height == null ? "" : `--fndn-code-view-height: ${height}px`].filter(Boolean).join("; ") || undefined);
@@ -96,21 +103,21 @@
     const el = editorEl;
     if (!isEditable || !el) return;
     const h = untrack(() => mountEditor(el, {
-      value, wrap, currentLine: line, label, labels: words,
+      value, wrap, currentLine: line, hostLine: tinted, label, labels: words,
       onValueChange: (v) => { value = v; onvaluechange?.(v); },
-      onCurrentLineChange: (n) => { currentLine = n; oncurrentlinechange?.(n); },
+      onCurrentLineChange: (n) => { reported = n; currentLine = n; oncurrentlinechange?.(n); },
       onSearch: (next) => { if (next.open && !search.open) { replacing = false; focusFind(); } search = next; },
       onSearchFocus: focusFind,
     }, () => { ready = true; }));
     handle = h;
     return () => { h.destroy(); handle = null; ready = false; search = CLOSED_SEARCH; };
   });
-  $effect(() => { const h = handle; const next = { value, wrap, currentLine: line, label, labels: words }; untrack(() => h?.update(next)); });
+  $effect(() => { const h = handle; const next = { value, wrap, currentLine: line, hostLine: tinted, label, labels: words }; untrack(() => h?.update(next)); });
 
   /* the listing: a named scroll region while it overflows, its current line kept in view */
   $effect(() => (body ? watchOverflow(body, label) : undefined));
   $effect(() => {
-    void line;
+    void tinted;
     if (showListing) revealCurrentLine(root);
   });
 </script>
@@ -131,15 +138,15 @@
           {/each}
         {:else if rows}
           {#each rows as source, i (i)}
-            <div data-slot="code-view-row" class={r.row({ current: line === i + 1 })} aria-current={line === i + 1 ? "true" : undefined}>
-              <span data-slot="code-view-num" class={r.num({ current: line === i + 1 })}>{i + 1}</span>
+            <div data-slot="code-view-row" class={r.row({ current: tinted === i + 1 })} aria-current={tinted === i + 1 ? "true" : undefined}>
+              <span data-slot="code-view-num" class={r.num({ current: tinted === i + 1 })}>{i + 1}</span>
               <code data-slot="code-view-code" class={r.code()}>{@render tokens(source)}</code>
             </div>
           {/each}
         {:else}
           {#each highlighted ?? [] as h, i (i)}
-            <div data-slot="code-view-row" class={r.row({ current: line === i + 1 })} aria-current={line === i + 1 ? "true" : undefined}>
-              <span data-slot="code-view-num" class={r.num({ current: line === i + 1 })}>{i + 1}</span>
+            <div data-slot="code-view-row" class={r.row({ current: tinted === i + 1 })} aria-current={tinted === i + 1 ? "true" : undefined}>
+              <span data-slot="code-view-num" class={r.num({ current: tinted === i + 1 })}>{i + 1}</span>
               <code data-slot="code-view-code" class={r.code()}>{@html h}</code>
             </div>
           {/each}

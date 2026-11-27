@@ -106,6 +106,8 @@ export type CodeEditorOptions = {
   wrap: boolean;
   /** The line to put the caret on, when it is new (a jump from a list of problems). */
   currentLine?: number;
+  /** The host's current line, tinted while the editor has no focus (with the focus, the caret's line is). */
+  hostLine?: number;
   label?: string;
   labels: CodeViewLabels;
   /** After an edit made in the editor, never after a value set through `update`. */

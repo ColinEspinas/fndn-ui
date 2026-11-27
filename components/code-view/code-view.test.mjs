@@ -13,7 +13,8 @@ const INVOICE = [
   "  return base.total;",
   "}",
 ].join("\n");
-const p = await launch({ dpr: 2 });
+/* a mouse, so the hover-gated fold markers can be checked */
+const p = await launch({ dpr: 2, hover: true });
 let failed = 0;
 const open = async (fw, ex, extra = "") => {
   await p.goto(`${BASE}/harness.html?c=code-view&fw=${fw}&ex=${ex}${extra}`, 150);
@@ -58,12 +59,16 @@ for (const fw of targets) {
   /* Editable (ex 2): the listing first, then the editor in its place, drawn the same */
   await open(fw, 2);
   const listing = await q(geometry);
-  check("editable: the listing shown while the editor loads keeps the fold column (12px)", listing.code.map(([x, y]) => [x - 12, y]), readonly.code);
+  check("editable: the listing shown while the editor loads is the read-only one (no fold column)", listing, readonly);
   check("editable: the editor arrives and replaces the listing", await editorReady(), true);
   const editor = await q(geometry);
   check("editable: nothing moves when the editor arrives (numbers, code, height)", editor, listing);
   check("editable: a named, multi-line text box; the gutter is hidden from assistive tech", await q(`(()=>{const c=document.querySelector("#stage .cm-content");return [c.getAttribute("role"), c.getAttribute("aria-multiline"), c.getAttribute("aria-label"), document.querySelector("#stage .cm-gutters").getAttribute("aria-hidden")]})()`), ["textbox", "true", "src/middleware/rate-limit.ts", "true"]);
-  check("editable: line 7 is the current line, tinted hover, its number ink", await q(`(()=>{const tok=(v,p)=>{const d=document.createElement("div");d.style[p]="var("+v+")";document.body.append(d);const c=getComputedStyle(d)[p];d.remove();return c};const l=document.querySelector("#stage .cm-activeLine");const g=document.querySelector("#stage .cm-lineNumbers .cm-activeLineGutter");return [g.textContent, getComputedStyle(l).backgroundColor===tok("--fndn-hover","backgroundColor"), getComputedStyle(g).color===tok("--fndn-ink","color")]})()`), ["7", true, true]);
+  const tint = `(()=>{const tok=(v,p)=>{const d=document.createElement("div");d.style[p]="var("+v+")";document.body.append(d);const c=getComputedStyle(d)[p];d.remove();return c};const hover=tok("--fndn-hover","backgroundColor"),ink=tok("--fndn-ink","color");
+    const lines=[...document.querySelectorAll("#stage .cm-line")].map((l,i)=>getComputedStyle(l).backgroundColor===hover?i+1:0).filter(Boolean);
+    const nums=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].filter((g)=>g.offsetHeight&&getComputedStyle(g).backgroundColor===hover&&getComputedStyle(g).color===ink).map((g)=>+g.textContent);
+    return [lines, nums]})()`;
+  check("editable at rest: only the host's line 7 is tinted (hover, number ink)", await q(tint), [[7], [7]]);
   check("editable: no CodeMirror default look (no focus outline, transparent editor, surface gutter, no gutter border)", await q(`(()=>{const e=document.querySelector("#stage .cm-editor"),g=document.querySelector("#stage .cm-gutters");return [getComputedStyle(e).backgroundColor, getComputedStyle(g).backgroundColor===getComputedStyle(document.querySelector("#stage [data-slot=code-view]")).backgroundColor, getComputedStyle(g).borderRightWidth]})()`), ["rgba(0, 0, 0, 0)", true, "0px"]);
 
   /* typing, undo, the caret's line */
@@ -144,10 +149,35 @@ for (const fw of targets) {
   await q(`document.querySelector("#stage [data-slot=code-view]").style.width=""`);
 
   /* folding by indentation, from the gutter */
-  const fold = await q(`(()=>{const m=document.querySelectorAll("#stage .cm-foldGutter [data-fold=open]");const t=[...m].find((e)=>{const r=e.getBoundingClientRect();const row=[...document.querySelectorAll("#stage .cm-line")][5].getBoundingClientRect();return Math.abs(r.top+r.height/2-(row.top+10))<3});if(!t) return null;const r=t.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);
-  check("a fold marker sits on the function's line", !!fold, true);
-  if (fold) { await p.click(fold.x, fold.y); await sleep(80); }
-  check("clicking it folds the indented body; the closing line stays", await q(`[!!document.querySelector("#stage .cm-foldPlaceholder"), [...document.querySelectorAll("#stage .cm-line")].some((l)=>l.textContent==="}")]`), [true, true]);
+  /* folding: no column; a chevron over the hairline of a foldable line's number, shown on hover */
+  const num6 = await q(`(()=>{const g=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return {x:g.left+g.width/2,y:g.top+g.height/2}})()`);
+  const marker6 = `(()=>{const row=[...document.querySelectorAll("#stage .cm-line")][5].getBoundingClientRect();const m=[...document.querySelectorAll("#stage .cm-foldGutter [data-fold]")].find((e)=>{const r=e.getBoundingClientRect();return Math.abs(r.top-row.top)<3});if(!m) return null;const r=m.getBoundingClientRect(),n=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return [getComputedStyle(m).visibility, Math.round(r.width), Math.round((r.left+r.width/2)-n.right)]})()`;
+  await p.hover(5, 5);
+  check("a foldable line's marker is hidden at rest", (await q(marker6))?.[0], "hidden");
+  const still6 = await q(geometry);
+  await p.hover(num6.x, num6.y);
+  await sleep(50);
+  check("over its number the marker shows, 8px, centred on the hairline", await q(marker6), ["visible", 8, 0]);
+  check("showing it moves nothing", await q(geometry), still6);
+  await p.click(num6.x, num6.y);
+  await sleep(80);
+  check("a click on the number folds the indented body; the closing line stays", await q(`[!!document.querySelector("#stage .cm-foldPlaceholder"), [...document.querySelectorAll("#stage .cm-line")].some((l)=>l.textContent==="}")]`), [true, true]);
+  await p.hover(5, 5);
+  check("a folded line keeps its marker", (await q(marker6))?.[0], "visible");
+  await p.click(num6.x, num6.y);
+  await sleep(80);
+  check("a second click unfolds it", await q(`!!document.querySelector("#stage .cm-foldPlaceholder")`), false);
+
+  /* no host line: nothing tinted at rest; the caret's line while focused */
+  await open(fw, 6);
+  check("no current line given: the editor arrives", await editorReady(), true);
+  check("at rest nothing is tinted", await q(tint), [[], []]);
+  await q(`document.querySelector("#stage .cm-content").focus()`);
+  await sleep(50);
+  check("focused, the caret's line (1) is tinted", await q(tint), [[1], [1]]);
+  await q(`document.activeElement.blur()`);
+  await sleep(50);
+  check("blurred, the tint goes", await q(tint), [[], []]);
 
   /* switching back to read-only brings the listing back */
   await q(`window.__harnessMounted.update({ editable: false })`);

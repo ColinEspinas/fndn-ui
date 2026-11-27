@@ -56,7 +56,13 @@ export function CodeView({
   const [ownLine, setOwnLine] = useState(defaultCurrentLine);
   const isEditable = editable && !diff;
   /* an editor always has a caret, so it always has a current line (the first, unless told) */
-  const line = diff ? undefined : (currentLine ?? ownLine ?? (isEditable ? 1 : undefined));
+  /* the host's current line: the prop, or the uncontrolled one once a default gave it. It is the
+   * line tinted at rest; an editor with the focus tints the caret's line instead */
+  const hostGiven = useRef(currentLine !== undefined || defaultCurrentLine !== undefined);
+  if (currentLine !== undefined) hostGiven.current = true;
+  const tinted = diff ? undefined : (currentLine ?? (hostGiven.current ? ownLine : undefined));
+  /* the line the caret starts on, and is moved to when the host asks for a new one */
+  const line = diff ? undefined : (tinted ?? ownLine ?? (isEditable ? 1 : undefined));
   const words: CodeViewLabels = { ...CODE_VIEW_LABELS, ...labels };
   const [ready, setReady] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -72,7 +78,7 @@ export function CodeView({
   useEffect(() => {
     if (!isEditable || !editorEl.current) return;
     const h = mountEditor(editorEl.current, {
-      value: text, wrap, currentLine: line, label, labels: words,
+      value: text, wrap, currentLine: line, hostLine: tinted, label, labels: words,
       onValueChange: (v) => { setOwnValue(v); handlers.current.onValueChange?.(v); },
       onCurrentLineChange: (n) => { setOwnLine(n); handlers.current.onCurrentLineChange?.(n); },
       onSearch: (next) => setSearch((prev) => { if (next.open && !prev.open) { setReplacing(false); setFocusFind((n) => n + 1); } return next; }),
@@ -82,7 +88,7 @@ export function CodeView({
     return () => { h.destroy(); handle.current = null; setReady(false); setSearch(CLOSED_SEARCH); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditable]);
-  useEffect(() => { handle.current?.update({ value: text, wrap, currentLine: line, label, labels: words }); });
+  useEffect(() => { handle.current?.update({ value: text, wrap, currentLine: line, hostLine: tinted, label, labels: words }); });
 
   /* the field takes the focus, its text selected, when the widget opens or Mod+F asks again */
   useEffect(() => {
@@ -105,13 +111,13 @@ export function CodeView({
   /* the listing: a named scroll region while it overflows, its current line kept in view */
   const body = useRef<HTMLDivElement>(null);
   useEffect(() => (showListing && body.current ? watchOverflow(body.current, label) : undefined), [showListing, label]);
-  useLayoutEffect(() => { if (showListing) revealCurrentLine(root.current); }, [line, showListing]);
+  useLayoutEffect(() => { if (showListing) revealCurrentLine(root.current); }, [tinted, showListing]);
 
   const vars: Record<string, string> = {};
   if (maxHeight != null) vars["--fndn-code-view-max-height"] = `${maxHeight}px`;
   if (height != null) vars["--fndn-code-view-height"] = `${height}px`;
   const rootStyle = Object.keys(vars).length ? ({ ...style, ...vars } as CSSProperties) : style;
-  const r = codeView({ diff: !!diff, wrap, fold: isEditable, ready, fill });
+  const r = codeView({ diff: !!diff, wrap, ready, fill });
   const rows = !diff && (isEditable || !highlighted) ? linesOf(text) : undefined;
 
   return (
@@ -131,14 +137,14 @@ export function CodeView({
                 ))
               : rows
                 ? rows.map((source, i) => (
-                    <div key={i} data-slot="code-view-row" className={r.row({ current: line === i + 1 })} aria-current={line === i + 1 ? "true" : undefined}>
-                      <span data-slot="code-view-num" className={r.num({ current: line === i + 1 })}>{i + 1}</span>
+                    <div key={i} data-slot="code-view-row" className={r.row({ current: tinted === i + 1 })} aria-current={tinted === i + 1 ? "true" : undefined}>
+                      <span data-slot="code-view-num" className={r.num({ current: tinted === i + 1 })}>{i + 1}</span>
                       <code data-slot="code-view-code" className={r.code()}><Tokens text={source} /></code>
                     </div>
                   ))
                 : highlighted!.map((html, i) => (
-                    <div key={i} data-slot="code-view-row" className={r.row({ current: line === i + 1 })} aria-current={line === i + 1 ? "true" : undefined}>
-                      <span data-slot="code-view-num" className={r.num({ current: line === i + 1 })}>{i + 1}</span>
+                    <div key={i} data-slot="code-view-row" className={r.row({ current: tinted === i + 1 })} aria-current={tinted === i + 1 ? "true" : undefined}>
+                      <span data-slot="code-view-num" className={r.num({ current: tinted === i + 1 })}>{i + 1}</span>
                       <code data-slot="code-view-code" className={r.code()} dangerouslySetInnerHTML={{ __html: html }} />
                     </div>
                   ))}

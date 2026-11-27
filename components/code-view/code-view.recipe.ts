@@ -36,7 +36,7 @@ export const codeView = tv({
     tok: "",
     /* where the editor is mounted; its own markup inside is themed by code-view.editor.ts */
     editor: "isolate flex min-h-0 flex-1 flex-col [&>.cm-editor]:min-h-0 [&>.cm-editor]:flex-1",
-    /* the fold marker's icon, which the editor copies into its gutter */
+    /* the fold marker's icon, which the editor copies onto the gutter's hairline */
     icons: "hidden",
     /* the find widget: floats over the code at its top end corner, so opening it moves nothing;
      * the popup's surface, shadow and radius, 4px inset. At a narrow width it spans the view less
@@ -70,9 +70,6 @@ export const codeView = tv({
         bar: "sticky start-0 inset-y-auto z-[2] col-[1] row-[1] self-stretch justify-self-start",
       },
     },
-    /* editable: the editor's fold column (12px after the gutter's hairline) is kept free in the
-     * listing shown while the editor loads, so nothing moves when it arrives */
-    fold: { true: { code: "ps-4" } },
     /* the editor is mounted but not shown yet: it lies over the listing, laid out at the same size
      * (so it measures and takes the listing's scroll position), and invisible */
     ready: { false: { editor: "invisible absolute inset-0" } },
@@ -106,7 +103,7 @@ export const codeView = tv({
     { wrap: false, type: "add", class: { num: "bg-[linear-gradient(var(--fndn-green-tint),var(--fndn-green-tint))]" } },
     { wrap: false, type: "del", class: { num: "bg-[linear-gradient(var(--fndn-red-tint),var(--fndn-red-tint))]" } },
   ],
-  defaultVariants: { diff: false, wrap: true, fold: false, ready: true, fill: false, current: false },
+  defaultVariants: { diff: false, wrap: true, ready: true, fill: false, current: false },
 });
 
 export type CodeViewRecipeProps = VariantProps<typeof codeView>;

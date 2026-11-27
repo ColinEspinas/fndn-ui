@@ -7,14 +7,14 @@
  * the listing's: the same tokenizer marks the same runs with the recipe's classes, so no language
  * package is needed. Folding follows indentation; the search panel is built from the system's
  * field and button recipes. */
-import { Annotation, Compartment, EditorState, RangeSetBuilder, Transaction, type Extension } from "@codemirror/state";
+import { Annotation, Compartment, EditorState, RangeSet, RangeSetBuilder, StateEffect, StateField, Transaction, type Extension } from "@codemirror/state";
 import {
-  Decoration, EditorView, ViewPlugin, crosshairCursor, drawSelection, highlightActiveLine, highlightActiveLineGutter, keymap, lineNumbers,
-  rectangularSelection, runScopeHandlers, type DecorationSet, type ViewUpdate,
+  Decoration, EditorView, GutterMarker, ViewPlugin, crosshairCursor, drawSelection, gutterLineClass, highlightActiveLine, highlightActiveLineGutter, keymap, lineNumbers,
+  rectangularSelection, runScopeHandlers, type BlockInfo, type DecorationSet, type ViewUpdate,
 } from "@codemirror/view";
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
 import { SearchQuery, closeSearchPanel, findNext, findPrevious, getSearchQuery, openSearchPanel, replaceAll, replaceNext, search, searchKeymap, searchPanelOpen, setSearchQuery } from "@codemirror/search";
-import { codeFolding, foldGutter, foldKeymap, foldService } from "@codemirror/language";
+import { codeFolding, foldEffect, foldGutter, foldKeymap, foldService, foldable, foldedRanges, unfoldEffect } from "@codemirror/language";
 import { codeView } from "./code-view.recipe";
 import { tokenize, type CodeEditorHandle, type CodeEditorOptions, type CodeSearchState, type CodeViewLabels } from "./code-view.logic";
 
@@ -85,17 +85,26 @@ const theme = EditorView.theme({
     minWidth: "20px", paddingBlock: "0", paddingInline: "4px", borderInlineEnd: "1px solid var(--fndn-line)",
     fontSize: "var(--fndn-text-2xs)", fontVariantNumeric: "tabular-nums", textAlign: "end", userSelect: "none",
   },
-  ".cm-foldGutter .cm-gutterElement": { width: "12px", paddingInline: "0" },
-  ".cm-foldGutter [data-fold]": { display: "flex", height: "20px", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--fndn-ink-3)" },
-  ".cm-foldGutter [data-fold] svg": { width: "10px", height: "10px" },
-  ".cm-foldGutter [data-fold=closed] svg": { transform: "rotate(-90deg)" },
-  /* open markers show while the pointer is over the gutter; a closed one always shows */
-  "@media (hover: hover)": {
-    ".cm-foldGutter [data-fold=open]": { opacity: "0" },
-    ".cm-gutters:hover .cm-foldGutter [data-fold=open]": { opacity: "1" },
+  /* the fold marker takes no column: an 8px chevron over the gutter's hairline, inside the 4px on
+   * each side of it, on the row's own fill so it covers the hairline where it sits */
+  ".cm-foldGutter": { overflow: "visible" },
+  ".cm-foldGutter .cm-gutterElement": { position: "relative", width: "0", minWidth: "0", paddingInline: "0", overflow: "visible" },
+  ".cm-foldGutter [data-fold]": {
+    position: "absolute", insetBlockStart: "0", insetInlineStart: "-4px", width: "8px", height: "20px",
+    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+    color: "var(--fndn-ink-3)", backgroundColor: "var(--fndn-surface)",
   },
-  ".cm-activeLine": { backgroundColor: "var(--fndn-hover)" },
-  ".cm-activeLineGutter": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
+  ".cm-foldGutter [data-fold] svg": { width: "8px", height: "8px" },
+  ".cm-foldGutter [data-fold=closed] svg": { transform: "rotate(-90deg)" },
+  ".cm-lineNumbers .cm-gutterElement.cm-foldable": { cursor: "pointer" },
+  /* an open marker shows while the pointer is over its line's number; a closed one always shows */
+  "@media (hover: hover)": {
+    ".cm-foldGutter .cm-gutterElement:not(.cm-hoverLine) [data-fold=open]": { visibility: "hidden" },
+  },
+  /* the current line: the caret's while the editor has the focus, else the host's currentLine */
+  "&.cm-focused .cm-activeLine, &:not(.cm-focused) .cm-hostLine": { backgroundColor: "var(--fndn-hover)" },
+  "&.cm-focused .cm-activeLineGutter, &:not(.cm-focused) .cm-gutterElement.cm-hostLine": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
+  "&.cm-focused .cm-activeLineGutter [data-fold], &:not(.cm-focused) .cm-hostLine [data-fold]": { backgroundColor: "var(--fndn-hover)" },
   ".cm-selectionBackground, &.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground": { backgroundColor: "var(--fndn-accent-tint)" },
   ".cm-cursor, .cm-dropCursor": { borderInlineStart: "1.5px solid var(--fndn-ink)" },
   ".cm-foldPlaceholder": {
@@ -109,6 +118,79 @@ const theme = EditorView.theme({
    * the window, and CodeMirror would then scroll every match "clear" of it. */
   ".cm-panels, .cm-panels.cm-panels-top": { border: "none", backgroundColor: "transparent" },
 });
+
+/* the host's current line (tinted while the editor has no focus) and the line whose number the
+ * pointer is over (its fold marker shows), both as line classes across the gutter */
+const setHostLine = StateEffect.define<number | undefined>();
+const setHoverLine = StateEffect.define<number | undefined>();
+const lineField = (effect: typeof setHostLine) => StateField.define<number | undefined>({
+  create: () => undefined,
+  update(value, tr) {
+    for (const e of tr.effects) if (e.is(effect)) value = e.value;
+    return value;
+  },
+});
+const hostLine = lineField(setHostLine);
+const hoverLine = lineField(setHoverLine);
+class LineClass extends GutterMarker {
+  elementClass: string;
+  constructor(name: string) { super(); this.elementClass = name; }
+}
+const HOST = new LineClass("cm-hostLine"), HOVER = new LineClass("cm-hoverLine"), FOLDABLE = new LineClass("cm-foldable");
+const startOf = (state: EditorState, n: number | undefined) => (n !== undefined && n >= 1 && n <= state.doc.lines ? state.doc.line(n).from : undefined);
+const lineMarks = [
+  hostLine, hoverLine,
+  gutterLineClass.compute([hostLine, hoverLine, "doc"], (state) => {
+    const host = startOf(state, state.field(hostLine)), hover = startOf(state, state.field(hoverLine));
+    const marks = [];
+    if (host !== undefined) marks.push(HOST.range(host));
+    if (hover !== undefined) {
+      marks.push(HOVER.range(hover));
+      const line = state.doc.lineAt(hover);
+      if (foldable(state, line.from, line.to) || foldedAt(state, line.from, line.to)) marks.push(FOLDABLE.range(hover));
+    }
+    return RangeSet.of(marks, true);
+  }),
+  EditorView.decorations.compute([hostLine, "doc"], (state) => {
+    const host = startOf(state, state.field(hostLine));
+    return host === undefined ? Decoration.none : Decoration.set([Decoration.line({ class: "cm-hostLine" }).range(host)]);
+  }),
+  /* the pointer over a number shows its line's fold marker (the gutter is outside the content,
+   * so this listens on the whole editor) */
+  ViewPlugin.fromClass(class {
+    view: EditorView;
+    constructor(view: EditorView) {
+      this.view = view;
+      view.dom.addEventListener("mousemove", this.move);
+      view.dom.addEventListener("mouseleave", this.leave);
+    }
+    set(n: number | undefined) { if (n !== this.view.state.field(hoverLine)) this.view.dispatch({ effects: setHoverLine.of(n) }); }
+    move = (event: MouseEvent) => {
+      const inGutter = (event.target as Element | null)?.closest?.(".cm-gutters");
+      this.set(inGutter ? this.view.state.doc.lineAt(this.view.lineBlockAtHeight(event.clientY - this.view.documentTop).from).number : undefined);
+    };
+    leave = () => this.set(undefined);
+    destroy() {
+      this.view.dom.removeEventListener("mousemove", this.move);
+      this.view.dom.removeEventListener("mouseleave", this.leave);
+    }
+  }),
+];
+
+/* a click on a foldable line's number folds it, or unfolds it */
+function foldedAt(state: EditorState, from: number, to: number) {
+  let found: { from: number; to: number } | undefined;
+  foldedRanges(state).between(from, to, (a, b) => { if (!found && a >= from && a <= to) found = { from: a, to: b }; });
+  return found;
+}
+function toggleFold(view: EditorView, line: BlockInfo) {
+  const folded = foldedAt(view.state, line.from, line.to);
+  if (folded) { view.dispatch({ effects: unfoldEffect.of(folded) }); return true; }
+  const range = foldable(view.state, line.from, line.to);
+  if (!range) return false;
+  view.dispatch({ effects: foldEffect.of(range) });
+  return true;
+}
 
 const phrases = (l: CodeViewLabels) => EditorState.phrases.of({
   "Fold line": l.fold, "Unfold line": l.unfold, "folded code": l.folded, unfold: l.unfold, close: l.close,
@@ -166,8 +248,9 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
     return span;
   };
   const extensions: Extension[] = [
-    lineNumbers(),
+    lineNumbers({ domEventHandlers: { mousedown: (view, line) => toggleFold(view, line) } }),
     foldGutter({ markerDOM: marker }),
+    lineMarks,
     codeFolding(),
     byIndent,
     highlightActiveLine(),
@@ -205,7 +288,7 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
   const state = EditorState.create({ doc: options.value, extensions });
   const first = lineOf(state, options.currentLine ?? 1);
   reported = first.number;
-  const view = new EditorView({ state: state.update({ selection: { anchor: first.from } }).state, parent });
+  const view = new EditorView({ state: state.update({ selection: { anchor: first.from }, effects: setHostLine.of(options.hostLine) }).state, parent });
   view.scrollDOM.scrollTop = start.scrollTop;
   view.scrollDOM.scrollLeft = start.scrollLeft;
 
@@ -217,6 +300,7 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
       if (next.wrap !== undefined && next.wrap !== prev.wrap) effects.push(wrapC.reconfigure(wrapping(next.wrap)));
       if ("label" in next && next.label !== prev.label) effects.push(labelC.reconfigure(named(next.label)));
       if (next.labels && JSON.stringify(next.labels) !== JSON.stringify(prev.labels)) effects.push(phraseC.reconfigure(phrases(next.labels)));
+      if ("hostLine" in next && next.hostLine !== view.state.field(hostLine)) effects.push(setHostLine.of(next.hostLine));
       const doc = view.state.doc.toString();
       const changes = next.value !== undefined && next.value !== doc ? change(doc, next.value) : undefined;
       let selection: { anchor: number } | undefined;
