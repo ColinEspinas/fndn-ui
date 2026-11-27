@@ -71,6 +71,13 @@ component meets them this way:
   Button line up in a toolbar.
 - A look is a `variant`, at every size. Reuse the names the Button and the fields use (`outline`,
   `primary`, `ghost` …), so a reader can guess the prop.
+- **A prop or a look is made for every screen that could use it, never for one.** When a screen
+  needs something a component lacks, first build it from the looks the system already has (the
+  pill tabs, the ghost toggle). Only when none fits, design what the component is missing in
+  general, in the system's own look. A look copied from another product (a browser's tabs, an
+  editor's activity-bar mark) is not the system's, and a prop that only one screen sets is a
+  screen's detail leaking into the contract. A product's name in a prop's description is the sign
+  of one.
 - `shape` is the radius only (`pill`, `rounded`) and has no default. A control of your own that
   follows the app's shape takes `rounded-shape` (`rounded-shape-sm` up to 28px): a pill, unless the
   project's `fndn.json` says `"shape": "rounded"` or an ancestor carries `data-shape="rounded"`. A
@@ -240,6 +247,10 @@ compilers are stricter.
 | `<name>.fixtures.json` | `{ "examples": [...], "worstCase": [...] }`: JSON props the tests render. |
 | `<name>.test.mjs` | Keyboard and pointer test, all three frameworks, on `/harness.html?c=<name>&fw=react&ex=0`. |
 | `examples/` | `index.json` (order, titles, playground props) and one file per example and framework: how to write them is `docs/examples-guide.md`. |
+
+The showcases (`showcases/`) use the components as they are. What a showcase lacks is designed
+for the component (section 2) and shown by an example of the component's own, which does not copy
+the showcase's screen.
 
 There is no `index.ts` here (three frameworks share the folder): the tool writes one into a
 project, and `packages/{react,vue,svelte}/src/index.ts` export every adapter as `@fndn/react`,
