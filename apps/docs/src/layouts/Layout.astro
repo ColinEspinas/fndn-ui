@@ -61,6 +61,11 @@ const boot = `${themeBootScript};(function(){var h=document.documentElement;h.se
     <title>{title === "fndn/ui" ? "fndn/ui — a spec-first component system" : `${title} · fndn/ui`}</title>
     {description && <meta name="description" content={description} />}
     <link rel="alternate" type="text/markdown" href={twin} />
+    {/* the SVG where the browser takes one (it follows the system's dark mode); the .ico's sizes
+        attribute keeps Chrome from preferring it to the SVG */}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline set:html={boot} />
     <link rel="stylesheet" href={cssHref} />
     <link rel="preload" as="font" type="font/woff2" href={interUrl} crossorigin />

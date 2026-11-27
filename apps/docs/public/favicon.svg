@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<!-- fndn/ui: the f of Newsreader Italic 800 (SIL Open Font License) on an ink tile, in the
+     ink and on-ink colours of spec/tokens.json; inverted where the system is dark.
+     favicon.ico (16, 32, 48) and apple-touch-icon.png are this drawing in its light colours. -->
+<style>.t{fill:#1f2124}.f{fill:#f1f2f3}@media (prefers-color-scheme:dark){.t{fill:#f2f3f4}.f{fill:#1c1d1f}}</style>
+<rect class="t" width="64" height="64" rx="14"/>
+<path class="f" d="M24.2 25.1L24.5 22.6L42.3 22.6L41.9 25.1ZM34.2 34.3Q32.9 39.6 31.3 43.2Q29.7 46.8 27.8 49Q25.9 51.1 23.7 52.1Q21.6 53 19.3 53Q16.5 53 15.2 51.9Q13.9 50.8 13.9 49.1Q13.9 47.8 14.8 47Q15.6 46.2 16.9 46.2Q17.2 46.5 17.7 47Q18.1 47.5 18.8 48.5Q19.5 49.5 20.1 49.9Q20.7 50.3 21.3 50.3Q21.8 50.3 22.3 50.1Q22.7 49.9 23.1 49.5Q23.5 49.1 23.8 48.4Q24.1 47.7 24.3 46.7L28.8 24.7Q29.8 20.1 32.1 17.1Q34.4 14 37.5 12.5Q40.7 11 44.1 11Q46.2 11 47.5 11.5Q48.9 12 49.5 12.9Q50.1 13.8 50.1 14.8Q50.1 16.2 49.1 17.1Q48.2 17.9 46.8 17.9Q46.5 17.7 46.1 17.2Q45.7 16.7 44.9 15.8Q44.2 15 43.4 14.5Q42.5 14 41.6 14Q40.7 14 40 14.4Q39.3 14.8 38.8 15.8Q38.3 16.8 37.9 18.7Z"/>
+</svg>
