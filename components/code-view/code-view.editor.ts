@@ -79,21 +79,24 @@ const theme = EditorView.theme({
   "&.cm-focused": { outline: "none" },
   ".cm-scroller": { fontFamily: "inherit", lineHeight: "inherit", overscrollBehaviorX: "contain" },
   ".cm-content": { paddingBlock: "12px", paddingInline: "0", caretColor: "var(--fndn-ink)" },
-  ".cm-line": { paddingBlock: "0", paddingInline: "4px 12px" },
   ".cm-gutters": { backgroundColor: "var(--fndn-surface)", color: "var(--fndn-ink-3)", border: "none" },
-  /* the number cell is the read-only listing's, built the same way so the two land on the same
-   * device pixels: 4px, the number, then the 12px fold column and the hairline (min 33px in all) */
   ".cm-lineNumbers .cm-gutterElement": {
-    minWidth: "33px", paddingBlock: "0", paddingInline: "4px 16px", borderInlineEnd: "1px solid var(--fndn-line)",
+    /* the listing's width: the widest number, rounded up to a multiple of 4px (code-view.logic.ts digitsOf) */
+    minWidth: "round(up, max(20px, calc(8px + var(--fndn-code-view-digits, 1) * 1ch)), 4px)",
+    paddingBlock: "0", paddingInline: "4px", borderInlineEnd: "1px solid var(--fndn-line)",
     fontSize: "var(--fndn-text-2xs)", fontVariantNumeric: "tabular-nums", textAlign: "end", userSelect: "none",
   },
-  /* the fold markers take no width of their own: each is drawn over the fold column of its number
-   * cell (the 12px before the hairline) */
+  /* the fold column: the first 12px after the hairline, inside each line's start padding (4px +
+   * 12px, as the read-only listing's code). The markers take no width of their own, so the hairline
+   * and the code land on the listing's device pixels at every scale; each marker is drawn over the
+   * column, on the row's fill, so code scrolled sideways passes under it */
+  ".cm-line": { paddingBlock: "0", paddingInline: "16px 12px" },
   ".cm-foldGutter": { overflow: "visible" },
   ".cm-foldGutter .cm-gutterElement": { position: "relative", width: "0", minWidth: "0", paddingInline: "0", overflow: "visible" },
   ".cm-foldGutter [data-fold]": {
-    position: "absolute", insetBlockStart: "0", insetInlineStart: "-13px", width: "12px", height: "20px",
-    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--fndn-ink-3)",
+    position: "absolute", insetBlockStart: "0", insetInlineStart: "0", width: "12px", height: "20px",
+    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+    color: "var(--fndn-ink-3)", backgroundColor: "var(--fndn-surface)",
   },
   ".cm-foldGutter [data-fold] svg": { width: "10px", height: "10px" },
   ".cm-foldGutter [data-fold=closed] svg": { transform: "rotate(-90deg)" },
@@ -108,6 +111,7 @@ const theme = EditorView.theme({
   ".cm-activeLine, .cm-activeLineGutter": { backgroundColor: "transparent" },
   "&.cm-focused .cm-activeLine, &:not(.cm-focused) .cm-hostLine": { backgroundColor: "var(--fndn-hover)" },
   "&.cm-focused .cm-activeLineGutter, &:not(.cm-focused) .cm-gutterElement.cm-hostLine": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
+  "&.cm-focused .cm-activeLineGutter [data-fold], &:not(.cm-focused) .cm-hostLine [data-fold]": { backgroundColor: "var(--fndn-hover)" },
   ".cm-selectionBackground, &.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground": { backgroundColor: "var(--fndn-accent-tint)" },
   ".cm-cursor, .cm-dropCursor": { borderInlineStart: "1.5px solid var(--fndn-ink)" },
   ".cm-foldPlaceholder": {

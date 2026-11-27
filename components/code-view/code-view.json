@@ -3,7 +3,7 @@
   "name": "code-view",
   "title": "Code View",
   "summary": "Code on its own, with line numbers: a listing, a diff, or an editor.",
-  "description": "The code itself, with no frame, to place anywhere: an editor pane, a diff view, the body of a Code Block. A gutter of line numbers as wide as the widest number, then the code in mono at a 20px line height with light syntax colouring (keywords, strings and numbers, function calls), or lines already highlighted elsewhere. A diff shows one gutter, a green / red accent bar, a row tint and word-level add / del highlights. A current line is tinted across the gutter and the code. Long lines wrap (wrap) or the code scrolls sideways under a gutter that stays. Its height is the code's, a fixed height, a cap past which it scrolls, or its container's (fill). Read-only it is plain markup, complete in the first frame and server-rendered, and every line is in the page. editable turns it into a code editor (CodeMirror 6): undo history, find and replace (a compact widget floating over the code), several cursors, folding by indentation. The editor is loaded only then (a dynamic import), so a read-only view never downloads it; its packages are installed with the component all the same. It looks exactly like the listing: same font, line height, gutter, colours, current-line tint and insets. An editable view at rest is the read-only one, pixel for pixel, so turning editable on or off, and the editor arriving, move nothing: a listing always keeps a 12px fold column free between its numbers and the gutter's hairline (a diff, never editable, has none), where the editor draws its fold markers, and the caret's line is tinted only while the editor has the focus.",
+  "description": "The code itself, with no frame, to place anywhere: an editor pane, a diff view, the body of a Code Block. A gutter of line numbers as wide as the widest number, then the code in mono at a 20px line height with light syntax colouring (keywords, strings and numbers, function calls), or lines already highlighted elsewhere. A diff shows one gutter, a green / red accent bar, a row tint and word-level add / del highlights. A current line is tinted across the gutter and the code. Long lines wrap (wrap) or the code scrolls sideways under a gutter that stays. Its height is the code's, a fixed height, a cap past which it scrolls, or its container's (fill). Read-only it is plain markup, complete in the first frame and server-rendered, and every line is in the page. editable turns it into a code editor (CodeMirror 6): undo history, find and replace (a compact widget floating over the code), several cursors, folding by indentation. The editor is loaded only then (a dynamic import), so a read-only view never downloads it; its packages are installed with the component all the same. It looks exactly like the listing: same font, line height, gutter, colours, current-line tint and insets. An editable view at rest is the read-only one, pixel for pixel, so turning editable on or off, and the editor arriving, move nothing: a listing always keeps a 12px fold column free between the gutter's hairline and the code (a diff, never editable, has none), where the editor draws its fold markers, and the caret's line is tinted only while the editor has the focus.",
   "kind": "component",
   "category": "display",
   "order": 9,
@@ -13,7 +13,7 @@
     {
       "part": "root",
       "element": "div",
-      "description": "The box: surface fill, no frame, no radius, no shadow; the font, 20px line and colour of the code; code reads left to right (direction: ltr) in every page. Carries --fndn-code-view-height (height) and --fndn-code-view-max-height (maxHeight); fill makes it as tall as its container."
+      "description": "The box: surface fill, no frame, no radius, no shadow; the font, 20px line and colour of the code; code reads left to right (direction: ltr) in every page. Carries --fndn-code-view-height (height) and --fndn-code-view-max-height (maxHeight); fill makes it as tall as its container. It also carries --fndn-code-view-digits, the digits of the widest line number, which sizes the gutter."
     },
     {
       "part": "body",
@@ -40,12 +40,12 @@
     {
       "part": "num",
       "element": "span",
-      "description": "Line number: 2xs, ink-3 (ink on the current line), right-aligned 12px before the gutter's hairline (the fold column, empty in a read-only listing, where the editor draws its fold markers), not selectable; at least 33px wide with the column and the hairline. A diff has no fold column and shows the new number, or the old one on a removed row."
+      "description": "Line number: 2xs, ink-3 (ink on the current line), right-aligned 4px before the gutter's hairline, not selectable. The gutter is as wide as the widest number, rounded up to a multiple of 4px (at least 20px), so the hairline lands on whole device pixels at 100%, 125%, 150% and 200% and the listing and the editor are drawn alike. A diff shows the new number, or the old one on a removed row."
     },
     {
       "part": "code",
       "element": "code",
-      "description": "The line's text"
+      "description": "The line's text. A listing (not a diff) starts it 16px after the hairline: the 12px fold column, then 4px."
     },
     {
       "part": "piece",
@@ -63,7 +63,7 @@
       "part": "icons",
       "element": "span",
       "optional": true,
-      "description": "Editable only, never shown: the Phosphor caret the editor copies into its fold markers, drawn in the 12px fold column before the hairline. An open marker shows while the pointer is over its row's gutter (hover-capable devices) and always on touch; a folded line's marker always shows."
+      "description": "Editable only, never shown: the Phosphor caret the editor copies into its fold markers, drawn in the 12px fold column between the hairline and the code. An open marker shows while the pointer is over its row's gutter (hover-capable devices) and always on touch; a folded line's marker always shows."
     },
     {
       "part": "editor",

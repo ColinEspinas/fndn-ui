@@ -78,7 +78,8 @@ for (const fw of targets) {
   check("editable: the editor arrives and replaces the listing", await editorReady(), true);
   const editor = await q(geometry);
   const shotEditable = await pixels("editable");
-  check("editable at rest is the read-only view, pixel for pixel", await q(`(async()=>{const load=(s)=>new Promise((ok)=>{const i=new Image();i.onload=()=>ok(i);i.src="data:image/png;base64,"+s});const [A,E]=await Promise.all([load(${JSON.stringify(shotReadonly)}),load(${JSON.stringify(shotEditable)})]);if(A.width!==E.width||A.height!==E.height) return "size "+A.width+"x"+A.height+" vs "+E.width+"x"+E.height;const px=(img)=>{const c=document.createElement("canvas");c.width=img.width;c.height=img.height;const x=c.getContext("2d");x.drawImage(img,0,0);return x.getImageData(0,0,img.width,img.height).data};const a=px(A),e=px(E);let n=0;for(let i=0;i<a.length;i+=4) if(a[i]!==e[i]||a[i+1]!==e[i+1]||a[i+2]!==e[i+2]) n++;return n})()`), 0);
+  const differing = (a, b) => q(`(async()=>{const load=(s)=>new Promise((ok)=>{const i=new Image();i.onload=()=>ok(i);i.src="data:image/png;base64,"+s});const [A,E]=await Promise.all([load(${JSON.stringify(a)}),load(${JSON.stringify(b)})]);if(A.width!==E.width||A.height!==E.height) return "size "+A.width+"x"+A.height+" vs "+E.width+"x"+E.height;const px=(img)=>{const c=document.createElement("canvas");c.width=img.width;c.height=img.height;const x=c.getContext("2d");x.drawImage(img,0,0);return x.getImageData(0,0,img.width,img.height).data};const a=px(A),e=px(E);let n=0,box=[1e9,1e9,-1,-1];for(let i=0;i<a.length;i+=4) if(a[i]!==e[i]||a[i+1]!==e[i+1]||a[i+2]!==e[i+2]){n++;const p=i/4,x=p%A.width,y=(p-x)/A.width;box=[Math.min(box[0],x),Math.min(box[1],y),Math.max(box[2],x),Math.max(box[3],y)]}return n?n+" pixels in "+box.join(","):0})()`);
+  check("editable at rest is the read-only view, pixel for pixel (dpr 2)", await differing(shotReadonly, shotEditable), 0);
   check("editable: nothing moves when the editor arrives (numbers, code, height)", editor, listing);
   check("editable: a named, multi-line text box; the gutter is hidden from assistive tech", await q(`(()=>{const c=document.querySelector("#stage .cm-content");return [c.getAttribute("role"), c.getAttribute("aria-multiline"), c.getAttribute("aria-label"), document.querySelector("#stage .cm-gutters").getAttribute("aria-hidden")]})()`), ["textbox", "true", "src/middleware/rate-limit.ts", "true"]);
   const tint = `(()=>{const tok=(v,p)=>{const d=document.createElement("div");d.style[p]="var("+v+")";document.body.append(d);const c=getComputedStyle(d)[p];d.remove();return c};const hover=tok("--fndn-hover","backgroundColor"),ink=tok("--fndn-ink","color");
@@ -170,13 +171,13 @@ for (const fw of targets) {
   /* folding by indentation, from the gutter */
   /* folding: no column; a chevron over the hairline of a foldable line's number, shown on hover */
   const num6 = await q(`(()=>{const g=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return {x:g.left+g.width/2,y:g.top+g.height/2}})()`);
-  const marker6 = `(()=>{const row=[...document.querySelectorAll("#stage .cm-line")][5].getBoundingClientRect();const m=[...document.querySelectorAll("#stage .cm-foldGutter [data-fold]")].find((e)=>{const r=e.getBoundingClientRect();return Math.abs(r.top-row.top)<3});if(!m) return null;const r=m.getBoundingClientRect(),n=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return [getComputedStyle(m).visibility, Math.round(r.width), Math.round(n.right-1-r.right)]})()`;
+  const marker6 = `(()=>{const row=[...document.querySelectorAll("#stage .cm-line")][5].getBoundingClientRect();const m=[...document.querySelectorAll("#stage .cm-foldGutter [data-fold]")].find((e)=>{const r=e.getBoundingClientRect();return Math.abs(r.top-row.top)<3});if(!m) return null;const r=m.getBoundingClientRect(),n=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return [getComputedStyle(m).visibility, Math.round(r.width), Math.round(r.left-n.right)]})()`;
   await p.hover(5, 5);
   check("a foldable line's marker is hidden at rest", (await q(marker6))?.[0], "hidden");
   const still6 = await q(geometry);
   await p.hover(num6.x, num6.y);
   await sleep(50);
-  check("over its row's gutter the marker shows, in the 12px column before the hairline", await q(marker6), ["visible", 12, 0]);
+  check("over its row's gutter the marker shows, in the 12px column after the hairline", await q(marker6), ["visible", 12, 0]);
   check("showing it moves nothing", await q(geometry), still6);
   await p.click(num6.x, num6.y);
   await sleep(80);
@@ -209,6 +210,18 @@ for (const fw of targets) {
   check("fill: 200px tall, scrolls; the current line (40) is in view; the page does not scroll", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-view]"),b=r.querySelector("[data-slot=code-view-body]");const c=b.querySelector("[aria-current=true]").getBoundingClientRect(),bb=b.getBoundingClientRect();return [Math.round(r.getBoundingClientRect().height), b.scrollHeight>b.clientHeight, c.top>=bb.top&&c.bottom<=bb.bottom, scrollY]})()`), [200, true, true, 0]);
 
   /* highlighted lines: shown as given; editable would colour value instead */
+  /* the same at the other display scales: hairline and code land on the same device pixels */
+  for (const dpr of [1, 1.25]) {
+    await p.viewport(1280, 900, dpr);
+    await open(fw, 3);
+    await sleep(100);
+    const ro = await pixels(`readonly-${dpr}`);
+    await open(fw, 2);
+    await editorReady();
+    const ed = await pixels(`editable-${dpr}`);
+    check(`editable at rest is the read-only view, pixel for pixel (dpr ${dpr})`, await differing(ro, ed), 0);
+  }
+  await p.viewport(1280, 900, 2);
   await open(fw, 4);
   check("highlighted lines are shown as given", await q(`document.querySelector("#stage [data-slot=code-view-code]").innerHTML.includes("<span")`), true);
   } catch (error) { check("script ran to the end", String(error.message).split("\n")[0].slice(0, 160), "ok"); }

@@ -27,7 +27,7 @@ export const codeView = tv({
     row: "relative col-[1/-1] grid grid-cols-subgrid",
     bar: "absolute inset-y-0 start-0 w-[3px]",
     /* line numbers: right-aligned on the gutter's hairline; not selectable, so a hand copy skips them */
-    num: "col-[1] min-w-5 px-1 border-e border-e-line text-2xs tabular-nums text-end text-ink-3 select-none",
+    num: "col-[1] min-w-[round(up,max(20px,calc(8px_+_var(--fndn-code-view-digits,1)_*_1ch)),4px)] px-1 border-e border-e-line text-2xs tabular-nums text-end text-ink-3 select-none",
     code: "col-[2] min-w-0 ps-1 pe-3 [font:inherit]",
     /* word-level add / del highlight (the change variant) */
     piece: "rounded-[3px] px-0.5 -mx-px box-decoration-clone",
@@ -71,9 +71,8 @@ export const codeView = tv({
       },
     },
     /* a listing (not a diff, which is never editable) keeps the editor's 12px fold column free
-     * between its numbers and the hairline, so it and the editor are drawn alike: the number cell is
-     * the editor's 20px number column, the 12px column and the 1px hairline */
-    fold: { true: { num: "min-w-[33px] pe-4" } },
+     * after the hairline, before the code, so it and the editor are drawn alike */
+    fold: { true: { code: "ps-4" } },
     /* the editor is mounted but not shown yet: it lies over the listing, laid out at the same size
      * (so it measures and takes the listing's scroll position), and invisible */
     ready: { false: { editor: "invisible absolute inset-0" } },

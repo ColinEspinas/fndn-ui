@@ -6,7 +6,7 @@ import { InputGroup } from "../input-group/input-group";
 import { Toggle } from "../toggle/toggle";
 import { Tooltip } from "../tooltip/tooltip";
 import { codeView } from "./code-view.recipe";
-import { CLOSED_SEARCH, CODE_VIEW_LABELS, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeDiffRow, type CodeEditorHandle, type CodeSearchState, type CodeViewLabels } from "./code-view.logic";
+import { CLOSED_SEARCH, CODE_VIEW_LABELS, digitsOf, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeDiffRow, type CodeEditorHandle, type CodeSearchState, type CodeViewLabels } from "./code-view.logic";
 
 export type { CodeDiffRow, CodePiece, CodeViewLabels } from "./code-view.logic";
 
@@ -113,12 +113,12 @@ export function CodeView({
   useEffect(() => (showListing && body.current ? watchOverflow(body.current, label) : undefined), [showListing, label]);
   useLayoutEffect(() => { if (showListing) revealCurrentLine(root.current); }, [tinted, showListing]);
 
-  const vars: Record<string, string> = {};
+  const rows = !diff && (isEditable || !highlighted) ? linesOf(text) : undefined;
+  const vars: Record<string, string> = { "--fndn-code-view-digits": String(digitsOf(rows?.length ?? highlighted?.length ?? 0, diff)) };
   if (maxHeight != null) vars["--fndn-code-view-max-height"] = `${maxHeight}px`;
   if (height != null) vars["--fndn-code-view-height"] = `${height}px`;
-  const rootStyle = Object.keys(vars).length ? ({ ...style, ...vars } as CSSProperties) : style;
+  const rootStyle = { ...style, ...vars } as CSSProperties;
   const r = codeView({ diff: !!diff, wrap, fold: !diff, ready, fill });
-  const rows = !diff && (isEditable || !highlighted) ? linesOf(text) : undefined;
 
   return (
     <div ref={root} data-slot="code-view" className={r.base({ class: className })} style={rootStyle} {...rest}>

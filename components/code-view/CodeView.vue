@@ -7,7 +7,7 @@ import InputGroup from "../input-group/InputGroup.vue";
 import Toggle from "../toggle/Toggle.vue";
 import Tooltip from "../tooltip/Tooltip.vue";
 import { codeView } from "./code-view.recipe";
-import { CLOSED_SEARCH, CODE_VIEW_LABELS, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeEditorHandle, type CodeSearchState } from "./code-view.logic";
+import { CLOSED_SEARCH, CODE_VIEW_LABELS, digitsOf, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeEditorHandle, type CodeSearchState } from "./code-view.logic";
 import type * as Logic from "./code-view.logic";
 
 /** A single run of code within a diff row; `change` tints it as an add / del. */
@@ -67,10 +67,10 @@ const r = computed(() => codeView({ diff: !!props.diff, wrap: props.wrap, fold: 
 const rows = computed(() => (!props.diff && (isEditable.value || !props.highlighted) ? linesOf(value.value) : undefined));
 const showListing = computed(() => !(isEditable.value && ready.value));
 const rootStyle = computed(() => {
-  const vars: Record<string, string> = {};
+  const vars: Record<string, string> = { "--fndn-code-view-digits": String(digitsOf(rows.value?.length ?? props.highlighted?.length ?? 0, props.diff)) };
   if (props.maxHeight != null) vars["--fndn-code-view-max-height"] = `${props.maxHeight}px`;
   if (props.height != null) vars["--fndn-code-view-height"] = `${props.height}px`;
-  return Object.keys(vars).length ? vars : undefined;
+  return vars;
 });
 
 const root = ref<HTMLElement | null>(null);

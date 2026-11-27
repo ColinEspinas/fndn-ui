@@ -11,7 +11,7 @@
   import Toggle from "../toggle/Toggle.svelte";
   import Tooltip from "../tooltip/Tooltip.svelte";
   import { codeView } from "./code-view.recipe";
-  import { CLOSED_SEARCH, CODE_VIEW_LABELS, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeEditorHandle, type CodeSearchState } from "./code-view.logic";
+  import { CLOSED_SEARCH, CODE_VIEW_LABELS, digitsOf, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeEditorHandle, type CodeSearchState } from "./code-view.logic";
   import type * as Logic from "./code-view.logic";
 
   /** A single run of code within a diff row; `change` tints it as an add / del. */
@@ -74,7 +74,7 @@
   const r = $derived(codeView({ diff: !!diff, wrap, fold: !diff, ready, fill }));
   const rows = $derived(!diff && (isEditable || !highlighted) ? linesOf(value) : undefined);
   const showListing = $derived(!(isEditable && ready));
-  const rootStyle = $derived([style, maxHeight == null ? "" : `--fndn-code-view-max-height: ${maxHeight}px`, height == null ? "" : `--fndn-code-view-height: ${height}px`].filter(Boolean).join("; ") || undefined);
+  const rootStyle = $derived([style, `--fndn-code-view-digits: ${digitsOf(rows?.length ?? highlighted?.length ?? 0, diff)}`, maxHeight == null ? "" : `--fndn-code-view-max-height: ${maxHeight}px`, height == null ? "" : `--fndn-code-view-height: ${height}px`].filter(Boolean).join("; ") || undefined);
 
   let root = $state<HTMLElement | null>(null);
   let body = $state<HTMLElement | null>(null);
