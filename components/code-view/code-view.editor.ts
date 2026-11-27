@@ -101,7 +101,10 @@ const theme = EditorView.theme({
   "@media (hover: hover)": {
     ".cm-foldGutter .cm-gutterElement:not(.cm-hoverLine) [data-fold=open]": { visibility: "hidden" },
   },
-  /* the current line: the caret's while the editor has the focus, else the host's currentLine */
+  /* the current line: the caret's while the editor has the focus, else the host's currentLine.
+   * CodeMirror marks the caret's line focused or not, and its own base theme tints it light blue:
+   * unfocused, that line is plain */
+  ".cm-activeLine, .cm-activeLineGutter": { backgroundColor: "transparent" },
   "&.cm-focused .cm-activeLine, &:not(.cm-focused) .cm-hostLine": { backgroundColor: "var(--fndn-hover)" },
   "&.cm-focused .cm-activeLineGutter, &:not(.cm-focused) .cm-gutterElement.cm-hostLine": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
   "&.cm-focused .cm-activeLineGutter [data-fold], &:not(.cm-focused) .cm-hostLine [data-fold]": { backgroundColor: "var(--fndn-hover)" },

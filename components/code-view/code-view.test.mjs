@@ -65,8 +65,10 @@ for (const fw of targets) {
   check("editable: nothing moves when the editor arrives (numbers, code, height)", editor, listing);
   check("editable: a named, multi-line text box; the gutter is hidden from assistive tech", await q(`(()=>{const c=document.querySelector("#stage .cm-content");return [c.getAttribute("role"), c.getAttribute("aria-multiline"), c.getAttribute("aria-label"), document.querySelector("#stage .cm-gutters").getAttribute("aria-hidden")]})()`), ["textbox", "true", "src/middleware/rate-limit.ts", "true"]);
   const tint = `(()=>{const tok=(v,p)=>{const d=document.createElement("div");d.style[p]="var("+v+")";document.body.append(d);const c=getComputedStyle(d)[p];d.remove();return c};const hover=tok("--fndn-hover","backgroundColor"),ink=tok("--fndn-ink","color");
-    const lines=[...document.querySelectorAll("#stage .cm-line")].map((l,i)=>getComputedStyle(l).backgroundColor===hover?i+1:0).filter(Boolean);
-    const nums=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].filter((g)=>g.offsetHeight&&getComputedStyle(g).backgroundColor===hover&&getComputedStyle(g).color===ink).map((g)=>+g.textContent);
+    /* any fill counts, not only the system's tint: CodeMirror's own (light blue) must never show */
+    const clear="rgba(0, 0, 0, 0)";
+    const lines=[...document.querySelectorAll("#stage .cm-line")].map((l,i)=>{const bg=getComputedStyle(l).backgroundColor;return bg===hover?i+1:bg!==clear?"fill "+bg:0}).filter(Boolean);
+    const nums=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].filter((g)=>g.offsetHeight&&getComputedStyle(g).backgroundColor!==clear).map((g)=>getComputedStyle(g).backgroundColor===hover&&getComputedStyle(g).color===ink?+g.textContent:"fill "+getComputedStyle(g).backgroundColor);
     return [lines, nums]})()`;
   check("editable at rest: only the host's line 7 is tinted (hover, number ink)", await q(tint), [[7], [7]]);
   check("editable: no CodeMirror default look (no focus outline, transparent editor, surface gutter, no gutter border)", await q(`(()=>{const e=document.querySelector("#stage .cm-editor"),g=document.querySelector("#stage .cm-gutters");return [getComputedStyle(e).backgroundColor, getComputedStyle(g).backgroundColor===getComputedStyle(document.querySelector("#stage [data-slot=code-view]")).backgroundColor, getComputedStyle(g).borderRightWidth]})()`), ["rgba(0, 0, 0, 0)", true, "0px"]);
