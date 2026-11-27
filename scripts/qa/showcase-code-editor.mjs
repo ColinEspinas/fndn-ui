@@ -52,7 +52,8 @@ async function focusApp() {
 try {
   await page.send("Page.addScriptToEvaluateOnNewDocument", { source: `window.__shift = 0; new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__shift += e.value; }).observe({ type: "layout-shift", buffered: true })` });
   await page.goto(URL, 1500);
-  ok(await waitFor(`!!${app("[data-editor=code] [data-slot=code-view-row]")}`), "the app renders with code in the editor");
+  /* the code is drawn by CodeMirror once it has loaded (the plain listing is the first frame) */
+  ok(await waitFor(`!!${app("[data-editor=code] .cm-line")}`), "the app renders with code in the editor");
   ok((await page.eval(`${app()}.dataset.layout`)) === "desktop", "1536: the desktop layout");
   await page.eval(`document.querySelector('[data-docs-showcase-frame]').scrollIntoView({ block: "start" })`);
   await sleep(2000);
@@ -63,7 +64,7 @@ try {
   const shift = await page.eval(`window.__shift`);
   ok(shift < 0.001, "first frame: no layout shift", shift.toFixed(4));
   /* density, the editor's way */
-  const rowH = await page.eval(`[...document.querySelectorAll('[data-editor=code] [data-slot=tabs-content]:not([hidden]) [data-slot=code-view-row]')].map((r) => Math.round(r.getBoundingClientRect().height))`);
+  const rowH = await page.eval(`[...document.querySelectorAll('[data-editor=code] [data-slot=tabs-content]:not([hidden]) .cm-line')].map((r) => Math.round(r.getBoundingClientRect().height))`);
   ok(rowH.length > 10 && new Set(rowH).size === 1, "code lines never wrap (one row height)", rowH.join(","));
   const treeH = await page.eval(`Math.max(...[...document.querySelectorAll('[data-editor=explorer] [data-slot=tree-view-item]')].map((e) => Math.round(e.getBoundingClientRect().height)))`);
   ok(treeH === 24, "explorer rows are 24px", treeH);
@@ -164,7 +165,7 @@ try {
   /* 1280, and dark */
   await page.viewport(1280, 900, 1.25);
   await page.goto(URL, 1500);
-  await waitFor(`!!${app("[data-slot=code-view-row]")}`);
+  await waitFor(`!!${app(".cm-line")}`);
   await focusApp();
   ok((await page.eval(`${app()}.dataset.layout`)) === "desktop", "1280: the desktop layout");
   ok(await page.eval(`document.scrollingElement.scrollWidth <= innerWidth`), "1280: no horizontal scroll");

@@ -1,18 +1,20 @@
-/* code-view's editor: CodeMirror 6, given the read-only listing's exact look. Loaded on demand by
- * code-view.logic.ts mountEditor, only for an editable view, so a listing never downloads it.
+/* code-view's CodeMirror 6 view, for an editor and for a read-only listing alike, given the plain
+ * listing's exact look. Loaded on demand by code-view.logic.ts mountEditor after the first frame,
+ * which the plain listing draws; a diff and lines highlighted elsewhere never load it.
  *
  * Nothing of CodeMirror's own look is kept. The font, the 20px line and the text colour are
  * inherited from the view's root (the recipe sets them for the listing too); the insets, the gutter,
  * the current line, the selection and the caret come from the tokens. The colours of the code are
  * the listing's: the same tokenizer marks the same runs with the recipe's classes, so no language
- * package is needed. Folding follows indentation; the search panel is built from the system's
- * field and button recipes. */
-import { Annotation, Compartment, EditorState, RangeSetBuilder, Transaction, type Extension } from "@codemirror/state";
+ * package is needed. Folding follows indentation; the find widget is drawn by the adapters.
+ * Read-only, the view takes no edits and shows no caret: it is one tab stop that scrolls with the
+ * keyboard, finds, folds and copies, and its current line is the host's alone. */
+import { Annotation, Compartment, EditorState, RangeSet, RangeSetBuilder, StateEffect, StateField, Transaction, type Extension } from "@codemirror/state";
 import {
-  Decoration, EditorView, ViewPlugin, crosshairCursor, drawSelection, highlightActiveLine, highlightActiveLineGutter, keymap, lineNumbers,
+  Decoration, EditorView, GutterMarker, ViewPlugin, crosshairCursor, drawSelection, gutterLineClass, highlightActiveLine, highlightActiveLineGutter, keymap, lineNumbers,
   rectangularSelection, runScopeHandlers, type DecorationSet, type ViewUpdate,
 } from "@codemirror/view";
-import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
+import { defaultKeymap, history, historyKeymap, indentWithTab, selectAll } from "@codemirror/commands";
 import { SearchQuery, closeSearchPanel, findNext, findPrevious, getSearchQuery, openSearchPanel, replaceAll, replaceNext, search, searchKeymap, searchPanelOpen, setSearchQuery } from "@codemirror/search";
 import { codeFolding, foldGutter, foldKeymap, foldService } from "@codemirror/language";
 import { codeView } from "./code-view.recipe";
@@ -77,6 +79,9 @@ const byIndent = foldService.of((state, lineStart) => {
 const theme = EditorView.theme({
   "&": { color: "inherit", backgroundColor: "transparent", fontSize: "inherit" },
   "&.cm-focused": { outline: "none" },
+  /* read-only, there is no caret to show the focus: from the keyboard the view takes the inset
+   * ring the plain listing's scroll region had (an editor shows its caret and current line) */
+  "&:has(.cm-content[aria-readonly=true]:focus-visible)": { outline: "2px solid var(--fndn-accent)", outlineOffset: "-2px" },
   ".cm-scroller": { fontFamily: "inherit", lineHeight: "inherit", overscrollBehaviorX: "contain" },
   ".cm-content": { paddingBlock: "12px", paddingInline: "0", caretColor: "var(--fndn-ink)" },
   ".cm-line": { paddingBlock: "0", paddingInline: "4px 12px" },
@@ -96,6 +101,9 @@ const theme = EditorView.theme({
   },
   ".cm-activeLine": { backgroundColor: "var(--fndn-hover)" },
   ".cm-activeLineGutter": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
+  /* read-only: the host's current line, the listing's tint */
+  ".cm-hostLine": { backgroundColor: "var(--fndn-hover)" },
+  ".cm-gutterElement.cm-hostLine": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
   ".cm-selectionBackground, &.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground": { backgroundColor: "var(--fndn-accent-tint)" },
   ".cm-cursor, .cm-dropCursor": { borderInlineStart: "1.5px solid var(--fndn-ink)" },
   ".cm-foldPlaceholder": {
@@ -115,6 +123,57 @@ const phrases = (l: CodeViewLabels) => EditorState.phrases.of({
 });
 const named = (label: string | undefined) => EditorView.contentAttributes.of(label ? { "aria-label": label } : {});
 const wrapping = (wrap: boolean) => (wrap ? EditorView.lineWrapping : []);
+
+/* read-only: the host's current line, tinted across the gutter and the code as the listing's is */
+const setHostLine = StateEffect.define<number | undefined>();
+const hostLine = StateField.define<number | undefined>({
+  create: () => undefined,
+  update(value, tr) {
+    for (const e of tr.effects) if (e.is(setHostLine)) value = e.value;
+    return value;
+  },
+});
+class HostLineMarker extends GutterMarker {
+  elementClass = "cm-hostLine";
+}
+const HOST = new HostLineMarker();
+const hostStart = (state: EditorState) => {
+  const n = state.field(hostLine, false);
+  return n !== undefined && n >= 1 && n <= state.doc.lines ? state.doc.line(n).from : undefined;
+};
+const hostLineMarks: Extension = [
+  hostLine,
+  gutterLineClass.compute([hostLine, "doc"], (state) => {
+    const at = hostStart(state);
+    return at === undefined ? RangeSet.empty : RangeSet.of([HOST.range(at)]);
+  }),
+  EditorView.decorations.compute([hostLine, "doc"], (state) => {
+    const at = hostStart(state);
+    return at === undefined ? Decoration.none : Decoration.set([Decoration.line({ class: "cm-hostLine" }).range(at)]);
+  }),
+];
+
+/* what an editor has and a read-only view has not: edits and their keys, the caret and its line,
+ * the drawn selection and several cursors. Read-only, the text box is one tab stop (aria-readonly),
+ * the browser's own selection shows (so it can be copied), the arrow keys scroll, Mod+A selects all,
+ * and the current line is the host's */
+const reduced = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const modeOf = (editable: boolean): Extension => editable
+  ? [
+      highlightActiveLine(),
+      highlightActiveLineGutter(),
+      drawSelection({ cursorBlinkRate: reduced() ? 0 : 1200 }),
+      EditorState.allowMultipleSelections.of(true),
+      rectangularSelection(),
+      crosshairCursor(),
+      keymap.of([indentWithTab, ...defaultKeymap, ...historyKeymap]),
+    ]
+  : [
+      EditorState.readOnly.of(true),
+      EditorView.editable.of(false),
+      EditorView.contentAttributes.of({ tabindex: "0" }),
+      keymap.of([{ key: "Mod-a", run: selectAll }]),
+    ];
 
 /* Find and replace: CodeMirror's search state, commands and keys, with the widget drawn by the
  * adapters over the code (the system's input, toggles, buttons and tooltips). CodeMirror only
@@ -150,14 +209,13 @@ function change(from: string, to: string) {
 
 export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions, start: { icon: SVGElement | null; scrollTop: number; scrollLeft: number }): CodeEditorHandle {
   let opts = options;
-  const wrapC = new Compartment(), labelC = new Compartment(), phraseC = new Compartment();
+  const wrapC = new Compartment(), labelC = new Compartment(), phraseC = new Compartment(), modeC = new Compartment();
   const lineOf = (state: EditorState, n: number) => state.doc.line(Math.min(Math.max(1, Math.round(n)), state.doc.lines));
   /* the last line the host asked for, and the last one reported: the caret jumps only when the
    * host asks for a new line, so a host that keeps passing the same line never pulls it back */
   let asked = options.currentLine;
   let reported = 0;
   let lastSearch = "";
-  const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const marker = (open: boolean) => {
     const span = document.createElement("span");
@@ -170,17 +228,13 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
     foldGutter({ markerDOM: marker }),
     codeFolding(),
     byIndent,
-    highlightActiveLine(),
-    highlightActiveLineGutter(),
-    drawSelection({ cursorBlinkRate: reduced ? 0 : 1200 }),
-    EditorState.allowMultipleSelections.of(true),
-    rectangularSelection(),
-    crosshairCursor(),
+    modeC.of(modeOf(options.editable)),
+    hostLineMarks,
     history(),
     search({ top: true, createPanel: emptyPanel }),
     /* Mod+F opens find, or takes focus back to its field when it is open */
     keymap.of([{ key: "Mod-f", scope: "editor search-panel", preventDefault: true, run: (v) => { openSearchPanel(v); opts.onSearchFocus(); return true; } }]),
-    keymap.of([indentWithTab, ...defaultKeymap, ...historyKeymap, ...searchKeymap, ...foldKeymap]),
+    keymap.of([...searchKeymap, ...foldKeymap]),
     tokens,
     theme,
     wrapC.of(wrapping(options.wrap)),
@@ -189,7 +243,7 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
     EditorView.updateListener.of((u) => {
       const own = u.transactions.some((tr) => !tr.annotation(fromHost));
       if (u.docChanged && u.transactions.some((tr) => tr.docChanged && !tr.annotation(fromHost))) opts.onValueChange(u.state.doc.toString());
-      if (u.selectionSet || u.docChanged) {
+      if (opts.editable && (u.selectionSet || u.docChanged)) {
         const n = u.state.doc.lineAt(u.state.selection.main.head).number;
         if (n !== reported) { reported = n; if (own) opts.onCurrentLineChange(n); }
       }
@@ -203,9 +257,10 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
     }),
   ];
   const state = EditorState.create({ doc: options.value, extensions });
-  const first = lineOf(state, options.currentLine ?? 1);
+  /* an editor's caret starts on the current line; a read-only view has none */
+  const first = options.editable ? lineOf(state, options.currentLine ?? 1) : state.doc.line(1);
   reported = first.number;
-  const view = new EditorView({ state: state.update({ selection: { anchor: first.from } }).state, parent });
+  const view = new EditorView({ state: state.update({ selection: { anchor: first.from }, effects: setHostLine.of(options.editable ? undefined : options.currentLine) }).state, parent });
   view.scrollDOM.scrollTop = start.scrollTop;
   view.scrollDOM.scrollLeft = start.scrollLeft;
 
@@ -217,10 +272,17 @@ export function createCodeEditor(parent: HTMLElement, options: CodeEditorOptions
       if (next.wrap !== undefined && next.wrap !== prev.wrap) effects.push(wrapC.reconfigure(wrapping(next.wrap)));
       if ("label" in next && next.label !== prev.label) effects.push(labelC.reconfigure(named(next.label)));
       if (next.labels && JSON.stringify(next.labels) !== JSON.stringify(prev.labels)) effects.push(phraseC.reconfigure(phrases(next.labels)));
+      if (next.editable !== undefined && next.editable !== prev.editable) effects.push(modeC.reconfigure(modeOf(next.editable)));
+      /* read-only, the current line is only the host's: tinted, and scrolled into view when it changes */
+      const host = opts.editable ? undefined : opts.currentLine;
+      if (host !== view.state.field(hostLine)) {
+        effects.push(setHostLine.of(host));
+        if (host !== undefined) effects.push(EditorView.scrollIntoView(lineOf(view.state, host).from, { y: "nearest", yMargin: 20 }));
+      }
       const doc = view.state.doc.toString();
       const changes = next.value !== undefined && next.value !== doc ? change(doc, next.value) : undefined;
       let selection: { anchor: number } | undefined;
-      if ("currentLine" in next && next.currentLine !== asked) {
+      if (opts.editable && "currentLine" in next && next.currentLine !== asked) {
         asked = next.currentLine;
         if (asked !== undefined) {
           const after = changes ? view.state.update({ changes }).state : view.state;

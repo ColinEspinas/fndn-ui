@@ -55,6 +55,9 @@ export function CodeView({
   const text = value ?? ownValue;
   const [ownLine, setOwnLine] = useState(defaultCurrentLine);
   const isEditable = editable && !diff;
+  /* CodeMirror draws every listing once it has loaded, read-only or not: all but a diff and lines
+   * highlighted elsewhere (trusted HTML), which stay the plain listing */
+  const usesEditor = !diff && (isEditable || !highlighted);
   /* an editor always has a caret, so it always has a current line (the first, unless told) */
   const line = diff ? undefined : (currentLine ?? ownLine ?? (isEditable ? 1 : undefined));
   const words: CodeViewLabels = { ...CODE_VIEW_LABELS, ...labels };
@@ -70,9 +73,9 @@ export function CodeView({
   const [focusFind, setFocusFind] = useState(0);
 
   useEffect(() => {
-    if (!isEditable || !editorEl.current) return;
+    if (!usesEditor || !editorEl.current) return;
     const h = mountEditor(editorEl.current, {
-      value: text, wrap, currentLine: line, label, labels: words,
+      value: text, editable: isEditable, wrap, currentLine: line, label, labels: words,
       onValueChange: (v) => { setOwnValue(v); handlers.current.onValueChange?.(v); },
       onCurrentLineChange: (n) => { setOwnLine(n); handlers.current.onCurrentLineChange?.(n); },
       onSearch: (next) => setSearch((prev) => { if (next.open && !prev.open) { setReplacing(false); setFocusFind((n) => n + 1); } return next; }),
@@ -81,8 +84,8 @@ export function CodeView({
     handle.current = h;
     return () => { h.destroy(); handle.current = null; setReady(false); setSearch(CLOSED_SEARCH); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditable]);
-  useEffect(() => { handle.current?.update({ value: text, wrap, currentLine: line, label, labels: words }); });
+  }, [usesEditor]);
+  useEffect(() => { handle.current?.update({ value: text, editable: isEditable, wrap, currentLine: line, label, labels: words }); });
 
   /* the field takes the focus, its text selected, when the widget opens or Mod+F asks again */
   useEffect(() => {
@@ -101,7 +104,7 @@ export function CodeView({
     else if (act?.key(event.nativeEvent)) event.preventDefault();
   };
 
-  const showListing = !(isEditable && ready);
+  const showListing = !(usesEditor && ready);
   /* the listing: a named scroll region while it overflows, its current line kept in view */
   const body = useRef<HTMLDivElement>(null);
   useEffect(() => (showListing && body.current ? watchOverflow(body.current, label) : undefined), [showListing, label]);
@@ -145,17 +148,17 @@ export function CodeView({
           </div>
         </div>
       )}
-      {isEditable && (
+      {usesEditor && (
         <>
           <span data-slot="code-view-icons" className={r.icons()} aria-hidden="true"><CaretDown data-slot="icon" weight="bold" /></span>
           <div ref={editorEl} data-slot="code-view-editor" className={r.editor()} />
           {ready && search.open && (
             <div data-slot="code-view-search" className={r.search()}>
               <div data-slot="code-view-search-row" className={r.searchRow()}>
-                <Button
+                {isEditable && <Button
                   data-code-view="search-expand" className={r.searchExpand()} variant="ghost" size="xs" square muted aria-label={words.toggleReplace} aria-expanded={replacing}
                   icon={<CaretRight data-slot="icon" weight="bold" />} onClick={() => setReplacing((v) => !v)}
-                />
+                />}
                 <InputGroup
                   data-code-view="search-field" className={r.searchField()} size="sm" mono aria-label={words.find} placeholder={words.find} spellCheck={false}
                   value={search.search} onChange={(e) => act?.set({ search: e.currentTarget.value })} onKeyDown={findKey}
@@ -178,7 +181,7 @@ export function CodeView({
                   <Button variant="ghost" size="xs" square muted aria-label={words.close} icon={<X data-slot="icon" weight="bold" />} onClick={() => act?.close()} />
                 </Tooltip>
               </div>
-              {replacing && (
+              {isEditable && replacing && (
                 <div data-slot="code-view-search-row" className={r.searchRow()}>
                   <InputGroup
                     data-code-view="replace-field" className={r.replaceField()} size="sm" mono aria-label={words.replace} placeholder={words.replace} spellCheck={false}

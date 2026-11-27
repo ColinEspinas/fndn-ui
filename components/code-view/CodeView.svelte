@@ -60,13 +60,16 @@
   /* tok and piece take no variant */
   const plain = codeView();
   const isEditable = $derived(editable && !diff);
+  /* CodeMirror draws every listing once it has loaded, read-only or not: all but a diff and lines
+   * highlighted elsewhere (trusted HTML), which stay the plain listing */
+  const usesEditor = $derived(!diff && (isEditable || !highlighted));
   /* an editor always has a caret, so it always has a current line (the first, unless told) */
   const line = $derived(diff ? undefined : (currentLine ?? (isEditable ? 1 : undefined)));
   const words = $derived<CodeViewLabels>({ ...CODE_VIEW_LABELS, ...labels });
   let ready = $state(false);
   const r = $derived(codeView({ diff: !!diff, wrap, fold: !diff, ready, fill }));
   const rows = $derived(!diff && (isEditable || !highlighted) ? linesOf(value) : undefined);
-  const showListing = $derived(!(isEditable && ready));
+  const showListing = $derived(!(usesEditor && ready));
   const rootStyle = $derived([style, maxHeight == null ? "" : `--fndn-code-view-max-height: ${maxHeight}px`, height == null ? "" : `--fndn-code-view-height: ${height}px`].filter(Boolean).join("; ") || undefined);
 
   let root = $state<HTMLElement | null>(null);
@@ -94,9 +97,9 @@
   }
   $effect(() => {
     const el = editorEl;
-    if (!isEditable || !el) return;
+    if (!usesEditor || !el) return;
     const h = untrack(() => mountEditor(el, {
-      value, wrap, currentLine: line, label, labels: words,
+      value, editable: isEditable, wrap, currentLine: line, label, labels: words,
       onValueChange: (v) => { value = v; onvaluechange?.(v); },
       onCurrentLineChange: (n) => { currentLine = n; oncurrentlinechange?.(n); },
       onSearch: (next) => { if (next.open && !search.open) { replacing = false; focusFind(); } search = next; },
@@ -105,7 +108,7 @@
     handle = h;
     return () => { h.destroy(); handle = null; ready = false; search = CLOSED_SEARCH; };
   });
-  $effect(() => { const h = handle; const next = { value, wrap, currentLine: line, label, labels: words }; untrack(() => h?.update(next)); });
+  $effect(() => { const h = handle; const next = { value, editable: isEditable, wrap, currentLine: line, label, labels: words }; untrack(() => h?.update(next)); });
 
   /* the listing: a named scroll region while it overflows, its current line kept in view */
   $effect(() => (body ? watchOverflow(body, label) : undefined));
@@ -147,15 +150,15 @@
       </div>
     </div>
   {/if}
-  {#if isEditable}
+  {#if usesEditor}
     <span data-slot="code-view-icons" class={r.icons()} aria-hidden="true"><CaretDown data-slot="icon" weight="bold" /></span>
     <div bind:this={editorEl} data-slot="code-view-editor" class={r.editor()}></div>
     {#if ready && search.open}
       <div data-slot="code-view-search" class={r.search()}>
         <div data-slot="code-view-search-row" class={r.searchRow()}>
-          <Button data-code-view="search-expand" class={r.searchExpand()} variant="ghost" size="xs" square muted aria-label={words.toggleReplace} aria-expanded={replacing} onclick={() => (replacing = !replacing)}>
+          {#if isEditable}<Button data-code-view="search-expand" class={r.searchExpand()} variant="ghost" size="xs" square muted aria-label={words.toggleReplace} aria-expanded={replacing} onclick={() => (replacing = !replacing)}>
             {#snippet icon()}<CaretRight data-slot="icon" weight="bold" />{/snippet}
-          </Button>
+          </Button>{/if}
           <InputGroup
             data-code-view="search-field" class={r.searchField()} size="sm" mono aria-label={words.find} placeholder={words.find} spellcheck="false"
             value={search.search} oninput={(v) => handle?.search.set({ search: v })} onkeydown={findKey}
@@ -183,7 +186,7 @@
             {/snippet}
           </Tooltip>
         </div>
-        {#if replacing}
+        {#if isEditable && replacing}
           <div data-slot="code-view-search-row" class={r.searchRow()}>
             <InputGroup
               data-code-view="replace-field" class={r.replaceField()} size="sm" mono aria-label={words.replace} placeholder={words.replace} spellcheck="false"

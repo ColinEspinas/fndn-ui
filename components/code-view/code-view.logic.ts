@@ -103,6 +103,8 @@ export function revealCurrentLine(root: HTMLElement | null): void {
 /** What the editor is given; `update` takes any of it again. */
 export type CodeEditorOptions = {
   value: string;
+  /** An editor; false: a read-only view (no edits, no caret, the host's current line). */
+  editable: boolean;
   wrap: boolean;
   /** The line to put the caret on, when it is new (a jump from a list of problems). */
   currentLine?: number;
@@ -128,8 +130,8 @@ export type CodeSearchActions = {
 };
 export type CodeEditorHandle = { update(options: Partial<CodeEditorOptions>): void; destroy(): void; search: CodeSearchActions };
 
-/** Mount the editor in `parent` (the editor part). It is loaded on demand; until it is there, the
- * listing shows. Once created, it takes the listing's scroll position, then `onReady` tells the
+/** Mount CodeMirror in `parent` (the editor part), editable or read-only. It is loaded on demand,
+ * after the first frame; until it is there, the plain listing shows. Once created, it takes the listing's scroll position, then `onReady` tells the
  * adapter to drop the listing and show it. Updates sent before it arrives are kept for it. */
 export function mountEditor(parent: HTMLElement, options: CodeEditorOptions, onReady: () => void): CodeEditorHandle {
   let current = options;

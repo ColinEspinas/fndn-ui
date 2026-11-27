@@ -52,13 +52,16 @@ const attrs = useAttrs();
 const plain = codeView();
 
 const isEditable = computed(() => props.editable && !props.diff);
+/* CodeMirror draws every listing once it has loaded, read-only or not: all but a diff and lines
+ * highlighted elsewhere (trusted HTML), which stay the plain listing */
+const usesEditor = computed(() => !props.diff && (isEditable.value || !props.highlighted));
 /* an editor always has a caret, so it always has a current line (the first, unless told) */
 const line = computed(() => (props.diff ? undefined : (currentLine.value ?? (isEditable.value ? 1 : undefined))));
 const words = computed<CodeViewLabels>(() => ({ ...CODE_VIEW_LABELS, ...props.labels }));
 const ready = ref(false);
 const r = computed(() => codeView({ diff: !!props.diff, wrap: props.wrap, fold: !props.diff, ready: ready.value, fill: props.fill }));
 const rows = computed(() => (!props.diff && (isEditable.value || !props.highlighted) ? linesOf(value.value) : undefined));
-const showListing = computed(() => !(isEditable.value && ready.value));
+const showListing = computed(() => !(usesEditor.value && ready.value));
 const rootStyle = computed(() => {
   const vars: Record<string, string> = {};
   if (props.maxHeight != null) vars["--fndn-code-view-max-height"] = `${props.maxHeight}px`;
@@ -96,9 +99,9 @@ function mount() {
   handle.value = null;
   ready.value = false;
   search.value = CLOSED_SEARCH;
-  if (!isEditable.value || !editorEl.value) return;
+  if (!usesEditor.value || !editorEl.value) return;
   handle.value = mountEditor(editorEl.value, {
-    value: value.value, wrap: props.wrap, currentLine: line.value, label: props.label, labels: words.value,
+    value: value.value, editable: isEditable.value, wrap: props.wrap, currentLine: line.value, label: props.label, labels: words.value,
     onValueChange: (v) => { value.value = v; emit("valueChange", v); },
     onCurrentLineChange: (n) => { currentLine.value = n; emit("currentLineChange", n); },
     onSearch: (next) => { if (next.open && !search.value.open) { replacing.value = false; focusFind(); } search.value = next; },
@@ -106,8 +109,8 @@ function mount() {
   }, () => { ready.value = true; });
 }
 onMounted(mount);
-watch(isEditable, () => nextTick(mount));
-watch(() => [value.value, props.wrap, line.value, props.label, words.value] as const, ([v, wrap, current, label, labels]) => handle.value?.update({ value: v, wrap, currentLine: current, label, labels }));
+watch(usesEditor, () => nextTick(mount));
+watch(() => [value.value, isEditable.value, props.wrap, line.value, props.label, words.value] as const, ([v, editable, wrap, current, label, labels]) => handle.value?.update({ value: v, editable, wrap, currentLine: current, label, labels }));
 
 /* the listing: a named scroll region while it overflows, its current line kept in view */
 let stopOverflow = () => {};
@@ -146,12 +149,12 @@ onBeforeUnmount(() => { handle.value?.destroy(); stopOverflow(); });
         </template>
       </div>
     </div>
-    <template v-if="isEditable">
+    <template v-if="usesEditor">
       <span data-slot="code-view-icons" :class="r.icons()" aria-hidden="true"><PhCaretDown data-slot="icon" weight="bold" /></span>
       <div ref="editorEl" data-slot="code-view-editor" :class="r.editor()" />
       <div v-if="ready && search.open" data-slot="code-view-search" :class="r.search()">
         <div data-slot="code-view-search-row" :class="r.searchRow()">
-          <Button data-code-view="search-expand" :class="r.searchExpand()" variant="ghost" size="xs" square muted :aria-label="words.toggleReplace" :aria-expanded="replacing" @click="replacing = !replacing">
+          <Button v-if="isEditable" data-code-view="search-expand" :class="r.searchExpand()" variant="ghost" size="xs" square muted :aria-label="words.toggleReplace" :aria-expanded="replacing" @click="replacing = !replacing">
             <template #icon><PhCaretRight data-slot="icon" weight="bold" /></template>
           </Button>
           <InputGroup
@@ -175,7 +178,7 @@ onBeforeUnmount(() => { handle.value?.destroy(); stopOverflow(); });
             <Button variant="ghost" size="xs" square muted :aria-label="words.close" @click="handle?.search.close()"><template #icon><PhX data-slot="icon" weight="bold" /></template></Button>
           </Tooltip>
         </div>
-        <div v-if="replacing" data-slot="code-view-search-row" :class="r.searchRow()">
+        <div v-if="isEditable && replacing" data-slot="code-view-search-row" :class="r.searchRow()">
           <InputGroup
             data-code-view="replace-field" :class="r.replaceField()" size="sm" mono :aria-label="words.replace" :placeholder="words.replace" spellcheck="false"
             :value="search.replace" @update:value="(v: string) => handle?.search.set({ replace: v })" @keydown="replaceKey"

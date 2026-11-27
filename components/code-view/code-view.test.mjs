@@ -1,6 +1,9 @@
 // Keyboard and pointer contract of the Code View, run against every target through the harness.
 //   node components/code-view/code-view.test.mjs            all three targets
 //   node components/code-view/code-view.test.mjs react      one target
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { launch, sleep } from "../../scripts/qa/cdp.mjs";
 const BASE = process.env.DOCS_URL ?? "http://localhost:4321";
 const targets = process.argv.slice(2).length ? process.argv.slice(2) : ["react", "vue", "svelte"];
@@ -13,8 +16,15 @@ const INVOICE = [
   "  return base.total;",
   "}",
 ].join("\n");
-const p = await launch({ dpr: 2 });
+/* a mouse, so the fold markers stay hidden until the gutter is hovered */
+const p = await launch({ dpr: 2, hover: true });
 let failed = 0;
+/* CodeMirror's module can be held back, to look at the plain listing it replaces */
+let holding = false;
+const held = [];
+p.on("Fetch.requestPaused", (e) => { if (holding) held.push(e.requestId); else void p.send("Fetch.continueRequest", { requestId: e.requestId }); });
+await p.send("Fetch.enable", { patterns: [{ urlPattern: "*code-view.editor*" }] });
+const release = async () => { holding = false; for (const id of held.splice(0)) await p.send("Fetch.continueRequest", { requestId: id }); };
 const open = async (fw, ex, extra = "") => {
   await p.goto(`${BASE}/harness.html?c=code-view&fw=${fw}&ex=${ex}${extra}`, 150);
   for (let t = 0; t < 80; t++) { if (await p.eval(`"harnessReady" in document.documentElement.dataset`)) break; await sleep(25); }
@@ -32,28 +42,85 @@ for (const fw of targets) {
   const checks = [];
   const check = (name, got, want) => { const ok = JSON.stringify(got) === JSON.stringify(want); if (!ok) failed++; checks.push(`${ok ? "✓" : "✗"} ${name}${ok ? "" : ` — got ${JSON.stringify(got)}, want ${JSON.stringify(want)}`}`); };
   try {
-  /* Listing */
+  /* the whole view as pixels */
+  const pixels = async (name) => {
+    await p.hover(1, 1);
+    await sleep(60);
+    const b = await p.rect("#stage [data-slot=code-view]");
+    const file = path.join(os.tmpdir(), `code-view-${fw}-${name}-${process.pid}.png`);
+    await p.shot(file, { x: b.x, y: b.y, width: b.w, height: b.h });
+    const data = fs.readFileSync(file).toString("base64");
+    fs.rmSync(file);
+    return data;
+  };
+  const differing = (a, b) => q(`(async()=>{const load=(s)=>new Promise((ok)=>{const i=new Image();i.onload=()=>ok(i);i.src="data:image/png;base64,"+s});const [A,E]=await Promise.all([load(${JSON.stringify(a)}),load(${JSON.stringify(b)})]);if(A.width!==E.width||A.height!==E.height) return "size "+A.width+"x"+A.height+" vs "+E.width+"x"+E.height;const px=(img)=>{const c=document.createElement("canvas");c.width=img.width;c.height=img.height;const x=c.getContext("2d");x.drawImage(img,0,0);return x.getImageData(0,0,img.width,img.height).data};const a=px(A),e=px(E);let n=0;for(let i=0;i<a.length;i+=4) if(a[i]!==e[i]||a[i+1]!==e[i+1]||a[i+2]!==e[i+2]) n++;return n})()`);
+  const lines = `[...document.querySelectorAll("#stage .cm-line")].map((l)=>l.textContent).join("\\n")`;
+
+  /* Read-only: the plain listing is the first frame, then CodeMirror takes its place */
+  holding = true;
   await open(fw, 0);
-  check("every target renders the same code, whitespace included", await q(`[...document.querySelectorAll("#stage [data-slot=code-view-code]")].map((c)=>c.textContent).join("\\n")`), INVOICE);
+  check("first frame: the plain listing, every target the same code, whitespace included", await q(`[!!document.querySelector("#stage .cm-editor"), [...document.querySelectorAll("#stage [data-slot=code-view-code]")].map((c)=>c.textContent).join("\\n")]`), [false, INVOICE]);
   check("no frame of its own: no shadow, no radius, no border", await q(`(()=>{const cs=getComputedStyle(document.querySelector("#stage [data-slot=code-view]"));return [cs.boxShadow, cs.borderTopLeftRadius, cs.borderTopWidth]})()`), ["none", "0px", "0px"]);
-  check("a listing that fits is not a tab stop and loads no editor", await q(`[document.querySelector("#stage [data-slot=code-view-body]").hasAttribute("tabindex"), !!document.querySelector("#stage .cm-editor")]`), [false, false]);
   check("line numbers are not selectable; rows are 20px; the code is 12.5px mono", await q(`(()=>{const n=document.querySelector("#stage [data-slot=code-view-num]"),c=document.querySelector("#stage [data-slot=code-view-code]");return [getComputedStyle(n).userSelect, Math.round(n.parentElement.getBoundingClientRect().height), getComputedStyle(c).fontSize, getComputedStyle(c).fontFamily.includes("JetBrains Mono")]})()`), ["none", 20, "12.5px", true]);
   check("syntax colours: keywords, strings, calls", await q(`[...new Set([...document.querySelectorAll("#stage [data-slot=code-view-tok]")].map((t)=>t.className))].length`), 3);
+  const plainShot = await pixels("plain");
+  await release();
+  check("read-only: CodeMirror arrives and replaces the listing", await editorReady(), true);
+  check("read-only: the same code", await q(lines), INVOICE);
+  check("read-only: not a pixel moves when CodeMirror arrives", await differing(plainShot, await pixels("cm")), 0);
+  check("read-only: one tab stop, a named read-only multi-line text box; the gutter hidden from assistive tech", await q(`(()=>{const c=document.querySelector("#stage .cm-content");return [c.getAttribute("tabindex"), c.getAttribute("role"), c.getAttribute("aria-readonly"), c.getAttribute("aria-multiline"), c.getAttribute("contenteditable"), c.getAttribute("aria-label"), document.querySelector("#stage .cm-gutters").getAttribute("aria-hidden")]})()`), ["0", "textbox", "true", "true", "false", "src/billing/invoice.ts", "true"]);
+  check("read-only: no current line given, nothing tinted", await q(`!!document.querySelector("#stage .cm-hostLine, #stage .cm-activeLine")`), false);
+  await p.click(5, 5);
+  await p.key("Tab");
+  check("Tab reaches the code; no caret is drawn", await q(`[document.activeElement?.classList.contains("cm-content"), !!document.querySelector("#stage .cm-cursor")]`), [true, false]);
+  await p.key("f", { ctrl: true });
+  await sleep(120);
+  check("Mod+F opens find, with no replace caret", await q(`[...document.querySelectorAll("#stage [data-slot=code-view-search] button")].map((b)=>b.getAttribute("aria-label")||b.textContent.trim())`), ["Match case", "Match whole word", "Use regular expression", "Previous match", "Next match", "Close"]);
+  await p.type("base");
+  await sleep(80);
+  check("it counts the matches", await q(`document.querySelector("#stage [data-slot=code-view-search-count]").textContent`), "4 results");
+  await p.key("Escape");
+  await sleep(50);
+  check("Escape closes it and returns the focus to the code", await q(`[!!document.querySelector("#stage [data-slot=code-view-search]"), document.activeElement?.classList.contains("cm-content")]`), [false, true]);
+  const l2 = await q(`(()=>{const r=[...document.querySelectorAll("#stage .cm-line")][1].getBoundingClientRect();return {x1:r.left+20,x2:r.left+200,y:r.top+10}})()`);
+  await p.drag(l2.x1, l2.y, l2.x2, l2.y);
+  check("text can be selected with the pointer, for copying", await q(`getSelection().toString().length > 5`), true);
+  await p.key("a", { ctrl: true });
+  check("Mod+A selects the whole listing", await q(`getSelection().toString().replace(/\\n+$/,"")`), INVOICE);
 
-  /* Diff */
+  /* Diff and highlighted lines stay the plain listing */
   await open(fw, 1);
-  check("Diff: one row per line, kinds tinted, bars on add and del, no current line", await q(`(()=>{const rows=[...document.querySelectorAll("#stage [data-slot=code-view-row]")];return [rows.length, rows.filter((r)=>r.querySelector("[data-slot=code-view-bar]")).length, document.querySelectorAll("#stage [data-slot=code-view-piece]").length, !!document.querySelector("#stage [aria-current]")]})()`), [4, 2, 2, false]);
+  await sleep(300);
+  check("Diff: the plain listing (no CodeMirror), one row per line, kinds tinted, bars on add and del, no current line", await q(`(()=>{const rows=[...document.querySelectorAll("#stage [data-slot=code-view-row]")];return [!!document.querySelector("#stage .cm-editor"), rows.length, rows.filter((r)=>r.querySelector("[data-slot=code-view-bar]")).length, document.querySelectorAll("#stage [data-slot=code-view-piece]").length, !!document.querySelector("#stage [aria-current]")]})()`), [false, 4, 2, 2, false]);
+  await open(fw, 4);
+  await sleep(300);
+  check("highlighted lines: the plain listing, shown as given", await q(`[!!document.querySelector("#stage .cm-editor"), document.querySelector("#stage [data-slot=code-view-code]").innerHTML.includes("<span")]`), [false, true]);
 
   /* Read-only with a current line, no wrap (ex 3): the same file as the editable example */
+  holding = true;
   await open(fw, 3);
-  check("currentLine 7: that row alone is current", await q(`(()=>{const rows=[...document.querySelectorAll("#stage [data-slot=code-view-row]")];const cur=rows.filter((r)=>r.getAttribute("aria-current")==="true");return [cur.length, rows.indexOf(cur[0])+1]})()`), [1, 7]);
-  check("an overflowing listing is a named, focusable region", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-view-body]");return [b.getAttribute("tabindex"), b.getAttribute("role"), b.getAttribute("aria-label")]})()`), ["0", "region", "src/middleware/rate-limit.ts"]);
+  check("first frame: currentLine 7, that row alone is current", await q(`(()=>{const rows=[...document.querySelectorAll("#stage [data-slot=code-view-row]")];const cur=rows.filter((r)=>r.getAttribute("aria-current")==="true");return [cur.length, rows.indexOf(cur[0])+1]})()`), [1, 7]);
+  check("first frame: an overflowing listing is a named, focusable region", await q(`(()=>{const b=document.querySelector("#stage [data-slot=code-view-body]");return [b.getAttribute("tabindex"), b.getAttribute("role"), b.getAttribute("aria-label")]})()`), ["0", "region", "src/middleware/rate-limit.ts"]);
   const geometry = `(()=>{const root=document.querySelector("#stage [data-slot=code-view]");const rb=root.getBoundingClientRect();const text=(e)=>{const g=document.createRange();g.selectNodeContents(e);const b=g.getBoundingClientRect();return [Math.round((b.left-rb.left)*4)/4, Math.round((b.top-rb.top)*4)/4]};
     const cm=root.querySelector(".cm-editor");
     const nums=cm?[...cm.querySelectorAll(".cm-lineNumbers .cm-gutterElement")].filter((e)=>e.offsetHeight):[...root.querySelectorAll("[data-slot=code-view-num]")];
     const lines=cm?[...cm.querySelectorAll(".cm-line")]:[...root.querySelectorAll("[data-slot=code-view-code]")];
     return {height: Math.round(rb.height), num: nums.slice(0,8).map(text), code: lines.slice(0,8).filter((l)=>l.textContent).map(text)}})()`;
   const readonly = await q(geometry);
+  const plain3 = await pixels("plain3");
+  await release();
+  await editorReady();
+  check("read-only, current line: not a pixel moves when CodeMirror arrives", await differing(plain3, await pixels("cm3")), 0);
+  check("read-only: the host's line 7 is tinted, its number ink; no caret", await q(`(()=>{const l=document.querySelector("#stage .cm-line.cm-hostLine"),g=document.querySelector("#stage .cm-lineNumbers .cm-gutterElement.cm-hostLine");return [l?.textContent.trim().slice(0,12), g?.textContent, !!document.querySelector("#stage .cm-activeLine"), !!document.querySelector("#stage .cm-cursor")]})()`), ["const bucket", "7", false, false]);
+  await q(`document.querySelector("#stage .cm-content").focus()`);
+  const top0 = await q(`document.querySelector("#stage .cm-scroller").scrollTop`);
+  await p.key("ArrowDown"); await p.key("ArrowDown"); await p.key("ArrowDown"); await p.key("PageDown");
+  await sleep(200);
+  check("the arrow keys and Page Down scroll it", await q(`document.querySelector("#stage .cm-scroller").scrollTop > ${top0}`), true);
+  const fold3 = await q(`(()=>{const row=[...document.querySelectorAll("#stage .cm-line")].find((l)=>l.textContent.startsWith("export function")).getBoundingClientRect();const m=[...document.querySelectorAll("#stage .cm-foldGutter [data-fold=open]")].find((e)=>{const r=e.getBoundingClientRect();return Math.abs(r.top+r.height/2-(row.top+10))<3});if(!m) return null;const r=m.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);
+  check("read-only: the function's line has a fold marker", !!fold3, true);
+  if (fold3) { await p.click(fold3.x, fold3.y); await sleep(80); }
+  check("read-only: clicking it folds the body", await q(`!!document.querySelector("#stage .cm-foldPlaceholder")`), true);
 
   /* Editable (ex 2): the listing first, then the editor in its place, drawn the same */
   await open(fw, 2);
@@ -149,19 +216,16 @@ for (const fw of targets) {
   if (fold) { await p.click(fold.x, fold.y); await sleep(80); }
   check("clicking it folds the indented body; the closing line stays", await q(`[!!document.querySelector("#stage .cm-foldPlaceholder"), [...document.querySelectorAll("#stage .cm-line")].some((l)=>l.textContent==="}")]`), [true, true]);
 
-  /* switching back to read-only brings the listing back */
+  /* switching to read-only keeps CodeMirror, read-only */
   await q(`window.__harnessMounted.update({ editable: false })`);
   await sleep(150);
-  check("editable off: the listing comes back, no editor left", await q(`[!!document.querySelector("#stage [data-slot=code-view-body]"), !!document.querySelector("#stage .cm-editor")]`), [true, false]);
+  check("editable off: the same CodeMirror view, now read-only; no caret line tinted", await q(`[!!document.querySelector("#stage [data-slot=code-view-body]"), document.querySelector("#stage .cm-content")?.getAttribute("contenteditable"), !!document.querySelector("#stage .cm-activeLine")]`), [false, "false", false]);
 
   /* fill: as tall as its container, the code scrolls inside */
   await open(fw, 5);
+  await editorReady();
   await sleep(100);
-  check("fill: 200px tall, scrolls; the current line (40) is in view; the page does not scroll", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-view]"),b=r.querySelector("[data-slot=code-view-body]");const c=b.querySelector("[aria-current=true]").getBoundingClientRect(),bb=b.getBoundingClientRect();return [Math.round(r.getBoundingClientRect().height), b.scrollHeight>b.clientHeight, c.top>=bb.top&&c.bottom<=bb.bottom, scrollY]})()`), [200, true, true, 0]);
-
-  /* highlighted lines: shown as given; editable would colour value instead */
-  await open(fw, 4);
-  check("highlighted lines are shown as given", await q(`document.querySelector("#stage [data-slot=code-view-code]").innerHTML.includes("<span")`), true);
+  check("fill: 200px tall, scrolls; the current line (40) is in view; the page does not scroll", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-view]"),b=r.querySelector(".cm-scroller");const c=r.querySelector(".cm-line.cm-hostLine").getBoundingClientRect(),bb=b.getBoundingClientRect();return [Math.round(r.getBoundingClientRect().height), b.scrollHeight>b.clientHeight, c.top>=bb.top&&c.bottom<=bb.bottom, scrollY]})()`), [200, true, true, 0]);
   } catch (error) { check("script ran to the end", String(error.message).split("\n")[0].slice(0, 160), "ok"); }
   check("no console errors", p.errors.slice(0, 2), []);
   if (failed > before && attempt < 2) { failed = before; await sleep(800); continue; }
