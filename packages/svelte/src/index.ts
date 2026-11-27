@@ -38,7 +38,9 @@ export type { ChipTone } from "../../../components/chip/Chip.svelte";
 export { default as Clipboard } from "../../../components/clipboard/Clipboard.svelte";
 export type { ClipboardLabels } from "../../../components/clipboard/Clipboard.svelte";
 export { default as CodeBlock } from "../../../components/code-block/CodeBlock.svelte";
-export type { CodePiece, CodeDiffRow, CodeBlockLabels, CodeBlockFile } from "../../../components/code-block/CodeBlock.svelte";
+export type { CodeBlockLabels, CodeBlockFile } from "../../../components/code-block/CodeBlock.svelte";
+export { default as CodeView } from "../../../components/code-view/CodeView.svelte";
+export type { CodePiece, CodeDiffRow, CodeViewLabels } from "../../../components/code-view/CodeView.svelte";
 export { default as Collapsible } from "../../../components/collapsible/Collapsible.svelte";
 export { default as Combobox } from "../../../components/combobox/Combobox.svelte";
 export type { ComboboxItem, ComboboxPlacement } from "../../../components/combobox/Combobox.svelte";
@@ -156,7 +158,7 @@ export { default as TableCell } from "../../../components/table/TableCell.svelte
 export { default as TableCaption } from "../../../components/table/TableCaption.svelte";
 export { default as TableSkeleton } from "../../../components/table/TableSkeleton.svelte";
 export { default as Tabs } from "../../../components/tabs/Tabs.svelte";
-export type { TabsItem } from "../../../components/tabs/Tabs.svelte";
+export type { TabsLabels, TabsItem } from "../../../components/tabs/Tabs.svelte";
 export { default as Tag } from "../../../components/tag/Tag.svelte";
 export type { TagTone, TagSize } from "../../../components/tag/Tag.svelte";
 export { default as TagsInput } from "../../../components/tags-input/TagsInput.svelte";
@@ -169,7 +171,7 @@ export type { ThinkingRow, ThinkingVariant } from "../../../components/thinking-
 export { default as Toast, toast } from "../../../components/toast/Toast.svelte";
 export type { ToastTone, ToastPlacement, ToastOptions } from "../../../components/toast/Toast.svelte";
 export { default as Toggle } from "../../../components/toggle/Toggle.svelte";
-export type { ToggleVariant, ToggleIndicator, ToggleSize, ToggleShape } from "../../../components/toggle/Toggle.svelte";
+export type { ToggleVariant, ToggleSize, ToggleShape } from "../../../components/toggle/Toggle.svelte";
 export { default as ToggleGroup } from "../../../components/toggle-group/ToggleGroup.svelte";
 export type { ToggleGroupItem } from "../../../components/toggle-group/ToggleGroup.svelte";
 export { default as ToolChips } from "../../../components/tool-chips/ToolChips.svelte";

@@ -17,6 +17,7 @@ export * from "../../../components/checkbox/checkbox";
 export * from "../../../components/chip/chip";
 export * from "../../../components/clipboard/clipboard";
 export * from "../../../components/code-block/code-block";
+export * from "../../../components/code-view/code-view";
 export * from "../../../components/collapsible/collapsible";
 export * from "../../../components/combobox/combobox";
 export * from "../../../components/command-palette/command-palette";

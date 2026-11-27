@@ -1,0 +1,160 @@
+{
+  "examples": [
+    {
+      "name": "Listing",
+      "props": {
+        "value": "export async function sendInvoice() {\n  const account = await getAccount(\"northwind\");\n  const base = await billing.fetch({ account });\n  await ledger.store(base, { terms: \"net-30\" });\n  if (!base.approved) return null;\n  return base.total;\n}",
+        "label": "src/billing/invoice.ts"
+      },
+      "width": 420
+    },
+    {
+      "name": "Diff",
+      "props": {
+        "diff": [
+          {
+            "old": 1,
+            "cur": 1,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "export async function deliver(event: WebhookEvent) {"
+              }
+            ]
+          },
+          {
+            "old": 2,
+            "cur": null,
+            "type": "del",
+            "pieces": [
+              {
+                "text": "  return "
+              },
+              {
+                "text": "post(event.url, event.body);",
+                "change": "del"
+              }
+            ]
+          },
+          {
+            "old": null,
+            "cur": 2,
+            "type": "add",
+            "pieces": [
+              {
+                "text": "  return "
+              },
+              {
+                "text": "retry(() => post(event.url, event.body), { attempts: 5 });",
+                "change": "add"
+              }
+            ]
+          },
+          {
+            "old": 3,
+            "cur": 3,
+            "type": "ctx",
+            "pieces": [
+              {
+                "text": "}"
+              }
+            ]
+          }
+        ],
+        "label": "src/webhooks/deliver.ts"
+      },
+      "width": 420
+    },
+    {
+      "name": "Editable",
+      "props": {
+        "value": "import { buckets } from \"./store\";\n\nconst WINDOW_MS = 60_000;\nconst LIMIT = 120;\n\nexport function rateLimit(key: string, now = Date.now(), options: { limit?: number; windowMs?: number } = {}) {\n  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };\n  if (now - bucket.windowStart >= (options.windowMs ?? WINDOW_MS)) {\n    bucket.count = 0;\n    bucket.windowStart = now;\n  }\n  bucket.count += 1;\n  buckets.set(key, bucket);\n  return bucket.count <= (options.limit ?? LIMIT);\n}",
+        "label": "src/middleware/rate-limit.ts",
+        "editable": true,
+        "wrap": false,
+        "currentLine": 7,
+        "height": 220
+      },
+      "width": 360
+    },
+    {
+      "name": "Read-only, no wrap",
+      "props": {
+        "value": "import { buckets } from \"./store\";\n\nconst WINDOW_MS = 60_000;\nconst LIMIT = 120;\n\nexport function rateLimit(key: string, now = Date.now(), options: { limit?: number; windowMs?: number } = {}) {\n  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };\n  if (now - bucket.windowStart >= (options.windowMs ?? WINDOW_MS)) {\n    bucket.count = 0;\n    bucket.windowStart = now;\n  }\n  bucket.count += 1;\n  buckets.set(key, bucket);\n  return bucket.count <= (options.limit ?? LIMIT);\n}",
+        "label": "src/middleware/rate-limit.ts",
+        "wrap": false,
+        "currentLine": 7,
+        "height": 220
+      },
+      "width": 360
+    },
+    {
+      "name": "Highlighted",
+      "props": {
+        "label": "src/ledger.ts",
+        "value": "export const terms = 30;",
+        "highlighted": [
+          "<span style=\"color: var(--fndn-accent-ink)\">export</span> const terms = <span style=\"color: var(--fndn-orange)\">30</span>;"
+        ]
+      },
+      "width": 420
+    },
+    {
+      "name": "Fill",
+      "props": {
+        "value": "charge(\"batch-1\");\ncharge(\"batch-2\");\ncharge(\"batch-3\");\ncharge(\"batch-4\");\ncharge(\"batch-5\");\ncharge(\"batch-6\");\ncharge(\"batch-7\");\ncharge(\"batch-8\");\ncharge(\"batch-9\");\ncharge(\"batch-10\");\ncharge(\"batch-11\");\ncharge(\"batch-12\");\ncharge(\"batch-13\");\ncharge(\"batch-14\");\ncharge(\"batch-15\");\ncharge(\"batch-16\");\ncharge(\"batch-17\");\ncharge(\"batch-18\");\ncharge(\"batch-19\");\ncharge(\"batch-20\");\ncharge(\"batch-21\");\ncharge(\"batch-22\");\ncharge(\"batch-23\");\ncharge(\"batch-24\");\ncharge(\"batch-25\");\ncharge(\"batch-26\");\ncharge(\"batch-27\");\ncharge(\"batch-28\");\ncharge(\"batch-29\");\ncharge(\"batch-30\");\ncharge(\"batch-31\");\ncharge(\"batch-32\");\ncharge(\"batch-33\");\ncharge(\"batch-34\");\ncharge(\"batch-35\");\ncharge(\"batch-36\");\ncharge(\"batch-37\");\ncharge(\"batch-38\");\ncharge(\"batch-39\");\ncharge(\"batch-40\");\ncharge(\"batch-41\");\ncharge(\"batch-42\");\ncharge(\"batch-43\");\ncharge(\"batch-44\");\ncharge(\"batch-45\");\ncharge(\"batch-46\");\ncharge(\"batch-47\");\ncharge(\"batch-48\");\ncharge(\"batch-49\");\ncharge(\"batch-50\");\ncharge(\"batch-51\");\ncharge(\"batch-52\");\ncharge(\"batch-53\");\ncharge(\"batch-54\");\ncharge(\"batch-55\");\ncharge(\"batch-56\");\ncharge(\"batch-57\");\ncharge(\"batch-58\");\ncharge(\"batch-59\");\ncharge(\"batch-60\");",
+        "label": "batches.ts",
+        "fill": true,
+        "currentLine": 40,
+        "style": {
+          "height": 200,
+          "width": 360
+        }
+      }
+    },
+    {
+      "name": "Editable, wrapping",
+      "props": {
+        "value": "import { buckets } from \"./store\";\n\nconst WINDOW_MS = 60_000;\nconst LIMIT = 120;\n\nexport function rateLimit(key: string, now = Date.now(), options: { limit?: number; windowMs?: number } = {}) {\n  const bucket = buckets.get(key) ?? { count: 0, windowStart: now };\n  if (now - bucket.windowStart >= (options.windowMs ?? WINDOW_MS)) {\n    bucket.count = 0;\n    bucket.windowStart = now;\n  }\n  bucket.count += 1;\n  buckets.set(key, bucket);\n  return bucket.count <= (options.limit ?? LIMIT);\n}",
+        "label": "src/middleware/rate-limit.ts",
+        "editable": true,
+        "maxHeight": 240
+      },
+      "width": 360
+    }
+  ],
+  "worstCase": [
+    {
+      "name": "400-character line, non-Latin and right-to-left",
+      "props": {
+        "label": "northwind-industries-holdings-wholesale-cloud-services-division-billing-schedule.ts",
+        "value": "  const note = \"invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-invoicing-\";\n  const city = \"Z\u00fcrich \u6771\u4eac \u0627\u0644\u0642\u0627\u0647\u0631\u0629\";\n  const emoji = \"\ud83d\ude80\ud83d\udd25\u2705\";"
+      }
+    },
+    {
+      "name": "Sixty lines, editable",
+      "props": {
+        "label": "batches.ts",
+        "value": "charge(\"batch-1\");\ncharge(\"batch-2\");\ncharge(\"batch-3\");\ncharge(\"batch-4\");\ncharge(\"batch-5\");\ncharge(\"batch-6\");\ncharge(\"batch-7\");\ncharge(\"batch-8\");\ncharge(\"batch-9\");\ncharge(\"batch-10\");\ncharge(\"batch-11\");\ncharge(\"batch-12\");\ncharge(\"batch-13\");\ncharge(\"batch-14\");\ncharge(\"batch-15\");\ncharge(\"batch-16\");\ncharge(\"batch-17\");\ncharge(\"batch-18\");\ncharge(\"batch-19\");\ncharge(\"batch-20\");\ncharge(\"batch-21\");\ncharge(\"batch-22\");\ncharge(\"batch-23\");\ncharge(\"batch-24\");\ncharge(\"batch-25\");\ncharge(\"batch-26\");\ncharge(\"batch-27\");\ncharge(\"batch-28\");\ncharge(\"batch-29\");\ncharge(\"batch-30\");\ncharge(\"batch-31\");\ncharge(\"batch-32\");\ncharge(\"batch-33\");\ncharge(\"batch-34\");\ncharge(\"batch-35\");\ncharge(\"batch-36\");\ncharge(\"batch-37\");\ncharge(\"batch-38\");\ncharge(\"batch-39\");\ncharge(\"batch-40\");\ncharge(\"batch-41\");\ncharge(\"batch-42\");\ncharge(\"batch-43\");\ncharge(\"batch-44\");\ncharge(\"batch-45\");\ncharge(\"batch-46\");\ncharge(\"batch-47\");\ncharge(\"batch-48\");\ncharge(\"batch-49\");\ncharge(\"batch-50\");\ncharge(\"batch-51\");\ncharge(\"batch-52\");\ncharge(\"batch-53\");\ncharge(\"batch-54\");\ncharge(\"batch-55\");\ncharge(\"batch-56\");\ncharge(\"batch-57\");\ncharge(\"batch-58\");\ncharge(\"batch-59\");\ncharge(\"batch-60\");",
+        "editable": true,
+        "maxHeight": 300,
+        "currentLine": 60
+      }
+    },
+    {
+      "name": "Empty",
+      "props": {
+        "label": "empty.ts",
+        "value": ""
+      }
+    },
+    {
+      "name": "Empty, editable",
+      "props": {
+        "label": "empty.ts",
+        "value": "",
+        "editable": true
+      }
+    }
+  ]
+}

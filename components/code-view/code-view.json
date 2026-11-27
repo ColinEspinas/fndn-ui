@@ -1,0 +1,241 @@
+{
+  "$schema": "../../spec/schema/component.schema.json",
+  "name": "code-view",
+  "title": "Code View",
+  "summary": "Code on its own, with line numbers: a listing, a diff, or an editor.",
+  "description": "The code itself, with no frame, to place anywhere: an editor pane, a diff view, the body of a Code Block. A gutter of line numbers as wide as the widest number, then the code in mono at a 20px line height with light syntax colouring (keywords, strings and numbers, function calls), or lines already highlighted elsewhere. A diff shows one gutter, a green / red accent bar, a row tint and word-level add / del highlights. A current line is tinted across the gutter and the code. Long lines wrap (wrap) or the code scrolls sideways under a gutter that stays. Its height is the code's, a fixed height, a cap past which it scrolls, or its container's (fill). Read-only it is plain markup, complete in the first frame and server-rendered, and every line is in the page. editable turns it into a code editor (CodeMirror 6): undo history, find and replace (a compact widget floating over the code), several cursors, folding by indentation. The editor is loaded only then (a dynamic import), so a read-only view never downloads it; its packages are installed with the component all the same. It looks exactly like the listing: same font, line height, gutter, colours, current-line tint and insets. An editable view keeps a 12px fold column after the gutter's hairline, in the listing shown while the editor loads as well, so nothing moves when the editor arrives; a read-only view has none, so turning editable on or off on a live view moves the code by that column.",
+  "kind": "component",
+  "category": "display",
+  "order": 9,
+  "status": "beta",
+  "element": "div",
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "description": "The box: surface fill, no frame, no radius, no shadow; the font, 20px line and colour of the code; code reads left to right (direction: ltr) in every page. Carries --fndn-code-view-height (height) and --fndn-code-view-max-height (maxHeight); fill makes it as tall as its container."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "description": "The listing's scroller, 12px block inset. While the code overflows it is a focusable role=region named by label (code-view.logic.ts watchOverflow). Gone once the editor shows."
+    },
+    {
+      "part": "rows",
+      "element": "div",
+      "description": "Grid: the gutter column (as wide as the widest number) + the code; rows are subgrids"
+    },
+    {
+      "part": "row",
+      "element": "div",
+      "repeat": true,
+      "description": "One line. A diff row is tinted by its kind (ctx, add, del). The current line is tinted (hover) and carries aria-current=\"true\"."
+    },
+    {
+      "part": "bar",
+      "element": "span",
+      "optional": true,
+      "description": "Diff only: the 3px accent bar of an added (green) or removed (red hatch) row, in the gutter"
+    },
+    {
+      "part": "num",
+      "element": "span",
+      "description": "Line number: 2xs, ink-3 (ink on the current line), right-aligned on the gutter's hairline, not selectable. A diff shows the new number, or the old one on a removed row."
+    },
+    {
+      "part": "code",
+      "element": "code",
+      "description": "The line's text"
+    },
+    {
+      "part": "piece",
+      "element": "span",
+      "optional": true,
+      "description": "Diff only: an added or removed run of words, tinted"
+    },
+    {
+      "part": "tok",
+      "element": "span",
+      "optional": true,
+      "description": "A syntax colour (kw, str, fn) from the light tokenizer (code-view.logic.ts tokenize); the editor marks the same runs with the same classes"
+    },
+    {
+      "part": "icons",
+      "element": "span",
+      "optional": true,
+      "description": "Editable only, never shown: the Phosphor caret the editor copies into its fold markers"
+    },
+    {
+      "part": "editor",
+      "element": "div",
+      "optional": true,
+      "description": "Editable only: where the editor (a CodeMirror EditorView) is mounted. While it loads it lies over the listing, invisible, at the same size; then it takes the listing's scroll position and the listing goes. Everything inside is the editor's own markup, given the listing's look by code-view.editor.ts."
+    },
+    {
+      "part": "search",
+      "element": "div",
+      "optional": true,
+      "description": "Editable only, while find is open (Mod+F): the find widget, floating over the code at its top end corner (8px clear), so opening it never pushes or scrolls the code. The popup's surface, shadow and radius, 4px inset; at a narrow width it spans the view less 8px each side. It runs on CodeMirror's own search state, commands and keys."
+    },
+    {
+      "part": "search-row",
+      "element": "div",
+      "repeat": true,
+      "optional": true,
+      "description": "Row 1: the replace caret, the find field, the count, Previous, Next, Close. Row 2, while the caret is open: the replace field, Replace and Replace all."
+    },
+    {
+      "part": "search-expand",
+      "element": "button",
+      "optional": true,
+      "description": "A Button (ghost, xs, square, muted) with a right caret that turns down while the replace row shows (aria-expanded), marked data-code-view=\"search-expand\". The replace row is hidden each time find opens."
+    },
+    {
+      "part": "search-field",
+      "element": "input",
+      "optional": true,
+      "description": "An InputGroup (sm, mono) named Find, marked data-code-view=\"search-field\" on its input, with three square Toggles (ghost, xs, muted) in its end: Aa match case, ab match whole word, .* regular expression, each named and tipped by its tooltip. It takes the focus, its text selected, when find opens and on Mod+F."
+    },
+    {
+      "part": "search-count",
+      "element": "span",
+      "optional": true,
+      "description": "\"3 of 12\" (the match the selection is on), \"12 results\" when it is on none, \"No results\", or nothing while the query is empty; xs, ink-2, tabular, as wide as \"No results\" so the row keeps still. A polite role=status, so the count is announced."
+    },
+    {
+      "part": "replace-field",
+      "element": "input",
+      "optional": true,
+      "description": "An InputGroup (sm, mono) named Replace, marked data-code-view=\"replace-field\", lined up under the find field; then Replace and Replace all, ghost xs Buttons."
+    }
+  ],
+  "props": {
+    "value": {
+      "type": "string",
+      "model": true,
+      "description": "The code, lines separated by \\n (an empty value is one empty line; a trailing \\n ends in an empty last line, as in an editor). Editable, it is the editor's text: an edit reports it (valueChange); a value set from outside replaces the text and the caret keeps its place."
+    },
+    "highlighted": {
+      "type": "array",
+      "items": {
+        "0": "string"
+      },
+      "description": "Lines already highlighted elsewhere (shiki and the like), as trusted HTML, one string per line; shown instead of value's rows. Display only: editable shows value with the tokenizer's colours instead."
+    },
+    "diff": {
+      "type": "array",
+      "items": {
+        "old": "number|null",
+        "cur": "number|null",
+        "type": "ctx|add|del",
+        "pieces": "{ text: string; change?: 'add'|'del' }[]"
+      },
+      "description": "A unified diff, shown instead of value. A diff is never editable and has no current line."
+    },
+    "label": {
+      "type": "string",
+      "description": "The accessible name: of the scroll region while the listing overflows, of the editor's text box (a file name or path)."
+    },
+    "editable": {
+      "type": "boolean",
+      "default": false,
+      "description": "A code editor on value (CodeMirror 6, loaded now): typing, undo / redo, find and replace, several cursors, folding by indentation. Tab indents; Escape then Tab leaves. Ignored with diff."
+    },
+    "currentLine": {
+      "type": "number",
+      "model": true,
+      "description": "The current line, 1-based: its row is tinted (hover) across the gutter and the code, its number turns ink, and it is kept in view (the code scrolls just enough, at once; the page never scrolls). Editable, it is the caret's line, line 1 unless set: moving the caret reports it (currentLineChange), and a new value puts the caret at the start of that line. A diff has none."
+    },
+    "wrap": {
+      "type": "boolean",
+      "default": true,
+      "description": "Long lines wrap (as in documentation): a wrapped line keeps its number on its first row. false: a line never wraps; the code scrolls sideways and the gutter (with a diff's accent bar) stays at the inline start over an opaque fill, as an editor's does."
+    },
+    "height": {
+      "type": "number",
+      "attr": "--fndn-code-view-height",
+      "description": "Fixed height in px: the box keeps its size whatever the code (loading, switching files)."
+    },
+    "maxHeight": {
+      "type": "number",
+      "attr": "--fndn-code-view-max-height",
+      "description": "Height in px past which the code scrolls."
+    },
+    "fill": {
+      "type": "boolean",
+      "default": false,
+      "description": "As tall as its container (give the container a height): the code scrolls inside. Layout only, nothing measured, so it follows every resize."
+    },
+    "labels": {
+      "type": "object",
+      "description": "The editor's words, for translation: { find, replace, toggleReplace, next, previous, close, matchCase, wholeWord, regexp, replaceOne, replaceAll, count, results, noResults, fold, unfold, folded }; in count and results, {current} and {total} stand for the numbers."
+    }
+  },
+  "events": {
+    "valueChange": "(value: string) after every edit made in the editor (typing, paste, undo); never for a value set from outside",
+    "currentLineChange": "(line: number) when the caret moves to another line in the editor"
+  },
+  "states": [
+    "overflowing",
+    "current-line",
+    "add",
+    "del",
+    "ctx",
+    "editable",
+    "focus",
+    "selection"
+  ],
+  "tokens": [
+    "color.accent",
+    "color.accent-ink",
+    "color.accent-tint",
+    "color.green",
+    "color.green-tint",
+    "color.hover",
+    "color.ink",
+    "color.ink-2",
+    "color.ink-3",
+    "color.inset",
+    "color.line",
+    "color.orange",
+    "color.orange-tint",
+    "color.red",
+    "color.red-tint",
+    "color.surface",
+    "font.mono",
+    "radius.card",
+    "radius.chip",
+    "shadow.raised",
+    "text.2xs",
+    "text.dense"
+  ],
+  "dependencies": [
+    "button",
+    "input-group",
+    "toggle",
+    "tooltip"
+  ],
+  "a11y": {
+    "role": "region (the listing, while it scrolls); textbox, multi-line (editable)",
+    "keyboard": [
+      "Read-only: Tab reaches the code while it overflows; the arrow keys and Page Up / Page Down scroll it",
+      "Editable: one tab stop. Typing edits; Tab and Shift+Tab indent and outdent the selected lines",
+      "Editable: Escape, then Tab or Shift+Tab within two seconds, moves focus out of the editor; Ctrl+M (Shift+Alt+M on macOS) makes Tab move focus until pressed again",
+      "Editable: Mod+Z undo, Mod+Shift+Z / Mod+Y redo; Mod+D adds the next occurrence as a cursor, Alt+click adds a cursor, Alt+drag a column of cursors; Ctrl+Shift+[ / ] (macOS Cmd+Alt+[ / ]) fold and unfold",
+      "Find: Mod+F opens it with the focus in its field (again, takes the focus back to it); Enter next match, Shift+Enter previous, F3 / Mod+G and Shift+F3 / Mod+Shift+G too; Escape closes it and returns the focus to the code; Enter in the replace field replaces the current match. A match already in view never scrolls the code."
+    ],
+    "notes": [
+      "Read-only, the line numbers are user-select: none, so selecting and copying by hand skips them, and every line is in the page, so the browser's find reaches all of it.",
+      "Editable, the text box is named by label and is aria-multiline; the gutter is aria-hidden; folding a range is announced. The focus shows as the caret and the current line, as in a field inside a composite surface: no ring.",
+      "The code is direction: ltr: it reads left to right in right-to-left pages.",
+      "The find widget's count is a polite status: it is announced as it changes. Every icon-only control is named, and its tooltip says its key."
+    ]
+  },
+  "motion": [
+    "None. The current line moves and is scrolled to at once: it follows the caret, a high-frequency action.",
+    "The editor arriving: no motion and no shift; it takes the listing's scroll position.",
+    "The caret blinks as an editor's does; not with reduced motion.",
+    "Fold markers appear at once while the pointer is over the gutter; a folded line's marker always shows.",
+    "Find widget: appears and goes at once (a keyboard action, used often). The replace caret turns down over duration.move with easing.out-strong, at once from the keyboard."
+  ]
+}
