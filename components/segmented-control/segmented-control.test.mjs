@@ -250,8 +250,13 @@ for (const fw of targets) {
   const end = await state();
   await p.eval(`${R}.style.width = ""`); await sleep(200);
   const back = await state();
-  const got = [[fit.over, fit.ox, fit.h], [squeezed.over, squeezed.ox, squeezed.h, squeezed.whole, squeezed.veils], [end.inView, end.scroll > 0, end.drift <= 0.6, end.veils], [back.over, back.ox, back.whole]];
-  const want = [[false, "visible", 24], [true, "auto", 24, true, [false, true, 0, 1]], [true, true, true, [true, false, 1, 0]], [false, "visible", true]];
+  /* hidden (display: none), it has nothing to scroll: no data-overflow, which would show it again */
+  await p.eval(`${R}.style.display = "none"`); await sleep(200);
+  const hidden = await p.eval(`${R}.hasAttribute("data-overflow")`);
+  await p.eval(`${R}.style.display = ""`); await sleep(200);
+  const shown = await state();
+  const got = [[fit.over, fit.ox, fit.h], [squeezed.over, squeezed.ox, squeezed.h, squeezed.whole, squeezed.veils], [end.inView, end.scroll > 0, end.drift <= 0.6, end.veils], [back.over, back.ox, back.whole], [hidden, shown.over, shown.ox]];
+  const want = [[false, "visible", 24], [true, "auto", 24, true, [false, true, 0, 1]], [true, true, true, [true, false, 1, 0]], [false, "visible", true], [false, false, "visible"]];
   let ok = JSON.stringify(got) === JSON.stringify(want);
   /* mount: a control that mounts too narrow, with its last option selected, starts scrolled to it */
   let mount = "skipped";
@@ -263,7 +268,7 @@ for (const fw of targets) {
     if (JSON.stringify(mount) !== JSON.stringify([true, true, true])) ok = false;
   }
   if (!ok) failed++;
-  console.log(`${fw}\n  ${ok ? "✓" : "✗"} options that do not fit scroll (labels whole, veils, selection kept in view, thumb on it); fitting is unchanged; mounts scrolled to the selection${ok ? "" : ` — got ${JSON.stringify(got)} mount ${JSON.stringify(mount)}, want ${JSON.stringify(want)}`}`);
+  console.log(`${fw}\n  ${ok ? "✓" : "✗"} options that do not fit scroll (labels whole, veils, selection kept in view, thumb on it); fitting is unchanged; hidden, it is not scrolling; mounts scrolled to the selection${ok ? "" : ` — got ${JSON.stringify(got)} mount ${JSON.stringify(mount)}, want ${JSON.stringify(want)}`}`);
 }
 /* the edge veils (segments) and the edge fades (chips) of a row that does not fit, at the start,
  * the middle and the end of the scroll, left-to-right and right-to-left: each side shows while

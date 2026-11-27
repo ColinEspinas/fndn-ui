@@ -110,7 +110,7 @@ export const segmentedControl = tv({
           ...VEILS,
           /* the veil is the track's colour */
           "data-overflow:[--_veil:var(--fndn-field)]",
-          "data-overflow:inline-flex data-overflow:overflow-x-auto data-overflow:overflow-y-hidden data-overflow:overscroll-x-contain",
+          "data-overflow:overflow-x-auto data-overflow:overflow-y-hidden data-overflow:overscroll-x-contain",
           "data-overflow:[scrollbar-width:none] data-overflow:[&::-webkit-scrollbar]:hidden",
         ],
         option: "[[data-slot=segmented-control][data-overflow]>&]:data-focus-visible:outline-offset-0",
@@ -152,6 +152,10 @@ export const segmentedControl = tv({
     { icons: true, size: "md", class: { option: "w-7" } },
     { icons: true, size: "lg", class: { option: "w-8" } },
     { icons: true, fill: true, class: { option: "w-auto" } },
+    /* a control that fills its row is a grid of equal columns; scrolling, it is a row again (the
+     * options at their own width, the veils at theirs). Only here does a state set the display:
+     * elsewhere the display stays the app's to set (a class that hides the control keeps it hidden) */
+    { variant: "segments", fill: true, class: { base: "data-overflow:inline-flex" } },
     /* rounded takes the radius of a field of the same height: chip up to 28px, control from 32px */
     { shape: "rounded", size: ["xs", "sm"], class: { base: "[--_radius:var(--fndn-radius-chip)]" } },
   ],

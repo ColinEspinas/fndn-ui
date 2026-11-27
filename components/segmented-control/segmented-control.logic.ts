@@ -23,6 +23,11 @@ function selectedOption(root: HTMLElement): HTMLElement | null {
 
 /** True while the options are wider than the root's content box (scroll position does not matter). */
 function overflows(root: HTMLElement): boolean {
+  /* a control with no box (display: none on it or above it) has nothing to scroll. Measured, its
+   * options (0 wide) would be wider than its content box (0 less the padding): data-overflow would
+   * go on, and since that state sets the display of a control that fills its row, a control its
+   * app hides with a class came back, fitted, was hidden again, and so on every frame. */
+  if (!root.getClientRects().length) return false;
   const options = root.querySelectorAll<HTMLElement>(OPTION);
   if (!options.length) return false;
   let start = Infinity;

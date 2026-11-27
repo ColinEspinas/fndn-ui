@@ -91,6 +91,12 @@ component meets them this way:
   Not `group-*`, which a nested component would match. Inside `[...]`, `_` is a space.
 - A part another component renders (the pager's previous button is a `<Button>`, already
   `data-slot="button"`) is marked after your component: `<Button data-pager="prev" …>`.
+- **A state a component measures on itself** (the segmented control's `data-overflow`, set while
+  its options are wider than its box) is never set on a component with no box (`display: none` on
+  it or above it): there is nothing to measure, and the state's layout would bring back a
+  component its app has hidden. Such a state leaves the `display` alone wherever it can. A hidden
+  control that counted as overflowing took the display of its scrolling state, fitted, was hidden
+  again, and flipped on every frame.
 - **A staggered group entrance** delays each item by
   `calc(min(var(--fndn-row-index,0),var(--fndn-motion-stagger-max))*var(--fndn-duration-stagger))`,
   with a fill mode of `both`. The adapter sets `--fndn-row-index` only on the items present at
