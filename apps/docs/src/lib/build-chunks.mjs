@@ -114,6 +114,11 @@ export function docsChunks(root) {
     if (!file.startsWith(components)) return null;
     const [folder, ...rest] = file.slice(components.length).split("/");
     if (folder === "lib") return "lib";
+    /* a component's module that is only ever loaded by import() (CodeView's editor, which brings
+     * CodeMirror) stays out of the groups: in its component's file it would be loaded, with all it
+     * imports, on every page that shows the component */
+    const info = ctx.getModuleInfo(rawId);
+    if (rest[0] !== "examples" && info && !info.importers.length && info.dynamicImporters.length) return null;
     const fw = file.endsWith(".vue") || query.includes("vue") ? "-vue" : file.endsWith(".svelte") || query.includes("svelte") ? "-svelte" : "";
     return rest[0] === "examples" ? `${folder}-examples${fw}` : `${folder}${fw}`;
   }

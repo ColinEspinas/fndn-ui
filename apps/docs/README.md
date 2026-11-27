@@ -22,5 +22,7 @@ The site is built from the library's own components and follows the same design 
   the layout's islands are exported from `src/components/Shell.ts` and a component page's from
   `src/components/ComponentPage.ts`: a new island for either goes there. The build then puts what
   each of the two imports into one file (`src/lib/build-chunks.mjs`), and every icon of a
-  framework into one. Two `import()` calls never share one conditional expression: the minifier
-  folds them into a call that fetches the files of one for both.
+  framework into one. A component's module that only `import()` loads (CodeView's editor, with
+  CodeMirror) stays out of those groups, so it loads only where it is used. Two `import()` calls
+  never share one conditional expression: the minifier folds them into a call that fetches the
+  files of one for both.
