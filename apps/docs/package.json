@@ -17,6 +17,7 @@
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@phosphor-icons/react": "2.1.10",
+    "@fndn/components": "workspace:*",
     "@fndn/core": "workspace:*",
     "@fndn/react": "workspace:*",
     "@fndn/svelte": "workspace:*",
@@ -25,6 +26,7 @@
     "marked": "^18.2.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "showcases": "workspace:*",
     "svelte": "^5.57.3",
     "vue": "^3.5.45"
   },
