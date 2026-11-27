@@ -1,10 +1,18 @@
 "use client";
 import { Tabs as ArkTabs } from "@ark-ui/react/tabs";
-import { X } from "@phosphor-icons/react";
+import { CaretDown, X } from "@phosphor-icons/react";
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { Button } from "../button/button";
 import { trackModality } from "../lib/modality";
-import { afterFirstPaint, closeDelay, focusTab, holdsFocus, neighbourTab, placeIndicator, revealTab, revealTabSoon } from "./tabs.logic";
+import { Menu } from "../menu/menu";
+import { Tooltip } from "../tooltip/tooltip";
+import {
+  afterFirstPaint, allTabsMenu, closeDelay, focusTab, focusTabSoon, holdsFocus, neighbourTab, placeIndicator, revealTab, revealTabSoon, tabsLabels, watchStrip,
+  type TabsLabels,
+} from "./tabs.logic";
 import { tabs } from "./tabs.recipe";
+
+export type { TabsLabels };
 
 export type TabsItem = {
   value: string; label?: ReactNode; content?: ReactNode; disabled?: boolean;
@@ -21,9 +29,8 @@ export type TabsProps = {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
-  /** pill: selected tab on a filled pill (default). underline: ink bar under the selected tab.
-   * attached: browser and editor tabs; the selected tab is the surface below it (--fndn-tabs-surface) and joins it. */
-  variant?: "pill" | "underline" | "attached";
+  /** pill: selected tab on a filled pill (default; also document tabs). underline: ink bar under the selected tab. */
+  variant?: "pill" | "underline";
   /** xs 24 · sm 28 (dense: editors, browsers) · md (default). Dimensions only. */
   size?: "xs" | "sm" | "md";
   /** pill or underline inside a card header: the strip fills the header's height, with no hairline of its own. */
@@ -34,7 +41,8 @@ export type TabsProps = {
   headerProps?: Record<string, string | undefined>;
   /** Parts after the list inside the header part (a path, a copy button). Implies the header part. */
   end?: ReactNode;
-  /** Every tab has a close button and closes on Delete (an item's own `closable` wins). */
+  /** Every tab has a close button and closes on Delete (an item's own `closable` wins): document tabs,
+   * whose title stops at 240px, cut at its end with its full text in the title. */
   closable?: boolean;
   /** A tab asks to close (its button, or Delete / Backspace on it). Remove it from `items`: when it
    * was selected, the next tab (else the previous) is already selected through onValueChange. */
@@ -43,11 +51,10 @@ export type TabsProps = {
   closeLabel?: string;
   /** The root fills its container's height; the selected panel takes the rest and scrolls. */
   fill?: boolean;
-  /** attached only. shrink (default, Chrome): tabs share the strip and shrink, labels cut with a title.
-   * fit (VS Code): each tab as wide as its title, the strip scrolls. */
-  tabSizing?: "shrink" | "fit";
   /** Name of the tab list. */
   "aria-label"?: string;
+  /** The strings, for translation: allTabs, the name and tooltip of the button that lists every tab. */
+  labels?: Partial<TabsLabels>;
   className?: string;
   style?: CSSProperties;
   /** Forwarded to the root (a host marks it data-<block>="<part>"). */
@@ -57,21 +64,24 @@ export type TabsProps = {
 /** Switch between views that share one place. Behaviour by Ark UI (Zag tabs). */
 export function Tabs({
   items, value, defaultValue, onValueChange, variant = "pill", size = "md", inHeader = false, headerClass, headerProps, end, closable = false, onClose,
-  closeLabel = "Close", fill = false, tabSizing = "shrink", "aria-label": ariaLabel, className, style, ...data
+  closeLabel = "Close", fill = false, "aria-label": ariaLabel, labels, className, style, ...data
 }: TabsProps) {
   const opts = items.map((o): TabsItem => (typeof o === "string" ? { value: o, label: o } : { label: o.value, ...o }));
   /* the selection is held here when uncontrolled, so closing a tab can hand it to a neighbour */
   const [inner, setInner] = useState(() => defaultValue ?? opts.find((o) => !o.disabled)?.value);
   const current = value ?? inner;
   const select = (next: string) => { if (value === undefined) setInner(next); onValueChange?.(next); };
-  /* after mount: from then on an inserted attached tab opens its room (nothing plays on first paint) */
+  /* after mount: from then on an inserted closable tab opens its room (nothing plays on first paint) */
   const [ready, setReady] = useState(false);
   useEffect(() => { trackModality(); return afterFirstPaint(() => setReady(true)); }, []);
-  /* attached tabs closed by the pointer, while their room closes */
+  /* closable tabs closed by the pointer, while their room closes */
   const [closing, setClosing] = useState<ReadonlyArray<string>>([]);
   /* the indicator on the selected tab from the first paint (the engine measures a frame or more later) */
   const root = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => { placeIndicator(root.current); revealTab(root.current, current, true); }, []);
+  /* more tabs than room: the edge fades and the all-tabs button (measured, never on a hidden list) */
+  const [overflow, setOverflow] = useState(false);
+  useLayoutEffect(() => watchStrip(root.current, setOverflow), []);
   /* a strip that scrolls keeps the selected tab in view (also when a tab is added and selected) */
   const count = opts.length;
   const mounted = useRef(false);
@@ -81,8 +91,8 @@ export function Tabs({
     const next = neighbourTab(opts, o.value);
     if (current === o.value && next !== undefined) select(next);
     if (focus || holdsFocus(root.current, o.value)) focusTab(root.current, next);
-    /* attached, from the pointer: the tab closes its room first (instant from the keyboard) */
-    const wait = variant === "attached" ? closeDelay(root.current, focus) : 0;
+    /* from the pointer the tab closes its room first (instant from the keyboard) */
+    const wait = closeDelay(root.current, focus);
     if (wait === 0) { onClose?.(o.value); return; }
     setClosing((list) => [...list, o.value]);
     setTimeout(() => { setClosing((list) => list.filter((v) => v !== o.value)); onClose?.(o.value); }, wait);
@@ -95,7 +105,23 @@ export function Tabs({
   };
   const label = (o: TabsItem) => (typeof o.label === "string" ? o.label : o.value);
 
-  const r = tabs({ variant, size, inHeader, fill, tabSizing, ready });
+  const r = tabs({ variant, size, inHeader, fill, ready });
+  const text = tabsLabels(labels);
+  /* every tab in order, the selected one checked; picking one selects it (and scrolls it into view) */
+  const more = overflow ? (
+    <Menu
+      data-tabs="more" className={r.more()} placement="bottom-end"
+      items={allTabsMenu(opts.filter((o) => !closing.includes(o.value)), current)}
+      onRadioChange={(_, next) => { select(next); focusTabSoon(root.current, next); }}
+    >
+      <Tooltip content={text.allTabs}>
+        <Button
+          data-tabs="more-trigger" className={r.moreTrigger()} variant="ghost" size={variant === "pill" ? "xs" : size} square muted
+          aria-label={text.allTabs} icon={<CaretDown data-slot="icon" weight="bold" />}
+        />
+      </Tooltip>
+    </Menu>
+  ) : null;
   const list = (
     <ArkTabs.List data-slot="tabs-list" className={r.list()} aria-label={ariaLabel}>
       <ArkTabs.Indicator data-slot="tabs-indicator" className={r.indicator()} />
@@ -110,7 +136,7 @@ export function Tabs({
             {o.icon != null && o.icon !== "" && (
               <span data-slot="tabs-icon" className={r.icon()} aria-hidden="true">{typeof o.icon === "string" ? <img src={o.icon} alt="" /> : o.icon}</span>
             )}
-            <span data-slot="tabs-label" className={r.label()} title={typeof o.label === "string" ? o.label : undefined}>{o.label}</span>
+            <span data-slot="tabs-label" className={r.label({ closable: canClose })} title={typeof o.label === "string" ? o.label : undefined}>{o.label}</span>
           </ArkTabs.Trigger>
         );
         if (!canClose) return trigger;
@@ -143,8 +169,8 @@ export function Tabs({
       onValueChange={(details) => select(details.value)}
     >
       {headerClass !== undefined || end !== undefined ? (
-        <div data-slot="tabs-header" {...headerProps} className={r.header({ class: headerClass })}>{list}{end}</div>
-      ) : list}
+        <div data-slot="tabs-header" {...headerProps} className={r.header({ class: headerClass })}>{list}{more}{end}</div>
+      ) : <>{list}{more}</>}
       {opts.map((o) => (
         <ArkTabs.Content key={o.value} value={o.value} data-slot="tabs-content" className={r.content()}>{o.content}</ArkTabs.Content>
       ))}

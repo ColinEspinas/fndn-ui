@@ -20,13 +20,16 @@ export const chatComposer = tv({
       "flex flex-col w-full max-w-[380px] h-[288px] min-w-0 overflow-hidden",
       "rounded-window bg-surface shadow-card text-ink",
     ],
-    /* the Tabs root: the strip is the card's header, the open panel the thread's scroller. The
-     * list is flush with the card that clips it (no negative margin), its 6px padding holds the
-     * focus ring; one class more specific than the tabs recipe. A long name stops at 180px. */
+    /* the Tabs root (fill): the strip is the card's header, the open panel the thread's scroller.
+     * The Tabs' header part (an empty headerClass) is the strip's row and carries the hairline, so
+     * it runs the whole width under the list and, while the strip overflows, under the all-tabs
+     * menu after it (the list's edge fade never touches it). The list is flush with the card that
+     * clips it, its 6px padding holds the focus ring; the menu keeps 6px from the card's edge. A
+     * long name stops at 180px. */
     tabs: [
       "flex-1 min-h-0",
-      "[&[data-slot=tabs]>[data-slot=tabs-list]]:shrink-0 [&[data-slot=tabs]>[data-slot=tabs-list]]:m-0 [&[data-slot=tabs]>[data-slot=tabs-list]]:p-1.5",
-      "[&[data-slot=tabs]>[data-slot=tabs-list]]:border-b [&[data-slot=tabs]>[data-slot=tabs-list]]:border-line",
+      "[&>[data-slot=tabs-header]]:border-b [&>[data-slot=tabs-header]]:border-line",
+      "[&>[data-slot=tabs-header]>[data-slot=tabs-list]]:p-1.5 [&>[data-slot=tabs-header]>[data-tabs=more]]:pe-1.5",
       "[&_[data-slot=tabs-trigger]]:max-w-[180px]",
       "[&>[data-slot=tabs-content]]:flex-1 [&>[data-slot=tabs-content]]:min-h-0 [&>[data-slot=tabs-content]]:overflow-y-auto",
       "[&>[data-slot=tabs-content]]:pt-2.5 [&>[data-slot=tabs-content]]:px-3",

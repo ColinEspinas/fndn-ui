@@ -56,8 +56,8 @@ code (TreeView `size="xs"`).
 | Token | What it is for |
 | --- | --- |
 | `page` | The app's background, behind everything. |
-| `canvas` | Recessed: behind cards, and the chrome a joined surface sits on (title bar, activity bar, explorer, tab strip, status bar). |
-| `surface` | Where the work is: cards, panels, popups, dialogs, the selected attached tab and the panel it joins. |
+| `canvas` | Recessed: behind cards, and app chrome (title bar, activity bar, explorer, status bar). |
+| `surface` | Where the work is: cards, panels, popups, dialogs. |
 | `inset` | A well inside a surface: a card's footer, a `subtle` field, a boxed count. |
 | `field` | The fill of an `outline` field. |
 | `hover` | The hover of a row or a ghost button; the highlight that travels in a list. |
@@ -91,7 +91,7 @@ Depth is a 1px ring plus a shadow, from five tokens and never a home-made shadow
 on `<html>`; whether to follow `prefers-color-scheme` is the app's choice. Lighter means nearer:
 `page` < `canvas` < `inset` < `surface` < `hover` < `hover-2`, and the ring becomes a faint white
 edge. A step between two surfaces must read as clearly in dark as in light: compare their contrast
-ratios, not their lightness numbers (the selected attached tab must stand off its strip in both).
+ratios, not their lightness numbers (a card must stand off the canvas in both).
 If it does not, the token is fixed, never one component with `dark:` overrides.
 
 ## Ink and colour
@@ -312,7 +312,9 @@ cut: they wrap, or a row of choices that does not fit becomes a `pager` plus a `
 a cut name cannot be told from its neighbour and a cut number is a wrong number. Only free text
 that is not a choice may be cut, and then carries its full text in a `title`: a title, the text
 of a list row, and a document tab (a browser or editor tab, whose title is free text). A field
-may cut the label it has chosen, since its list shows every name whole.
+may cut the label it has chosen, since its list shows every name whole. A strip of tabs with more
+tabs than room scrolls sideways, fades each edge it continues past and ends in a button whose
+menu lists every tab whole: a tab past the edge would otherwise be found only by scrolling blind.
 
 **Pick a component by its look, not its name**, and read its variants in its docs before building
 around it:
@@ -323,7 +325,7 @@ around it:
 | Data on a page or a canvas | Table (its `card` look) |
 | A change list | Listbox `variant="flush"` |
 | An explorer | TreeView `size="xs"` |
-| Document tabs | Tabs `variant="attached"` (`tabSizing="fit"` for files; `shrink` for browser tabs) |
+| Document tabs (open files, a browser's tabs) | Tabs `variant="pill"` with `closable` |
 | The tabs of a panel | Tabs `variant="underline"` |
 
 ## Every state of a view

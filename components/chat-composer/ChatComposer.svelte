@@ -103,7 +103,7 @@
 </script>
 
 <div bind:this={root} {...data} data-slot="chat-composer" class={r.base({ class: className })} {style}>
-  <Tabs data-chat-composer="tabs" class={r.tabs()} aria-label={ariaLabel} {items} value={current} onvaluechange={(next) => { tab = next; ontabchange?.(next); }}>
+  <Tabs data-chat-composer="tabs" fill headerClass="" class={r.tabs()} aria-label={ariaLabel} {items} value={current} onvaluechange={(next) => { tab = next; ontabchange?.(next); }}>
     {#snippet panel({ item })}
       <div data-slot="chat-composer-thread" class={r.thread()} role="log">
         {#each messagesOf(item.value) as m, i (i)}

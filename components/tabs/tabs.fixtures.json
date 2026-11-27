@@ -137,15 +137,12 @@
       }
     },
     {
-      "name": "Attached (browser tabs)",
+      "name": "Document tabs (closable pill)",
       "props": {
-        "variant": "attached",
         "size": "sm",
         "closable": true,
         "style": {
-          "width": 520,
-          "background": "var(--fndn-canvas)",
-          "--fndn-tabs-surface": "var(--fndn-surface)"
+          "width": 520
         },
         "items": [
           {
@@ -178,51 +175,51 @@
       }
     },
     {
-      "name": "Attached, fit (editor tabs)",
+      "name": "More tabs than room",
+      "width": 300,
       "props": {
-        "variant": "attached",
-        "size": "sm",
-        "closable": true,
-        "tabSizing": "fit",
-        "style": {
-          "width": 460,
-          "background": "var(--fndn-canvas)",
-          "--fndn-tabs-surface": "var(--fndn-surface)"
-        },
-        "aria-label": "Open files",
-        "value": "rate-limit.ts",
         "items": [
           {
-            "value": "rate-limit.ts",
-            "label": "rate-limit.ts",
-            "content": "rate-limit.ts — editor"
+            "value": "overview",
+            "label": "Overview",
+            "content": "Overview: requests, errors and latency for the last 24 hours."
           },
           {
-            "value": "rate-limit.test.ts",
-            "label": "rate-limit.test.ts",
-            "content": "rate-limit.test.ts — editor"
+            "value": "requests",
+            "label": "Requests",
+            "content": "Requests: requests, errors and latency for the last 24 hours."
           },
           {
-            "value": "retry-policy.ts",
-            "label": "retry-policy.ts",
-            "content": "retry-policy.ts — editor"
+            "value": "errors",
+            "label": "Errors",
+            "content": "Errors: requests, errors and latency for the last 24 hours."
           },
           {
-            "value": "webhooks.md",
-            "label": "webhooks.md",
-            "content": "webhooks.md — editor"
+            "value": "latency",
+            "label": "Latency",
+            "content": "Latency: requests, errors and latency for the last 24 hours."
           },
           {
-            "value": "package.json",
-            "label": "package.json",
-            "content": "package.json — editor"
+            "value": "deploys",
+            "label": "Deploys",
+            "content": "Deploys: requests, errors and latency for the last 24 hours."
           },
           {
-            "value": "tsconfig.json",
-            "label": "tsconfig.json",
-            "content": "tsconfig.json — editor"
+            "value": "logs",
+            "label": "Logs",
+            "content": "Logs: requests, errors and latency for the last 24 hours."
+          },
+          {
+            "value": "settings",
+            "label": "Settings",
+            "content": "Settings: requests, errors and latency for the last 24 hours."
           }
-        ]
+        ],
+        "value": "overview",
+        "aria-label": "Service",
+        "labels": {
+          "allTabs": "All tabs"
+        }
       }
     }
   ],
@@ -342,14 +339,12 @@
       }
     },
     {
-      "name": "Attached, many files",
+      "name": "Document tabs, many files",
       "props": {
-        "variant": "attached",
         "size": "xs",
         "closable": true,
         "style": {
-          "width": 300,
-          "background": "var(--fndn-canvas)"
+          "width": 300
         },
         "items": [
           {

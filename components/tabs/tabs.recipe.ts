@@ -4,14 +4,8 @@ import { tv, type VariantProps } from "../lib/tv";
  *   pill (default)  13px labels, 26px tabs; the selected tab sits on a filled pill (the chat header strip)
  *                   whose radius is the chip token
  *   underline       13px labels, 32px tabs on a hairline; an ink bar under the selected tab
- *   attached        browser and editor tabs: the selected tab is its own surface (--fndn-tabs-surface,
- *                   the colour of the panel or toolbar under it, default surface) with rounded top
- *                   corners and inverse curves at its feet, joined to what is below (no line); the
- *                   others sit on the strip (the host's colour) with a hairline between them, hidden
- *                   beside the selected and the hovered tab. No travelling indicator: a document tab
- *                   is selected in place, as Chrome and VS Code do, and a joined tab never scales
  *   size            xs 24 · sm 28 · md (default) — dimensions only; md keeps each variant's height
- *                   (pill 26, underline 32, attached 32)
+ *                   (pill 26, underline 32)
  *   inHeader        pill or underline inside a card header: fills the header's height, no hairline
  *                   (its own prop: the size scale is dimensions only)
  *   closable        a closable tab is wrapped in the tab part with its close part beside the
@@ -20,25 +14,40 @@ import { tv, type VariantProps } from "../lib/tv";
  *                   trigger, covers both. The wrapper is not positioned: the trigger's offset box
  *                   stays relative to the list, which the engine and placeIndicator measure
  *   fill            the root fills its container's height and the selected panel takes the rest
- *   tabSizing       attached only. shrink (default, Chrome): tabs share the strip, 240px at most,
- *                   shrinking to 96px before the strip scrolls; labels are cut with a title. fit
- *                   (VS Code): each tab is as wide as its title, never cut, and the strip scrolls
- *   arrivals        attached only (house rule "arrivals make room"): a tab added after the first
- *                   paint (`ready`, set by the adapter after mount) opens its width from 0 over
- *                   duration.reveal while it fades in over duration.base; a tab closed by the
+ *   document tabs   closable tabs are documents (open files, browser tabs): a title is free text, so
+ *                   a closable tab's label stops at 240px and is cut at its end (with its title);
+ *                   a tab that is not closable names a view and is never cut
+ *   arrivals        closable tabs (house rule "arrivals and removals make room"): a tab added after
+ *                   the first paint (`ready`, set by the adapter after mount) opens its width from 0
+ *                   over duration.reveal while it fades in over duration.base; a tab closed by the
  *                   pointer (`closing`) closes its width to 0 the same way, and the adapter calls
  *                   onClose when it has. From the keyboard both are instant (kbd-instant; the adapter
  *                   closes at once); under reduced motion duration.reveal is 0, so the width jumps
  *                   and only the fade is left. Width, min-width and inline padding move (a tab's
- *                   room is its width: no transform can open it); fit tabs, whose width is auto,
- *                   move through interpolate-size (Chromium; elsewhere they appear at once)
+ *                   room is its width: no transform can open it); the width is auto, so it moves
+ *                   through interpolate-size (Chromium; elsewhere the tab appears at once). The
+ *                   indicator measures the trigger, so it rides along and lands on the selected tab
+ *   overflow        every variant: a strip with more tabs than room scrolls sideways (no scrollbar),
+ *                   fades each edge it continues past and shows the all-tabs button after the list.
+ *                   watchStrip (tabs.logic.ts) measures it: data-overflow on the list while the tabs
+ *                   are wider than it (never on a list with no box), data-overflow-start and
+ *                   data-overflow-end from the scroll position. The fade is a 24px mask on the list,
+ *                   the room revealTab keeps clear of each edge; it follows the scroll, with no time
+ *                   of its own. The adapters render the button (the more part: a Menu whose trigger is
+ *                   the real Button, ghost, muted, square) only while data-overflow holds
  *
  * Everything is here, motion included. The indicator is the engine's: it measures the selected tab
  * and travels on transform only while a selection is being made (the engine sets transition-property
  * from --transition-property then), so it does not slide in on mount or when fonts load. Keyboard
  * selections are instant (kbd-instant). Panels swap instantly. Parts are found by data-slot
  * (tabs, tabs-header, tabs-list, tabs-indicator, tabs-trigger, tabs-label, tabs-content); the root
- * slot is `base`. */
+ * slot is `base`. The all-tabs menu is marked data-tabs="more", its button data-tabs="more-trigger".
+ *
+ * The root is a grid of two columns, the list and the all-tabs button side by side on the first row
+ * (when there is no header part to hold them), and every other part across both: the header, and
+ * the selected panel on the second row. Its rows are as tall as their content, packed at the top
+ * (a panel keeps its content's height in a taller root); with fill the panel's row takes the
+ * height the strip leaves. */
 
 /* until the indicator is measured the selected tab paints itself exactly like the indicator, so the
  * hand-over is invisible (written whole below: a class built from pieces is never generated). The
@@ -46,10 +55,23 @@ import { tv, type VariantProps } from "../lib/tv";
 
 export const tabs = tv({
   slots: {
-    base: "flex flex-col min-w-0 max-w-full",
+    base: "grid grid-cols-[minmax(0,1fr)_auto] content-start min-w-0 max-w-full *:col-span-full",
     /* the host's header row, when the list is wrapped in it */
     header: "flex items-center min-w-0",
-    list: "relative flex items-center min-w-0 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+    list: [
+      "relative flex items-center min-w-0 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [[data-slot=tabs]>&]:col-span-1",
+      /* a tab's width can open from 0 to auto (arrivals) and close back */
+      "[interpolate-size:allow-keywords]",
+      /* overflowing, each edge the strip continues past fades out over 24px (a mask: the strip has
+       * no colour of its own to fade into); logical, so right-to-left swaps the ends */
+      "[--_fade:linear-gradient(to_var(--_end,right),transparent,#000_var(--_fade-start,0px),#000_calc(100%_-_var(--_fade-end,0px)),transparent)] [&:dir(rtl)]:[--_end:left]",
+      "data-overflow-start:[--_fade-start:24px] data-overflow-end:[--_fade-end:24px]",
+      "data-overflow-start:[mask-image:var(--_fade)] data-overflow-end:[mask-image:var(--_fade)]",
+    ],
+    /* the all-tabs menu (the Menu's root) after the list, holding its button; centred on the strip */
+    more: "flex shrink-0 items-center self-stretch [[data-slot=tabs]>&]:col-span-1",
+    /* the all-tabs button (the real Button, ghost, muted, square) */
+    moreTrigger: "",
     /* a closable tab: the trigger and its close button side by side (never positioned, see above) */
     tab: "group/tab flex shrink-0 items-center min-w-0 max-w-full",
     /* the engine's indicator: left is the engine's inline `left: var(--left)`, overridden (offsets
@@ -98,11 +120,12 @@ export const tabs = tv({
   },
   variants: {
     variant: {
-      pill: { close: "-ms-5 me-1" },
+      pill: { close: "-ms-5 me-1", more: "[[data-slot=tabs]>&]:ps-1" },
       underline: {
         /* the list clips: 4px of inline padding, taken back by the margin, give the ring room at the
          * ends (a list that is the root's child; one in the header part keeps its edges) */
         list: "gap-4 [[data-slot=tabs]>&]:px-1 [[data-slot=tabs]>&]:-mx-1",
+        more: "[[data-slot=tabs]>&]:ps-1",
         close: "-ms-4",
         indicator: "top-auto bottom-0 h-0.5 rounded-[1px] bg-ink [transform:translateX(var(--left,0px))]",
         /* the usual ring (outside the tab) would be cut off by the list: it is drawn 4px inside the
@@ -115,49 +138,6 @@ export const tabs = tv({
           "[[data-slot=tabs-indicator][hidden]~*>&]:aria-selected:bg-transparent [[data-slot=tabs-indicator][hidden]~*>&]:aria-selected:shadow-[inset_0_-2px_0_var(--fndn-ink)]",
         ],
       },
-      attached: {
-        /* the strip: tabs stand on its bottom edge; the ends leave room for the outer feet. A tab's
-         * width can open from 0 to auto (fit tabs arriving and leaving) */
-        list: "items-end gap-0 px-2 pt-1 [--fndn-tabs-radius:var(--fndn-radius-control)] [interpolate-size:allow-keywords]",
-        /* the selected tab paints itself: the engine's indicator stays hidden */
-        indicator: "hidden!",
-        /* tabs share the strip, 240px at most each, and shrink together (to 96px) before the strip
-         * scrolls, as Chrome's do; the label is cut at its end with its title */
-        tab: "w-60 shrink min-w-24",
-        trigger: [
-          "w-60 shrink min-w-24 justify-start [[data-slot=tabs-tab]>&]:w-auto [[data-slot=tabs-tab]>&]:flex-1",
-          "h-8 px-3 rounded-none rounded-t-(--fndn-tabs-radius) text-ink-2 hover:text-ink aria-selected:text-ink",
-          /* inactive tabs: a quiet hover fill (half the selected surface); the selected one is the surface */
-          "hover:bg-[color-mix(in_oklab,var(--fndn-tabs-surface,var(--fndn-surface))_55%,transparent)]",
-          "aria-selected:z-2 aria-selected:bg-[var(--fndn-tabs-surface,var(--fndn-surface))]",
-          /* the strip is usually the canvas, whose step under surface reads the same in both themes
-           * (the dark canvas is set to match light's contrast). In dark the selected tab
-           * also gets a lit top edge (a 1px line-strong inset along its rounded top), as dark
-           * browser tabs do: light on top is how dark themes show what is raised */
-          "[:is(.dark,[data-theme=dark])_&]:aria-selected:shadow-[inset_0_1px_0_var(--fndn-line-strong)]",
-          "[[data-slot=tabs-indicator][hidden]~&]:aria-selected:bg-[var(--fndn-tabs-surface,var(--fndn-surface))] [[data-slot=tabs-indicator][hidden]~*>&]:aria-selected:bg-[var(--fndn-tabs-surface,var(--fndn-surface))]",
-          /* only the ink fades; the surface changes at once (selecting a document is instant) */
-          "[--fndn-m-colors:color_var(--fndn-duration-base)_ease]",
-          /* joined to the panel below: no press scale */
-          "active:scale-100",
-          /* the ring is drawn inside: the strip clips */
-          "focus-visible:-outline-offset-2",
-          /* inverse curves at the selected tab's feet, in the surface's colour */
-          "after:content-[''] after:absolute after:bottom-0 after:inset-x-[calc(var(--fndn-tabs-radius)*-1)] after:h-(--fndn-tabs-radius) after:pointer-events-none after:hidden aria-selected:after:block",
-          "after:[background:radial-gradient(circle_at_0_0,transparent_var(--fndn-tabs-radius),var(--fndn-tabs-surface,var(--fndn-surface))_calc(var(--fndn-tabs-radius)+0.5px))_left_bottom/var(--fndn-tabs-radius)_var(--fndn-tabs-radius)_no-repeat,radial-gradient(circle_at_100%_0,transparent_var(--fndn-tabs-radius),var(--fndn-tabs-surface,var(--fndn-surface))_calc(var(--fndn-tabs-radius)+0.5px))_right_bottom/var(--fndn-tabs-radius)_var(--fndn-tabs-radius)_no-repeat]",
-          /* a hairline between inactive tabs, at the tab's inline start; none on the first tab, none
-           * beside the selected or the hovered tab */
-          "before:content-[''] before:absolute before:start-0 before:inset-y-2 before:w-px before:bg-line-strong before:pointer-events-none",
-          "aria-selected:before:opacity-0 hover:before:opacity-0 group-hover/tab:before:opacity-0",
-          "[[data-slot=tabs-indicator]+&]:before:opacity-0 [[data-slot=tabs-indicator]+[data-slot=tabs-tab]>&]:before:opacity-0",
-          "[[aria-selected=true]+&]:before:opacity-0 [[data-slot=tabs-tab]:has(>[aria-selected=true])+&]:before:opacity-0",
-          "[[aria-selected=true]+[data-slot=tabs-tab]>&]:before:opacity-0 [[data-slot=tabs-tab]:has(>[aria-selected=true])+[data-slot=tabs-tab]>&]:before:opacity-0",
-          "[:hover+&]:before:opacity-0 [:hover+[data-slot=tabs-tab]>&]:before:opacity-0",
-        ],
-        close: "-ms-6 me-2",
-        /* the selected panel is the same surface, joined to its tab */
-        content: "pt-0 bg-[var(--fndn-tabs-surface,var(--fndn-surface))]",
-      },
     },
     size: {
       xs: { trigger: "text-xs", icon: "size-3.5 text-[14px]" },
@@ -166,22 +146,22 @@ export const tabs = tv({
     },
     /* inside a card header: the strip fills the header's height, with no hairline of its own; a
      * list that is the root's only child fills the root */
+    /* (the panel starts at the header's line: what it holds brings its own inset) */
     inHeader: {
-      true: { base: "self-stretch", list: "self-stretch [[data-slot=tabs]>&]:flex-[1_0_auto]" },
+      true: { base: "self-stretch", list: "self-stretch [[data-slot=tabs]>&]:flex-[1_0_auto]", content: "pt-0" },
       false: {},
     },
-    /* a closable tab's trigger keeps room at its end for the close button */
-    closable: { true: {}, false: {} },
-    /* attached: shrink (Chrome) or fit (VS Code), see above */
-    tabSizing: { shrink: {}, fit: {} },
-    /* set by the adapter after mount: from then on an inserted tab opens its room (attached) */
+    /* a closable tab is a document: its trigger keeps room at its end for the close button, and its
+     * title (free text) stops at 240px, cut at its end */
+    closable: { true: { label: "max-w-60" }, false: {} },
+    /* set by the adapter after mount: from then on an inserted closable tab opens its room */
     ready: { true: {}, false: {} },
-    /* a tab closed by the pointer, while its room closes (attached); the adapter then calls onClose */
+    /* a tab closed by the pointer, while its room closes; the adapter then calls onClose */
     closing: { true: {}, false: {} },
     /* fill: the root takes its container's height; the selected panel takes what the strip leaves
      * and scrolls inside itself (put a ScrollArea in it for the system's scrollbar) */
     fill: {
-      true: { base: "h-full min-h-0", content: "flex-1 min-h-0 overflow-y-auto overscroll-x-contain" },
+      true: { base: "h-full min-h-0 grid-rows-[auto_minmax(0,1fr)]", content: "flex-1 min-h-0 overflow-y-auto overscroll-x-contain" },
       false: {},
     },
   },
@@ -198,58 +178,66 @@ export const tabs = tv({
         list: [
           "shadow-[inset_0_-1px_0_var(--fndn-line)] [[data-slot=tabs]>&]:shadow-none",
           "[[data-slot=tabs]>&]:bg-[linear-gradient(var(--fndn-line)_0_0)] [[data-slot=tabs]>&]:bg-bottom [[data-slot=tabs]>&]:bg-[length:100%_1px] [[data-slot=tabs]>&]:bg-no-repeat [[data-slot=tabs]>&]:bg-origin-content [[data-slot=tabs]>&]:bg-clip-content",
+          /* the edge fades leave the hairline whole: a second mask layer keeps the bottom pixel */
+          "data-overflow-start:[mask-image:var(--_fade),linear-gradient(#000_0_0)] data-overflow-end:[mask-image:var(--_fade),linear-gradient(#000_0_0)]",
+          "[mask-size:100%_100%,100%_1px] [mask-position:0_0,0_100%] [mask-repeat:no-repeat]",
         ],
+        /* the hairline runs on under the all-tabs button */
+        more: "shadow-[inset_0_-1px_0_var(--fndn-line)]",
       },
     },
-    { variant: "pill", closable: true, class: { trigger: "pe-6" } },
-    { variant: "underline", closable: true, class: { trigger: "pe-5" } },
-    { variant: "attached", closable: true, class: { trigger: "pe-7" } },
+    /* pill tabs of 20 and 22px: the 24px button keeps to the strip's height (negative block margins) */
+    { variant: "pill", size: "xs", class: { moreTrigger: "-my-0.5" } },
+    { variant: "pill", size: "sm", class: { moreTrigger: "-my-px" } },
     /* the dense sizes (editors): xs 24 · sm 28; md keeps each variant's own height */
     { variant: "pill", size: "xs", class: { trigger: "h-5 px-1.5" } },
     { variant: "pill", size: "sm", class: { trigger: "h-[22px] px-1.5" } },
     { variant: "underline", size: "xs", class: { trigger: "h-6" } },
     { variant: "underline", size: "sm", class: { trigger: "h-7" } },
     { variant: "underline", size: ["xs", "sm"], class: { list: "gap-3" } },
+    /* a closable trigger keeps room at its end for the close button (after the dense sizes, whose
+     * inline padding it overrides at the end) */
+    { variant: "pill", closable: true, class: { trigger: "pe-6" } },
+    { variant: "underline", closable: true, class: { trigger: "pe-5" } },
     /* in a header the underline tabs stretch to the header's height (after the dense heights: it wins) */
     { variant: "underline", inHeader: true, class: { list: "items-stretch", tab: "self-stretch", trigger: "h-auto" } },
-    { variant: "attached", size: "xs", class: { trigger: "h-6 px-2", list: "[--fndn-tabs-radius:var(--fndn-radius-chip)]" } },
-    { variant: "attached", size: "sm", class: { trigger: "h-7 px-2.5", list: "[--fndn-tabs-radius:var(--fndn-radius-chip)]" } },
-    { variant: "attached", size: ["xs", "sm"], closable: true, class: { trigger: "pe-6", close: "-ms-5 me-1" } },
-    /* fit (VS Code): as wide as the title, never cut; the strip scrolls */
-    { variant: "attached", tabSizing: "fit", class: { tab: "w-auto shrink-0 min-w-0", trigger: "w-auto shrink-0 min-w-0" } },
-    /* a fit tab's title is never cut, so the close button stands 8px clear of it, as VS Code's
-     * (shrink tabs keep 4px: their title is cut just before it) */
-    { variant: "attached", tabSizing: "fit", closable: true, class: { trigger: "pe-8" } },
-    { variant: "attached", tabSizing: "fit", size: ["xs", "sm"], closable: true, class: { trigger: "pe-7" } },
-    /* arrivals make room: an inserted tab (the closable wrapper, or the trigger alone) opens from 0.
-     * fndn-check-ok: width, min-width and inline padding are a tab's room in the strip; no transform
-     * can open it, and they move over duration.reveal (0 under reduced motion: only the fade stays) */
+    /* arrivals make room: an inserted closable tab (the tab part, which fades, and its trigger) opens
+     * from 0; underline also opens the gap before the next tab (its end margin, from -16px).
+     * fndn-check-ok: width, min-width, inline padding and margin are a tab's room in the strip; no
+     * transform can open it, and they move over duration.reveal (0 under reduced motion: only the
+     * fade stays) */
     {
-      variant: "attached",
       ready: true,
       class: {
         tab: [
           "kbd-instant starting:w-0 starting:min-w-0 starting:opacity-0",
-          "motion-opacity-base motion-also-[width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),min-width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong)]",
-        ],
-        trigger: [
-          "starting:w-0 starting:min-w-0 starting:px-0 starting:opacity-0",
-          "motion-opacity-base motion-also-[width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),min-width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),padding-inline_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong)]",
+          "motion-opacity-base motion-also-[width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),min-width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),margin-inline-end_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong)]",
         ],
       },
     },
+    {
+      ready: true,
+      closable: true,
+      class: {
+        trigger: [
+          "starting:w-0 starting:min-w-0 starting:px-0",
+          "motion-also-[width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),min-width_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong),padding-inline_var(--fndn-duration-reveal)_var(--fndn-easing-out-strong)]",
+        ],
+      },
+    },
+    { variant: "underline", ready: true, class: { tab: "starting:-me-4" } },
     /* departures close their room: the closing tab's width and padding go to 0 and it fades; it takes
      * no more presses. After the closable compounds, so its px-0 wins over their pe-* */
     {
-      variant: "attached",
       closing: true,
       class: {
         tab: "w-0 min-w-0 opacity-0 pointer-events-none",
-        trigger: "w-0 min-w-0 px-0 opacity-0",
+        trigger: "w-0 min-w-0 px-0",
       },
     },
+    { variant: "underline", closing: true, class: { tab: "-me-4" } },
   ],
-  defaultVariants: { variant: "pill", size: "md", inHeader: false, closable: false, fill: false, tabSizing: "shrink", ready: false, closing: false },
+  defaultVariants: { variant: "pill", size: "md", inHeader: false, closable: false, fill: false, ready: false, closing: false },
 });
 
 export type TabsRecipeProps = VariantProps<typeof tabs>;

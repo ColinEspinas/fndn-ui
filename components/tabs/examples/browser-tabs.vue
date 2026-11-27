@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { PhGitBranch, PhGlobe, PhTerminal } from "@phosphor-icons/vue";
-import { Tabs, type TabsItem } from "@fndn/vue";
+import { PhGitBranch, PhGlobe, PhPlus, PhTerminal } from "@phosphor-icons/vue";
+import { Button, Tabs, Tooltip, type TabsItem } from "@fndn/vue";
 
 const pages: TabsItem[] = [
   { value: "deploys", label: "Deploys · web-app", icon: PhTerminal, content: "dpl_7f3a9c is live on Production." },
@@ -11,22 +11,33 @@ const pages: TabsItem[] = [
 
 const open = ref(pages);
 const active = ref("pr-482");
+let next = 1;
+function add() {
+  const value = `new-${next++}`;
+  open.value = [...open.value, { value, label: "New tab", icon: PhGlobe, content: "A blank page." }];
+  active.value = value;
+}
 </script>
 
-<!-- browser tabs: attached, so the selected tab is the toolbar's surface and joins it; the others sit
-     on the darker strip. Tabs share the strip (240px at most) and shrink before it scrolls -->
+<!-- browser tabs: closable pill tabs, each with its page's icon. A title stops at 240px, cut with its
+     full text in the title; a new tab opens its room and a closed one gives it back -->
 <template>
-  <div class="w-full max-w-[560px] overflow-hidden rounded-card bg-canvas shadow-card">
-    <Tabs
-      v-model:value="active"
-      variant="attached"
-      size="sm"
-      closable
-      :items="open"
-      aria-label="Open tabs"
-      @close="(page) => (open = open.filter((tab) => tab.value !== page))"
-    >
-      <template #panel="{ item }"><p class="px-3 py-2.5 text-sm text-ink-2">{{ item.content }}</p></template>
-    </Tabs>
-  </div>
+  <Tabs
+    v-model:value="active"
+    class="w-full max-w-[560px]"
+    size="sm"
+    closable
+    :items="open"
+    aria-label="Open tabs"
+    @close="(value) => (open = open.filter((tab) => tab.value !== value))"
+  >
+    <template #panel="{ item }"><p class="py-2.5 text-sm text-ink-2">{{ item.content }}</p></template>
+    <template #end>
+      <Tooltip content="New tab">
+        <Button variant="ghost" size="xs" square muted aria-label="New tab" @click="add">
+          <template #icon><PhPlus data-slot="icon" weight="bold" /></template>
+        </Button>
+      </Tooltip>
+    </template>
+  </Tabs>
 </template>

@@ -117,7 +117,7 @@ export function ChatComposer({
 
   return (
     <div ref={root} {...data} data-slot="chat-composer" className={r.base({ class: className })} style={style}>
-      <Tabs data-chat-composer="tabs"
+      <Tabs data-chat-composer="tabs" fill headerClass=""
         className={r.tabs()}
         aria-label={ariaLabel}
         value={tab}

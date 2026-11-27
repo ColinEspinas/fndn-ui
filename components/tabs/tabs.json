@@ -3,7 +3,7 @@
   "name": "tabs",
   "title": "Tabs",
   "summary": "Switch between views that share one place.",
-  "description": "Switch between views that share one place. A row of 13px tab labels; the selected one sits on a filled pill (pill) or over an ink underline (underline), or is a surface of its own joined to the panel or toolbar below (attached: browser and editor tabs), and that indicator slides to the next tab under the pointer and jumps under the keyboard. Panels swap instantly. One tab stop: arrow keys move and select. Tabs can be closable (open files, browser tabs): a close button beside each trigger, Delete on the focused tab, focus and selection handed to a neighbour. A strip with more tabs than room scrolls sideways and keeps the selected tab in view; `fill` makes the panel take the height of its container. Behaviour, focus and ARIA come from the Zag tabs machine, through Ark UI in React, Vue and Svelte.",
+  "description": "Switch between views that share one place. A row of 13px tab labels; the selected one sits on a filled pill (pill) or over an ink underline (underline), and that indicator slides to the next tab under the pointer and jumps under the keyboard. Panels swap instantly. One tab stop: arrow keys move and select. Tabs can be closable, which makes them document tabs (open files, browser tabs): a close button beside each trigger, Delete on the focused tab, focus and selection handed to a neighbour, a title cut at 240px, and a tab that opens or closes makes room instead of jumping. A strip with more tabs than room scrolls sideways, keeps the selected tab in view, fades each edge it continues past and shows a button at its end that lists every tab in a menu; `fill` makes the panel take the height of its container. Behaviour, focus and ARIA come from the Zag tabs machine, through Ark UI in React, Vue and Svelte.",
   "kind": "component",
   "category": "navigation",
   "order": 2,
@@ -14,18 +14,18 @@
     {
       "part": "root",
       "element": "div",
-      "description": "data-orientation (set by the engine). With fill: the height of its container (which must have one)."
+      "description": "data-orientation (set by the engine). A grid: without the header part, the list and the all-tabs menu share the first row; every other part spans both columns. Rows are as tall as their content, packed at the top, so a panel keeps its content's height in a taller root. With fill: the height of its container (which must have one), and the selected panel's row takes what the strip leaves."
     },
     {
       "part": "header",
       "element": "div",
       "optional": true,
-      "description": "Optional. The host's header row around the list (headerClass adds the host's class), holding the host's trailing parts after the list (the end slot). Rendered only when headerClass or end is given. A flex row; with inHeader the list fills its height."
+      "description": "Optional. The host's header row around the list (headerClass adds the host's class), holding the all-tabs menu (while the strip overflows) and then the host's trailing parts (the end slot). Rendered only when headerClass or end is given. A flex row; with inHeader the list fills its height."
     },
     {
       "part": "list",
       "element": "div",
-      "description": "role=tablist; the indicator's offset parent. Scrolls sideways when the tabs do not fit (no scrollbar, the wheel's sideways overscroll stays in): the selected tab is kept in view, 24px clear of the edge so the next one peeks in."
+      "description": "role=tablist; the indicator's offset parent. Scrolls sideways when the tabs do not fit (no scrollbar, the wheel's sideways overscroll stays in): the selected tab is kept in view, 24px clear of the edge so the next one peeks in. data-overflow while the tabs are wider than it (measured on mount and on every change of size or of the tabs; never on a list with no box, display: none on it or above it). data-overflow-start / data-overflow-end while tabs are hidden past that edge (the scroll position, logical): each such edge fades out over 24px (a mask; underline keeps its hairline whole)."
     },
     {
       "part": "indicator",
@@ -37,7 +37,7 @@
       "element": "div",
       "optional": true,
       "repeat": true,
-      "description": "Only around a closable tab: the trigger and its close button side by side (a button cannot hold a button). Not positioned, so the trigger's offset box stays the list's (the indicator measures the trigger, which keeps room at its end for the close button, so the pill or the underline spans both)."
+      "description": "Only around a closable tab: the trigger and its close button side by side (a button cannot hold a button). Not positioned, so the trigger's offset box stays the list's (the indicator measures the trigger, which keeps room at its end for the close button, so the pill or the underline spans both). It is the tab's room: it opens and closes (see motion, arrival and closing)."
     },
     {
       "part": "trigger",
@@ -54,7 +54,7 @@
     {
       "part": "label",
       "element": "span",
-      "description": "The tab's text on one line; it truncates at the end and carries the full text as title."
+      "description": "The tab's text on one line; it truncates at the end and carries the full text as title. A view's name (a tab that is not closable) is never cut by the Tabs themselves: it is cut only when the strip is narrower than the one tab. A closable tab's title is free text (a document's name) and stops at 240px, cut at its end."
     },
     {
       "part": "close",
@@ -62,6 +62,18 @@
       "optional": true,
       "repeat": true,
       "description": "A closable tab's close button: 16px with a 24px target, pulled back over the trigger's end room. Shown on the selected tab and while its tab is hovered (always on touch); keeps its room at rest, so the strip never reflows. Not a tab stop (the keyboard closes with Delete on the tab, aria-keyshortcuts) but not hidden either: named \"Close <tab>\", reachable by a screen reader's cursor and by touch exploration. A press never takes focus."
+    },
+    {
+      "part": "more",
+      "element": "div",
+      "optional": true,
+      "description": "The all-tabs menu: the Menu's root, after the list and before the end slot, marked data-tabs=\"more\". Rendered only while the list has data-overflow. Its items are one radio group of every tab in order (a tab whose label is not text is listed by its value), the selected tab checked and disabled tabs disabled; picking one selects that tab (valueChange), closes the menu and focuses the tab, and the strip scrolls it into view. Placed bottom-end."
+    },
+    {
+      "part": "more-trigger",
+      "element": "button",
+      "optional": true,
+      "description": "The menu's trigger: the real Button (ghost, muted, square, caret-down), marked data-tabs=\"more-trigger\", named and tooltipped by labels.allTabs. Its size matches the strip: xs for pill (held to the strip's height by negative block margins at xs and sm), the Tabs' size for underline. Underline outside a header: the hairline runs on under it."
     },
     {
       "part": "content",
@@ -92,11 +104,10 @@
       "type": "enum",
       "values": [
         "pill",
-        "underline",
-        "attached"
+        "underline"
       ],
       "default": "pill",
-      "description": "pill: the selected tab sits on a filled pill (the chat header strip). underline: an ink bar under the selected tab on a hairline. attached: browser and editor tabs (Chrome, VS Code). The selected tab is a surface of its own, the colour of the panel or toolbar under it (--fndn-tabs-surface on the Tabs or an ancestor; default color.surface), with rounded top corners and inverse curves at its feet, and it joins what is below (no line under it); its panel takes the same surface. The other tabs sit on the strip (the host's colour, one step darker than the surface), ink-2, with a hairline between them hidden beside the selected and the hovered tab; hover fills half the surface. No travelling indicator and no press scale: a joined tab is selected in place. Attached tabs share the strip as Chrome's do: 240px at most each, shrinking together to 96px before the strip scrolls; a label cut by that keeps its full text in the title."
+      "description": "pill: the selected tab sits on a filled pill: the chat header strip, and document tabs (closable: open files, browser tabs). underline: an ink bar under the selected tab on a hairline (the tabs of a panel)."
     },
     "size": {
       "type": "enum",
@@ -106,12 +117,12 @@
         "md"
       ],
       "default": "md",
-      "description": "xs 24 · sm 28: dense strips (an editor's file tabs, a browser's tabs), 12px labels, 14px icons; md (default) keeps each variant's height (pill 26, underline 32, attached 32). Dimensions only."
+      "description": "xs 24 · sm 28: dense strips (an editor's file tabs, a browser's tabs), 12px labels, 14px icons; md (default) keeps each variant's height (pill 26, underline 32). Dimensions only."
     },
     "inHeader": {
       "type": "boolean",
       "default": false,
-      "description": "pill or underline, for a strip inside a card header (a code block's file tabs, an editor's panel strip). The list fills the header's height (underline tabs stretch to it) and draws no hairline of its own: the header's bottom line is the line, and the underline rests on it. Its own prop, not a size: the size scale is dimensions only."
+      "description": "pill or underline, for a strip inside a card header (a code block's file tabs, an editor's panel strip). The list fills the header's height (underline tabs stretch to it) and draws no hairline of its own: the header's bottom line is the line, and the underline rests on it. The panel starts at that line, with no top padding: what it holds (code, a toolbar, a terminal) brings its own inset. Its own prop, not a size: the size scale is dimensions only."
     },
     "headerProps": {
       "type": "object",
@@ -124,26 +135,21 @@
     "closable": {
       "type": "boolean",
       "default": false,
-      "description": "Every tab gets a close button and closes on Delete (an item's own `closable` wins): open files, browser tabs, documents. The Tabs never remove a tab themselves: they select the neighbour and emit close; the caller removes the item."
+      "description": "Every tab gets a close button and closes on Delete (an item's own `closable` wins): document tabs (open files, browser tabs). A closable tab's title is free text: it stops at 240px and is cut at its end, keeping its full text in the title. The Tabs never remove a tab themselves: they select the neighbour and emit close; the caller removes the item. A closable tab added after the first paint opens its room; one closed by the pointer closes it first."
     },
     "closeLabel": {
       "type": "string",
       "default": "Close",
       "description": "Verb of a close button's name, followed by the tab's text (\"Close rate-limit.ts\")."
     },
+    "labels": {
+      "type": "object",
+      "description": "The strings, for translation: allTabs (default \"All tabs\"), the name and tooltip of the button that lists every tab while the strip overflows."
+    },
     "fill": {
       "type": "boolean",
       "default": false,
       "description": "The root takes the height of its container and the selected panel the rest (an editor's bottom panel, a pane). A variant, so hosts never reach into the panel with selectors."
-    },
-    "tabSizing": {
-      "type": "enum",
-      "values": [
-        "shrink",
-        "fit"
-      ],
-      "default": "shrink",
-      "description": "attached only. shrink (Chrome): tabs share the strip, 240px at most each, and shrink together to 96px before the strip scrolls; labels are cut at their end with a title. fit (VS Code): each tab is as wide as its title, never cut, and the strip scrolls sideways (the selected tab is kept in view). Use fit for files whose names differ only at the end (rate-limit.ts, rate-limit.test.ts)."
     },
     "aria-label": {
       "type": "string",
@@ -156,7 +162,7 @@
   },
   "events": {
     "valueChange": "(value: string)",
-    "close": "(value: string) when a closable tab asks to close (its button, or Delete / Backspace on it). If it was selected, valueChange has already moved the selection to the next enabled tab, else the previous. attached, closed by the pointer: emitted once the tab's room has closed (duration.reveal later); from the keyboard and under reduced motion at once."
+    "close": "(value: string) when a closable tab asks to close (its button, or Delete / Backspace on it). If it was selected, valueChange has already moved the selection to the next enabled tab, else the previous. Closed by the pointer: emitted once the tab's room has closed (duration.reveal later); from the keyboard and under reduced motion at once."
   },
   "states": [
     "selected",
@@ -167,7 +173,8 @@
     "closable",
     "close-hover",
     "close-press",
-    "fill"
+    "fill",
+    "overflow"
   ],
   "tokens": [
     "color.field",
@@ -186,20 +193,22 @@
     "color.accent",
     "color.hover",
     "duration.fast",
-    "color.surface",
-    "color.line-strong",
-    "radius.control",
     "text.xs",
     "duration.reveal"
   ],
-  "dependencies": [],
+  "dependencies": [
+    "button",
+    "menu",
+    "tooltip"
+  ],
   "a11y": {
     "role": "tablist + tab + tabpanel",
     "keyboard": [
       "Tab reaches the selected tab; the list is one tab stop, the next Tab goes to the panel",
       "ArrowRight / ArrowLeft move to the next / previous enabled tab and select it (selection follows focus); they wrap",
       "Home / End move to the first / last enabled tab and select it",
-      "Delete (and Backspace, the key macOS labels delete) closes the focused closable tab; focus and selection move to the next enabled tab, else the previous. The browser keeps Ctrl/⌘ W, so the platform's own close shortcut cannot be taken by a web page"
+      "Delete (and Backspace, the key macOS labels delete) closes the focused closable tab; focus and selection move to the next enabled tab, else the previous. The browser keeps Ctrl/⌘ W, so the platform's own close shortcut cannot be taken by a web page",
+      "While the strip overflows, the all-tabs button is the next Tab stop after the list: Enter, Space or ArrowDown open its menu (the Menu's keys); Enter on a tab selects it, closes the menu and moves focus to that tab, where the arrow keys and Delete work as after any selection"
     ],
     "notes": [
       "Give the list an aria-label when nothing else names it.",
@@ -208,7 +217,8 @@
       "To select from outside, control `value`: React value / onValueChange, Vue v-model:value, Svelte bind:value.",
       "A closable trigger carries aria-keyshortcuts=\"Delete\"; its close button is not a tab stop (the Tab key meets only tabs) but it is not hidden: it is named \"Close <tab>\" (closeLabel + the tab's text), so a screen reader's cursor and touch exploration (VoiceOver, TalkBack) reach and press it; Delete keeps working on the focused tab.",
       "When the selected tab moves out of a scrolling strip it is scrolled back into view: instantly after a key, smoothly after a click.",
-      "An item's icon is decoration (aria-hidden; a favicon is an <img alt=\"\">): the label is the tab's name."
+      "An item's icon is decoration (aria-hidden; a favicon is an <img alt=\"\">): the label is the tab's name.",
+      "The all-tabs button appears only while some tabs are out of view; it is named (labels.allTabs) and shows the same name as a tooltip. Its menu is a radio group, so the selected tab is announced as checked."
     ]
   },
   "motion": [
@@ -218,8 +228,8 @@
     "panel: swaps instantly",
     "close button: fades in on hover of its tab (opacity over duration.fast); background over duration.fast; press scales to motion.press-scale from the pointer only",
     "strip scroll: smooth to the selected tab after a pointer selection, instant after a key or under reduced motion",
-    "attached: no indicator and no press scale (the tab is joined to the panel); the selected surface changes at once, only the label's ink fades over duration.base; the hover fill and the hairlines between tabs change at once; instant under the keyboard",
-    "closing: pill and underline, and attached from the keyboard: instant (the tab goes, its neighbours close the gap in one frame, the indicator lands on the neighbour). attached from the pointer: the tab's room closes (width, min-width and inline padding to 0 over duration.reveal, easing.out-strong) while it fades (opacity over duration.base) and takes no presses; close is emitted when the room has closed (duration.reveal later; at once under reduced motion). The selection and focus move to the neighbour at once",
-    "arrival (attached): a tab added after the first paint opens its room from 0 (width, min-width, inline padding over duration.reveal, easing.out-strong) while it fades in over duration.base, so the + button and the tabs after it move instead of jumping; nothing plays on the first paint (the adapters set ready two frames after mount); instant when the keyboard was last used; under reduced motion only the fade. fit tabs (width auto) move through interpolate-size: in browsers without it they appear at once"
+    "closing: from the keyboard, instant (the tab goes, its neighbours close the gap in one frame, the indicator lands on the neighbour). From the pointer, the tab's room closes (width, min-width and inline padding to 0, and underline's gap after it, over duration.reveal, easing.out-strong) while it fades (opacity over duration.base) and takes no presses; close is emitted when the room has closed (duration.reveal later; at once under reduced motion). The selection and focus move to the neighbour at once",
+    "arrival (closable tabs): a tab added after the first paint opens its room from 0 (width, min-width, inline padding, and underline's gap after it, over duration.reveal, easing.out-strong) while it fades in over duration.base, so the tabs after it and the parts after the strip move instead of jumping; the indicator measures the trigger and lands on the selected tab; nothing plays on the first paint (the adapters set ready two frames after mount); instant when the keyboard was last used; under reduced motion only the fade. The width is auto and moves through interpolate-size: in browsers without it the tab appears at once",
+    "edge fades: none of their own; the mask follows the scroll position at once (no transition), and the all-tabs button appears and goes without motion when the strip starts or stops overflowing"
   ]
 }

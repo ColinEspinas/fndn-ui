@@ -125,9 +125,9 @@ for (const fw of targets) {
   check("…instantly, and the indicator lands on it", await driftX(), near(0.5));
   await p.key("End"); await sleep(250);
   check("End selects the last tab and the strip scrolls it into view (instantly, from the keyboard)", [await selected(), await inView()], ["package.json", true]);
-  await p.clickSel('#stage [data-slot=tabs-trigger][aria-selected="true"] + [data-slot=tabs-close]'); await sleep(200);
+  await p.clickSel('#stage [data-slot=tabs-trigger][aria-selected="true"] + [data-slot=tabs-close]'); await sleep(450);
   check("its close button closes the last tab: the previous one is selected, focus follows (not lost to the page)", [await tabsNow(), await selected(), await focused()], [["invoices.ts", "rate-limit.test.ts", "deliver.ts"], "deliver.ts", "deliver.ts"]);
-  await p.clickSel('#stage [data-slot=tabs-tab]:nth-child(2) [data-slot=tabs-close]'); await sleep(200);
+  await p.clickSel('#stage [data-slot=tabs-tab]:nth-child(2) [data-slot=tabs-close]'); await sleep(450);
   check("closing a tab that is not selected keeps the selection", [await tabsNow(), await selected()], [["rate-limit.test.ts", "deliver.ts"], "deliver.ts"]);
   check("no console errors (closable)", p.errors.slice(0, 2), []);
 
@@ -135,62 +135,112 @@ for (const fw of targets) {
   await open(fw, 4);
   check("fill: the root is as tall as its box and the panel takes the rest, scrolling inside itself", await p.eval(`(()=>{const r=document.querySelector("#stage [data-slot=tabs]"),l=r.querySelector("[data-slot=tabs-list]"),c=[...r.querySelectorAll("[data-slot=tabs-content]")].find((e)=>!e.hidden);const a=r.getBoundingClientRect(),b=c.getBoundingClientRect();return [Math.round(a.height), Math.abs(b.bottom-a.bottom)<0.5, Math.abs(b.top-l.getBoundingClientRect().bottom)<0.5, c.scrollHeight>c.clientHeight, getComputedStyle(c).overflowY]})()`), [160, true, true, true, "auto"]);
 
-  /* attached (example 5): browser tabs; the selected tab is the panel's surface and joins it */
-  await open(fw, 5);
-  const surf = await p.eval(`(()=>{const d=document.createElement("div");d.style.backgroundColor="var(--fndn-surface)";document.body.append(d);const v=getComputedStyle(d).backgroundColor;d.remove();return v})()`);
-  check("attached: no indicator; the selected tab is the surface, the others clear; its panel the same surface", await p.eval(`(()=>{const i=document.querySelector("#stage [data-slot=tabs-indicator]");const t=[...document.querySelectorAll("#stage [data-slot=tabs-trigger]")];const sel=t.find((e)=>e.getAttribute("aria-selected")==="true");const c=[...document.querySelectorAll("#stage [data-slot=tabs-content]")].find((e)=>!e.hidden);return [getComputedStyle(i).display, getComputedStyle(sel).backgroundColor, getComputedStyle(t[0]).backgroundColor, getComputedStyle(c).backgroundColor]})()`), ["none", surf, "rgba(0, 0, 0, 0)", surf]);
-  check("attached: the selected tab joins its panel (no gap, no line), 28px at sm, rounded top, feet drawn", await p.eval(`(()=>{const sel=document.querySelector('#stage [data-slot=tabs-trigger][aria-selected="true"]');const c=[...document.querySelectorAll("#stage [data-slot=tabs-content]")].find((e)=>!e.hidden);const a=sel.getBoundingClientRect(),b=c.getBoundingClientRect();const cs=getComputedStyle(sel);return [Math.abs(b.top-a.bottom)<0.5, Math.round(a.height), cs.borderTopLeftRadius, cs.borderBottomLeftRadius, cs.boxShadow==="none", getComputedStyle(sel,"::after").display]})()`), [true, 28, "6px", "0px", true, "block"]);
-  check("attached: a favicon is an image with an empty alt inside the tab's icon part", await p.eval(`(()=>{const i=document.querySelector("#stage [data-slot=tabs-trigger] [data-slot=tabs-icon]");return [i.getAttribute("aria-hidden"), i.firstElementChild.tagName, i.firstElementChild.getAttribute("alt"), Math.round(i.getBoundingClientRect().width)]})()`), ["true", "IMG", "", 14]);
-  check("attached: tabs share the strip (240px at most), shrinking together before it scrolls", await p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const w=[...l.querySelectorAll(":scope>[data-slot=tabs-tab]")].map((e)=>Math.round(e.getBoundingClientRect().width));return [w.every((x)=>x<=240&&x===w[0]), l.scrollWidth<=l.clientWidth+1]})()`), [true, true]);
-  { const t = await p.rect('#stage [data-slot=tabs-tab]:nth-child(2) [data-slot=tabs-trigger]'); await p.click(t.cx - 20, t.cy); await sleep(40); }
-  check("attached: a press does not scale the joined tab; the surface moves at once", await p.eval(`(()=>{const sel=document.querySelector('#stage [data-slot=tabs-trigger][aria-selected="true"]');return [sel.textContent.trim(), getComputedStyle(sel).transform, getComputedStyle(sel).backgroundColor]})()`), ["Deploys · web-app", "none", surf]);
-  await open(fw, 5, "&theme=dark");
-  check("attached, dark: the selected tab has a lit top edge (1px line-strong inset), the others none", await p.eval(`(()=>{const d=document.createElement("div");d.style.color="var(--fndn-line-strong)";document.querySelector("#stage").append(d);const c=getComputedStyle(d).color;d.remove();const t=[...document.querySelectorAll("#stage [data-slot=tabs-trigger]")];const sel=t.find((e)=>e.getAttribute("aria-selected")==="true"),other=t.find((e)=>e!==sel);const sh=getComputedStyle(sel).boxShadow;return [sh.includes("inset")&&sh.includes(c)&&sh.includes("0px 1px 0px"), getComputedStyle(other).boxShadow]})()`), [true, "none"]);
-  await open(fw, 5, "&data=worst");
-  check("attached worst case (xs, six files in 300px): 24px tabs shrink to their minimum, then the strip scrolls; labels cut with a title", await p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const t=l.querySelector("[data-slot=tabs-trigger]");const lab=[...l.querySelectorAll("[data-slot=tabs-label]")][1];return [Math.round(t.getBoundingClientRect().height), l.scrollWidth>l.clientWidth, lab.title.length>40, getComputedStyle(lab).textOverflow]})()`), [24, true, true, "ellipsis"]);
+  /* document tabs (example 5): closable pill tabs with favicons; titles cut at 240px */
+  const DOC = 5;
+  const docItems = FIXTURE.examples[DOC].props.items;
+  await open(fw, DOC);
+  check("document tabs: no transition runs on the first paint", await p.eval(`document.getAnimations().filter((a)=>a.effect?.target?.closest?.("#stage [data-slot=tabs]")).length`), 0);
+  check("document tabs: a favicon is an image with an empty alt inside the tab's icon part", await p.eval(`(()=>{const i=document.querySelector("#stage [data-slot=tabs-trigger] [data-slot=tabs-icon]");return [i.getAttribute("aria-hidden"), i.firstElementChild.tagName, i.firstElementChild.getAttribute("alt"), Math.round(i.getBoundingClientRect().width)]})()`), ["true", "IMG", "", 14]);
+  check("document tabs: pill, the indicator on the selected tab", await drift(), near(0.5));
+  await open(fw, DOC, "&data=worst");
+  check("document tabs: a closable tab's title stops at 240px, cut at its end, full text in its title", await p.eval(`(()=>{const l=[...document.querySelectorAll("#stage [data-slot=tabs-label]")].find((e)=>e.textContent.length>60);return [Math.round(l.getBoundingClientRect().width), getComputedStyle(l).textOverflow, l.scrollWidth>l.clientWidth, l.title===l.textContent]})()`), [240, "ellipsis", true, true]);
+  await open(fw, 1);
+  check("a tab that is not closable names a view: no 240px stop", await p.eval(`getComputedStyle(document.querySelector("#stage [data-slot=tabs-label]")).maxWidth`), "none");
 
-  /* attached arrivals and departures make room (examples 5 shrink, 6 fit). The harness plays the
-   * caller: items are replaced through the mounted example, a tab that asks to close is dropped */
-  const FIT = 6;
-  const fitItems = FIXTURE.examples[FIT].props.items;
+  /* arrivals and removals make room, every closable tab. The harness plays the caller: items are
+   * replaced through the mounted example, a tab that asks to close is dropped */
   const outer = (v) => `(document.querySelector('#stage [data-slot=tabs-trigger][data-value="${v}"]')?.closest("[data-slot=tabs-tab]"))`;
-  /* add a tab after the first paint: its width two frames later, then once settled */
   /* add a tab after the first paint: its width on every frame for 450ms, then once settled. Some frame
    * must show it part-way (a fixed "two frames later" sample is flaky under load: two slow frames
    * can land before the transition starts or after it ends) */
   const arrive = (items, v) => p.eval(`(async()=>{const m=window.__harnessMounted;const f=()=>new Promise((r)=>requestAnimationFrame(()=>r()));await m.update({items:${JSON.stringify(items)}});const seen=[];const t0=performance.now();while(performance.now()-t0<450){await f();const e=${outer(v)};seen.push(e?e.getBoundingClientRect().width:0);}await new Promise((r)=>setTimeout(r,200));const b=${outer(v)}.getBoundingClientRect().width;return [seen.find((w)=>w>b*0.05&&w<b*0.9)??0,b];})()`);
-  const dropOnClose = () => p.eval(`(()=>{const m=window.__harnessMounted;let items=${JSON.stringify(fitItems)};const drop=(v)=>{items=items.filter((i)=>i.value!==v);m.update({items})};m.update(${fw === "svelte" ? "{onclose:drop,onvaluechange:(v)=>m.update({value:v})}" : "{onClose:drop}"})})()`);
-  await open(fw, FIT);
-  check("fit: no transition runs on the first paint", await p.eval(`document.getAnimations().filter((a)=>a.effect?.target?.closest?.("#stage [data-slot=tabs]")).length`), 0);
-  check("fit: each tab as wide as its title (never cut), so widths differ; the strip scrolls", await p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const labs=[...l.querySelectorAll("[data-slot=tabs-label]")];const w=[...l.querySelectorAll(":scope>[data-slot=tabs-tab]")].map((e)=>Math.round(e.getBoundingClientRect().width));return [labs.every((e)=>e.scrollWidth<=e.clientWidth+0.5), new Set(w).size>2, l.scrollWidth>l.clientWidth]})()`), [true, true, true]);
-  await sleep(200);
-  { const [a, b] = await arrive([...fitItems, { value: "deliver.ts", label: "deliver.ts", content: "deliver.ts" }], "deliver.ts");
-    check("fit: a tab added after the first paint opens its width (some frame part-way, whole once settled)", [a > 0 && a < b * 0.9, b > 60], [true, true]); }
-  await open(fw, 5);
-  await sleep(200);
-  { const items5 = FIXTURE.examples[5].props.items;
-    const [a, b] = await arrive([...items5, { value: "new", label: "New tab", content: "New tab" }], "new");
-    check("shrink: a new tab opens its width instead of appearing whole in one frame", [a > 0 && a < b * 0.9, b >= 96], [true, true]); }
+  const dropOnClose = (items) => p.eval(`(()=>{const m=window.__harnessMounted;let items=${JSON.stringify(items)};const drop=(v)=>{items=items.filter((i)=>i.value!==v);m.update({items})};m.update(${fw === "svelte" ? "{onclose:drop,onvaluechange:(v)=>m.update({value:v})}" : "{onClose:drop}"})})()`);
+  const fresh = { value: "new", label: "New tab", content: "New tab" };
+  await open(fw, DOC); await sleep(200);
+  { const [a, b] = await arrive([fresh, ...docItems], "new");
+    check("pill: a tab added after the first paint opens its width (some frame part-way, whole once settled)", [a > 0 && a < b * 0.9, b > 40], [true, true]); }
+  check("pill: after an arrival before it, the indicator is on the selected tab", await drift(), near(0.5));
+  await open(fw, 3); await sleep(200);
+  { const items3 = FIXTURE.examples[3].props.items;
+    const [a, b] = await arrive([...items3.slice(0, 1), { value: "new.ts", label: "new.ts", content: "new.ts" }, ...items3.slice(1)], "new.ts");
+    check("underline: a closable tab added after the first paint opens its width", [a > 0 && a < b * 0.9, b > 30], [true, true]); }
   /* departures: a pointer close closes the room before the caller drops the tab */
-  await open(fw, FIT);
-  await dropOnClose(); await sleep(250);
-  { const w0 = await p.eval(`${outer("retry-policy.ts")}.getBoundingClientRect().width`);
-    await p.clickSel(`#stage [data-slot=tabs-tab]:nth-child(4) [data-slot=tabs-close]`);
-    const mid = await p.eval(`(async()=>{const f=()=>new Promise((r)=>requestAnimationFrame(()=>r()));await f();await f();await f();const e=${outer("retry-policy.ts")};return e?[Math.round(e.getBoundingClientRect().width),getComputedStyle(e).pointerEvents]:null})()`);
+  await open(fw, DOC);
+  await dropOnClose(docItems); await sleep(250);
+  { const v = await p.eval(`document.querySelector('#stage [data-slot=tabs-trigger][aria-selected="true"]').dataset.value`);
+    const w0 = await p.eval(`${outer(v)}.getBoundingClientRect().width`);
+    await p.clickSel(`#stage [data-slot=tabs-trigger][aria-selected="true"] + [data-slot=tabs-close]`);
+    const mid = await p.eval(`(async()=>{const f=()=>new Promise((r)=>requestAnimationFrame(()=>r()));await f();await f();await f();const e=${outer(v)};return e?[Math.round(e.getBoundingClientRect().width),getComputedStyle(e).pointerEvents]:null})()`);
     await sleep(450);
-    check("pointer close: the tab's room closes over a few frames (no presses meanwhile), then it is dropped", [mid && mid[0] > 0 && mid[0] < w0 - 4, mid?.[1], await tabsNow().then((t) => t.includes("retry-policy.ts"))], [true, "none", false]); }
+    check("pill pointer close: the tab's room closes over a few frames (no presses meanwhile), then it is dropped", [mid && mid[0] > 0 && mid[0] < w0 - 4, mid?.[1], await tabsNow().then((t) => t.some((x) => x === docItems.find((i) => i.value === v).label))], [true, "none", false]);
+    check("…and the indicator lands on the neighbour that took the selection", await drift(), near(0.5)); }
   await p.eval(`document.querySelector('#stage [data-slot=tabs-trigger][aria-selected="true"]').focus()`); await sleep(60);
   const kbdFocus = await focused();
   await p.key("Delete");
   await sleep(40);
-  check("keyboard close (Delete): instant, the focused tab is gone at once", [kbdFocus, await tabsNow().then((t) => t.includes(kbdFocus))], ["rate-limit.ts", false]);
+  check("keyboard close (Delete): instant, the focused tab is gone at once", [kbdFocus !== null, await tabsNow().then((t) => t.includes(kbdFocus))], [true, false]);
+  await sleep(100);
+  check("…and the indicator is on the next tab", await drift(), near(0.5));
   /* reduced motion: no width motion, only the fade */
   await p.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
-  await open(fw, FIT); await sleep(200);
-  { const [a, b] = await arrive([...fitItems, { value: "deliver.ts", label: "deliver.ts", content: "deliver.ts" }], "deliver.ts");
-    check("reduced motion: the new tab takes its whole width at once (no frame part-way; only its opacity fades)", [a, b > 60], [0, true]); }
+  await open(fw, DOC); await sleep(200);
+  { const [a, b] = await arrive([...docItems, fresh], "new");
+    check("reduced motion: the new tab takes its whole width at once (no frame part-way; only its opacity fades)", [a, b > 40], [0, true]); }
   await p.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "no-preference" }] });
   check("no console errors (arrivals)", p.errors.slice(0, 2), []);
+
+  /* overflow (example 3: five closable files in 320px): the edges fade with the scroll and a button
+   * after the list opens a menu of every tab; a strip that fits, or a list with no box, has neither */
+  const strip = () => p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const m=document.querySelector("#stage [data-tabs=more]");return [l.hasAttribute("data-overflow"), l.hasAttribute("data-overflow-start"), l.hasAttribute("data-overflow-end"), !!m]})()`);
+  const scrollTo = (where) => p.eval(`(async()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const range=l.scrollWidth-l.clientWidth;const s=document.documentElement.dir==="rtl"?-1:1;l.scrollTo({left:s*${"${where}"}*range,behavior:"instant"});await new Promise((r)=>requestAnimationFrame(()=>requestAnimationFrame(r)))})()`.replace("${where}", String(where)));
+  const menuRows = () => p.eval(`[...document.querySelectorAll("[data-slot=menu-content] [data-slot=menu-item]")].filter((n)=>n.getClientRects().length).map((n)=>n.textContent.trim()+(n.getAttribute("aria-checked")==="true"?" ✓":""))`);
+  await open(fw, 0);
+  check("overflow: a strip that fits has no button, no overflow state and no fade", [await strip(), await p.eval(`getComputedStyle(document.querySelector("#stage [data-slot=tabs-list]")).maskImage`)], [[false, false, false, false], "none"]);
+  await open(fw, 3);
+  check("overflow: the strip overflows; at rest only the end fades; the button follows the list", [await strip(), await p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]");const m=document.querySelector("#stage [data-tabs=more]");const b=m.querySelector("[data-tabs=more-trigger]");return [l.nextElementSibling===m, b.matches("[data-slot=button]"), b.getAttribute("aria-label"), b.getAttribute("aria-haspopup"), Math.round(b.getBoundingClientRect().width), Math.round(b.getBoundingClientRect().left - l.getBoundingClientRect().right) >= 0]})()`)], [[true, false, true, true], [true, true, "All tabs", "menu", 32, true]]);
+  check("overflow: the fade is a mask on the list, 24px at the end only", await p.eval(`getComputedStyle(document.querySelector("#stage [data-slot=tabs-list]")).maskImage`), (v) => /to right/.test(v) && /0px/.test(v) && /100% - 24px/.test(v));
+  await scrollTo(0.5);
+  check("overflow: scrolled part-way, both edges fade", await strip(), [true, true, true, true]);
+  await scrollTo(1);
+  check("overflow: scrolled to the end, only the start fades", await strip(), [true, true, false, true]);
+  await scrollTo(0);
+  await p.clickSel("#stage [data-tabs=more-trigger]"); await sleep(350);
+  check("overflow: the menu lists every tab in order, the selected one checked", await menuRows(), ["rate-limit.ts ✓", "invoices.ts", "rate-limit.test.ts", "deliver.ts", "package.json"]);
+  { const r = await p.eval(`(()=>{const n=[...document.querySelectorAll("[data-slot=menu-content] [data-slot=menu-item]")].find((n)=>n.textContent.trim()==="package.json");const b=n.getBoundingClientRect();return {x:b.x+b.width/2,y:b.y+b.height/2}})()`); await p.click(r.x, r.y); }
+  await sleep(600);
+  check("overflow: choosing one selects that tab, closes the menu, focuses the tab and scrolls it into view", [await selected(), await panel(), await p.eval(`document.querySelector("#stage [data-tabs=more-trigger]").getAttribute("aria-expanded")`), await focused(), await inView()], ["package.json", ["package.json"], "false", "package.json", true]);
+  /* the keyboard: the button is the next Tab stop after the list; the menu's own keys pick a tab */
+  await p.eval(`document.querySelector('#stage [data-slot=tabs-trigger][aria-selected="true"]').focus()`);
+  await p.key("Tab"); await sleep(60);
+  check("overflow: Tab from the list reaches the all-tabs button", await p.eval(`document.activeElement?.dataset.tabs ?? null`), "more-trigger");
+  await p.key("Enter"); await sleep(300);
+  await p.key("Home"); await sleep(60);
+  await p.key("ArrowDown"); await sleep(60);
+  await p.key("Enter"); await sleep(300);
+  check("overflow: from the keyboard, Enter opens the menu and Enter on a row selects that tab and focuses it", [await selected(), await focused(), await inView()], ["invoices.ts", "invoices.ts", true]);
+  await p.key("ArrowRight"); await sleep(80);
+  check("…from where the arrow keys work as after any selection", [await selected(), await focused()], ["rate-limit.test.ts", "rate-limit.test.ts"]);
+  /* a list with no box (its host shows something else instead) is not overflowing */
+  await p.eval(`document.querySelector("#stage [data-slot=tabs-list]").style.display="none"`); await sleep(200);
+  check("overflow: a hidden list (display: none) has no button and no overflow state", await strip(), [false, false, false, false]);
+  await p.eval(`document.querySelector("#stage [data-slot=tabs-list]").style.display=""`); await sleep(200);
+  check("…and the button comes back when the list shows again", await strip(), (v) => v[0] === true && v[3] === true);
+  await p.eval(`document.querySelector("#stage").style.display="none"`); await sleep(200);
+  check("overflow: a list hidden above it (an ancestor with display: none) has no button", await strip(), [false, false, false, false]);
+  await p.eval(`document.querySelector("#stage").style.display=""`); await sleep(200);
+  await p.eval(`document.querySelector("#stage [data-slot=tabs]").style.width="1200px"`); await sleep(250);
+  check("overflow: given room, the tabs fit and the button goes", await strip(), [false, false, false, false]);
+  await p.eval(`document.querySelector("#stage [data-slot=tabs]").style.width="320px"`); await sleep(250);
+  check("…and comes back when the room shrinks", await strip(), (v) => v[0] === true && v[3] === true);
+  await p.eval(`window.__harnessMounted.update({labels:{allTabs:"Alle Tabs"}})`); await sleep(150);
+  check("overflow: the button's name comes from labels (for translation)", await p.eval(`document.querySelector("#stage [data-tabs=more-trigger]").getAttribute("aria-label")`), "Alle Tabs");
+  check("no console errors (overflow)", p.errors.slice(0, 2), []);
+  await open(fw, 3, "&dir=rtl");
+  check("overflow, right to left: the button sits left of the list (its end) and the fade is at the left end", [await strip(), await p.eval(`(()=>{const l=document.querySelector("#stage [data-slot=tabs-list]").getBoundingClientRect(),b=document.querySelector("#stage [data-tabs=more-trigger]").getBoundingClientRect();return b.right<=l.left+0.5})()`), await p.eval(`getComputedStyle(document.querySelector("#stage [data-slot=tabs-list]")).maskImage`).then((v) => /to left/.test(v))], [[true, false, true, true], true, true]);
+  await scrollTo(1);
+  check("overflow, right to left: scrolled to the end, only the start (right) edge fades", await strip(), [true, true, false, true]);
+  await open(fw, 0, "&data=worst");
+  check("overflow, pill: a 24px button centred on the tabs; the strip keeps the height of its tabs (the panel starts at their bottom)", await p.eval(`(()=>{const b=document.querySelector("#stage [data-tabs=more-trigger]")?.getBoundingClientRect(),l=document.querySelector("#stage [data-slot=tabs-list]"),t=l.querySelector("[data-slot=tabs-trigger]").getBoundingClientRect(),c=[...document.querySelectorAll("#stage [data-slot=tabs-content]")].find((e)=>!e.hidden).getBoundingClientRect();return [b&&Math.round(b.height), Math.abs((b.top+b.bottom)/2-(t.top+t.bottom)/2)<0.5, Math.round(c.top-t.bottom)]})()`), [24, true, 0]);
 
   /* label part: one line that truncates, full text in title; colour hover, token radius */
   await open(fw, 0);

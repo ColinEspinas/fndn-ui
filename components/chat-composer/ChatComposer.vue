@@ -110,7 +110,7 @@ watch(value, () => void nextTick(() => sizing?.update()));
 
 <template>
   <div ref="root" v-bind="attrs" data-slot="chat-composer" :class="r.base({ class: attrs.class as string | undefined })">
-    <Tabs data-chat-composer="tabs" :class="r.tabs()" :aria-label="ariaLabel" :items="items" :value="current" @update:value="setTab">
+    <Tabs data-chat-composer="tabs" fill header-class="" :class="r.tabs()" :aria-label="ariaLabel" :items="items" :value="current" @update:value="setTab">
       <template #panel="{ item }">
         <div data-slot="chat-composer-thread" :class="r.thread()" role="log">
           <template v-for="(m, i) in messagesOf(item.value)" :key="i">

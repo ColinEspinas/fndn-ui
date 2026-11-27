@@ -46,7 +46,7 @@
     },
     {
       "file": "browser-tabs",
-      "title": "Browser tabs that join the toolbar"
+      "title": "Browser tabs with a new-tab button"
     },
     {
       "file": "deploy-panel",
