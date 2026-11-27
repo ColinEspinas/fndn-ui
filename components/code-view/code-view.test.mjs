@@ -1,9 +1,6 @@
 // Keyboard and pointer contract of the Code View, run against every target through the harness.
 //   node components/code-view/code-view.test.mjs            all three targets
 //   node components/code-view/code-view.test.mjs react      one target
-import fs from "node:fs";
-import os from "node:os";
-import path from "node:path";
 import { launch, sleep } from "../../scripts/qa/cdp.mjs";
 const BASE = process.env.DOCS_URL ?? "http://localhost:4321";
 const targets = process.argv.slice(2).length ? process.argv.slice(2) : ["react", "vue", "svelte"];
@@ -16,8 +13,7 @@ const INVOICE = [
   "  return base.total;",
   "}",
 ].join("\n");
-/* a mouse, so the hover-gated fold markers can be checked */
-const p = await launch({ dpr: 2, hover: true });
+const p = await launch({ dpr: 2 });
 let failed = 0;
 const open = async (fw, ex, extra = "") => {
   await p.goto(`${BASE}/harness.html?c=code-view&fw=${fw}&ex=${ex}${extra}`, 150);
@@ -58,37 +54,16 @@ for (const fw of targets) {
     const lines=cm?[...cm.querySelectorAll(".cm-line")]:[...root.querySelectorAll("[data-slot=code-view-code]")];
     return {height: Math.round(rb.height), num: nums.slice(0,8).map(text), code: lines.slice(0,8).filter((l)=>l.textContent).map(text)}})()`;
   const readonly = await q(geometry);
-  /* the whole view as pixels, to compare read-only with editable at rest */
-  const pixels = async (name) => {
-    await p.hover(1, 1);
-    await sleep(60);
-    const b = await p.rect("#stage [data-slot=code-view]");
-    const file = path.join(os.tmpdir(), `code-view-${fw}-${name}-${process.pid}.png`);
-    await p.shot(file, { x: b.x, y: b.y, width: b.w, height: b.h });
-    const data = fs.readFileSync(file).toString("base64");
-    fs.rmSync(file);
-    return data;
-  };
-  const shotReadonly = await pixels("readonly");
 
   /* Editable (ex 2): the listing first, then the editor in its place, drawn the same */
   await open(fw, 2);
   const listing = await q(geometry);
-  check("editable: the listing shown while the editor loads is the read-only one (no fold column)", listing, readonly);
+  check("editable or read-only, the listing keeps the fold column: numbers and code at the same place", [listing.num, listing.code], [readonly.num, readonly.code]);
   check("editable: the editor arrives and replaces the listing", await editorReady(), true);
   const editor = await q(geometry);
-  const shotEditable = await pixels("editable");
-  const differing = (a, b) => q(`(async()=>{const load=(s)=>new Promise((ok)=>{const i=new Image();i.onload=()=>ok(i);i.src="data:image/png;base64,"+s});const [A,E]=await Promise.all([load(${JSON.stringify(a)}),load(${JSON.stringify(b)})]);if(A.width!==E.width||A.height!==E.height) return "size "+A.width+"x"+A.height+" vs "+E.width+"x"+E.height;const px=(img)=>{const c=document.createElement("canvas");c.width=img.width;c.height=img.height;const x=c.getContext("2d");x.drawImage(img,0,0);return x.getImageData(0,0,img.width,img.height).data};const a=px(A),e=px(E);let n=0,box=[1e9,1e9,-1,-1];for(let i=0;i<a.length;i+=4) if(a[i]!==e[i]||a[i+1]!==e[i+1]||a[i+2]!==e[i+2]){n++;const p=i/4,x=p%A.width,y=(p-x)/A.width;box=[Math.min(box[0],x),Math.min(box[1],y),Math.max(box[2],x),Math.max(box[3],y)]}return n?n+" pixels in "+box.join(","):0})()`);
-  check("editable at rest is the read-only view, pixel for pixel (dpr 2)", await differing(shotReadonly, shotEditable), 0);
   check("editable: nothing moves when the editor arrives (numbers, code, height)", editor, listing);
   check("editable: a named, multi-line text box; the gutter is hidden from assistive tech", await q(`(()=>{const c=document.querySelector("#stage .cm-content");return [c.getAttribute("role"), c.getAttribute("aria-multiline"), c.getAttribute("aria-label"), document.querySelector("#stage .cm-gutters").getAttribute("aria-hidden")]})()`), ["textbox", "true", "src/middleware/rate-limit.ts", "true"]);
-  const tint = `(()=>{const tok=(v,p)=>{const d=document.createElement("div");d.style[p]="var("+v+")";document.body.append(d);const c=getComputedStyle(d)[p];d.remove();return c};const hover=tok("--fndn-hover","backgroundColor"),ink=tok("--fndn-ink","color");
-    /* any fill counts, not only the system's tint: CodeMirror's own (light blue) must never show */
-    const clear="rgba(0, 0, 0, 0)";
-    const lines=[...document.querySelectorAll("#stage .cm-line")].map((l,i)=>{const bg=getComputedStyle(l).backgroundColor;return bg===hover?i+1:bg!==clear?"fill "+bg:0}).filter(Boolean);
-    const nums=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].filter((g)=>g.offsetHeight&&getComputedStyle(g).backgroundColor!==clear).map((g)=>getComputedStyle(g).backgroundColor===hover&&getComputedStyle(g).color===ink?+g.textContent:"fill "+getComputedStyle(g).backgroundColor);
-    return [lines, nums]})()`;
-  check("editable at rest: only the host's line 7 is tinted (hover, number ink)", await q(tint), [[7], [7]]);
+  check("editable: line 7 is the current line, tinted hover, its number ink", await q(`(()=>{const tok=(v,p)=>{const d=document.createElement("div");d.style[p]="var("+v+")";document.body.append(d);const c=getComputedStyle(d)[p];d.remove();return c};const l=document.querySelector("#stage .cm-activeLine");const g=document.querySelector("#stage .cm-lineNumbers .cm-activeLineGutter");return [g.textContent, getComputedStyle(l).backgroundColor===tok("--fndn-hover","backgroundColor"), getComputedStyle(g).color===tok("--fndn-ink","color")]})()`), ["7", true, true]);
   check("editable: no CodeMirror default look (no focus outline, transparent editor, surface gutter, no gutter border)", await q(`(()=>{const e=document.querySelector("#stage .cm-editor"),g=document.querySelector("#stage .cm-gutters");return [getComputedStyle(e).backgroundColor, getComputedStyle(g).backgroundColor===getComputedStyle(document.querySelector("#stage [data-slot=code-view]")).backgroundColor, getComputedStyle(g).borderRightWidth]})()`), ["rgba(0, 0, 0, 0)", true, "0px"]);
 
   /* typing, undo, the caret's line */
@@ -169,35 +144,10 @@ for (const fw of targets) {
   await q(`document.querySelector("#stage [data-slot=code-view]").style.width=""`);
 
   /* folding by indentation, from the gutter */
-  /* folding: no column; a chevron over the hairline of a foldable line's number, shown on hover */
-  const num6 = await q(`(()=>{const g=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return {x:g.left+g.width/2,y:g.top+g.height/2}})()`);
-  const marker6 = `(()=>{const row=[...document.querySelectorAll("#stage .cm-line")][5].getBoundingClientRect();const m=[...document.querySelectorAll("#stage .cm-foldGutter [data-fold]")].find((e)=>{const r=e.getBoundingClientRect();return Math.abs(r.top-row.top)<3});if(!m) return null;const r=m.getBoundingClientRect(),n=[...document.querySelectorAll("#stage .cm-lineNumbers .cm-gutterElement")].find((e)=>e.textContent==="6").getBoundingClientRect();return [getComputedStyle(m).visibility, Math.round(r.width), Math.round(r.left-n.right)]})()`;
-  await p.hover(5, 5);
-  check("a foldable line's marker is hidden at rest", (await q(marker6))?.[0], "hidden");
-  const still6 = await q(geometry);
-  await p.hover(num6.x, num6.y);
-  await sleep(50);
-  check("over its row's gutter the marker shows, in the 12px column after the hairline", await q(marker6), ["visible", 12, 0]);
-  check("showing it moves nothing", await q(geometry), still6);
-  await p.click(num6.x, num6.y);
-  await sleep(80);
-  check("a click on the number folds the indented body; the closing line stays", await q(`[!!document.querySelector("#stage .cm-foldPlaceholder"), [...document.querySelectorAll("#stage .cm-line")].some((l)=>l.textContent==="}")]`), [true, true]);
-  await p.hover(5, 5);
-  check("a folded line keeps its marker", (await q(marker6))?.[0], "visible");
-  await p.click(num6.x, num6.y);
-  await sleep(80);
-  check("a second click unfolds it", await q(`!!document.querySelector("#stage .cm-foldPlaceholder")`), false);
-
-  /* no host line: nothing tinted at rest; the caret's line while focused */
-  await open(fw, 6);
-  check("no current line given: the editor arrives", await editorReady(), true);
-  check("at rest nothing is tinted", await q(tint), [[], []]);
-  await q(`document.querySelector("#stage .cm-content").focus()`);
-  await sleep(50);
-  check("focused, the caret's line (1) is tinted", await q(tint), [[1], [1]]);
-  await q(`document.activeElement.blur()`);
-  await sleep(50);
-  check("blurred, the tint goes", await q(tint), [[], []]);
+  const fold = await q(`(()=>{const m=document.querySelectorAll("#stage .cm-foldGutter [data-fold=open]");const t=[...m].find((e)=>{const r=e.getBoundingClientRect();const row=[...document.querySelectorAll("#stage .cm-line")][5].getBoundingClientRect();return Math.abs(r.top+r.height/2-(row.top+10))<3});if(!t) return null;const r=t.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);
+  check("a fold marker sits on the function's line", !!fold, true);
+  if (fold) { await p.click(fold.x, fold.y); await sleep(80); }
+  check("clicking it folds the indented body; the closing line stays", await q(`[!!document.querySelector("#stage .cm-foldPlaceholder"), [...document.querySelectorAll("#stage .cm-line")].some((l)=>l.textContent==="}")]`), [true, true]);
 
   /* switching back to read-only brings the listing back */
   await q(`window.__harnessMounted.update({ editable: false })`);
@@ -210,18 +160,6 @@ for (const fw of targets) {
   check("fill: 200px tall, scrolls; the current line (40) is in view; the page does not scroll", await q(`(()=>{const r=document.querySelector("#stage [data-slot=code-view]"),b=r.querySelector("[data-slot=code-view-body]");const c=b.querySelector("[aria-current=true]").getBoundingClientRect(),bb=b.getBoundingClientRect();return [Math.round(r.getBoundingClientRect().height), b.scrollHeight>b.clientHeight, c.top>=bb.top&&c.bottom<=bb.bottom, scrollY]})()`), [200, true, true, 0]);
 
   /* highlighted lines: shown as given; editable would colour value instead */
-  /* the same at the other display scales: hairline and code land on the same device pixels */
-  for (const dpr of [1, 1.25]) {
-    await p.viewport(1280, 900, dpr);
-    await open(fw, 3);
-    await sleep(100);
-    const ro = await pixels(`readonly-${dpr}`);
-    await open(fw, 2);
-    await editorReady();
-    const ed = await pixels(`editable-${dpr}`);
-    check(`editable at rest is the read-only view, pixel for pixel (dpr ${dpr})`, await differing(ro, ed), 0);
-  }
-  await p.viewport(1280, 900, 2);
   await open(fw, 4);
   check("highlighted lines are shown as given", await q(`document.querySelector("#stage [data-slot=code-view-code]").innerHTML.includes("<span")`), true);
   } catch (error) { check("script ran to the end", String(error.message).split("\n")[0].slice(0, 160), "ok"); }

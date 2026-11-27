@@ -60,14 +60,6 @@ export function tokenize(text: string): CodeToken[] {
   return out;
 }
 
-/** How many digits the widest line number has: the gutter is sized from it
- * (--fndn-code-view-digits), to a whole multiple of 4px, so the hairline lands on whole device
- * pixels at 100%, 125%, 150% and 200% and the listing and the editor are drawn exactly alike. */
-export function digitsOf(lines: number, diff?: CodeDiffRow[]): number {
-  const last = diff ? Math.max(0, ...diff.map((r) => Math.max(r.old ?? 0, r.cur ?? 0))) : lines;
-  return String(Math.max(1, last)).length;
-}
-
 /** The rows of a value: one per line, as an editor counts them (an empty value is one empty line). */
 export const linesOf = (value: string): string[] => value.split("\n");
 
@@ -114,8 +106,6 @@ export type CodeEditorOptions = {
   wrap: boolean;
   /** The line to put the caret on, when it is new (a jump from a list of problems). */
   currentLine?: number;
-  /** The host's current line, tinted while the editor has no focus (with the focus, the caret's line is). */
-  hostLine?: number;
   label?: string;
   labels: CodeViewLabels;
   /** After an edit made in the editor, never after a value set through `update`. */

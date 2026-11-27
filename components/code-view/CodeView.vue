@@ -7,7 +7,7 @@ import InputGroup from "../input-group/InputGroup.vue";
 import Toggle from "../toggle/Toggle.vue";
 import Tooltip from "../tooltip/Tooltip.vue";
 import { codeView } from "./code-view.recipe";
-import { CLOSED_SEARCH, CODE_VIEW_LABELS, digitsOf, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeEditorHandle, type CodeSearchState } from "./code-view.logic";
+import { CLOSED_SEARCH, CODE_VIEW_LABELS, linesOf, mountEditor, revealCurrentLine, searchCount, tokenize, watchOverflow, type CodeEditorHandle, type CodeSearchState } from "./code-view.logic";
 import type * as Logic from "./code-view.logic";
 
 /** A single run of code within a diff row; `change` tints it as an add / del. */
@@ -53,13 +53,6 @@ const plain = codeView();
 
 const isEditable = computed(() => props.editable && !props.diff);
 /* an editor always has a caret, so it always has a current line (the first, unless told) */
-/* the host's current line: one it gave, not one the editor reported. It is the line tinted at
- * rest; an editor with the focus tints the caret's line instead */
-const hostGiven = ref(currentLine.value !== undefined);
-let reported: number | undefined;
-watch(currentLine, (n) => { if (n !== undefined && n !== reported) hostGiven.value = true; });
-const tinted = computed(() => (props.diff || !hostGiven.value ? undefined : currentLine.value));
-/* the line the caret starts on, and is moved to when the host asks for a new one */
 const line = computed(() => (props.diff ? undefined : (currentLine.value ?? (isEditable.value ? 1 : undefined))));
 const words = computed<CodeViewLabels>(() => ({ ...CODE_VIEW_LABELS, ...props.labels }));
 const ready = ref(false);
@@ -67,10 +60,10 @@ const r = computed(() => codeView({ diff: !!props.diff, wrap: props.wrap, fold: 
 const rows = computed(() => (!props.diff && (isEditable.value || !props.highlighted) ? linesOf(value.value) : undefined));
 const showListing = computed(() => !(isEditable.value && ready.value));
 const rootStyle = computed(() => {
-  const vars: Record<string, string> = { "--fndn-code-view-digits": String(digitsOf(rows.value?.length ?? props.highlighted?.length ?? 0, props.diff)) };
+  const vars: Record<string, string> = {};
   if (props.maxHeight != null) vars["--fndn-code-view-max-height"] = `${props.maxHeight}px`;
   if (props.height != null) vars["--fndn-code-view-height"] = `${props.height}px`;
-  return vars;
+  return Object.keys(vars).length ? vars : undefined;
 });
 
 const root = ref<HTMLElement | null>(null);
@@ -105,16 +98,16 @@ function mount() {
   search.value = CLOSED_SEARCH;
   if (!isEditable.value || !editorEl.value) return;
   handle.value = mountEditor(editorEl.value, {
-    value: value.value, wrap: props.wrap, currentLine: line.value, hostLine: tinted.value, label: props.label, labels: words.value,
+    value: value.value, wrap: props.wrap, currentLine: line.value, label: props.label, labels: words.value,
     onValueChange: (v) => { value.value = v; emit("valueChange", v); },
-    onCurrentLineChange: (n) => { reported = n; currentLine.value = n; emit("currentLineChange", n); },
+    onCurrentLineChange: (n) => { currentLine.value = n; emit("currentLineChange", n); },
     onSearch: (next) => { if (next.open && !search.value.open) { replacing.value = false; focusFind(); } search.value = next; },
     onSearchFocus: focusFind,
   }, () => { ready.value = true; });
 }
 onMounted(mount);
 watch(isEditable, () => nextTick(mount));
-watch(() => [value.value, props.wrap, line.value, tinted.value, props.label, words.value] as const, ([v, wrap, current, host, label, labels]) => handle.value?.update({ value: v, wrap, currentLine: current, hostLine: host, label, labels }));
+watch(() => [value.value, props.wrap, line.value, props.label, words.value] as const, ([v, wrap, current, label, labels]) => handle.value?.update({ value: v, wrap, currentLine: current, label, labels }));
 
 /* the listing: a named scroll region while it overflows, its current line kept in view */
 let stopOverflow = () => {};
@@ -124,7 +117,7 @@ function watchBody() {
 }
 onMounted(() => { watchBody(); revealCurrentLine(root.value); });
 watch(() => [showListing.value, props.label], () => nextTick(watchBody));
-watch(() => [tinted.value, showListing.value], () => nextTick(() => { if (showListing.value) revealCurrentLine(root.value); }));
+watch(() => [line.value, showListing.value], () => nextTick(() => { if (showListing.value) revealCurrentLine(root.value); }));
 onBeforeUnmount(() => { handle.value?.destroy(); stopOverflow(); });
 </script>
 
@@ -140,14 +133,14 @@ onBeforeUnmount(() => { handle.value?.destroy(); stopOverflow(); });
           </div>
         </template>
         <template v-else-if="rows">
-          <div v-for="(source, i) in rows" :key="i" data-slot="code-view-row" :class="r.row({ current: tinted === i + 1 })" :aria-current="tinted === i + 1 ? 'true' : undefined">
-            <span data-slot="code-view-num" :class="r.num({ current: tinted === i + 1 })">{{ i + 1 }}</span>
+          <div v-for="(source, i) in rows" :key="i" data-slot="code-view-row" :class="r.row({ current: line === i + 1 })" :aria-current="line === i + 1 ? 'true' : undefined">
+            <span data-slot="code-view-num" :class="r.num({ current: line === i + 1 })">{{ i + 1 }}</span>
             <code data-slot="code-view-code" :class="r.code()"><template v-for="(t, k) in tokenize(source)" :key="k"><span v-if="t.tok" data-slot="code-view-tok" :class="plain.tok({ tok: t.tok })">{{ t.text }}</span><template v-else>{{ t.text }}</template></template></code>
           </div>
         </template>
         <template v-else>
-          <div v-for="(html, i) in highlighted" :key="i" data-slot="code-view-row" :class="r.row({ current: tinted === i + 1 })" :aria-current="tinted === i + 1 ? 'true' : undefined">
-            <span data-slot="code-view-num" :class="r.num({ current: tinted === i + 1 })">{{ i + 1 }}</span>
+          <div v-for="(html, i) in highlighted" :key="i" data-slot="code-view-row" :class="r.row({ current: line === i + 1 })" :aria-current="line === i + 1 ? 'true' : undefined">
+            <span data-slot="code-view-num" :class="r.num({ current: line === i + 1 })">{{ i + 1 }}</span>
             <code data-slot="code-view-code" :class="r.code()" v-html="html" />
           </div>
         </template>

@@ -27,7 +27,7 @@ export const codeView = tv({
     row: "relative col-[1/-1] grid grid-cols-subgrid",
     bar: "absolute inset-y-0 start-0 w-[3px]",
     /* line numbers: right-aligned on the gutter's hairline; not selectable, so a hand copy skips them */
-    num: "col-[1] min-w-[round(up,max(20px,calc(8px_+_var(--fndn-code-view-digits,1)_*_1ch)),4px)] px-1 border-e border-e-line text-2xs tabular-nums text-end text-ink-3 select-none",
+    num: "col-[1] min-w-5 px-1 border-e border-e-line text-2xs tabular-nums text-end text-ink-3 select-none",
     code: "col-[2] min-w-0 ps-1 pe-3 [font:inherit]",
     /* word-level add / del highlight (the change variant) */
     piece: "rounded-[3px] px-0.5 -mx-px box-decoration-clone",
@@ -36,7 +36,7 @@ export const codeView = tv({
     tok: "",
     /* where the editor is mounted; its own markup inside is themed by code-view.editor.ts */
     editor: "isolate flex min-h-0 flex-1 flex-col [&>.cm-editor]:min-h-0 [&>.cm-editor]:flex-1",
-    /* the fold marker's icon, which the editor copies onto the gutter's hairline */
+    /* the fold marker's icon, which the editor copies into its gutter */
     icons: "hidden",
     /* the find widget: floats over the code at its top end corner, so opening it moves nothing;
      * the popup's surface, shadow and radius, 4px inset. At a narrow width it spans the view less
@@ -70,8 +70,8 @@ export const codeView = tv({
         bar: "sticky start-0 inset-y-auto z-[2] col-[1] row-[1] self-stretch justify-self-start",
       },
     },
-    /* a listing (not a diff, which is never editable) keeps the editor's 12px fold column free
-     * after the hairline, before the code, so it and the editor are drawn alike */
+    /* the editor's fold column (12px after the gutter's hairline) is kept free in every listing but a
+     * diff (which is never editable), so read-only and editable code start at the same place */
     fold: { true: { code: "ps-4" } },
     /* the editor is mounted but not shown yet: it lies over the listing, laid out at the same size
      * (so it measures and takes the listing's scroll position), and invisible */
