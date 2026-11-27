@@ -63,7 +63,7 @@ const tinted = computed(() => (props.diff || !hostGiven.value ? undefined : curr
 const line = computed(() => (props.diff ? undefined : (currentLine.value ?? (isEditable.value ? 1 : undefined))));
 const words = computed<CodeViewLabels>(() => ({ ...CODE_VIEW_LABELS, ...props.labels }));
 const ready = ref(false);
-const r = computed(() => codeView({ diff: !!props.diff, wrap: props.wrap, ready: ready.value, fill: props.fill }));
+const r = computed(() => codeView({ diff: !!props.diff, wrap: props.wrap, fold: !props.diff, ready: ready.value, fill: props.fill }));
 const rows = computed(() => (!props.diff && (isEditable.value || !props.highlighted) ? linesOf(value.value) : undefined));
 const showListing = computed(() => !(isEditable.value && ready.value));
 const rootStyle = computed(() => {

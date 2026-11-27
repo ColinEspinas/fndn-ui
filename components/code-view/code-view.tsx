@@ -117,7 +117,7 @@ export function CodeView({
   if (maxHeight != null) vars["--fndn-code-view-max-height"] = `${maxHeight}px`;
   if (height != null) vars["--fndn-code-view-height"] = `${height}px`;
   const rootStyle = Object.keys(vars).length ? ({ ...style, ...vars } as CSSProperties) : style;
-  const r = codeView({ diff: !!diff, wrap, ready, fill });
+  const r = codeView({ diff: !!diff, wrap, fold: !diff, ready, fill });
   const rows = !diff && (isEditable || !highlighted) ? linesOf(text) : undefined;
 
   return (

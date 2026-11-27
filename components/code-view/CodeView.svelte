@@ -71,7 +71,7 @@
   const line = $derived(diff ? undefined : (currentLine ?? (isEditable ? 1 : undefined)));
   const words = $derived<CodeViewLabels>({ ...CODE_VIEW_LABELS, ...labels });
   let ready = $state(false);
-  const r = $derived(codeView({ diff: !!diff, wrap, ready, fill }));
+  const r = $derived(codeView({ diff: !!diff, wrap, fold: !diff, ready, fill }));
   const rows = $derived(!diff && (isEditable || !highlighted) ? linesOf(value) : undefined);
   const showListing = $derived(!(isEditable && ready));
   const rootStyle = $derived([style, maxHeight == null ? "" : `--fndn-code-view-max-height: ${maxHeight}px`, height == null ? "" : `--fndn-code-view-height: ${height}px`].filter(Boolean).join("; ") || undefined);

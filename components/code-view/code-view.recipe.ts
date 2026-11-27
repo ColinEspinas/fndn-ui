@@ -70,6 +70,10 @@ export const codeView = tv({
         bar: "sticky start-0 inset-y-auto z-[2] col-[1] row-[1] self-stretch justify-self-start",
       },
     },
+    /* a listing (not a diff, which is never editable) keeps the editor's 12px fold column free
+     * between its numbers and the hairline, so it and the editor are drawn alike: the number cell is
+     * the editor's 20px number column, the 12px column and the 1px hairline */
+    fold: { true: { num: "min-w-[33px] pe-4" } },
     /* the editor is mounted but not shown yet: it lies over the listing, laid out at the same size
      * (so it measures and takes the listing's scroll position), and invisible */
     ready: { false: { editor: "invisible absolute inset-0" } },
@@ -103,7 +107,7 @@ export const codeView = tv({
     { wrap: false, type: "add", class: { num: "bg-[linear-gradient(var(--fndn-green-tint),var(--fndn-green-tint))]" } },
     { wrap: false, type: "del", class: { num: "bg-[linear-gradient(var(--fndn-red-tint),var(--fndn-red-tint))]" } },
   ],
-  defaultVariants: { diff: false, wrap: true, ready: true, fill: false, current: false },
+  defaultVariants: { diff: false, wrap: true, fold: false, ready: true, fill: false, current: false },
 });
 
 export type CodeViewRecipeProps = VariantProps<typeof codeView>;

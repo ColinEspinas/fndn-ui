@@ -3,7 +3,7 @@
   "name": "code-view",
   "title": "Code View",
   "summary": "Code on its own, with line numbers: a listing, a diff, or an editor.",
-  "description": "The code itself, with no frame, to place anywhere: an editor pane, a diff view, the body of a Code Block. A gutter of line numbers as wide as the widest number, then the code in mono at a 20px line height with light syntax colouring (keywords, strings and numbers, function calls), or lines already highlighted elsewhere. A diff shows one gutter, a green / red accent bar, a row tint and word-level add / del highlights. A current line is tinted across the gutter and the code. Long lines wrap (wrap) or the code scrolls sideways under a gutter that stays. Its height is the code's, a fixed height, a cap past which it scrolls, or its container's (fill). Read-only it is plain markup, complete in the first frame and server-rendered, and every line is in the page. editable turns it into a code editor (CodeMirror 6): undo history, find and replace (a compact widget floating over the code), several cursors, folding by indentation. The editor is loaded only then (a dynamic import), so a read-only view never downloads it; its packages are installed with the component all the same. It looks exactly like the listing: same font, line height, gutter, colours, current-line tint and insets. An editable view at rest is the read-only one, pixel for pixel, so turning editable on or off, and the editor arriving, move nothing: no column is added for folding (the fold marker is a small chevron over the gutter's hairline, shown while the pointer is over a foldable line's number), and the caret's line is tinted only while the editor has the focus.",
+  "description": "The code itself, with no frame, to place anywhere: an editor pane, a diff view, the body of a Code Block. A gutter of line numbers as wide as the widest number, then the code in mono at a 20px line height with light syntax colouring (keywords, strings and numbers, function calls), or lines already highlighted elsewhere. A diff shows one gutter, a green / red accent bar, a row tint and word-level add / del highlights. A current line is tinted across the gutter and the code. Long lines wrap (wrap) or the code scrolls sideways under a gutter that stays. Its height is the code's, a fixed height, a cap past which it scrolls, or its container's (fill). Read-only it is plain markup, complete in the first frame and server-rendered, and every line is in the page. editable turns it into a code editor (CodeMirror 6): undo history, find and replace (a compact widget floating over the code), several cursors, folding by indentation. The editor is loaded only then (a dynamic import), so a read-only view never downloads it; its packages are installed with the component all the same. It looks exactly like the listing: same font, line height, gutter, colours, current-line tint and insets. An editable view at rest is the read-only one, pixel for pixel, so turning editable on or off, and the editor arriving, move nothing: a listing always keeps a 12px fold column free between its numbers and the gutter's hairline (a diff, never editable, has none), where the editor draws its fold markers, and the caret's line is tinted only while the editor has the focus.",
   "kind": "component",
   "category": "display",
   "order": 9,
@@ -40,7 +40,7 @@
     {
       "part": "num",
       "element": "span",
-      "description": "Line number: 2xs, ink-3 (ink on the current line), right-aligned on the gutter's hairline, not selectable. A diff shows the new number, or the old one on a removed row."
+      "description": "Line number: 2xs, ink-3 (ink on the current line), right-aligned 12px before the gutter's hairline (the fold column, empty in a read-only listing, where the editor draws its fold markers), not selectable; at least 33px wide with the column and the hairline. A diff has no fold column and shows the new number, or the old one on a removed row."
     },
     {
       "part": "code",
@@ -63,7 +63,7 @@
       "part": "icons",
       "element": "span",
       "optional": true,
-      "description": "Editable only, never shown: the Phosphor caret the editor copies into its fold markers. A marker takes no column: an 8px chevron over the gutter's hairline, inside the 4px on each side of it, on the row's fill so it covers the hairline where it sits; shown while the pointer is over its line's number (hover-capable devices), always on a folded line, and always on foldable lines on touch."
+      "description": "Editable only, never shown: the Phosphor caret the editor copies into its fold markers, drawn in the 12px fold column before the hairline. An open marker shows while the pointer is over its row's gutter (hover-capable devices) and always on touch; a folded line's marker always shows."
     },
     {
       "part": "editor",
@@ -139,7 +139,7 @@
     "editable": {
       "type": "boolean",
       "default": false,
-      "description": "A code editor on value (CodeMirror 6, loaded now): typing, undo / redo, find and replace, several cursors, folding by indentation (a click on a foldable line's number or its chevron folds or unfolds it). Tab indents; Escape then Tab leaves. Ignored with diff. At rest it looks exactly like the read-only view."
+      "description": "A code editor on value (CodeMirror 6, loaded now): typing, undo / redo, find and replace, several cursors, folding by indentation (a click on a foldable line's number or its chevron, in the fold column, folds or unfolds it). Tab indents; Escape then Tab leaves. Ignored with diff. At rest it looks exactly like the read-only view."
     },
     "currentLine": {
       "type": "number",
@@ -235,7 +235,7 @@
     "None. The current line moves and is scrolled to at once: it follows the caret, a high-frequency action.",
     "The editor arriving: no motion and no shift; it takes the listing's scroll position.",
     "The caret blinks as an editor's does; not with reduced motion.",
-    "Fold markers appear at once while the pointer is over a foldable line's number; a folded line's marker always shows. The current line's tint comes and goes with the focus, at once.",
+    "Fold markers appear at once while the pointer is over a row's gutter; a folded line's marker always shows. The current line's tint comes and goes with the focus, at once.",
     "Find widget: appears and goes at once (a keyboard action, used often). The replace caret turns down over duration.move with easing.out-strong, at once from the keyboard."
   ]
 }

@@ -81,23 +81,24 @@ const theme = EditorView.theme({
   ".cm-content": { paddingBlock: "12px", paddingInline: "0", caretColor: "var(--fndn-ink)" },
   ".cm-line": { paddingBlock: "0", paddingInline: "4px 12px" },
   ".cm-gutters": { backgroundColor: "var(--fndn-surface)", color: "var(--fndn-ink-3)", border: "none" },
+  /* the number cell is the read-only listing's, built the same way so the two land on the same
+   * device pixels: 4px, the number, then the 12px fold column and the hairline (min 33px in all) */
   ".cm-lineNumbers .cm-gutterElement": {
-    minWidth: "20px", paddingBlock: "0", paddingInline: "4px", borderInlineEnd: "1px solid var(--fndn-line)",
+    minWidth: "33px", paddingBlock: "0", paddingInline: "4px 16px", borderInlineEnd: "1px solid var(--fndn-line)",
     fontSize: "var(--fndn-text-2xs)", fontVariantNumeric: "tabular-nums", textAlign: "end", userSelect: "none",
   },
-  /* the fold marker takes no column: an 8px chevron over the gutter's hairline, inside the 4px on
-   * each side of it, on the row's own fill so it covers the hairline where it sits */
+  /* the fold markers take no width of their own: each is drawn over the fold column of its number
+   * cell (the 12px before the hairline) */
   ".cm-foldGutter": { overflow: "visible" },
   ".cm-foldGutter .cm-gutterElement": { position: "relative", width: "0", minWidth: "0", paddingInline: "0", overflow: "visible" },
   ".cm-foldGutter [data-fold]": {
-    position: "absolute", insetBlockStart: "0", insetInlineStart: "-4px", width: "8px", height: "20px",
-    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
-    color: "var(--fndn-ink-3)", backgroundColor: "var(--fndn-surface)",
+    position: "absolute", insetBlockStart: "0", insetInlineStart: "-13px", width: "12px", height: "20px",
+    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--fndn-ink-3)",
   },
-  ".cm-foldGutter [data-fold] svg": { width: "8px", height: "8px" },
+  ".cm-foldGutter [data-fold] svg": { width: "10px", height: "10px" },
   ".cm-foldGutter [data-fold=closed] svg": { transform: "rotate(-90deg)" },
   ".cm-lineNumbers .cm-gutterElement.cm-foldable": { cursor: "pointer" },
-  /* an open marker shows while the pointer is over its line's number; a closed one always shows */
+  /* an open marker shows while the pointer is over its row's gutter; a closed one always shows */
   "@media (hover: hover)": {
     ".cm-foldGutter .cm-gutterElement:not(.cm-hoverLine) [data-fold=open]": { visibility: "hidden" },
   },
@@ -107,7 +108,6 @@ const theme = EditorView.theme({
   ".cm-activeLine, .cm-activeLineGutter": { backgroundColor: "transparent" },
   "&.cm-focused .cm-activeLine, &:not(.cm-focused) .cm-hostLine": { backgroundColor: "var(--fndn-hover)" },
   "&.cm-focused .cm-activeLineGutter, &:not(.cm-focused) .cm-gutterElement.cm-hostLine": { backgroundColor: "var(--fndn-hover)", color: "var(--fndn-ink)" },
-  "&.cm-focused .cm-activeLineGutter [data-fold], &:not(.cm-focused) .cm-hostLine [data-fold]": { backgroundColor: "var(--fndn-hover)" },
   ".cm-selectionBackground, &.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground": { backgroundColor: "var(--fndn-accent-tint)" },
   ".cm-cursor, .cm-dropCursor": { borderInlineStart: "1.5px solid var(--fndn-ink)" },
   ".cm-foldPlaceholder": {
@@ -158,7 +158,7 @@ const lineMarks = [
     const host = startOf(state, state.field(hostLine));
     return host === undefined ? Decoration.none : Decoration.set([Decoration.line({ class: "cm-hostLine" }).range(host)]);
   }),
-  /* the pointer over a number shows its line's fold marker (the gutter is outside the content,
+  /* the pointer over a row's gutter shows its fold marker (the gutter is outside the content,
    * so this listens on the whole editor) */
   ViewPlugin.fromClass(class {
     view: EditorView;
