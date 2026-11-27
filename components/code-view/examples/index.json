@@ -13,10 +13,6 @@
     {
       "file": "failed-build",
       "title": "Point at the line that failed"
-    },
-    {
-      "file": "editor-pane",
-      "title": "The body of an editor pane"
     }
   ]
 }
