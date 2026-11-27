@@ -82,17 +82,6 @@ async function run(fw, check) {
   await open(fw, 7);
   check("xs: 24px high, pressed ghost fill hover-2", [(await p.rect(T)).h, (await state())[1]], [24, ink.hover2]);
 
-  /* ink (examples 8, 9): pressed changes the ink, never a fill; an indicator bar while pressed */
-  await open(fw, 8);
-  check("ink, pressed: no fill, ink colour, a 2px bar at the inline start", [...(await state()), await q(`(()=>{const b=document.querySelector(${JSON.stringify(T)});const cs=getComputedStyle(b,"::before");const bb=b.getBoundingClientRect();return [cs.width, cs.backgroundColor, Math.round(parseFloat(cs.left))]})()`)], ["true", ink.clear, ink.ink, ["2px", await token("--fndn-ink"), 0]]);
-  await p.clickSel(T); await sleep(250);
-  check("ink, released by a click: still no fill (hovered: the ghost hover), the bar is gone", [...(await state()).slice(0, 2), await q(`getComputedStyle(document.querySelector(${JSON.stringify(T)}),"::before").backgroundColor`)], ["false", ink.hover, ink.clear]);
-  await p.hover(1, 1); await sleep(250);
-  check("ink, released at rest: transparent, ink-3", (await state()).slice(1), [ink.clear, ink.ink3]);
-  await open(fw, 9);
-  await p.clickSel(T); await p.hover(1, 1); await sleep(250);
-  check("ink, toolbar: pressed by a click shows the bottom bar, no fill", [...(await state()).slice(0, 2), await q(`(()=>{const cs=getComputedStyle(document.querySelector(${JSON.stringify(T)}),"::before");return [cs.height, cs.bottom, cs.backgroundColor]})()`)], ["true", ink.clear, ["2px", "0px", await token("--fndn-ink")]]);
-
   /* worst cases */
   await open(fw, 0, "&data=worst");
   check("long label in 180px: cut at the end, its title holds the whole label", await q(`(()=>{const b=document.querySelector(${JSON.stringify(T)});const l=b.querySelector("[data-slot=toggle-label]");return [Math.round(b.getBoundingClientRect().width),l.getAttribute("title")===l.textContent,b.scrollWidth<=b.clientWidth+1]})()`), [180, true, true]);

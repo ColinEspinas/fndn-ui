@@ -9,8 +9,7 @@
   import { trackModality } from "../lib/modality";
   import { truncationTitles } from "../lib/truncate";
 
-  export type ToggleVariant = "outline" | "ghost" | "ink";
-export type ToggleIndicator = "none" | "start" | "bottom";
+  export type ToggleVariant = "outline" | "ghost";
   export type ToggleSize = "xs" | "sm" | "md" | "lg";
   export type ToggleShape = "pill" | "rounded";
 
@@ -26,8 +25,6 @@ export type ToggleIndicator = "none" | "start" | "bottom";
     square?: boolean;
     /** ink-3 at rest, ink when hovered, held down or pressed. */
     muted?: boolean;
-    /** The ink look's pressed mark: a 2px ink bar at the inline start (an activity bar) or at the bottom (a toolbar). */
-    indicator?: ToggleIndicator;
     /** Icon, rendered in the icon part. */
     icon?: Snippet;
     /** Wraps the toggle in a Tooltip with this text; also the name (aria-label) of a square or icon-only toggle that has none. */
@@ -37,11 +34,11 @@ export type ToggleIndicator = "none" | "start" | "bottom";
   };
 
   let {
-    pressed = $bindable(false), onpressedchange, variant = "outline", size = "md", shape, square, muted, indicator = "none", icon, tooltip,
+    pressed = $bindable(false), onpressedchange, variant = "outline", size = "md", shape, square, muted, icon, tooltip,
     class: className, style, disabled, children, ...rest
   }: Props = $props();
 
-  const r = $derived(toggle({ variant, size, shape, square: !!square, muted: !!muted, indicator }));
+  const r = $derived(toggle({ variant, size, shape, square: !!square, muted: !!muted }));
   const named = $derived(tooltip && (square || !children) && rest["aria-label"] == null ? { "aria-label": tooltip } : {});
 
   /* a label cut by its ellipsis carries its full text as a title */

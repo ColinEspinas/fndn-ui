@@ -3,7 +3,7 @@
   "name": "toggle",
   "title": "Toggle",
   "summary": "A button that stays pressed, such as Bold in a text toolbar.",
-  "description": "A button that stays pressed: bold in a text toolbar, pin, follow. It is the Button (same sizes, shapes, square and muted, ghost and outline looks) whose pressed state keeps the darker fill, the way an open ghost button does. Icon-only toggles are named by a Tooltip. Controlled or uncontrolled.",
+  "description": "A button that stays pressed: bold in a text toolbar, pin, follow, the open view of an activity bar. It is the Button (same sizes, shapes, square and muted, ghost and outline looks) whose pressed state keeps the darker fill, the way an open ghost button does. Icon-only toggles are named by a Tooltip. Controlled or uncontrolled.",
   "kind": "component",
   "category": "actions",
   "order": 2,
@@ -40,11 +40,10 @@
       "type": "enum",
       "values": [
         "outline",
-        "ghost",
-        "ink"
+        "ghost"
       ],
       "default": "outline",
-      "description": "The Button's looks. outline: surface with shadow.btn; pressed fills hover-2, hovered or not. ghost: transparent; hover fills hover, pressed fills hover-2, hovered or not. ink: pressed without a fill, for activity bars, layout toggles (a panel, an assistant) and a browser's bookmark star: ink-3 at rest, ink when pressed (pass the filled glyph for the pressed state if you want one; the star may take the accent), never a grey box; hover as the ghost button (hover fill, ink)."
+      "description": "The Button's looks. outline: surface with shadow.btn; pressed fills hover-2, hovered or not. ghost: transparent; hover fills hover, pressed fills hover-2, hovered or not (toolbars and app chrome: an activity bar, a panel switch, a bookmark star)."
     },
     "size": {
       "type": "enum",
@@ -74,16 +73,6 @@
       "type": "boolean",
       "default": false,
       "description": "Quiet at rest, ink when hovered, held down or pressed (with variant ghost). An icon-only toggle (square) rests in ink-3: toolbars of small icon toggles. A toggle with a label rests in ink-2."
-    },
-    "indicator": {
-      "type": "enum",
-      "values": [
-        "none",
-        "start",
-        "bottom"
-      ],
-      "default": "none",
-      "description": "The ink look's pressed mark: a 2px ink bar with round ends, at the inline start (an activity bar, as VS Code) or at the bottom (a toolbar). Drawn only while pressed; follows the writing direction."
     },
     "tooltip": {
       "type": "string",
@@ -115,7 +104,6 @@
     "color.ink-3",
     "color.hover",
     "color.hover-2",
-    "color.inset",
     "shadow.btn",
     "radius.pill",
     "radius.shape",
@@ -150,7 +138,6 @@
   "motion": [
     "the Button's: press scales to motion.press-scale over duration.press with easing.out-strong; hover fill and colour over duration.fast (pointer only)",
     "pressed fill: over duration.fast from a pointer; instant from the keyboard (kbd-instant)",
-    "no entrance and no other motion",
-    "ink: no fill at any time but hover's; pressed changes the ink (colour over duration.fast from a pointer, instant from the keyboard) and the indicator bar appears and goes at once (a discrete state, no slide)"
+    "no entrance and no other motion"
   ]
 }

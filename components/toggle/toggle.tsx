@@ -6,8 +6,7 @@ import { toggle } from "./toggle.recipe";
 import { trackModality } from "../lib/modality";
 import { truncationTitles } from "../lib/truncate";
 
-export type ToggleVariant = "outline" | "ghost" | "ink";
-export type ToggleIndicator = "none" | "start" | "bottom";
+export type ToggleVariant = "outline" | "ghost";
 export type ToggleSize = "xs" | "sm" | "md" | "lg";
 export type ToggleShape = "pill" | "rounded";
 
@@ -24,8 +23,6 @@ export type ToggleProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onChang
   square?: boolean;
   /** ink-3 at rest, ink when hovered, held down or pressed. */
   muted?: boolean;
-  /** The ink look's pressed mark: a 2px ink bar at the inline start (an activity bar) or at the bottom (a toolbar). */
-  indicator?: ToggleIndicator;
   /** Icon, rendered in the icon part. */
   icon?: ReactNode;
   /** Wraps the toggle in a Tooltip with this text; also the name (aria-label) of a square or icon-only toggle that has none. */
@@ -34,7 +31,7 @@ export type ToggleProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onChang
 
 /** A button that stays pressed. Behaviour by Ark UI (Zag toggle). */
 export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle(
-  { pressed, defaultPressed, onPressedChange, variant = "outline", size = "md", shape, square, muted, indicator = "none", icon, tooltip, className, children, ...rest },
+  { pressed, defaultPressed, onPressedChange, variant = "outline", size = "md", shape, square, muted, icon, tooltip, className, children, ...rest },
   ref,
 ) {
   useEffect(() => trackModality(), []);
@@ -42,7 +39,7 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle
   const hasLabel = children != null && children !== false;
   /* a label cut by its ellipsis carries its full text as a title */
   useEffect(() => truncationTitles(label.current), [hasLabel]);
-  const r = toggle({ variant, size, shape, square: !!square, muted: !!muted, indicator });
+  const r = toggle({ variant, size, shape, square: !!square, muted: !!muted });
   const root = (
     <ArkToggle.Root
       ref={ref}

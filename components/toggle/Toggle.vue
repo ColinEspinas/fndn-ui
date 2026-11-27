@@ -7,8 +7,7 @@ import { toggle } from "./toggle.recipe";
 import { trackModality } from "../lib/modality";
 import { truncationTitles } from "../lib/truncate";
 
-export type ToggleVariant = "outline" | "ghost" | "ink";
-export type ToggleIndicator = "none" | "start" | "bottom";
+export type ToggleVariant = "outline" | "ghost";
 export type ToggleSize = "xs" | "sm" | "md" | "lg";
 export type ToggleShape = "pill" | "rounded";
 
@@ -26,13 +25,11 @@ const props = withDefaults(
     square?: boolean;
     /** ink-3 at rest, ink when hovered, held down or pressed. */
     muted?: boolean;
-    /** The ink look's pressed mark: a 2px ink bar at the inline start (an activity bar) or at the bottom (a toolbar). */
-    indicator?: ToggleIndicator;
     /** Wraps the toggle in a Tooltip with this text; also the name (aria-label) of a square or icon-only toggle that has none. */
     tooltip?: string;
     disabled?: boolean;
   }>(),
-  { variant: "outline", size: "md", square: false, muted: false, indicator: "none", tooltip: undefined, disabled: false },
+  { variant: "outline", size: "md", square: false, muted: false, tooltip: undefined, disabled: false },
 );
 
 /** v-model:pressed — falls back to local state when unbound. */
@@ -42,7 +39,7 @@ const emit = defineEmits<{ pressedChange: [pressed: boolean] }>();
 defineSlots<{ default?: () => unknown; icon?: () => unknown }>();
 
 const slots = useSlots();
-const r = computed(() => toggle({ variant: props.variant, size: props.size, shape: props.shape, square: props.square, muted: props.muted, indicator: props.indicator }));
+const r = computed(() => toggle({ variant: props.variant, size: props.size, shape: props.shape, square: props.square, muted: props.muted }));
 const named = computed(() =>
   props.tooltip && (props.square || !slots.default) && attrs["aria-label"] == null ? { "aria-label": props.tooltip } : {},
 );

@@ -259,10 +259,10 @@ One size in one row of controls. `size` changes dimensions only; a look is a `va
   goes at the end of a row, where growing moves nothing; a `busy` button keeps its width under its
   spinner.
 
-**Toggles.** One that shows a panel or marks the current view in app chrome (an activity bar, a
-panel switch, a bookmark) is Toggle `variant="ink"`: `ink` when pressed, `ink-3` at rest, no box.
-`ghost` and `outline` toggles, whose pressed state is the `hover-2` fill, are for formatting,
-options and filters.
+**Toggles.** A toggle is the Button that stays pressed, in the Button's `ghost` or `outline` look;
+pressed keeps the `hover-2` fill. App chrome takes `ghost` toggles, `muted` when icon-only: the
+open view of an activity bar, a panel switch, a bookmark star (its filled glyph when pressed).
+`outline` toggles are for options and filters that stand among outline controls.
 
 **Fields.**
 

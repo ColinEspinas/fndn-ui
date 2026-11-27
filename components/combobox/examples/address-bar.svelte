@@ -14,8 +14,8 @@
 </script>
 
 <!-- a browser's address bar: the site-information button in `start` (a button: it sits 2px from the
-     edge, as the star does at the end), the bookmark star in `end` (an ink Toggle:
-     the accent star when bookmarked, never a grey box); no caret, the suggestions open as you type -->
+     edge, as the star does at the end), the bookmark star in `end` (a muted ghost Toggle:
+     the filled star and the pressed fill when bookmarked); no caret, the suggestions open as you type -->
 <Combobox
   items={pages}
   bind:value={address}
@@ -33,10 +33,10 @@
   {#snippet end()}
     <Toggle
       bind:pressed={bookmarked}
-      variant="ink"
+      variant="ghost"
       size="xs"
       square
-      class="aria-pressed:text-accent"
+      muted
       tooltip={bookmarked ? "Edit bookmark" : "Bookmark this tab"}
     >
       {#snippet icon()}<Star data-slot="icon" weight={bookmarked ? "fill" : "bold"} />{/snippet}

@@ -9,8 +9,8 @@ const pages = [
 ];
 
 /* a browser's address bar: the site-information button in `start` (a button: it sits 2px from the
- * edge, as the star does at the end), the bookmark star in `end` (an ink Toggle:
- * the accent star when bookmarked, never a grey box); no caret, the suggestions open as you type */
+ * edge, as the star does at the end), the bookmark star in `end` (a muted ghost Toggle:
+ * the filled star and the pressed fill when bookmarked); no caret, the suggestions open as you type */
 export default function AddressBar() {
   const [bookmarked, setBookmarked] = useState(false);
   return (
@@ -24,10 +24,10 @@ export default function AddressBar() {
       start={<Button variant="ghost" size="xs" square muted aria-label="View site information" icon={<Lock data-slot="icon" weight="bold" />} />}
       end={
         <Toggle
-          variant="ink"
+          variant="ghost"
           size="xs"
           square
-          className="aria-pressed:text-accent"
+          muted
           tooltip={bookmarked ? "Edit bookmark" : "Bookmark this tab"}
           pressed={bookmarked}
           onPressedChange={setBookmarked}

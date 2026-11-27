@@ -69,27 +69,6 @@
         "pressed": true
       },
       "text": "Mine"
-    },
-    {
-      "name": "Ink, activity bar",
-      "props": {
-        "variant": "ink",
-        "size": "md",
-        "square": true,
-        "indicator": "start",
-        "pressed": true,
-        "aria-label": "Explorer"
-      },
-      "text": "E"
-    },
-    {
-      "name": "Ink, toolbar",
-      "props": {
-        "variant": "ink",
-        "size": "sm",
-        "indicator": "bottom"
-      },
-      "text": "Panel"
     }
   ],
   "worstCase": [

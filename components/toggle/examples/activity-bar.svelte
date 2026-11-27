@@ -15,16 +15,16 @@
   let view = $state<string | null>("explorer");
 </script>
 
-<!-- an editor's activity bar: ink toggles, never a grey box. The open view is in ink with a bar at the
-     inline start; pressing it again closes the side bar -->
+<!-- an editor's activity bar: muted ghost toggles. The open view keeps the pressed fill and its ink;
+      pressing it again closes the side bar -->
 <div role="toolbar" aria-orientation="vertical" aria-label="Views" class="flex w-11 flex-col items-center gap-1 rounded-card bg-canvas py-1.5">
   {#each views as { value, label, Icon } (value)}
     <Toggle
-      variant="ink"
-      indicator="start"
+      variant="ghost"
       size="md"
       shape="rounded"
       square
+      muted
       tooltip={label}
       pressed={view === value}
       onpressedchange={(pressed) => (view = pressed ? value : null)}

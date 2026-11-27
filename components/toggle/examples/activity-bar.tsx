@@ -9,8 +9,8 @@ const views = [
   { value: "terminal", label: "Terminal", Icon: Terminal },
 ];
 
-/* an editor's activity bar: ink toggles, never a grey box. The open view is in ink with a bar at the
- * inline start; pressing it again closes the side bar */
+/* an editor's activity bar: muted ghost toggles. The open view keeps the pressed fill and its ink;
+ * pressing it again closes the side bar */
 export default function ActivityBar() {
   const [view, setView] = useState<string | null>("explorer");
   return (
@@ -18,11 +18,11 @@ export default function ActivityBar() {
       {views.map(({ value, label, Icon }) => (
         <Toggle
           key={value}
-          variant="ink"
-          indicator="start"
+          variant="ghost"
           size="md"
           shape="rounded"
           square
+          muted
           tooltip={label}
           pressed={view === value}
           onPressedChange={(pressed) => setView(pressed ? value : null)}

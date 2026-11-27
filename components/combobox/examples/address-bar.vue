@@ -14,8 +14,8 @@ const bookmarked = ref(false);
 </script>
 
 <!-- a browser's address bar: the site-information button in `start` (a button: it sits 2px from the
-     edge, as the star does at the end), the bookmark star in `end` (an ink Toggle:
-     the accent star when bookmarked, never a grey box); no caret, the suggestions open as you type -->
+     edge, as the star does at the end), the bookmark star in `end` (a muted ghost Toggle:
+     the filled star and the pressed fill when bookmarked); no caret, the suggestions open as you type -->
 <template>
   <Combobox
     v-model:value="address"
@@ -34,10 +34,10 @@ const bookmarked = ref(false);
     <template #end>
       <Toggle
         v-model:pressed="bookmarked"
-        variant="ink"
+        variant="ghost"
         size="xs"
         square
-        class="aria-pressed:text-accent"
+        muted
         :tooltip="bookmarked ? 'Edit bookmark' : 'Bookmark this tab'"
       >
         <template #icon><PhStar data-slot="icon" :weight="bookmarked ? 'fill' : 'bold'" /></template>
