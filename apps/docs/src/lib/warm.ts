@@ -17,6 +17,7 @@
  * Imported by the tree, which is on every page. */
 import { getOptions } from "./store";
 import { componentOf, loadComponent } from "./render";
+import { exampleModule } from "./example-modules";
 import { loadSpec } from "./spec-cache";
 import { files as reactAdapters } from "virtual:docs-adapters/react"; /* lib/vite-modules.mjs */
 import { targetsOf, type Fw, type Spec } from "./types";
@@ -33,8 +34,8 @@ export async function prepare(name: string, fw: Fw = getOptions().fw): Promise<v
    * (not waited for: the page does not need it to be shown) */
   const first = spec.exampleFiles?.[0]?.file;
   if (import.meta.env.PROD && first && targetsOf(spec).includes(fw)) void Promise.all([
-    fw === "react" ? import("./mount-react") : fw === "vue" ? import("./mount-vue") : import("./mount-svelte"),
-    import("./example-modules").then((m) => m.exampleModule(fw, name, first)),
+    fw === "react" ? undefined : MOUNT[fw](),
+    exampleModule(fw, name, first),
   ]).catch(() => {});
   if (!adapterReady(spec, fw)) await loadComponent(spec.name, spec.files?.react?.[0]);
   /* Vue and Svelte mount their own adapter after the swap: with it loaded here, that mount takes
@@ -42,6 +43,15 @@ export async function prepare(name: string, fw: Fw = getOptions().fw): Promise<v
   if (fw === "vue" && targetsOf(spec).includes("vue")) await (mounters.vue ??= await import("./mount-vue")).preloadVue(spec.name);
   if (fw === "svelte" && targetsOf(spec).includes("svelte")) await (mounters.svelte ??= await import("./mount-svelte")).preloadSvelte(spec.name);
 }
+
+/* The mount module of Vue and of Svelte (React's comes with the component page's own code). One
+ * function each, never the two imports in one conditional expression: the build gives each
+ * import() the list of files to fetch with it, and the minifier folds a conditional of imports
+ * into one call that keeps a single list, so a page in React fetched the Svelte runtime. */
+const MOUNT: Record<Exclude<Fw, "react">, () => Promise<unknown>> = {
+  vue: () => import("./mount-vue"),
+  svelte: () => import("./mount-svelte"),
+};
 
 /** The Vue and Svelte mount modules once loaded, for a mount in the frame of the swap (Workbench). */
 export const mounters: { vue?: typeof import("./mount-vue"); svelte?: typeof import("./mount-svelte") } = {};

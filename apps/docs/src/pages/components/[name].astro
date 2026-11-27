@@ -2,11 +2,9 @@
 /* One static page per spec (blocks included): title, status, description, install line, then the
  * workbench island (stage, inspector, Usage and the component's own files). */
 import Layout from "../../layouts/Layout.astro";
-import InstallLine from "../../components/InstallLine";
-import Workbench from "../../components/Workbench";
+import { InstallLine, PrevNext, Workbench } from "../../components/ComponentPage";
 import { Chip } from "@fndn/components/chip/chip.tsx";
 import { StatusPill } from "@fndn/components/status-pill/status-pill.tsx";
-import PrevNext from "../../components/PrevNext";
 import { allOwnFiles, specOf, specs } from "../../lib/catalog";
 import type { Spec } from "../../lib/types";
 

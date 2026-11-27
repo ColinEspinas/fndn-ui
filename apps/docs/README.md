@@ -18,3 +18,9 @@ The site is built from the library's own components and follows the same design 
   broken over a dotted ground.
 - **The props panel drives two-way props on the live component**, so a value set there (a
   carousel's `page`) travels as it would in an app.
+- **A page asks for few files.** A browser fetches one file per module an island comes from, so
+  the layout's islands are exported from `src/components/Shell.ts` and a component page's from
+  `src/components/ComponentPage.ts`: a new island for either goes there. The build then puts what
+  each of the two imports into one file (`src/lib/build-chunks.mjs`), and every icon of a
+  framework into one. Two `import()` calls never share one conditional expression: the minifier
+  folds them into a call that fetches the files of one for both.
